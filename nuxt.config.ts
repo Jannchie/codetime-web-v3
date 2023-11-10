@@ -11,6 +11,5 @@ export default defineNuxtConfig({
         'Share Tech Mono': true,
       },
     }],
-    'radix-vue/nuxt',
   ],
 })
