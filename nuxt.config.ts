@@ -1,8 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      apiHost: 'http://localhost:8081',
+    },
+  },
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
@@ -17,5 +21,6 @@ export default defineNuxtConfig({
         'Share Tech Mono': true,
       },
     }],
+    '@nuxt/image',
   ],
 })

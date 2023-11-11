@@ -19,6 +19,7 @@
   "devDependencies": {
     "@jannchie/eslint-config": "^2.4.1",
     "@nuxt/devtools": "^1.0.0",
+    "@nuxt/image": "^1.0.0",
     "@nuxtjs/google-fonts": "^3.0.2",
     "@nuxtjs/robots": "^3.0.0",
     "@types/d3": "^7.4.3",

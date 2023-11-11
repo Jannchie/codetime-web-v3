@@ -95,16 +95,22 @@ function onItemPointerDown(option: Option) {
     ref="wrapperRef"
     class="r-select-wrapper relative"
   >
-    <input
-      ref="inputRef"
-      class="r-select-input w-inherit cursor-pointer pl-2 py-1 pr-6 outline-none focus:border-sky-7 border border-neutral-7 rounded text-neutral-0 bg-neutral-8"
-      placeholder="Select"
-      readonly
-      :value="currentLabel"
-      aria-haspopup="listbox"
-      autocomplete="off"
-      @focus="focused = true"
-    >
+    <div class="w-full">
+      <input
+        ref="inputRef"
+        class="r-select-input w-inherit cursor-pointer pl-2 py-1 pr-6 outline-none focus:border-sky-7 border border-neutral-7 rounded text-neutral-0 bg-neutral-8"
+        placeholder="Select"
+        readonly
+        :value="currentLabel"
+        aria-haspopup="listbox"
+        autocomplete="off"
+        @focus="focused = true"
+      >
+      <Icon
+        class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+        icon="eva:chevron-down-outline"
+      />
+    </div>
     <div
       v-if="focused"
       class="r-select-list p-1 overflow-hidden flex-col w-full mt-2 absolute border border-neutral-7 rounded bg-neutral-8 z-1"

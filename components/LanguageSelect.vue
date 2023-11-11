@@ -1,18 +1,25 @@
-<script setup>
-// const defaultLang = useNavigatorLanguage()
-// console.log(defaultLang.language.value)
-const locale = useRoute('locale').params.locale
-const currentLocale = ref(locale)
+<script setup lang="ts">
+const route = useRoute()
 const router = useRouter()
-watch(currentLocale, (value) => {
-  router.push(`/${value}/`)
+const locale = computed({
+  get: () => route.params.locale as string,
+  set: (locale: string) => {
+    router.push({
+      params: { locale },
+    })
+    useHead({
+      htmlAttrs: {
+        lang: locale,
+      },
+    })
+  },
 })
 </script>
 
 <template>
   <div class="relative">
     <RSelect
-      v-model="currentLocale"
+      v-model="locale"
       class="w-28"
       :options="[
         { label: 'English', id: 'en' },

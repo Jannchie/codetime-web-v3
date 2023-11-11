@@ -5,32 +5,6 @@ import 'auxlines/style.css'
 definePageMeta({
   layout: 'landing',
 })
-
-useSeoMeta({
-  title: 'CodeTime - 追迹你的编程时间',
-  description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  ogTitle: 'CodeTime - 追迹你的编程时间',
-  ogDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  ogImage: '/icon.png',
-  ogUrl: 'https://codetime.dev',
-  twitterTitle: 'CodeTime - 追迹你的编程时间',
-  twitterDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  twitterImage: '/icon.png',
-  twitterCard: 'summary',
-})
-
-useHead({
-  htmlAttrs: {
-    lang: 'en',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/icon.png',
-    },
-  ],
-})
 </script>
 
 <template>

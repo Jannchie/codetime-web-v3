@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import '@unocss/reset/tailwind-compat.css'
+
+provide('user', await fetchUser())
 </script>
 
 <template>
