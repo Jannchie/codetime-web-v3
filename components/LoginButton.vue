@@ -5,18 +5,18 @@ import { Icon } from '@iconify/vue'
 <template>
   <div class="flex flex-col items-center">
     <div class="flex gap-2">
-      <button class="p-4 rounded-xl bg-transparent border border-neutral-8 bg-neutral-8 hover:bg-neutral-8 transition-all">
+      <button class="px-4 py-3 rounded-xl bg-transparent border border-neutral-8 bg-neutral-8 hover:bg-neutral-8 transition-all">
         <div class="flex gap-2 items-center">
           <Icon
             class="w-4 h-4"
             icon="eva:bar-chart-outline"
           />
           <span>
-            演示仪表盘
+            演示
           </span>
         </div>
       </button>
-      <button class="p-4 rounded-xl bg-transparent border border-neutral-8 bg-neutral-8 hover:bg-neutral-8 transition-all">
+      <button class="px-4 py-3 rounded-xl bg-transparent border border-sky-8 hover:bg-sky-8 transition-all">
         <div class="flex gap-2 items-center">
           <Icon
             class="w-4 h-4"

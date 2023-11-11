@@ -10,9 +10,17 @@
   >
     <slot />
   </NuxtLayout>
-  <footer class="text-center mt-32 py-4">
+  <footer class="text-center mt-32 py-4 mt-auto">
     <div class="text-sm op50">
       datreks @ {{ new Date().getFullYear() }}
     </div>
   </footer>
 </template>
+
+<style>
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+</style>
