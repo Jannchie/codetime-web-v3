@@ -26,9 +26,3 @@ const data = []
     }"
   />
 </template>
-
-<style>
-:root {
-  --plot-background: rgb(23 23 23 / var(--un-bg-opacity));
-}
-</style>

@@ -14,9 +14,11 @@
     "@observablehq/plot": "^0.6.11",
     "auxlines": "^0.3.0",
     "d3": "^7.8.5",
+    "date-fns": "^2.30.0",
     "vue-wf": "^0.1.0"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.140",
     "@jannchie/eslint-config": "^2.4.1",
     "@nuxt/devtools": "^1.0.0",
     "@nuxt/image": "^1.0.0",
@@ -24,6 +26,7 @@
     "@nuxtjs/robots": "^3.0.0",
     "@types/d3": "^7.4.3",
     "@unocss/nuxt": "^0.57.3",
+    "@unocss/preset-icons": "^0.57.3",
     "@unocss/reset": "^0.57.3",
     "@vueuse/nuxt": "^10.5.0",
     "eslint": "^8.53.0",

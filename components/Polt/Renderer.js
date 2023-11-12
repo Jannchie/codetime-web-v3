@@ -232,14 +232,14 @@ export default {
           'span',
           method === 'plot'
             ? [
-              h('div', {
-                style: {
-                  maxWidth: '100%',
-                  width: `688px`,
-                  aspectRatio: `688 / ${height}`,
-                },
-              }),
-            ]
+                h('div', {
+                  style: {
+                    maxWidth: '100%',
+                    width: `688px`,
+                    aspectRatio: `688 / ${height}`,
+                  },
+                }),
+              ]
             : [],
         ),
         [
@@ -255,6 +255,16 @@ export default {
     }
     if (typeof document !== 'undefined') {
       const plot = Plot[method](options)
+      plot.addEventListener('input', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        this.$emit('input', e, plot.value)
+      })
+      plot.addEventListener('pointerup', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        this.$emit('pointerup', e, plot.value)
+      })
       const replace = (el) => {
         while (el.lastChild) el.lastChild.remove()
         el.append(plot)

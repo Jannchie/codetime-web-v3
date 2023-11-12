@@ -16,7 +16,6 @@ useSeoMeta({
   twitterImage: '/icon.png',
   twitterCard: 'summary',
 })
-
 const route = useRoute()
 const locale = computed(() => {
   return route.params.locale as string
@@ -76,11 +75,12 @@ useHead({
             >
               {{ tab.label }}
             </NuxtLink>
-            <div
-              v-if="tab === currentTab"
-              class="mt-2"
-            >
-              <div class="h-0.5 bg-sky-7" />
+            <div class="min-h-0.5 mt-2">
+              <div
+                v-if="tab === currentTab"
+              >
+                <div class="h-0.5 bg-sky-7" />
+              </div>
             </div>
           </div>
         </div>

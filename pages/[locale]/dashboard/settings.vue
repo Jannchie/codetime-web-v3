@@ -5,6 +5,10 @@ definePageMeta({
 const user = useUser()
 const token = computed(() => user.value?.upload_token ?? '')
 const a = useClipboard({ source: token })
+const router = useRouter()
+router.push({
+  params: { locale: 'zh-CN' },
+})
 </script>
 
 <template>
@@ -25,9 +29,13 @@ const a = useClipboard({ source: token })
           :value="token"
         />
         <RBtn
+          class="flex items-center gap-2"
           @click="a.copy(token)"
         >
-          复制
+          <i class="i-tabler-copy" />
+          <div>
+            复制
+          </div>
         </RBtn>
       </div>
       <div class="op50 text-xs">
@@ -53,7 +61,8 @@ const a = useClipboard({ source: token })
         我们支持网站数据导出功能，以确保数据的安全备份、便捷迁移、深入分析与合规性，同时赋予您对其数据完全的控制权和透明度。
       </div>
       <div class="mb-2">
-        <RBtn>
+        <RBtn class="flex gap-2 items-center">
+          <i class="i-tabler-download" />
           一键导出
         </RBtn>
       </div>
@@ -62,18 +71,18 @@ const a = useClipboard({ source: token })
       </div>
     </CardBase>
     <CardBase class="p-6 border-red-9">
-      <div class="text-xl mb-4">
+      <div class="text-xl mb-4 text-red-5">
         危险区域
       </div>
       <div class="op75 text-sm mb-4">
         这里的操作可能会导致数据丢失，或者无法恢复。请谨慎操作。
       </div>
       <div class="mb-2">
-        <RBtn class="hover:bg-red-9! hover:border-red-9!">
+        <RBtn class="hover:bg-red-9! hover:border-red-9! flex gap-2 items-center">
+          <i class="i-tabler-trash" />
           删除所有数据
         </RBtn>
       </div>
     </CardBase>
-    <div />
   </DashboardPageContent>
 </template>

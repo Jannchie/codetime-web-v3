@@ -46,11 +46,12 @@ const user = useUser()
       class="px-4 py-3 flex gap-2 items-center rounded-xl bg-transparent border border-sky-8 hover:bg-sky-8 transition-all"
     >
       <NuxtImg
+        v-if="user.avatar"
         :src="user.avatar"
         class="rounded-full w-6 h-6"
       />
       <span>
-        仪表盘
+        前往仪表盘
       </span>
     </nuxtlink>
     <div class="text-xs op25 mt-2">

@@ -11,7 +11,7 @@ const props = defineProps<{
   options: Option[]
 }>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const value = computed({
   get() {
@@ -95,10 +95,10 @@ function onItemPointerDown(option: Option) {
     ref="wrapperRef"
     class="r-select-wrapper relative"
   >
-    <div class="w-full">
+    <div class="w-full flex items-center">
       <input
         ref="inputRef"
-        class="r-select-input w-inherit cursor-pointer pl-2 py-1 pr-6 outline-none focus:border-sky-7 border border-neutral-7 rounded text-neutral-0 bg-neutral-8"
+        class="r-select-input w-inherit cursor-pointer pl-2 py-1 pr-8 outline-none focus:border-sky-7 border border-neutral-7 rounded text-neutral-0 bg-neutral-8"
         placeholder="Select"
         readonly
         :value="currentLabel"
@@ -106,10 +106,7 @@ function onItemPointerDown(option: Option) {
         autocomplete="off"
         @focus="focused = true"
       >
-      <Icon
-        class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
-        icon="eva:chevron-down-outline"
-      />
+      <i class="i-tabler-chevron-down absolute right-2 pointer-events-none" />
     </div>
     <div
       v-if="focused"
@@ -128,9 +125,7 @@ function onItemPointerDown(option: Option) {
       >
         {{ getLabel(option) }}
         <div v-if="option === currentOption">
-          <Icon
-            icon="eva:checkmark-outline"
-          />
+          <i class="i-tabler-check w-3 h-3" />
         </div>
       </div>
     </div>

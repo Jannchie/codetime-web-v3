@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const route = useRoute()
 const locale = route.params.locale as string
-const minutes = ref(0)
-if (typeof window !== 'undefined') {
-  const { minutes: m } = await fetchSumMinutes()
-  minutes.value = m
-}
+const data = await fetchSumMinutes()
+const minutes = computed(() => {
+  return data.value?.minutes ?? 0
+})
 const fomater = new Intl.NumberFormat(locale, {
   maximumFractionDigits: 0,
   minimumFractionDigits: 0,
@@ -19,21 +18,25 @@ const fomater = new Intl.NumberFormat(locale, {
     </span>
     <ClientOnly>
       <template #placeholder>
-        <div class="text-6xl op75">
-          <span class="font-bold font-mono">
-            -
-          </span>
+        <div class="text-6xl op75 flex items-end gap-2">
+          <div
+            key="a"
+            class="font-bold font-mono min-w-72 h-60px bg-neutral-8 animate-pulse rounded"
+          />
           <span class="text-xl">
             分钟
           </span>
         </div>
       </template>
-      <div class="text-6xl op75">
-        <span class="font-bold font-mono">
-          {{ fomater.format(minutes / 60 * 997) }}
+      <div class="text-6xl op75 flex items-end gap-2">
+        <span
+          key="b"
+          class="font-bold font-mono"
+        >
+          {{ fomater.format(minutes) }}
         </span>
         <span class="text-xl">
-          小时
+          分钟
         </span>
       </div>
     </ClientOnly>

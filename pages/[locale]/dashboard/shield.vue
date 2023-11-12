@@ -19,10 +19,8 @@ const link = computed(() => {
     color: color.value,
     style: style.value,
   })
-  // return `https://img.shields.io/endpoint?${params.toString()}`
   const url = new URL(`https://img.shields.io/endpoint?${params.toString()}`)
   const res = `${url.toString()}&url=https%3A%2F%2Fapi.codetime.dev%2Fshield%3Fid%3D2%26`
-  // escape(res)
   return res
 })
 
@@ -33,6 +31,9 @@ const htmlClipboard = useClipboard({
 })
 const markdownClipboard = useClipboard({
   source: markdown,
+})
+const linkClipboard = useClipboard({
+  source: link,
 })
 </script>
 
@@ -48,6 +49,7 @@ const markdownClipboard = useClipboard({
       </div>
       <div class="flex items-center justify-center h-32">
         <NuxtImg
+          placeholder
           :src="link"
           class="h-8"
           alt="CodeTime Badge"
@@ -56,9 +58,7 @@ const markdownClipboard = useClipboard({
     </CardBase>
     <CardBase class="flex flex-col gap-2">
       <div class="flex items-center gap-2">
-        <Icon
-          icon="mdi:markdown"
-        />
+        <i class="i-tabler-markdown" />
         <RTextField
           :value="markdown"
           class="text-xs grow-1"
@@ -67,16 +67,12 @@ const markdownClipboard = useClipboard({
           class="text-xs flex items-center gap-2"
           @click="markdownClipboard.copy(markdown)"
         >
-          <Icon
-            icon="mdi:content-copy"
-          />
+          <i class="i-tabler-copy" />
           复制
         </RBtn>
       </div>
       <div class="flex items-center gap-2">
-        <Icon
-          icon="mdi:language-html5"
-        />
+        <i class="i-tabler-code" />
         <RTextField
           :value="html"
           class="text-xs grow-1"
@@ -85,9 +81,21 @@ const markdownClipboard = useClipboard({
           class="text-xs flex items-center gap-2"
           @click="htmlClipboard.copy(html)"
         >
-          <Icon
-            icon="mdi:content-copy"
-          />
+          <i class="i-tabler-copy" />
+          复制
+        </RBtn>
+      </div>
+      <div class="flex items-center gap-2">
+        <i class="i-tabler-link" />
+        <RTextField
+          :value="link"
+          class="text-xs grow-1"
+        />
+        <RBtn
+          class="text-xs flex items-center gap-2"
+          @click="linkClipboard.copy(link)"
+        >
+          <i class="i-tabler-copy" />
           复制
         </RBtn>
       </div>

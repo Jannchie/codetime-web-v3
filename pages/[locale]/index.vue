@@ -44,13 +44,3 @@ definePageMeta({
     </CardBase>
   </div>
 </template>
-
-<style>
-.plot {
-  --plot-background: rgb(23 23 23 / var(--un-bg-opacity));
-  background: rgb(23 23 23 / var(--un-bg-opacity)) !important;
-}
-.y-grid {
-  stroke-dasharray: 2 2;
-}
-</style>
