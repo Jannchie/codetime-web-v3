@@ -14,7 +14,7 @@ export function getDurationData(ms: number): { hour: number; minute: number; sec
   return { hour, minute, second }
 }
 
-export function getDurationString(ms: number): string {
+export function getDurationString(ms: number, format = ['hours', 'minutes', 'seconds']): string {
   const route = useRoute()
   const locale = route.params.locale as string
   const { hour, minute, second } = getDurationData(ms)
@@ -25,7 +25,7 @@ export function getDurationString(ms: number): string {
   ])
   return formatDuration({ hours: hour, minutes: minute, seconds: second }, {
     locale: localeMap.get(locale) ?? localeMap.get('en'),
-    format: ['hours', 'minutes', 'seconds'],
+    format,
   }).replace('hour', 'hr').replace('minute', 'min').replace('second', 'sec')
 }
 

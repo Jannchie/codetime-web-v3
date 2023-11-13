@@ -171,7 +171,7 @@ function toHyperScript(node) {
 
 export default {
   props: {
-    options: Object,
+    options: Object, /** @type {} */
     mark: Object,
     defer: Boolean,
     method: { type: String, default: 'plot' },

@@ -80,7 +80,7 @@ const pData = computed(() => {
   })
   const res = Array.from(dataMap.entries()).map(([key, duration]) => ({
     date: new Date(key),
-    duration,
+    duration: duration as number,
   })).sort((a, b) => b.date.getTime() - a.date.getTime())
   return res
 })
@@ -147,6 +147,7 @@ const options = {
     axis: null,
     tickFormat: Plot.formatWeekday('en'),
     tickSize: 0,
+    insetLeft: -8,
   },
   y: {
     tickSize: 0,
@@ -252,6 +253,7 @@ const options = {
         :data="platformTopData"
       />
     </div>
+    <CumulativeLineChart :data="pData" />
   </DashboardPageContent>
   <DashboardPageContent v-else>
     <CardBase class="p-6 flex gap-2">
