@@ -48,9 +48,9 @@ const user = useUser()
       <NuxtImg
         v-if="user.avatar"
         :src="user.avatar"
-        class="rounded-full w-6 h-6"
+        class="rounded-full w-5 h-5"
       />
-      <span>
+      <span class="text-sm">
         前往仪表盘
       </span>
     </nuxtlink>

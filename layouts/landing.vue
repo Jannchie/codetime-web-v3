@@ -49,11 +49,7 @@ watchEffect(() => {
   >
     <slot />
   </NuxtLayout>
-  <footer class="text-center mt-32 py-4 mt-auto">
-    <div class="text-sm op50">
-      datreks @ {{ new Date().getFullYear() }}
-    </div>
-  </footer>
+  <CodetimeFooter />
 </template>
 
 <style>

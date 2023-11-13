@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
 import * as d3 from 'd3'
 import * as Plot from '@observablehq/plot'
 
@@ -205,7 +204,7 @@ const options = {
   <DashboardPageContent v-if="hasData">
     <CardBase class="p-0!">
       <div class="p-4 flex flex-col">
-        <div class="flex gap-2 children:flex-basis-[200px]">
+        <div class="flex gap-2 children:sm:flex-basis-[200px] flex-wrap children:flex-grow">
           <DashboardDataBody
             title="编程时间/总计"
             :value="getDurationString(totalMinutes)"

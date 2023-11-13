@@ -4,7 +4,7 @@ const router = useRouter()
 const locale = computed(
   () => route.params.locale as string,
 )
-const currentLocale = ref(locale.value)
+const currentLocale = ref(locale.value ?? 'en')
 watchEffect(() => {
   nextTick(() => {
     router.push({

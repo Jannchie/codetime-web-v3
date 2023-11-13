@@ -48,9 +48,11 @@ useHead({
 
 <template>
   <NuxtLayout name="default">
-    <div class="h-84px min-w-full sm:min-w-sm absolute right-0 p-2 z-1">
-      <!-- TODO: Notification -->
-      <CardBase v-if="false">
+    <div
+      v-if="false"
+      class="h-84px min-w-full sm:min-w-sm absolute right-0 p-2 z-1"
+    >
+      <CardBase>
         <div class="flex flex-col gap-1">
           <div class="text-sky-6 font-black flex items-center gap-1.5">
             <i
@@ -91,7 +93,7 @@ useHead({
             {{ user.username }}
           </NuxtLink>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 mt-2">
           <div
             v-for="tab in headerTabs"
             :key="tab.id"
@@ -114,6 +116,7 @@ useHead({
       </div>
     </RHeader>
     <slot />
+    <CodetimeFooter />
   </NuxtLayout>
 </template>
 
