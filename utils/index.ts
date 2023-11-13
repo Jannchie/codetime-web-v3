@@ -1,7 +1,7 @@
 import * as Plot from '@observablehq/plot'
 
-import { formatDuration } from 'date-fns'
-import { enUS, ja, zhCN } from 'date-fns/locale'
+import type { AsyncDataOptions } from 'nuxt/dist/app/composables'
+import type { KeysOf } from 'nuxt/dist/app/composables/asyncData'
 
 export { Plot }
 
@@ -30,12 +30,16 @@ export async function fetchStats(by: string = 'time', limit: number = 60, unit: 
   return await useAPIFetch<{ data: { duration: number; time: string }[] }>(`/stats?${params}`)
 }
 
-export async function useAPIFetch<T>(path: string) {
+export async function useAPIFetch<T>(path: string, options?: AsyncDataOptions<T, T, KeysOf<T>, null>) {
+  const resp = useNuxtData<T>(path)
+  if (resp.data.value) {
+    return resp
+  }
   const apiHost = useRuntimeConfig().public.apiHost
   const _fetch = useRequestFetch()
   return await useAsyncData<T>(path, () => _fetch(`${apiHost}${path}`, {
     credentials: 'include',
-  }))
+  }), options)
 }
 
 export async function fetchUser() {
@@ -56,41 +60,15 @@ export function useUser() {
 export interface TopData {
   field: string
   minutes: number
+  icon?: string
 }
 
-export async function fetchTop(field: string, minutes: number = 0, limit: number = 5) {
+export async function fetchTop(field: string, minutes: number = 0, limit: number = 5, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
   const params = new URLSearchParams({
     field,
     minutes: String(minutes),
     limit: String(limit),
   })
-  const { data } = await useAPIFetch<TopData[]>(`/top?${params}`)
+  const { data } = await useAPIFetch<TopData[]>(`/top?${params}`, options)
   return data
-}
-
-export function getDurationData(ms: number): { hour: number; minute: number; second: number } {
-  const MS_OF_HOUR = 3600000
-  const MS_OF_MINUTE = 60000
-  const MS_OF_SECOND = 1000
-  const hour = Math.floor(ms / MS_OF_HOUR)
-  ms %= MS_OF_HOUR
-  const minute = Math.floor(ms / MS_OF_MINUTE)
-  ms %= MS_OF_MINUTE
-  const second = Math.floor(ms / MS_OF_SECOND)
-  return { hour, minute, second }
-}
-
-export function getDurationString(ms: number): string {
-  const route = useRoute()
-  const locale = route.params.locale as string
-  const { hour, minute, second } = getDurationData(ms)
-  const localeMap = new Map<string, Locale>([
-    ['en', enUS],
-    ['zh-CN', zhCN],
-    ['ja', ja],
-  ])
-  return formatDuration({ hours: hour, minutes: minute, seconds: second }, {
-    locale: localeMap.get(locale) ?? localeMap.get('en'),
-    format: ['hours', 'minutes', 'seconds'],
-  }).replace('hour', 'hr').replace('minute', 'min').replace('second', 'sec')
 }

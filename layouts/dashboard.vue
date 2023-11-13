@@ -31,7 +31,7 @@ const currentTab = computed(() => {
   })
   return ctab
 })
-
+const user = await fetchUser()
 useHead({
   htmlAttrs: {
     lang: locale.value,
@@ -48,22 +48,49 @@ useHead({
 
 <template>
   <NuxtLayout name="default">
+    <div class="h-84px min-w-full sm:min-w-sm absolute right-0 p-2 z-1">
+      <!-- TODO: Notification -->
+      <CardBase v-if="false">
+        <div class="flex flex-col gap-1">
+          <div class="text-sky-6 font-black flex items-center gap-1.5">
+            <i
+              class="w-5 h-5 text-sky-6 i-mdi:alert-circle-outline"
+            />
+            title
+          </div>
+          <div class="text-sm">
+            desc
+          </div>
+        </div>
+      </CardBase>
+    </div>
     <RHeader class="px-2 pt-2">
       <div class="flex flex-col gap-2 pt-2 px-2">
-        <NuxtLink
+        <div
           class="flex gap-2 items-center"
-          :to="`/${locale}`"
         >
-          <NuxtImg
-            alt="Code Time"
-            src="/icon.svg"
-            width="26"
-            class="ml-2 mr-3"
-          />
-          <div class="header-title">
-            CodeTime
-          </div>
-        </NuxtLink>
+          <NuxtLink
+            :to="`/${locale}`"
+          >
+            <NuxtImg
+              alt="Code Time"
+              src="/icon.svg"
+              width="26"
+              class="ml-2 mr-3"
+            />
+          </NuxtLink>
+          <NuxtLink
+            v-if="user"
+            class="flex gap-3 text-sm items-center"
+            :to="`/${locale}/dashboard`"
+          >
+            <NuxtImg
+              :src="user.avatar"
+              class="rounded-full w-5 h-5"
+            />
+            {{ user.username }}
+          </NuxtLink>
+        </div>
         <div class="flex gap-2">
           <div
             v-for="tab in headerTabs"

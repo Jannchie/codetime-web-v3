@@ -33,7 +33,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <RHeader class="py-2 px-4">
+  <RHeader class="px-4 py-3">
     <NuxtImg
       alt="Code Time"
       src="/icon.svg"

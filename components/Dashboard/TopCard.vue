@@ -35,9 +35,14 @@ const maxMinutes = computed(() => {
             class="flex op75 justify-between gap-2 text-sm"
           >
             <div class="overflow-hidden truncate text-nowrap">
+              <i
+                v-if="d.icon"
+                :class="d.icon"
+                class="mr-1 inline-block mb-0.5"
+              />
               {{ d.field }}
             </div>
-            <div>
+            <div class="flex-shrink-0">
               {{ getDurationString(d.minutes * 60 * 1000) }}
             </div>
           </div>

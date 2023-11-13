@@ -13,13 +13,40 @@ const hasData = computed(() => {
   }
   return (allData.data.value?.data.length ?? 0) > 0
 })
+
 let languageTopData: globalThis.Ref<globalThis.TopData[] | null>
 let projectTopData: globalThis.Ref<globalThis.TopData[] | null>
 let platformTopData: globalThis.Ref<globalThis.TopData[] | null>
 if (hasData) {
-  languageTopData = await fetchTop('language', 1440, 5)
+  languageTopData = (await fetchTop('language', 1440, 5, {
+    transform(data) {
+      return data.map((d) => {
+        d.icon = iconMap.get(d.field)
+        d.field = getLanguageName(d.field)
+        return d
+      })
+    },
+  }))
   projectTopData = await fetchTop('project', 1440, 5)
-  platformTopData = await fetchTop('platform', 1440, 5)
+  platformTopData = await fetchTop('platform', 1440, 5, {
+    transform(data) {
+      return data.map((d) => {
+        if (d.field.toLocaleLowerCase().includes('mac')) {
+          d.icon = 'i-mdi-apple'
+        }
+        else if (d.field.toLocaleLowerCase().includes('window')) {
+          d.icon = 'i-mdi-microsoft-windows'
+        }
+        else if (d.field.toLocaleLowerCase().includes('linux')) {
+          d.icon = 'i-codicon-terminal-linux'
+        }
+        else {
+          d.icon = 'i-mdi-desktop-classic'
+        }
+        return d
+      })
+    },
+  })
 }
 const totalMinutes = computed(() => {
   if (allData.data === null) {
@@ -38,20 +65,42 @@ const todayMinutes = computed(() => {
   return todayData?.duration ?? 0
 })
 
+const yearStartDate = d3.utcDay.offset(new Date(), -365)
+const dateListPastYear = d3.utcDay.range(yearStartDate, new Date())
+const dataMap = new Map<string, number | string>()
+dateListPastYear.forEach((d) => {
+  dataMap.set(d.toISOString().slice(0, 10), 0)
+})
+
+const pData = computed(() => {
+  const data = allData.data.value?.data ?? []
+  data.forEach((d) => {
+    const date = new Date(d.time)
+    const key = date.toISOString().slice(0, 10)
+    dataMap.set(key, d.duration)
+  })
+  const res = Array.from(dataMap.entries()).map(([key, duration]) => ({
+    date: new Date(key),
+    duration,
+  })).sort((a, b) => b.date.getTime() - a.date.getTime())
+  return res
+})
+
+const yearData = computed(() => {
+  const data = pData.value
+  const res = data.filter((d) => {
+    return d.date.getTime() >= yearStartDate.getTime()
+  })
+  return res
+})
+
 const currentStreak = computed(() => {
   if (allData.data === null) {
     return 0
   }
-  const data = allData.data.value?.data ?? []
-  const today = new Date()
-  const todayString = today.toISOString().slice(0, 10)
-  const todayData = data.find(d => d.time.slice(0, 10) === todayString)
-  if (todayData === undefined) {
-    return 0
-  }
   let streak = 0
-  for (let i = data.length - 1; i >= 0; i--) {
-    const d = data[i]
+  for (let i = 0; i < pData.value.length; i++) {
+    const d = pData.value[i]
     if (d.duration === 0) {
       break
     }
@@ -60,23 +109,22 @@ const currentStreak = computed(() => {
   return streak
 })
 
-const yearData = computed(() => {
-  const dateListPastYear = d3.utcDay.range(d3.utcDay.offset(new Date(), -365), new Date())
-  const dataMap = new Map<string, number | string>()
-  dateListPastYear.forEach((d) => {
-    dataMap.set(d.toISOString().slice(0, 10), 0)
-  })
-  const data = allData.data.value?.data ?? []
-  data.forEach((d) => {
-    const date = new Date(d.time)
-    const key = date.toISOString().slice(0, 10)
-    dataMap.set(key, d.duration)
-  })
-  const res = Array.from(dataMap.entries()).map(([key, value]) => ({
-    date: new Date(key),
-    value,
-  }))
-  return res.reverse()
+const maxStreak = computed(() => {
+  if (allData.data === null) {
+    return 0
+  }
+  let streak = 0
+  let maxStreak = 0
+  for (let i = 0; i < pData.value.length; i++) {
+    const d = pData.value[i]
+    if (d.duration === 0) {
+      maxStreak = Math.max(maxStreak, streak)
+      streak = 0
+      continue
+    }
+    streak++
+  }
+  return maxStreak
 })
 
 const latestWeekDate = computed(() => {
@@ -86,7 +134,8 @@ const latestWeekDate = computed(() => {
 function getWeekDifference(date1: Date, date2: Date): number {
   const time1 = date1.getTime()
   const time2 = date2.getTime()
-  const timeDiff = Math.abs(time2 - time1)
+  const day = date2.getUTCDay()
+  const timeDiff = Math.abs(Math.abs(time2 - time1) + day * 24 * 60 * 60 * 1000)
   const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000
   const weekDiff = Math.floor(timeDiff / oneWeekInMillis)
   return weekDiff
@@ -109,12 +158,12 @@ const options = {
       if (d === 0) {
         return '#0004'
       }
-      return d3.scaleOrdinal([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#38bdf822', '#38bdf8')))(d)
+      return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#38bdf822', '#38bdf8')))(d)
     },
   },
   marks: [
     Plot.cell(yearData.value, {
-      fill: 'value',
+      fill: 'duration',
       x: (d) => {
         const deltaWeek = getWeekDifference(d.date, latestWeekDate.value)
         return deltaWeek
@@ -122,12 +171,17 @@ const options = {
       y: d => d.date.getUTCDay(),
       tip: {
         channels: {
-          date: d => d.date.toISOString().slice(0, 10),
-          value: (d) => {
-            return getDurationString(d.value)
+          date: {
+            label: '日期',
+            value: d => d.date.toISOString().slice(0, 10),
+          },
+          duration: {
+            label: '时间',
+            value: d => getDurationString(d.duration),
           },
         },
         format: {
+          fill: false,
           x: false,
           y: false,
         },
@@ -151,18 +205,22 @@ const options = {
   <DashboardPageContent v-if="hasData">
     <CardBase class="p-0!">
       <div class="p-4 flex flex-col">
-        <div class="flex gap-2">
+        <div class="flex gap-2 children:flex-basis-[200px]">
           <DashboardDataBody
-            title="总编程时间"
+            title="编程时间/总计"
             :value="getDurationString(totalMinutes)"
           />
           <DashboardDataBody
-            title="今日编程时间"
+            title="编程时间/今日"
             :value="getDurationString(todayMinutes)"
           />
           <DashboardDataBody
-            title="当前连续天数"
-            :value="currentStreak"
+            title="连续天数/当前"
+            :value="formateDays(currentStreak)"
+          />
+          <DashboardDataBody
+            title="连续天数/最大"
+            :value="formateDays(maxStreak)"
           />
         </div>
         <div class="overflow-x-auto">
@@ -177,7 +235,7 @@ const options = {
       </div>
     </CardBase>
     <div
-      class="flex gap-2 flex-wrap children:flex-basis-[100%] sm:children:flex-basis-[calc(100%/3-(0.5rem)*2/3)] sm:children:max-w-[calc(100%/3-(0.5rem)*2/3)]"
+      class="flex gap-2 flex-wrap flex-basis-[100%] flex-col sm:flex-row sm:children:flex-basis-[calc(100%/3-(0.5rem)*2/3)] sm:children:max-w-[calc(100%/3-(0.5rem)*2/3)]"
     >
       <DashboardTopCard
         icon="i-tabler-braces"
@@ -197,11 +255,10 @@ const options = {
     </div>
   </DashboardPageContent>
   <DashboardPageContent v-else>
-    <CardBase class="p-6 class flex gap-2">
+    <CardBase class="p-6 flex gap-2">
       <div>
-        <Icon
-          icon="mdi:alert-circle-outline"
-          class="w-6 h-6 text-sky-6"
+        <i
+          class="w-6 h-6 text-sky-6 i-mdi:alert-circle-outline"
         />
       </div>
       <div class="flex flex-col gap-2">
