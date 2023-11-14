@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as Plot from '@observablehq/plot'
 import * as d3 from 'd3'
+import type { PlotOptions } from '@observablehq/plot'
 
 const props = defineProps<{
   data: MaybeRef<{
@@ -9,11 +10,14 @@ const props = defineProps<{
   }[]>
 }>()
 
-const data = computed(() => unref(props.data).filter(d => d.date > d3.utcDay.offset(new Date(), -365)))
-const options = {
+const data = computed(() => unref(props.data))
+const options: PlotOptions = {
   x: {
     interval: 'day',
   },
+  padding: 0,
+  marginLeft: 8,
+  marginRight: 22,
   width: 1110,
   height: 300,
   y: {
@@ -26,14 +30,13 @@ const options = {
   marks: [
     Plot.dotY(data.value, { x: 'date', y: 'duration', fill: '#333' }),
     Plot.lineY(data.value, Plot.windowY({ k: 7, x: 'date', y: 'duration', stroke: 'rgb(2 132 199)' })),
-    Plot.linearRegressionY(data.value, { x: 'date', y: 'duration', stroke: '#c2410c', ci: 0.99 }),
+    Plot.linearRegressionY(data.value, { x: 'date', y: 'duration', stroke: '#c2410c' }),
   ],
-
 }
 </script>
 
 <template>
-  <CardBase class="p4">
+  <CardBase class="p-4">
     <div>
       <div class="text-lg flex items-center gap-2">
         <i class="i-tabler-calendar-event" />
@@ -42,12 +45,6 @@ const options = {
         </div>
       </div>
     </div>
-    <div class="flex-col overflow-y-auto">
-      <div class="w-1110px">
-        <PoltRenderer
-          :options="options"
-        />
-      </div>
-    </div>
+    <PoltChart :options="options" />
   </CardBase>
 </template>

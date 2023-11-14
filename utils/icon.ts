@@ -2792,13 +2792,13 @@ export const extensions = {
       light: true,
       format: FileFormat.svg,
     },
-    {
-      icon: 'js_official',
-      extensions: [],
-      languages: [languages.javascript],
-      format: FileFormat.svg,
-      disabled: true,
-    },
+    // {
+    //   icon: 'js_official',
+    //   extensions: [],
+    //   languages: [languages.javascript],
+    //   format: FileFormat.svg,
+    //   disabled: true,
+    // },
     {
       icon: 'jsbeautify',
       extensions: [

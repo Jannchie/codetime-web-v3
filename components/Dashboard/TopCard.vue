@@ -16,7 +16,7 @@ const maxMinutes = computed(() => {
 </script>
 
 <template>
-  <CardBase class="p-4 max-w-[calc(100vw-0.5rem)]">
+  <CardBase class="max-w-[calc(100vw-0.5rem)]">
     <div class="flex flex-col gap-2">
       <div class="text-lg flex items-center gap-2">
         <i :class="icon" />
