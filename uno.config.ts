@@ -15,5 +15,11 @@ export default defineConfig({
   ],
   safelist: [
     ...iconMap.values(),
+    ...['i-mdi-apple', 'i-mdi-microsoft-windows', 'i-codicon-terminal-linux', 'i-mdi-desktop-classic'],
   ],
+  content: {
+    pipeline: {
+      include: ['./components/**/*.vue', './layouts/**/*.vue', './pages/**/*.vue'],
+    },
+  },
 })
