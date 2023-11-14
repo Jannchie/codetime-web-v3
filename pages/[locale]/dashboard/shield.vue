@@ -31,19 +31,7 @@ const link = computed(() => {
     description="在你的项目中用简明、一致、清晰的徽章展示你的编程时间。"
   />
   <DashboardPageContent>
-    <CardBase class="p-6">
-      <div class="text-xl mb-4">
-        预览
-      </div>
-      <div class="flex items-center justify-center h-32">
-        <NuxtImg
-          placeholder
-          :src="link"
-          class="h-8"
-          alt="CodeTime Badge"
-        />
-      </div>
-    </CardBase>
+    <ShieldPreviewCard :link="link" />
     <ShieldCopyCard :link="link" />
   </DashboardPageContent>
 </template>
