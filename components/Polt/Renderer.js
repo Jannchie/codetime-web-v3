@@ -141,11 +141,14 @@ class Element {
     return h(
       this.tagName,
       this.attributes,
-      this.children.map(c => c.toHyperScript()),
+      this.children.sort((d) => {
+        return d.tagName === 'style' ? -1 : 1
+      }).map((c) => {
+        return c.toHyperScript()
+      }),
     )
   }
 }
-
 class TextNode {
   constructor(ownerDocument, nodeValue) {
     this.ownerDocument = ownerDocument
@@ -181,7 +184,7 @@ export default {
     const options = {
       ...(method === 'plot' && {
         marks: this.mark == null ? [] : [this.mark],
-        width: 688, // better default for VitePress
+        width: 1110, // better default for Codetime
       }),
       ...this.options,
       className: 'plot',
@@ -226,7 +229,7 @@ export default {
           }
         }
       }
-      const { height = 400 } = this.options
+      const { height = 300 } = this.options
       return withDirectives(
         h(
           'span',
@@ -235,7 +238,7 @@ export default {
                 h('div', {
                   style: {
                     maxWidth: '100%',
-                    width: `688px`,
+                    width: `1110px`,
                     aspectRatio: `688 / ${height}`,
                   },
                 }),

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
-
 definePageMeta({
   layout: 'dashboard',
 })
@@ -20,8 +18,8 @@ const link = computed(() => {
 
 <template>
   <DashboardPageTitle
-    title="徽章"
-    description="在你的项目中用简明、一致、清晰的徽章展示你的编程时间。"
+    :title="t.dashboard.pageHeader.title.shield"
+    :description="t.dashboard.pageHeader.description.shield"
   />
   <DashboardPageContent>
     <CardBase class="flex children:flex-grow-1 gap-2">
@@ -34,21 +32,21 @@ const link = computed(() => {
           { label: 'For the Badge', id: 'for-the-badge' },
           { label: 'Plastic', id: 'plastic' },
         ]"
-        placeholder="样式"
+        :placeholder="t.dashboard.shield.placeholder.style"
       />
       <RTextField
         v-if="style !== 'social'"
         v-model="color"
-        placeholder="颜色"
+        :placeholder="t.dashboard.shield.placeholder.color"
       />
       <RTextField
         v-model="project"
-        placeholder="项目"
+        :placeholder="t.dashboard.shield.placeholder.project"
       />
       <RTextField
         v-model="days"
-        placeholder="天数"
         type="number"
+        :placeholder="t.dashboard.shield.placeholder.days"
       />
     </CardBase>
     <ShieldPreviewCard :link="link" />

@@ -12,10 +12,7 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 
-const route = useRoute()
-const locale = computed(() => {
-  return route.params.locale as string
-})
+const locale = useLocale()
 watchEffect(() => {
   useHead({
     htmlAttrs: {

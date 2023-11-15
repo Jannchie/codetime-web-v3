@@ -24,12 +24,12 @@ const options: PlotOptions = {
     grid: true,
     nice: true,
     axis: 'right',
-    label: '时间（小时）',
+    label: t.value.plot.label.timeHour,
     tickFormat: (d: number) => d3.format(',d')(d / 60 / 60 / 1000),
   },
   marks: [
     Plot.dotY(data.value, { x: 'date', y: 'duration', fill: '#333' }),
-    Plot.lineY(data.value, Plot.windowY({ k: 7, x: 'date', y: 'duration', stroke: 'rgb(2 132 199)' })),
+    Plot.lineY(data.value, Plot.windowY({ k: 7, x: 'date', y: 'duration', stroke: 'rgb(2 132 199)', curve: 'natural' })),
     Plot.linearRegressionY(data.value, { x: 'date', y: 'duration', stroke: '#c2410c' }),
   ],
 }
@@ -41,7 +41,7 @@ const options: PlotOptions = {
       <div class="text-lg flex items-center gap-2">
         <i class="i-tabler-calendar-event" />
         <div>
-          编程时间趋势
+          {{ t.dashboard.overview.codetimeTrendTitle }}
         </div>
       </div>
     </div>

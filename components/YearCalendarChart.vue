@@ -50,11 +50,11 @@ const options = {
       tip: {
         channels: {
           date: {
-            label: '日期',
+            label: t.value.plot.label.date,
             value: d => d.date.toISOString().slice(0, 10),
           },
           duration: {
-            label: '时间',
+            label: t.value.plot.label.duration,
             value: d => getDurationString(d.duration),
           },
         },
@@ -64,7 +64,6 @@ const options = {
           y: false,
         },
         stroke: '#404040',
-        strokeWidth: 1,
       },
       rx: 2,
       ry: 2,

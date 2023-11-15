@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
-import * as Plot from '@observablehq/plot'
 
 definePageMeta({
   layout: 'dashboard',
@@ -9,6 +8,7 @@ definePageMeta({
 const days = ref(28)
 
 const allData = await fetchStats('time', 525600, 'days')
+const allLanguageData = await fetchStats('language', days.value, 'days')
 const hasData = computed(() => {
   if (allData.data === null) {
     return false
@@ -17,30 +17,11 @@ const hasData = computed(() => {
 })
 
 const [languageTopData, projectTopData, platformTopData] = await useAllTopData(hasData, days)
-
 const totalMinutes = useTotalMinutes(allData.data)
 const todayMinutes = useTodayMinutes(allData.data)
-const minDateString = d3.min(allData.data.value?.data ?? [], d => d.time)
-const minDateDate = minDateString ? new Date(minDateString) : new Date()
-const dateRange = d3.utcDay.range(minDateDate, new Date())
-const dataMap = new Map<string, number | string>()
-dateRange.forEach((d) => {
-  dataMap.set(d.toISOString().slice(0, 10), 0)
-})
 
-const pAllData = computed(() => {
-  const data = allData.data.value?.data ?? []
-  data.forEach((d) => {
-    const date = new Date(d.time)
-    const key = date.toISOString().slice(0, 10)
-    dataMap.set(key, d.duration)
-  })
-  const res = Array.from(dataMap.entries()).map(([key, duration]) => ({
-    date: new Date(key),
-    duration: duration as number,
-  })).sort((a, b) => b.date.getTime() - a.date.getTime())
-  return res
-})
+const pAllData = useProcessedData(allData.data)
+const pAllLangData = useProcessedData(allLanguageData.data)
 
 const filtedData = computed(() => {
   const data = pAllData.value
@@ -52,31 +33,32 @@ const filtedData = computed(() => {
 
 const currentStreak = useCurrentStreak(pAllData)
 const maxStreak = useMaxStreak(pAllData)
+const NoDataBody = t.value.dashboard.overview.noData.notice.body
 </script>
 
 <template>
   <DashboardPageTitle
-    title="总览"
-    description="查看您的所有 CodeTime 数据。"
+    :title="t.dashboard.pageHeader.title.overview"
+    :description="t.dashboard.pageHeader.description.overview"
   />
   <DashboardPageContent v-if="hasData">
     <CardBase class="p-0!">
       <div class="p-4 flex flex-col">
         <div class="flex gap-2 children:sm:flex-basis-[200px] flex-wrap children:flex-grow">
           <DashboardDataBody
-            title="编程时间/总计"
+            :title="t.dashboard.overview.statistic.timeTotal"
             :value="getDurationString(totalMinutes)"
           />
           <DashboardDataBody
-            title="编程时间/今日"
+            :title="t.dashboard.overview.statistic.timeToday"
             :value="getDurationString(todayMinutes)"
           />
           <DashboardDataBody
-            title="连续天数/当前"
+            :title="t.dashboard.overview.statistic.currentStreak"
             :value="formateDays(currentStreak)"
           />
           <DashboardDataBody
-            title="连续天数/最大"
+            :title="t.dashboard.overview.statistic.longestStreak"
             :value="formateDays(maxStreak)"
           />
         </div>
@@ -89,21 +71,93 @@ const maxStreak = useMaxStreak(pAllData)
     >
       <DashboardTopCard
         icon="i-tabler-braces"
-        title="语言"
+        :title="t.dashboard.overview.top.language"
         :data="languageTopData"
       />
       <DashboardTopCard
         icon="i-tabler-app-window"
-        title="项目"
+        :title="t.dashboard.overview.top.project"
         :data="projectTopData"
       />
       <DashboardTopCard
         icon="i-tabler-terminal"
-        title="平台"
+        :title="t.dashboard.overview.top.platform"
         :data="platformTopData"
       />
     </div>
     <CumulativeLineChart :data="filtedData" />
+    <CardBase>
+      <!-- <div>
+        {{ pAllLangData.reduce((p, c) => {
+          p.add(c.by)
+          return p
+        }, new Set()) }}
+      </div> -->
+      <div>
+        <div class="text-lg flex items-center gap-2">
+          <i class="i-carbon-chart-line-data" />
+          <div>
+            {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
+          </div>
+        </div>
+      </div>
+      <PoltChart
+        :options="{
+          color: {
+            scheme: 'Tableau10',
+          },
+          y: {
+            grid: true,
+            nice: true,
+            axis: 'right',
+            label: t.plot.label.timeHour,
+            tickFormat: (d: number) => d3.format(',d')(d / 60 / 60 / 1000),
+          },
+          width: 1110,
+          height: 300,
+          marks: [
+            Plot.dot(pAllLangData, Plot.pointer({
+              x: 'date',
+              y: 'duration',
+              interval: 'day',
+              opacity: 0.5,
+              fill: 'by',
+              marker: 'circle',
+              r: 8,
+              tip: {
+                stroke: '#404040',
+                channels: {
+                  by: {
+                    label: t.plot.label.language,
+                    value: d => getLanguageName(d.by),
+                  },
+                  duration: {
+                    label: t.plot.label.duration,
+                    value: d => getDurationString(d.duration),
+                  },
+                  date: {
+                    label: t.plot.label.date,
+                    value: d => d.date.toISOString().slice(0, 10),
+                  },
+                },
+                format: {
+                  fill: false,
+                  x: false,
+                  y: false,
+                },
+              },
+            })),
+            Plot.line(pAllLangData, {
+              x: 'date',
+              y: 'duration',
+              stroke: 'by',
+              marker: 'circle',
+              curve: 'catmull-rom-open',
+            }),
+          ],
+        }"
+      />
+    </CardBase>
   </DashboardPageContent>
   <DashboardPageContent v-else>
     <CardBase class="p-6 flex gap-2">
@@ -114,22 +168,9 @@ const maxStreak = useMaxStreak(pAllData)
       </div>
       <div class="flex flex-col gap-2">
         <div class="text-sky-6 font-black">
-          还没有数据
+          {{ t.dashboard.overview.noData.notice.title }}
         </div>
-        <div class="text-sm">
-          <span class="op50">
-            目前，我们尚未收到您的编码时间记录。我们的应用程序依赖于代码编辑器或集成开发环境（例如 VSCode、JetBrains IDE ）的插件。为了确保正常运作，请您前往
-          </span>
-          <NuxtLink
-            to="dashboard/settings"
-            class="text-sky-6"
-          >
-            [ 设置 ]
-          </NuxtLink>
-          <span class="op50">
-            页面并在您所使用的支持插件的代码编辑器中进行相应配置。感谢您的合作。
-          </span>
-        </div>
+        <NoDataBody />
       </div>
     </CardBase>
   </DashboardPageContent>

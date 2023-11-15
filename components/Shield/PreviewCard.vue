@@ -7,7 +7,7 @@ defineProps<{
 <template>
   <CardBase class="p-6">
     <div class="text-xl mb-4">
-      预览
+      {{ t.dashboard.shield.preview.title }}
     </div>
     <div class="flex items-center justify-center h-32">
       <NuxtImg

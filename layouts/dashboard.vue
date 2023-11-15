@@ -16,21 +16,8 @@ useSeoMeta({
   twitterImage: '/icon.png',
   twitterCard: 'summary',
 })
-const route = useRoute()
-const locale = computed(() => {
-  return route.params.locale as string
-})
-
-const currentPath = computed(() => {
-  return route.path
-})
-const currentTab = computed(() => {
-  const normalizedCurrentPath = currentPath.value.replace(/\/$/, '')
-  const ctab = headerTabs.value.find((tab) => {
-    return `/${locale.value}${tab.path}` === normalizedCurrentPath
-  })
-  return ctab
-})
+const locale = useLocale()
+const currentTab = useCurrentTab(headerTabs)
 const user = await fetchUser()
 useHead({
   htmlAttrs: {

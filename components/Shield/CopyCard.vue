@@ -30,7 +30,7 @@ const linkClipboard = useClipboard({
         @click="markdownClipboard.copy(markdown)"
       >
         <i class="i-tabler-copy" />
-        复制
+        {{ t.button.copy }}
       </RBtn>
     </div>
     <div class="flex items-center gap-2">
@@ -44,7 +44,7 @@ const linkClipboard = useClipboard({
         @click="htmlClipboard.copy(html)"
       >
         <i class="i-tabler-copy" />
-        复制
+        {{ t.button.copy }}
       </RBtn>
     </div>
     <div class="flex items-center gap-2">
@@ -58,7 +58,7 @@ const linkClipboard = useClipboard({
         @click="linkClipboard.copy(link)"
       >
         <i class="i-tabler-copy" />
-        复制
+        {{ t.button.copy }}
       </RBtn>
     </div>
   </CardBase>

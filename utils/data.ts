@@ -1,3 +1,4 @@
+import * as d3 from 'd3'
 import type { TopData } from '.'
 
 export function useMaxStreak(data: Ref<{
@@ -121,4 +122,57 @@ export async function useAllTopData(hasData: MaybeRef<boolean>, days: MaybeRef<n
     }
   }
   return [languageTopData, projectTopData, platformTopData]
+}
+
+export function useProcessedData(data: Ref<{
+  data: {
+    duration: number
+    time: string
+    by?: string | undefined
+  }[]
+} | null>) {
+  return computed(() => {
+    const differentBy = new Set<string>()
+    data.value?.data.forEach((d) => {
+      differentBy.add(d.by ?? 'unknown')
+    })
+
+    // get sum duration for each by
+    const sumDurationBy = new Map<string, number>()
+    data.value?.data.forEach((d) => {
+      const duration = sumDurationBy.get(d.by ?? 'unknown') ?? 0
+      sumDurationBy.set(d.by ?? 'unknown', duration + d.duration)
+    })
+
+    // get top by
+    const sortedBy = Array.from(sumDurationBy.entries()).sort((a, b) => b[1] - a[1])
+    const topBy = sortedBy.slice(0, 3).map(d => d[0])
+    const dataWithOther = data.value?.data.map((d) => {
+      if (!topBy.includes(d.by ?? 'unknown')) {
+        d.by = 'other'
+      }
+      return d
+    }) ?? []
+    const minDateString = d3.min(data.value?.data ?? [], d => d.time)
+    const minDateDate = minDateString ? new Date(minDateString) : new Date()
+    const dateRange = d3.utcDay.range(minDateDate, new Date())
+    const dataMap = new Map<string, number>()
+    dateRange.forEach((d) => {
+      topBy.forEach((by) => {
+        const key: string = [d.toISOString().slice(0, 10), by].join(',')
+        dataMap.set(key, 0)
+      })
+    })
+    dataWithOther.forEach((d) => {
+      const date = new Date(d.time)
+      const key = [date.toISOString().slice(0, 10), d.by ?? 'unknown'].join(',')
+      dataMap.set(key, d.duration)
+    })
+    const res = Array.from(dataMap.entries()).map(([keyRaw, data]) => {
+      const key = keyRaw.split(',')
+      return { date: new Date(key[0]), duration: data, by: key[1] }
+    })
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+    return res
+  })
 }

@@ -35,7 +35,8 @@ const user = useUser()
             icon="eva:github-outline"
           />
           <span>
-            使用 Github 登录
+            {{ t.landing.loginWithGithub }}
+            <!-- 使用 Github 登录 -->
           </span>
         </div>
       </NuxtLink>
@@ -51,11 +52,12 @@ const user = useUser()
         class="rounded-full w-5 h-5"
       />
       <span class="text-sm">
-        前往仪表盘
+        {{ t.landing.toDashboard }}
       </span>
     </nuxtlink>
     <div class="text-xs op25 mt-2">
-      目前完全免费，无需信用卡
+      {{ t.landing.freeMessage }}
+      <!-- 目前完全免费，无需信用卡 -->
     </div>
   </div>
 </template>

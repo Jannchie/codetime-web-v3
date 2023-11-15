@@ -24,41 +24,32 @@ const maxMinutes = computed(() => {
           {{ title }}
         </div>
       </div>
-      <template
-        v-if="data !== null"
+      <div
+        v-for="d in data"
+        :key="d.field"
       >
         <div
-          v-for="d in data"
-          :key="d.field"
+          class="flex op75 justify-between gap-2 text-sm cursor-pointer"
         >
-          <div
-            class="flex op75 justify-between gap-2 text-sm"
-          >
-            <div class="overflow-hidden truncate text-nowrap">
-              <i
-                v-if="d.icon"
-                :class="d.icon"
-                class="mr-1 inline-block mb-0.5"
-              />
-              {{ d.field }}
-            </div>
-            <div class="flex-shrink-0">
-              {{ getDurationString(d.minutes * 60 * 1000) }}
-            </div>
-          </div>
-          <div class="h-0.5 bg-neutral-8">
-            <div
-              class="h-full bg-sky-7"
-              :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
+          <div class="overflow-hidden truncate text-nowrap">
+            <i
+              v-if="d.icon"
+              :class="d.icon"
+              class="mr-1 inline-block mb-0.5"
             />
+            {{ d.field }}
+          </div>
+          <div class="flex-shrink-0">
+            {{ getDurationString(d.minutes * 60 * 1000) }}
           </div>
         </div>
-      </template>
-      <template
-        v-else
-      >
-        Loading...
-      </template>
+        <div class="h-0.5 my-0.5 bg-neutral-8 rounded-xl overflow-hidden">
+          <div
+            class="h-full bg-sky-7"
+            :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
+          />
+        </div>
+      </div>
     </div>
   </CardBase>
 </template>

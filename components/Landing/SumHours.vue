@@ -1,20 +1,19 @@
 <script setup lang="ts">
-const route = useRoute()
-const locale = route.params.locale as string
+const locale = useLocale()
 const data = await fetchSumMinutes()
 const minutes = computed(() => {
   return data.value?.minutes ?? 0
 })
-const fomater = new Intl.NumberFormat(locale, {
+const fomater = computed(() => new Intl.NumberFormat(locale.value, {
   maximumFractionDigits: 0,
   minimumFractionDigits: 0,
-})
+}))
 </script>
 
 <template>
   <div class="flex flex-col items-center">
     <span class="op50">
-      已统计编程时间
+      {{ t.landing.alreadyStatistical }}
     </span>
     <ClientOnly>
       <template #placeholder>
@@ -24,7 +23,7 @@ const fomater = new Intl.NumberFormat(locale, {
             class="font-bold font-mono min-w-72 h-60px bg-neutral-8 animate-pulse rounded"
           />
           <span class="text-xl">
-            分钟
+            {{ t.landing.minutes }}
           </span>
         </div>
       </template>
@@ -36,7 +35,7 @@ const fomater = new Intl.NumberFormat(locale, {
           {{ fomater.format(minutes) }}
         </span>
         <span class="text-xl">
-          分钟
+          {{ t.landing.minutes }}
         </span>
       </div>
     </ClientOnly>

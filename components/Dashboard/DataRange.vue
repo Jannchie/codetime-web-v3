@@ -7,9 +7,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="mt-8 ml-4 sm:ml-7 mb-2">
+  <div class="mt-8 ml-4 mb-2">
     <div>
-      过去 {{ days }} 天
+      {{ t.dashboard.overview.dataRange.title(days) }}
     </div>
     <div class="text-sm op50">
       <span>

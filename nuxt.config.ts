@@ -11,14 +11,24 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+  imports: {
+    dirs: [
+      'composables/**',
+      'utils/**',
+      'i18n/**',
+    ],
+  },
   modules: [
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/robots',
     ['@nuxtjs/google-fonts', {
       preload: true,
+      download: true,
       families: {
         'Share Tech Mono': true,
+        'Noto Sans JP': true,
+        'Noto Sans SC': true,
       },
     }],
     '@nuxt/image',
