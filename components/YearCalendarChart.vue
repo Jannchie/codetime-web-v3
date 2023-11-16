@@ -28,7 +28,6 @@ const options = {
   x: {
     axis: null,
     tickSize: 0,
-    insetLeft: -8,
   },
   y: {
     tickSize: 0,

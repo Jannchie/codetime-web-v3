@@ -9,6 +9,7 @@ const days = ref(28)
 
 const allData = await fetchStats('time', 525600, 'days')
 const allLanguageData = await fetchStats('language', days.value, 'days')
+const allProjectData = await fetchStats('project', days.value, 'days')
 const hasData = computed(() => {
   if (allData.data === null) {
     return false
@@ -22,6 +23,7 @@ const todayMinutes = useTodayMinutes(allData.data)
 
 const pAllData = useProcessedData(allData.data)
 const pAllLangData = useProcessedData(allLanguageData.data)
+const pAllProjectData = useProcessedData(allProjectData.data)
 
 const filtedData = computed(() => {
   const data = pAllData.value
@@ -88,12 +90,6 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     </div>
     <CumulativeLineChart :data="filtedData" />
     <CardBase>
-      <!-- <div>
-        {{ pAllLangData.reduce((p, c) => {
-          p.add(c.by)
-          return p
-        }, new Set()) }}
-      </div> -->
       <div>
         <div class="text-lg flex items-center gap-2">
           <i class="i-carbon-chart-line-data" />
@@ -102,61 +98,23 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
           </div>
         </div>
       </div>
-      <PoltChart
-        :options="{
-          color: {
-            scheme: 'Tableau10',
-          },
-          y: {
-            grid: true,
-            nice: true,
-            axis: 'right',
-            label: t.plot.label.timeHour,
-            tickFormat: (d: number) => d3.format(',d')(d / 60 / 60 / 1000),
-          },
-          width: 1110,
-          height: 300,
-          marks: [
-            Plot.dot(pAllLangData, Plot.pointer({
-              x: 'date',
-              y: 'duration',
-              interval: 'day',
-              opacity: 0.5,
-              fill: 'by',
-              marker: 'circle',
-              r: 8,
-              tip: {
-                stroke: '#404040',
-                channels: {
-                  by: {
-                    label: t.plot.label.language,
-                    value: d => getLanguageName(d.by),
-                  },
-                  duration: {
-                    label: t.plot.label.duration,
-                    value: d => getDurationString(d.duration),
-                  },
-                  date: {
-                    label: t.plot.label.date,
-                    value: d => d.date.toISOString().slice(0, 10),
-                  },
-                },
-                format: {
-                  fill: false,
-                  x: false,
-                  y: false,
-                },
-              },
-            })),
-            Plot.line(pAllLangData, {
-              x: 'date',
-              y: 'duration',
-              stroke: 'by',
-              marker: 'circle',
-              curve: 'catmull-rom-open',
-            }),
-          ],
-        }"
+      <PoltYDot
+        :data="pAllLangData"
+        :y-label="t.plot.label.language"
+      />
+    </CardBase>
+    <CardBase>
+      <div>
+        <div class="text-lg flex items-center gap-2">
+          <i class="i-carbon-chart-line-data" />
+          <div>
+            {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
+          </div>
+        </div>
+      </div>
+      <PoltYDot
+        :data="pAllProjectData"
+        :y-label="t.plot.label.project"
       />
     </CardBase>
   </DashboardPageContent>

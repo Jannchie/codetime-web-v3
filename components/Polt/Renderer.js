@@ -187,7 +187,7 @@ export default {
         width: 1110, // better default for Codetime
       }),
       ...this.options,
-      className: 'plot',
+      className: this.options.className ? this.options.className : 'plot',
     }
     if (this.defer) {
       const mounted = (el) => {

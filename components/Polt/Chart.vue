@@ -4,18 +4,22 @@ import type { PlotOptions } from '@observablehq/plot'
 const props = defineProps<{
   options: PlotOptions
 }>()
-const options = reactive(props.options)
+
+const options = ref(props.options)
+watchEffect(() => {
+  options.value = props.options
+})
 const chartWrapper = ref<HTMLElement | null>(null)
 const { width } = useElementBounding(chartWrapper)
-const basicHeight = options.height ?? 400
+const basicHeight = options.value.height ?? 400
 watchEffect(() => {
   if (chartWrapper.value) {
-    options.width = width.value
-    if (options.width * 0.7 < basicHeight) {
-      options.height = options.width * 0.7
+    options.value.width = width.value
+    if (options.value.width * 0.7 < basicHeight) {
+      options.value.height = options.value.width * 0.7
     }
     else {
-      options.height = basicHeight
+      options.value.height = basicHeight
     }
   }
 })

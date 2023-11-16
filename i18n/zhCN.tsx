@@ -77,6 +77,13 @@ export const zhCN = {
       preview: {
         title: '预览',
       },
+      style: {
+        flat: '扁平(Flat)',
+        flatSquare: '扁平方形(Flat Square)',
+        forTheBadge: 'For the Badge',
+        plastic: '塑料(Plastic)',
+        social: '社交(Social)',
+      },
       placeholder: {
         style: '样式',
         language: '语言',
@@ -114,10 +121,13 @@ export const zhCN = {
   },
   plot: {
     label: {
+      project: '项目',
       timeHour: '时间（小时）',
       language: '语言',
       date: '日期',
       duration: '时间',
+      other: '其他',
+      unknown: '未知',
     },
   },
 }

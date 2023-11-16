@@ -131,25 +131,27 @@ export function useProcessedData(data: Ref<{
     by?: string | undefined
   }[]
 } | null>) {
+  const t = useI18N()
   return computed(() => {
     const differentBy = new Set<string>()
     data.value?.data.forEach((d) => {
-      differentBy.add(d.by ?? 'unknown')
+      differentBy.add(d.by ?? t.value.plot.label.unknown)
     })
 
     // get sum duration for each by
     const sumDurationBy = new Map<string, number>()
     data.value?.data.forEach((d) => {
-      const duration = sumDurationBy.get(d.by ?? 'unknown') ?? 0
-      sumDurationBy.set(d.by ?? 'unknown', duration + d.duration)
+      const duration = sumDurationBy.get(d.by ?? t.value.plot.label.unknown) ?? 0
+      sumDurationBy.set(d.by ?? t.value.plot.label.unknown, duration + d.duration)
     })
 
     // get top by
     const sortedBy = Array.from(sumDurationBy.entries()).sort((a, b) => b[1] - a[1])
-    const topBy = sortedBy.slice(0, 3).map(d => d[0])
+    const topBy = sortedBy.slice(0, 5).map(d => d[0])
     const dataWithOther = data.value?.data.map((d) => {
-      if (!topBy.includes(d.by ?? 'unknown')) {
-        d.by = 'other'
+      d = { ...d }
+      if (!topBy.includes(d.by ?? t.value.plot.label.unknown)) {
+        d.by = t.value.plot.label.other
       }
       return d
     }) ?? []
@@ -165,13 +167,14 @@ export function useProcessedData(data: Ref<{
     })
     dataWithOther.forEach((d) => {
       const date = new Date(d.time)
-      const key = [date.toISOString().slice(0, 10), d.by ?? 'unknown'].join(',')
+      const key = [date.toISOString().slice(0, 10), d.by ?? t.value.plot.label.unknown].join(',')
       dataMap.set(key, d.duration)
     })
     const res = Array.from(dataMap.entries()).map(([keyRaw, data]) => {
       const key = keyRaw.split(',')
       return { date: new Date(key[0]), duration: data, by: key[1] }
     })
+      .sort((a, b) => a.by.localeCompare(b.by))
       .sort((a, b) => a.date.getTime() - b.date.getTime())
     return res
   })

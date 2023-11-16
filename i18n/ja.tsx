@@ -77,6 +77,13 @@ export const ja: typeof zhCN = {
       preview: {
         title: 'プレビュー',
       },
+      style: {
+        flat: 'フラット(Flat)',
+        flatSquare: 'フラットスクエア(Flat Square)',
+        forTheBadge: 'フォーバッジ(For The Badge)',
+        plastic: 'プラスチック(Plastic)',
+        social: 'ソーシャル(Social)',
+      },
       placeholder: {
         style: 'スタイル',
         language: '言語',
@@ -114,10 +121,13 @@ export const ja: typeof zhCN = {
   },
   plot: {
     label: {
+      project: 'プロジェクト',
       timeHour: '時間',
       language: '言語',
       date: '日付',
       duration: '時間',
+      other: 'その他',
+      unknown: '不明',
     },
   },
 }

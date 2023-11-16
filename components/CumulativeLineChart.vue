@@ -12,7 +12,7 @@ const props = defineProps<{
 
 const t = useI18N()
 const data = computed(() => unref(props.data))
-const options: PlotOptions = {
+const options = computed<PlotOptions>(() => ({
   x: {
     interval: 'day',
   },
@@ -33,7 +33,7 @@ const options: PlotOptions = {
     Plot.lineY(data.value, Plot.windowY({ k: 7, x: 'date', y: 'duration', stroke: 'rgb(2 132 199)', curve: 'natural' })),
     Plot.linearRegressionY(data.value, { x: 'date', y: 'duration', stroke: '#c2410c' }),
   ],
-}
+}))
 </script>
 
 <template>

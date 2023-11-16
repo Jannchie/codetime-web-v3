@@ -31,7 +31,11 @@ input[type="password"] {
 
 .plot {
   --plot-background: rgb(23 23 23);
-  background: rgb(23 23 23) !important;
+  background: var(--plot-background) !important;
+}
+.y-dot-plot {
+  --plot-background: rgb(23 23 23);
+  background: var(--plot-background) !important;
 }
 
 .y-grid {
@@ -39,13 +43,23 @@ input[type="password"] {
 }
 
 [aria-label="tip"] {
-  --plot-background: rgb(23 23 23);
-  background: rgb(23 23 23) !important;
-  border: 1px solid rgb(23 23 23) !important;
-  fill: rgb(23 23 23) !important;
+  background: var(--plot-background) !important;
+  border: 1px solid var(--plot-background) !important;
+  fill: var(--plot-background) !important;
 }
 
 marker {
-  stroke: rgb(23 23 23) !important;
+  stroke: var(--plot-background)!important;
+}
+[aria-label="y-axis tick label"] > text {
+  stroke: var(--plot-background);
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', sans-serif;
+  text-anchor: end !important;
+  text-transform: capitalize;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  stroke-width: 6px;
 }
 </style>
