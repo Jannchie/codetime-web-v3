@@ -28,11 +28,11 @@ const options = computed<Plot.PlotOptions>(() => ({
   color: {
     scheme: 'Warm',
   },
+  marginRight: 24,
   y: {
     grid: true,
     ariaLabel: props.yLabel,
     label: props.yLabel,
-
   },
   x: {
     insetRight: maxR.value,

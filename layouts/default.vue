@@ -51,7 +51,7 @@ input[type="password"] {
 marker {
   stroke: var(--plot-background)!important;
 }
-[aria-label="y-axis tick label"] > text {
+.y-dot-plot [aria-label="y-axis tick label"] > text {
   stroke: var(--plot-background);
   -webkit-font-smoothing: antialiased;
   font-family: 'Inter', sans-serif;
