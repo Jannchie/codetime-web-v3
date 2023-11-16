@@ -27,11 +27,11 @@ const t = useI18N()
       <RSelect
         v-model="style"
         :options="[
-          { label: 'social', id: 'social' },
-          { label: 'flat-square', id: 'flat-square' },
-          { label: 'flat', id: 'flat' },
-          { label: 'For the Badge', id: 'for-the-badge' },
-          { label: 'Plastic', id: 'plastic' },
+          { label: t.dashboard.shield.style.social, id: 'social' },
+          { label: t.dashboard.shield.style.flatSquare, id: 'flat-square' },
+          { label: t.dashboard.shield.style.flat, id: 'flat' },
+          { label: t.dashboard.shield.style.forTheBadge, id: 'for-the-badge' },
+          { label: t.dashboard.shield.style.plastic, id: 'plastic' },
         ]"
         :placeholder="t.dashboard.shield.placeholder.style"
       />
