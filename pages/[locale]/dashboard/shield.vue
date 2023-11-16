@@ -23,7 +23,8 @@ const t = useI18N()
     :description="t.dashboard.pageHeader.description.shield"
   />
   <DashboardPageContent>
-    <CardBase class="flex children:flex-grow-1 gap-2">
+    <ShieldPreviewCard :link="link" />
+    <CardBase class="flex children:flex-grow-1 gap-2 flex-col sm:flex-row">
       <RSelect
         v-model="style"
         :options="[
@@ -50,7 +51,6 @@ const t = useI18N()
         :placeholder="t.dashboard.shield.placeholder.days"
       />
     </CardBase>
-    <ShieldPreviewCard :link="link" />
     <ShieldCopyCard :link="link" />
   </DashboardPageContent>
 </template>

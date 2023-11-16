@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
 
+const filters = reactive<FilterItem[]>([])
+provide('filters', filters)
+
 definePageMeta({
   layout: 'dashboard',
 })
@@ -69,21 +72,25 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       </div>
     </CardBase>
     <DashboardDataRange :days="days" />
+    <DashboardFilterWrapper />
     <div
       class="flex gap-2 flex-wrap flex-basis-[100%] flex-col sm:flex-row sm:children:flex-basis-[calc(100%/3-(0.5rem)*2/3)] sm:children:max-w-[calc(100%/3-(0.5rem)*2/3)]"
     >
       <DashboardTopCard
         icon="i-tabler-braces"
+        type="language"
         :title="t.dashboard.overview.top.language"
         :data="languageTopData"
       />
       <DashboardTopCard
         icon="i-tabler-app-window"
+        type="project"
         :title="t.dashboard.overview.top.project"
         :data="projectTopData"
       />
       <DashboardTopCard
         icon="i-tabler-terminal"
+        type="platform"
         :title="t.dashboard.overview.top.platform"
         :data="platformTopData"
       />

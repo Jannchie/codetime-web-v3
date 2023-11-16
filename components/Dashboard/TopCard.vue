@@ -1,18 +1,33 @@
 <script setup lang="ts">
-import type { TopData } from '~/utils'
-
 const props = defineProps<{
   icon: string
   title: string
   data: TopData[] | null
+  type: 'language' | 'project' | 'platform'
 }>()
 
+const filters = inject<FilterItem[]>('filters')
 const maxMinutes = computed(() => {
   if (props.data === null) {
     return 0
   }
   return Math.max(...props.data.map(d => d.minutes))
 })
+
+function onClickItem(field: string, type: 'language' | 'project' | 'platform') {
+  if (filters) {
+    const filter = {
+      value: field,
+      key: type,
+    }
+    if (!filters.find(f => f.key === type && f.value === field)) {
+      filters.push(filter)
+    }
+    else {
+      filters.splice(filters.findIndex(f => f.key === type && f.value === field), 1)
+    }
+  }
+}
 </script>
 
 <template>
@@ -30,6 +45,8 @@ const maxMinutes = computed(() => {
       >
         <div
           class="flex op75 justify-between gap-2 text-sm cursor-pointer"
+          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-sky-4' : ''"
+          @click="onClickItem(d.field, type)"
         >
           <div class="overflow-hidden truncate text-nowrap">
             <i

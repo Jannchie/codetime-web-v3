@@ -98,7 +98,7 @@ export const zhCN = {
         tip: '您的令牌用于 CodeTime API 的访问，请保持它的私密性。您可以在此处生成新的令牌。',
       },
       language: {
-        title: '语言',
+        title: '语言 (Language)',
         tip: '选择您的 CodeTime Web UI 的语言。',
       },
       export: {
@@ -118,6 +118,7 @@ export const zhCN = {
   },
   button: {
     copy: '复制',
+    copied: '已复制',
   },
   plot: {
     label: {

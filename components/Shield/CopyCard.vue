@@ -5,17 +5,6 @@ const props = defineProps<{
 const link = computed(() => props.link)
 const markdown = computed(() => `[![CodeTime Badge](${link.value})](https://codetime.dev)`)
 const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badge" src="${link.value}">`)
-
-const htmlClipboard = useClipboard({
-  source: html,
-})
-const markdownClipboard = useClipboard({
-  source: markdown,
-})
-const linkClipboard = useClipboard({
-  source: link,
-})
-const t = useI18N()
 </script>
 
 <template>
@@ -26,13 +15,10 @@ const t = useI18N()
         :value="markdown"
         class="text-xs grow-1"
       />
-      <RBtn
-        class="text-xs flex items-center gap-2"
-        @click="markdownClipboard.copy(markdown)"
-      >
-        <i class="i-tabler-copy" />
-        {{ t.button.copy }}
-      </RBtn>
+      <RCopyBtn
+        class="text-xs"
+        :value="markdown"
+      />
     </div>
     <div class="flex items-center gap-2">
       <i class="i-tabler-code" />
@@ -40,13 +26,10 @@ const t = useI18N()
         :value="html"
         class="text-xs grow-1"
       />
-      <RBtn
-        class="text-xs flex items-center gap-2"
-        @click="htmlClipboard.copy(html)"
-      >
-        <i class="i-tabler-copy" />
-        {{ t.button.copy }}
-      </RBtn>
+      <RCopyBtn
+        class="text-xs"
+        :value="html"
+      />
     </div>
     <div class="flex items-center gap-2">
       <i class="i-tabler-link" />
@@ -54,13 +37,10 @@ const t = useI18N()
         :value="link"
         class="text-xs grow-1"
       />
-      <RBtn
-        class="text-xs flex items-center gap-2"
-        @click="linkClipboard.copy(link)"
-      >
-        <i class="i-tabler-copy" />
-        {{ t.button.copy }}
-      </RBtn>
+      <RCopyBtn
+        class="text-xs"
+        :value="link"
+      />
     </div>
   </CardBase>
 </template>

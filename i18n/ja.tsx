@@ -98,7 +98,7 @@ export const ja: typeof zhCN = {
         tip: 'あなたのトークンは CodeTime API へのアクセスに使用されるので、それを秘密に保ってください。ここで新しいトークンを生成できます。',
       },
       language: {
-        title: '言語',
+        title: '言語 (Language)',
         tip: 'CodeTime Web UI の言語を選択します。',
       },
       export: {

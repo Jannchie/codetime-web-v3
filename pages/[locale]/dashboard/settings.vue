@@ -4,7 +4,6 @@ definePageMeta({
 })
 const user = useUser()
 const token = computed(() => user.value?.upload_token ?? '')
-const a = useClipboard({ source: token })
 const router = useRouter()
 router.push({
   params: { locale: 'zh-CN' },
@@ -29,15 +28,7 @@ const t = useI18N()
           type="password"
           :value="token"
         />
-        <RBtn
-          class="flex items-center gap-2"
-          @click="a.copy(token)"
-        >
-          <i class="i-tabler-copy" />
-          <div>
-            {{ t.button.copy }}
-          </div>
-        </RBtn>
+        <RCopyBtn :value="token" />
       </div>
       <div class="op50 text-xs">
         {{ t.dashboard.settings.token.tip }}
