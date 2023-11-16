@@ -33,6 +33,7 @@ const filtedData = computed(() => {
 
 const currentStreak = useCurrentStreak(pAllData)
 const maxStreak = useMaxStreak(pAllData)
+const t = useI18N()
 const NoDataBody = t.value.dashboard.overview.noData.notice.body
 </script>
 
@@ -161,7 +162,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
   </DashboardPageContent>
   <DashboardPageContent v-else>
     <CardBase class="p-6 flex gap-2">
-      <div>
+      <div class="leading-0">
         <i
           class="w-6 h-6 text-sky-6 i-mdi:alert-circle-outline"
         />

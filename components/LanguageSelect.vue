@@ -4,7 +4,14 @@ const router = useRouter()
 const locale = computed(
   () => route.params.locale as string,
 )
-const currentLocale = ref(locale.value ?? 'en')
+
+const cookie = useCookie('locale')
+const currentLocale = ref(locale.value ?? (cookie.value ?? 'en'))
+
+function onChange(value: string) {
+  cookie.value = value
+}
+
 watchEffect(() => {
   nextTick(() => {
     router.push({
@@ -29,6 +36,7 @@ watchEffect(() => {
         { label: '中文', id: 'zh-CN' },
         { label: '日本語', id: 'ja' },
       ]"
+      @change="onChange"
     />
   </div>
 </template>

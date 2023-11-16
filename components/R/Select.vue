@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
-
 type Option = {
   id: number | string | symbol
   label: string
 } | string | symbol | number
 
 const props = defineProps<{
-  modelValue: string | symbol | number
+  modelValue: string | symbol | number | undefined
   options: Option[]
 }>()
 
@@ -41,18 +39,28 @@ watchEffect(() => {
   value.value = getId(props.options[index.value])
 })
 
+watch(value, () => {
+  emit('change', value.value)
+})
+
 const options = props.options
 
 const currentOption = computed(() => options[index.value])
 const currentLabel = computed(() => getLabel(currentOption.value))
-function getLabel(option: Option) {
+function getLabel(option?: Option) {
+  if (!option) {
+    return undefined
+  }
   if (typeof option === 'string' || typeof option === 'symbol' || typeof option === 'number') {
     return option
   }
   return option.label
 }
 
-function getId(option: Option) {
+function getId(option?: Option) {
+  if (!option) {
+    return undefined
+  }
   if (typeof option === 'string' || typeof option === 'symbol' || typeof option === 'number') {
     return option
   }
@@ -79,7 +87,6 @@ onKeyStroke('Enter', () => {
     focused.value = false
   }
 })
-
 function onItemPointerDown(option: Option) {
   if (!focused.value) {
     focused.value = true

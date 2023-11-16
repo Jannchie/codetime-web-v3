@@ -2,6 +2,7 @@
 defineProps<{
   link: string
 }>()
+const t = useI18N()
 </script>
 
 <template>

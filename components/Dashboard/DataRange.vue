@@ -4,6 +4,7 @@ import * as d3 from 'd3'
 defineProps<{
   days: number
 }>()
+const t = useI18N()
 </script>
 
 <template>

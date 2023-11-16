@@ -3,8 +3,10 @@ import Auxlines from 'auxlines'
 import 'auxlines/style.css'
 
 definePageMeta({
+  middleware: ['i18n'],
   layout: 'landing',
 })
+const t = useI18N()
 </script>
 
 <template>

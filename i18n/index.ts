@@ -1,23 +1,18 @@
+import { iconMap } from './../utils/icon'
 import { zhCN } from './zhCN'
 import { ja } from './ja'
 
-export const t = computed(() => {
-  const locale = useLocale()
-  switch (locale.value) {
-    case 'zh-CN':
-      return zhCN
-    case 'en':
-      return zhCN
-    case 'ja':
-      return ja
-  }
-  return zhCN
-})
+const i18NMap = new Map([
+  ['zh-CN', zhCN],
+  ['en', zhCN],
+  ['ja', ja],
+])
 
-export function useI18n(): typeof zhCN {
-  const locale = useLocale()
-  if (locale.value === 'zh-CN') {
-    return zhCN
-  }
-  return zhCN
+export const locales = [...iconMap.keys()]
+export function useI18N() {
+  return computed(() => {
+    const locale = useLocale()
+    const i18N = i18NMap.get(locale.value) ?? zhCN
+    return i18N
+  })
 }

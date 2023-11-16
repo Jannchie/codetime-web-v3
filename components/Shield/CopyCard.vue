@@ -15,6 +15,7 @@ const markdownClipboard = useClipboard({
 const linkClipboard = useClipboard({
   source: link,
 })
+const t = useI18N()
 </script>
 
 <template>

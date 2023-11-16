@@ -20,6 +20,8 @@ const latestWeekDate = computed(() => {
   return yearData.value[yearData.value.length - 1].date
 })
 
+const t = useI18N()
+
 const options = {
   width: 700,
   height: 130,

@@ -8,8 +8,10 @@ export const zhCN = {
     minutes: '分钟',
     loginWithGithub: '使用 GitHub 登录',
     freeMessage: '目前完全免费，无需信用卡',
+    demo: '演示',
   },
   dashboard: {
+    loginRequired: '欢迎访问 CodeTime 仪表板！请登录以查看你的编程时间数据，或者点击下方的演示按钮体验演示仪表盘。',
     pageHeader: {
       title: {
         overview: '概览',

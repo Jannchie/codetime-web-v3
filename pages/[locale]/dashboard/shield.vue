@@ -14,6 +14,7 @@ const link = computed(() => {
   const res = `https://img.shields.io/endpoint?style=${style.value}&color=${color.value}&url=https%3A%2F%2Fapi.codetime.dev%2Fshield%3Fid%3D${user.value?.id}%26project%3D${project.value}%26in=${String(Number(days.value) * 86400 * 1000)}`
   return res
 })
+const t = useI18N()
 </script>
 
 <template>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
-
 const locale = useRoute().params.locale as string
 const user = useUser()
+const t = useI18N()
 </script>
 
 <template>
@@ -16,12 +15,11 @@ const user = useUser()
         class="px-4 py-3 rounded-xl bg-transparent border border-neutral-8 bg-neutral-8 hover:bg-neutral-8 transition-all"
       >
         <div class="flex gap-2 items-center">
-          <Icon
-            class="w-4 h-4"
-            icon="eva:bar-chart-outline"
+          <i
+            class="w-4 h-4 i-eva-bar-chart-outline"
           />
           <span>
-            演示
+            {{ t.landing.demo }}
           </span>
         </div>
       </NuxtLink>
@@ -30,13 +28,9 @@ const user = useUser()
         class="px-4 py-3 rounded-xl bg-transparent border border-sky-8 hover:bg-sky-8 transition-all"
       >
         <div class="flex gap-2 items-center">
-          <Icon
-            class="w-4 h-4"
-            icon="eva:github-outline"
-          />
+          <i class="w-4 h-4 i-eva-github-outline" />
           <span>
             {{ t.landing.loginWithGithub }}
-            <!-- 使用 Github 登录 -->
           </span>
         </div>
       </NuxtLink>
@@ -57,7 +51,6 @@ const user = useUser()
     </nuxtlink>
     <div class="text-xs op25 mt-2">
       {{ t.landing.freeMessage }}
-      <!-- 目前完全免费，无需信用卡 -->
     </div>
   </div>
 </template>

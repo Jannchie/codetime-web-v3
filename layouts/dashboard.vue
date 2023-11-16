@@ -31,10 +31,12 @@ useHead({
     },
   ],
 })
+const t = useI18N()
 </script>
 
 <template>
   <NuxtLayout name="default">
+    <!-- Notification -->
     <div
       v-if="false"
       class="h-84px min-w-full sm:min-w-sm absolute right-0 p-2 z-1"
@@ -102,7 +104,23 @@ useHead({
         </div>
       </div>
     </RHeader>
-    <slot />
+    <slot v-if="user" />
+    <div
+      v-else
+      class="flex flex-col items-center justify-center h-full op75"
+    >
+      <div class="mb-8">
+        <NuxtImg
+          alt="Code Time"
+          src="/icon.svg"
+          width="64"
+        />
+      </div>
+      <span class="text-sm pb-6 max-w-2xl text-center">
+        {{ t.dashboard.loginRequired }}
+      </span>
+      <LoginButton />
+    </div>
     <CodetimeFooter />
   </NuxtLayout>
 </template>

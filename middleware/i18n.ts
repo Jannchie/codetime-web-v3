@@ -1,14 +1,17 @@
 const locales = ['en', 'zh-CN', 'ja']
 
 export default defineNuxtRouteMiddleware((to) => {
-  const { locale } = to.params as { locale: string }
-  if (locales.includes(locale)) {
-    return
-  }
-
-  // get preferred language from browser
-  const headers = useRequestHeaders()
   try {
+    const { locale } = to.params as { locale: string }
+    if (locales.includes(locale)) {
+      return
+    }
+    // get preferred language from browser
+    const headers = useRequestHeaders()
+    const cookie = useCookie('locale')
+    if (cookie.value) {
+      return navigateTo(`/${cookie.value}${to.path}`)
+    }
     const preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
     for (const preferredLanguage of preferredLanguages) {
       let trueLanguage = preferredLanguage

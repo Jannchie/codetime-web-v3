@@ -8,8 +8,10 @@ export const ja: typeof zhCN = {
     minutes: '分',
     loginWithGithub: 'GitHub でログイン',
     freeMessage: '現在完全無料、クレジットカード不要',
+    demo: 'デモ',
   },
   dashboard: {
+    loginRequired: 'CodeTime ダッシュボードへようこそ！\n コーディング時間のデータを閲覧するには、ログインしていただくか、下のデモボタンをクリックしてデモダッシュボードをお試しいただけます。',
     pageHeader: {
       title: {
         overview: '概観',
@@ -57,7 +59,7 @@ export const ja: typeof zhCN = {
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="text-sky-6"
+                    class="text-sky-6 px-2"
                   >
                     [ 設定 ]
                   </NuxtLink>

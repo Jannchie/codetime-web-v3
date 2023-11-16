@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { locales } from '~/i18n'
+
 const locale = useLocale()
 const data = await fetchSumMinutes()
 const minutes = computed(() => {
   return data.value?.minutes ?? 0
 })
-const fomater = computed(() => new Intl.NumberFormat(locale.value, {
-  maximumFractionDigits: 0,
-  minimumFractionDigits: 0,
-}))
+const fomater = computed(() => {
+  const finalLocale = locales.includes(locale.value) ? locale.value : 'en'
+  return new Intl.NumberFormat(finalLocale, {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  })
+})
+const t = useI18N()
 </script>
 
 <template>

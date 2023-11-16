@@ -4,7 +4,6 @@ export function useLocale() {
   const locale = computed(() => {
     return route.value.params.locale as string
   })
-
   return locale
 }
 

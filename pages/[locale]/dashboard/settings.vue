@@ -9,6 +9,7 @@ const router = useRouter()
 router.push({
   params: { locale: 'zh-CN' },
 })
+const t = useI18N()
 </script>
 
 <template>

@@ -10,6 +10,7 @@ const props = defineProps<{
   }[]>
 }>()
 
+const t = useI18N()
 const data = computed(() => unref(props.data))
 const options: PlotOptions = {
   x: {

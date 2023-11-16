@@ -5,7 +5,10 @@ provide('user', await fetchUser())
 </script>
 
 <template>
-  <NuxtLoadingIndicator color="#fff" />
+  <NuxtLoadingIndicator
+    color="#fff"
+    :height="1"
+  />
   <slot />
 </template>
 
