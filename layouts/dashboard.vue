@@ -1,9 +1,10 @@
 <script setup lang="ts">
+const t = useI18N()
 const headerTabs = ref([
-  { label: 'Overview', id: 'overview', path: `/dashboard` },
-  { label: 'Badges', id: 'badges', path: `/dashboard/badges` },
-  { label: 'Settings', id: 'settings', path: `/dashboard/settings` },
-  { label: 'Leaderboard', id: 'leaderboard', path: `/dashboard/leaderboard` },
+  { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
+  { label: t.value.dashboard.pageHeader.title.badge, id: 'badges', path: `/dashboard/badges` },
+  { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
+  { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
 ])
 useSeoMeta({
   title: 'CodeTime - 追迹你的编程时间',
@@ -32,7 +33,6 @@ useHead({
     },
   ],
 })
-const t = useI18N()
 </script>
 
 <template>
@@ -57,31 +57,39 @@ const t = useI18N()
       </CardBase>
     </div>
     <RHeader class="px-2 pt-2">
-      <div class="flex flex-col gap-2 pt-2 px-2">
+      <div class="flex flex-col gap-2 pt-2 px-2 w-full">
         <div
-          class="flex gap-2 items-center"
+          class="flex items-center justify-between h-34px"
         >
-          <NuxtLink
-            :to="`/${locale}`"
-          >
-            <NuxtImg
-              alt="Code Time"
-              src="/icon.svg"
-              width="26"
-              class="ml-2 mr-3"
-            />
-          </NuxtLink>
-          <NuxtLink
-            v-if="user"
-            class="flex gap-3 text-sm items-center"
-            :to="`/${locale}/dashboard`"
-          >
-            <NuxtImg
-              :src="user.avatar"
-              class="rounded-full w-5 h-5"
-            />
-            {{ user.username }}
-          </NuxtLink>
+          <div class="flex gap-2 items-center">
+            <NuxtLink
+              :to="`/${locale}`"
+            >
+              <NuxtImg
+                alt="Code Time"
+                src="/icon.svg"
+                width="26"
+                class="ml-2 mr-3"
+              />
+            </NuxtLink>
+            <NuxtLink
+              v-if="user"
+              class="flex gap-3 text-sm items-center"
+              :to="`/${locale}/dashboard`"
+            >
+              <NuxtImg
+                :src="user.avatar"
+                class="rounded-full w-5 h-5"
+              />
+              {{ user.username }}
+            </NuxtLink>
+          </div>
+          <div class="flex items-center gap-2">
+            <ClientOnly>
+              <i class="i-tabler-language-hiragana w-5 h-5" />
+              <LanguageSelect />
+            </ClientOnly>
+          </div>
         </div>
         <div class="flex gap-2 mt-2">
           <div

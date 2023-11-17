@@ -125,7 +125,10 @@ export const en = {
     },
     leaderboard: {
       title(days: number) {
-        return `Past ${days} days Coding Time Leaderboard`
+        return `Past ${days} Days Coding Time Leaderboard`
+      },
+      delta(string: string) {
+        return `${string} behind`
       },
     },
   },

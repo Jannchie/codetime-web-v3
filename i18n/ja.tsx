@@ -1,6 +1,7 @@
 import NuxtLink from './NuxtLink.vue'
+import type { I18NData } from '.'
 
-export const ja: I18NData = {
+export const ja: Partial<I18NData> = {
   landing: {
     description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
     toDashboard: 'ダッシュボードへ',
@@ -17,11 +18,13 @@ export const ja: I18NData = {
         overview: '概観',
         badge: 'シールド',
         settings: '設定',
+        leaderboard: 'リーダーボード',
       },
       description: {
         overview: 'すべての CodeTime データを見る。',
         badge: 'あなたのプロジェクトでスマート、統一感のある、明瞭なシールドで CodeTime を表示。',
         settings: 'CodeTime の設定を管理する、外観、言語、データ等を含む。',
+        leaderboard: 'CodeTime ユーザーのリーダーボードを見る。',
       },
     },
     overview: {
@@ -123,6 +126,9 @@ export const ja: I18NData = {
     leaderboard: {
       title(days: number) {
         return `${days} 日間のコーディング時間リーダーボード`
+      },
+      delta(string: string) {
+        return `差：${string}`
       },
     },
   },

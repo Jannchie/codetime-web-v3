@@ -1,6 +1,7 @@
 import NuxtLink from './NuxtLink.vue'
+import type { I18NData } from '.'
 
-export const zhCN: I18NData = {
+export const zhCN: Partial<I18NData> = {
   landing: {
     description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析您的编程时间。',
     toDashboard: '前往仪表盘',
@@ -17,11 +18,13 @@ export const zhCN: I18NData = {
         overview: '概览',
         badge: '徽章',
         settings: '设置',
+        leaderboard: '排行榜',
       },
       description: {
         overview: '查看您的所有 CodeTime 数据。',
         badge: '在你的项目中用简明、一致、清晰的徽章展示你的编程时间。',
         settings: '管理您的 CodeTime 设置，包含外观、语言、数据等。',
+        leaderboard: '查看 CodeTime 用户的排行榜。',
       },
     },
     overview: {
@@ -123,6 +126,9 @@ export const zhCN: I18NData = {
     leaderboard: {
       title(days: number) {
         return `过去 ${days} 天编程时间排行榜`
+      },
+      delta(string: string) {
+        return `相差 ${string}`
       },
     },
   },
