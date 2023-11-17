@@ -5757,3 +5757,4 @@ export const iconMap = new Map(extensions.supported.filter(d => d.languages).map
     })
   }).flat()
 }).flat() as [string, string][])
+iconMap.set('plain_text', 'i-vscode-icons-file-type-text')

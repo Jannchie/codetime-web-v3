@@ -20,7 +20,7 @@ const hasData = computed(() => {
   return (allData.data.value?.data.length ?? 0) > 0
 })
 
-const [languageTopData, projectTopData, platformTopData] = await useAllTopData(hasData, days)
+const [languageTopData, projectTopData, platformTopData] = await useAllTopData(hasData, days, filters)
 const totalMinutes = useTotalMinutes(allData.data)
 const todayMinutes = useTodayMinutes(allData.data)
 
@@ -74,25 +74,29 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <DashboardDataRange :days="days" />
     <DashboardFilterWrapper />
     <div
+      v-if="languageTopData && projectTopData && platformTopData"
       class="flex gap-2 flex-wrap flex-basis-[100%] flex-col sm:flex-row sm:children:flex-basis-[calc(100%/3-(0.5rem)*2/3)] sm:children:max-w-[calc(100%/3-(0.5rem)*2/3)]"
     >
       <DashboardTopCard
         icon="i-tabler-braces"
         type="language"
         :title="t.dashboard.overview.top.language"
-        :data="languageTopData"
+        :data="languageTopData.data.value"
+        :loading="languageTopData.pending"
       />
       <DashboardTopCard
         icon="i-tabler-app-window"
         type="project"
         :title="t.dashboard.overview.top.project"
-        :data="projectTopData"
+        :data="projectTopData.data.value"
+        :loading="languageTopData.pending"
       />
       <DashboardTopCard
         icon="i-tabler-terminal"
         type="platform"
         :title="t.dashboard.overview.top.platform"
-        :data="platformTopData"
+        :data="platformTopData.data.value"
+        :loading="languageTopData.pending"
       />
     </div>
     <CumulativeLineChart :data="filtedData" />
@@ -115,7 +119,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         <div class="text-lg flex items-center gap-2">
           <i class="i-carbon-chart-line-data" />
           <div>
-            {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
+            {{ t.dashboard.overview.codetimeProjectTrendTitle }}
           </div>
         </div>
       </div>

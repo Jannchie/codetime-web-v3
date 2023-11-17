@@ -12,7 +12,7 @@ const t = useI18N()
     >
       <NuxtLink
         :to="`/${locale}/dashboard`"
-        class="px-4 py-3 rounded-xl bg-transparent border border-neutral-8 bg-neutral-8 hover:bg-neutral-8 transition-all"
+        class="px-4 py-3 rounded-xl bg-transparent border border-neutral-7 bg-neutral-8 hover:bg-neutral-7 transition-all"
       >
         <div class="flex gap-2 items-center">
           <i

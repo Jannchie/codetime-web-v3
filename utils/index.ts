@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot'
 
-import type { AsyncDataOptions } from 'nuxt/dist/app/composables'
+import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/dist/app/composables'
 import type { KeysOf } from 'nuxt/dist/app/composables/asyncData'
 
 export { Plot }
@@ -30,20 +30,21 @@ export async function fetchStats(by: string = 'time', limit: number = 60, unit: 
   return await useAPIFetch<{ data: { duration: number; time: string; by?: string }[] }>(`/stats?${params}`)
 }
 
-export async function useAPIFetch<T>(path: string, options?: AsyncDataOptions<T, T, KeysOf<T>, null>) {
-  const resp = useNuxtData<T>(path)
-  if (resp.data.value) {
-    return resp
-  }
+export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}) {
   const apiHost = useRuntimeConfig().public.apiHost
-  const _fetch = useRequestFetch()
-  return await useAsyncData<T>(path, () => _fetch(`${apiHost}${path}`, {
+  fetch(`${apiHost}${path}`, { credentials: 'include' })
+  return await useFetch<T>(`${path}`, {
+    $fetch: useRequestFetch(),
+    baseURL: apiHost,
     credentials: 'include',
-  }), options)
+    ...options,
+  })
 }
 
 export async function fetchUser() {
-  const { data } = await useAPIFetch<User>('/user')
+  const { data } = await useAPIFetch<User>('/user', {
+    credentials: 'include',
+  })
   return data
 }
 
@@ -63,12 +64,30 @@ export interface TopData {
   icon?: string
 }
 
-export async function fetchTop(field: string, minutes: number = 0, limit: number = 5, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
-  const params = new URLSearchParams({
-    field,
-    minutes: String(minutes),
-    limit: String(limit),
+export async function fetchTop(field: string, minutes: number = 0, limit: number = 5, filters: Ref<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
+  const params = computed(() => {
+    const params = {
+      field,
+      minutes: String(minutes),
+      limit: String(limit),
+      ...filters.value.reduce((acc, cur) => {
+        acc[cur.key] = cur.value
+        return acc
+      }, {} as Record<string, string>),
+    }
+    return params
   })
-  const { data } = await useAPIFetch<TopData[]>(`/top?${params}`, options)
-  return data
+  const apiHost = useRuntimeConfig().public.apiHost
+  const resp = await useFetch<TopData[]>(`${apiHost}/top`, {
+    ...options,
+    credentials: 'include',
+    query: params,
+    $fetch: useRequestFetch(),
+  })
+  return resp
+}
+
+export interface FilterItem {
+  key: string
+  value: string
 }

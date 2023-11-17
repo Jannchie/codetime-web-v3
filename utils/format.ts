@@ -54,5 +54,13 @@ const entries = Object.entries(languageIdentifiers)
 const languageIdentifiersMap = new Map(entries)
 
 export function getLanguageName(languageIdentifier: string): string {
-  return languageIdentifiersMap.get(languageIdentifier) ?? languageIdentifier
+  const res = languageIdentifiersMap.get(languageIdentifier) ?? languageIdentifier
+  switch (res) {
+    case '':
+      return 'Unknown'
+    case 'plain_text':
+      return 'Plain Text'
+    default:
+      return res
+  }
 }

@@ -1,9 +1,10 @@
-export function getWeekDifference(date1: Date, date2: Date): number {
-  const time1 = date1.getTime()
-  const time2 = date2.getTime()
-  const day = date2.getUTCDay()
-  const timeDiff = Math.abs(Math.abs(time2 - time1) + day * 24 * 60 * 60 * 1000)
+export function getWeekDifference(currentDate: Date, baseDate: Date): number {
+  const time1 = currentDate.getTime()
+  const time2 = baseDate.getTime()
+  const day = baseDate.getUTCDay()
+  const refTime = (7 - day) * 24 * 60 * 60 * 1000 + time2
+  const timeDiff = Math.abs(Math.abs(refTime - time1))
   const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000
-  const weekDiff = Math.floor(timeDiff / oneWeekInMillis)
-  return weekDiff
+  const weekDiff = Math.ceil(timeDiff / oneWeekInMillis)
+  return -weekDiff
 }

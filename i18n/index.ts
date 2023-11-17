@@ -1,14 +1,16 @@
-import { iconMap } from './../utils/icon'
 import { zhCN } from './zhCN'
 import { ja } from './ja'
+import { en } from './en'
 
-const i18NMap = new Map([
+type I18NData = typeof en
+
+const i18NMap: Map<string, I18NData> = new Map<string, I18NData>([
   ['zh-CN', zhCN],
-  ['en', zhCN],
+  ['en', en],
   ['ja', ja],
 ])
 
-export const locales = [...iconMap.keys()]
+export const locales = [...i18NMap.keys()]
 export function useI18N() {
   return computed(() => {
     const locale = useLocale()

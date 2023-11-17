@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import type { AsyncData } from 'nuxt/app'
 import type { TopData } from '.'
 
 export function useMaxStreak(data: Ref<{
@@ -96,24 +97,47 @@ export function transformTopPlatformData(data: TopData[]) {
 
 export function transformTopLanguageData(data: TopData[]) {
   return data.map((d) => {
-    d.icon = iconMap.get(d.field)
-    d.field = getLanguageName(d.field)
+    d.icon = iconMap.get(d.field) ?? 'i-material-symbols-question-mark-rounded'
+    // d.field = getLanguageName(d.field)
     return d
   })
 }
 
-export async function useAllTopData(hasData: MaybeRef<boolean>, days: MaybeRef<number>) {
-  let languageTopData: Ref<TopData[] | null> = ref(null)
-  let projectTopData: Ref<TopData[] | null> = ref(null)
-  let platformTopData: Ref<TopData[] | null> = ref(null)
+export function useMergedFilters(filters: FilterItem[]) {
+  return computed(() => {
+    const map = new Map<string, string>()
+    filters.forEach((f) => {
+      if (map.has(f.key)) {
+        const value = map.get(f.key)
+        if (value) {
+          map.set(f.key, `${value},${f.value}`)
+        }
+      }
+      else {
+        map.set(f.key, f.value)
+      }
+    })
+    const res: FilterItem[] = []
+    map.forEach((value, key) => {
+      res.push({ key, value })
+    })
+    return res
+  })
+}
+
+export async function useAllTopData(hasData: MaybeRef<boolean>, days: MaybeRef<number>, filters: FilterItem[]) {
+  const mergedFilters = useMergedFilters(filters)
+  let languageTopData
+  let projectTopData
+  let platformTopData
   if (unref(hasData)) {
     const limit = 5
     const durationInMinutes = unref(days) * 1440
     try {
       [languageTopData, projectTopData, platformTopData] = await Promise.all([
-        fetchTop('language', durationInMinutes, limit, { transform: transformTopLanguageData }),
-        fetchTop('project', durationInMinutes, limit),
-        fetchTop('platform', durationInMinutes, limit, { transform: transformTopPlatformData }),
+        fetchTop('language', durationInMinutes, limit, mergedFilters, { transform: transformTopLanguageData }),
+        fetchTop('project', durationInMinutes, limit, mergedFilters),
+        fetchTop('platform', durationInMinutes, limit, mergedFilters, { transform: transformTopPlatformData }),
       ])
     }
     catch (error) {

@@ -1,6 +1,6 @@
 import NuxtLink from './NuxtLink.vue'
 
-export const ja: typeof zhCN = {
+export const ja: I18NData = {
   landing: {
     description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
     toDashboard: 'ダッシュボードへ',
@@ -15,18 +15,19 @@ export const ja: typeof zhCN = {
     pageHeader: {
       title: {
         overview: '概観',
-        shield: 'シールド',
+        badge: 'シールド',
         settings: '設定',
       },
       description: {
         overview: 'すべての CodeTime データを見る。',
-        shield: 'あなたのプロジェクトでスマート、統一感のある、明瞭なシールドで CodeTime を表示。',
+        badge: 'あなたのプロジェクトでスマート、統一感のある、明瞭なシールドで CodeTime を表示。',
         settings: 'CodeTime の設定を管理する、外観、言語、データ等を含む。',
       },
     },
     overview: {
       codetimeTrendTitle: 'コーディング時間のトレンド',
       codetimeLanguaeTrendTitle: 'コーディング言語のトレンド',
+      codetimeProjectTrendTitle: 'プロジェクトのトレンド',
       dataRange: {
         title(days: number) {
           return `${days} 日間`
@@ -73,7 +74,7 @@ export const ja: typeof zhCN = {
         },
       },
     },
-    shield: {
+    badge: {
       preview: {
         title: 'プレビュー',
       },
@@ -104,6 +105,10 @@ export const ja: typeof zhCN = {
       export: {
         title: 'エクスポート',
         button: 'ワンクリックエクスポート',
+        buttonExporting: 'エクスポート中',
+        buttonSucceed: 'エクスポート成功',
+        buttonFailed: 'エクスポート失敗',
+        download: 'ダウンロード',
         description: 'データの安全なバックアップ、便利な移行、深い分析とコンプライアンスを確保するためのデータのエクスポート機能をサポートしています。また、データの完全なコントロールと透明性を提供します。',
         tip: 'あなたのデータを CSV ファイルにエクスポート。',
       },
@@ -115,9 +120,15 @@ export const ja: typeof zhCN = {
         },
       },
     },
+    leaderboard: {
+      title(days: number) {
+        return `${days} 日間のコーディング時間リーダーボード`
+      },
+    },
   },
   button: {
     copy: 'コピー',
+    copied: 'コピー済み',
   },
   plot: {
     label: {

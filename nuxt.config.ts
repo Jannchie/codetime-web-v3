@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      apiHost: 'http://localhost:8081',
+      apiHost: 'https://api.codetime.dev',
     },
   },
   devtools: {

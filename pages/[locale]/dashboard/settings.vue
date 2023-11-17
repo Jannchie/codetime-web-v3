@@ -8,6 +8,44 @@ const router = useRouter()
 router.push({
   params: { locale: 'zh-CN' },
 })
+
+const apiHost = useRuntimeConfig().public.apiHost
+const exporting = ref(false)
+const exportSucceed = autoResetRef(false, 3000)
+const exportFailed = autoResetRef(false, 3000)
+const exportURL = ref('')
+const fileName = `${user.value?.username}-codetime-records-${new Date().toLocaleString()}.csv`
+async function exportData() {
+  if (exporting.value) {
+    return
+  }
+  try {
+    exporting.value = true
+    const resp = await $fetch<string>('/user/records/export', {
+      method: 'POST',
+      baseURL: apiHost,
+      credentials: 'include',
+    })
+    exporting.value = false
+    exportSucceed.value = true
+    exportFailed.value = false
+    // resp is a csv string, download it.
+    const blob = new Blob([resp], { type: 'text/csv' })
+    const url = window.URL.createObjectURL(blob)
+    exportURL.value = url
+    // auto download
+    const link = document.createElement('a')
+    link.href = url
+    link.download = fileName
+    link.click()
+  }
+  catch {
+    exporting.value = false
+    exportSucceed.value = false
+    exportFailed.value = true
+  }
+}
+
 const t = useI18N()
 </script>
 
@@ -17,7 +55,7 @@ const t = useI18N()
     :description="t.dashboard.pageHeader.description.settings"
   />
   <DashboardPageContent>
-    <CardBase class="p-6">
+    <CardBase sparse>
       <div class="text-xl mb-4">
         {{ t.dashboard.settings.token.title }}
       </div>
@@ -34,7 +72,7 @@ const t = useI18N()
         {{ t.dashboard.settings.token.tip }}
       </div>
     </CardBase>
-    <CardBase class="p-6">
+    <CardBase sparse>
       <div class="text-xl mb-4">
         {{ t.dashboard.settings.language.title }}
       </div>
@@ -45,18 +83,60 @@ const t = useI18N()
         {{ t.dashboard.settings.language.tip }}
       </div>
     </CardBase>
-    <CardBase class="p-6">
+    <CardBase
+      sparse
+      :loading="exporting"
+    >
       <div class="text-xl mb-4">
         {{ t.dashboard.settings.export.title }}
       </div>
       <div class="op75 text-sm mb-4">
         {{ t.dashboard.settings.export.description }}
       </div>
-      <div class="mb-2">
-        <RBtn class="flex gap-2 items-center">
-          <i class="i-tabler-download" />
-          {{ t.dashboard.settings.export.button }}
+      <div class="mb-2 flex items-center gap-2">
+        <RBtn
+          class="flex gap-2 items-center"
+          :class="{
+            ['!bg-red-9 !border-red-9 !hover:bg-red-9 !hover:border-red-9']: exportFailed,
+            ['!bg-green-9 !border-green-9 !hover:bg-green-9 !hover:border-green-9']: exportSucceed,
+            ['!bg-sky-9 !border-sky-9 !hover:bg-sky-9 !hover:border-sky-9']: exporting,
+          }"
+          @click="exportData"
+        >
+          <template v-if="exporting">
+            <i class="i-tabler-loader animate-spin" />
+            <span>
+              {{ t.dashboard.settings.export.buttonExporting }}
+            </span>
+          </template>
+          <template v-else-if="exportFailed">
+            <i class="i-tabler-alert-triangle" />
+            <span>
+              {{ t.dashboard.settings.export.buttonFailed }}
+            </span>
+          </template>
+          <template v-else-if="exportSucceed">
+            <i class="i-tabler-check" />
+            <span>
+
+              {{ t.dashboard.settings.export.buttonSucceed }}
+            </span>
+          </template>
+          <template v-else>
+            <i class="i-tabler-download" />
+            <span>
+              {{ t.dashboard.settings.export.button }}
+            </span>
+          </template>
         </RBtn>
+        <div v-if="exportURL">
+          <a
+            :href="exportURL"
+            :download="fileName"
+          >
+            {{ t.dashboard.settings.export.download }}
+          </a>
+        </div>
       </div>
       <div class="op50 text-xs">
         {{ t.dashboard.settings.export.tip }}

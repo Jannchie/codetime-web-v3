@@ -1,8 +1,9 @@
 <script setup lang="ts">
 const headerTabs = ref([
   { label: 'Overview', id: 'overview', path: `/dashboard` },
-  { label: 'Shield', id: 'shield', path: `/dashboard/shield` },
+  { label: 'Badges', id: 'badges', path: `/dashboard/badges` },
   { label: 'Settings', id: 'settings', path: `/dashboard/settings` },
+  { label: 'Leaderboard', id: 'leaderboard', path: `/dashboard/leaderboard` },
 ])
 useSeoMeta({
   title: 'CodeTime - 追迹你的编程时间',

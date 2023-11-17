@@ -36,6 +36,7 @@ const options = computed<Plot.PlotOptions>(() => ({
   },
   x: {
     insetRight: maxR.value,
+    insetLeft: maxR.value,
     label: t.value.plot.label.date,
   },
   width: 1110,

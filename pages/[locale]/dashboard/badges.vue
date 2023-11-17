@@ -19,38 +19,38 @@ const t = useI18N()
 
 <template>
   <DashboardPageTitle
-    :title="t.dashboard.pageHeader.title.shield"
-    :description="t.dashboard.pageHeader.description.shield"
+    :title="t.dashboard.pageHeader.title.badge"
+    :description="t.dashboard.pageHeader.description.badge"
   />
   <DashboardPageContent>
-    <ShieldPreviewCard :link="link" />
+    <BadgePreviewCard :link="link" />
     <CardBase class="flex children:flex-grow-1 gap-2 flex-col sm:flex-row">
       <RSelect
         v-model="style"
         :options="[
-          { label: t.dashboard.shield.style.social, id: 'social' },
-          { label: t.dashboard.shield.style.flatSquare, id: 'flat-square' },
-          { label: t.dashboard.shield.style.flat, id: 'flat' },
-          { label: t.dashboard.shield.style.forTheBadge, id: 'for-the-badge' },
-          { label: t.dashboard.shield.style.plastic, id: 'plastic' },
+          { label: t.dashboard.badge.style.social, id: 'social' },
+          { label: t.dashboard.badge.style.flatSquare, id: 'flat-square' },
+          { label: t.dashboard.badge.style.flat, id: 'flat' },
+          { label: t.dashboard.badge.style.forTheBadge, id: 'for-the-badge' },
+          { label: t.dashboard.badge.style.plastic, id: 'plastic' },
         ]"
-        :placeholder="t.dashboard.shield.placeholder.style"
+        :placeholder="t.dashboard.badge.placeholder.style"
       />
       <RTextField
         v-if="style !== 'social'"
         v-model="color"
-        :placeholder="t.dashboard.shield.placeholder.color"
+        :placeholder="t.dashboard.badge.placeholder.color"
       />
       <RTextField
         v-model="project"
-        :placeholder="t.dashboard.shield.placeholder.project"
+        :placeholder="t.dashboard.badge.placeholder.project"
       />
       <RTextField
         v-model="days"
         type="number"
-        :placeholder="t.dashboard.shield.placeholder.days"
+        :placeholder="t.dashboard.badge.placeholder.days"
       />
     </CardBase>
-    <ShieldCopyCard :link="link" />
+    <BadgeCopyCard :link="link" />
   </DashboardPageContent>
 </template>
