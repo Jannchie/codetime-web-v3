@@ -122,6 +122,11 @@ export const en = {
           removeAllData: 'Remove All Data',
         },
       },
+      other: {
+        title: 'Other',
+        description: 'Other settings.',
+        logout: 'Logout',
+      },
     },
     leaderboard: {
       title(days: number) {

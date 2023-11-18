@@ -46,6 +46,16 @@ async function exportData() {
   }
 }
 
+async function logout() {
+  await $fetch('/auth/logout', {
+    method: 'POST',
+    baseURL: apiHost,
+    credentials: 'include',
+  })
+  // clean
+  window.location.href = '/'
+}
+
 const t = useI18N()
 </script>
 
@@ -140,6 +150,23 @@ const t = useI18N()
       </div>
       <div class="op50 text-xs">
         {{ t.dashboard.settings.export.tip }}
+      </div>
+    </CardBase>
+    <CardBase class="p-6">
+      <div class="text-xl mb-4">
+        {{ t.dashboard.settings.other.title }}
+      </div>
+      <div class="op75 text-sm mb-4">
+        {{ t.dashboard.settings.other.description }}
+      </div>
+      <div class="mb-2">
+        <RBtn
+          class="flex gap-2 items-center"
+          @click="logout"
+        >
+          <i class="i-tabler-logout" />
+          {{ t.dashboard.settings.other.logout }}
+        </RBtn>
       </div>
     </CardBase>
     <CardBase class="p-6 border-red-9">

@@ -122,6 +122,11 @@ export const zhCN: Partial<I18NData> = {
           removeAllData: '删除所有数据',
         },
       },
+      other: {
+        title: '其他',
+        description: '其他设置。',
+        logout: '登出',
+      },
     },
     leaderboard: {
       title(days: number) {

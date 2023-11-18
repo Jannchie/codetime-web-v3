@@ -122,6 +122,11 @@ export const ja: Partial<I18NData> = {
           removeAllData: 'すべてのデータを削除',
         },
       },
+      other: {
+        title: 'その他',
+        description: 'その他の設定。',
+        logout: 'ログアウト',
+      },
     },
     leaderboard: {
       title(days: number) {
