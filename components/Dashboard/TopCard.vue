@@ -64,8 +64,8 @@ onMounted(() => {
         :key="d.field"
       >
         <div
-          class="flex op75 justify-between gap-2 text-sm cursor-pointer"
-          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-sky-4' : ''"
+          class="flex justify-between gap-2 text-sm cursor-pointer"
+          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-sky-6' : ''"
           @click="onClickItem(d.field, type)"
         >
           <div class="overflow-hidden truncate text-nowrap">
@@ -82,7 +82,7 @@ onMounted(() => {
         </div>
         <div class="h-0.5 my-0.5 bg-neutral-8 rounded-xl overflow-hidden">
           <div
-            class="h-full bg-sky-7"
+            class="h-full bg-sky-6"
             :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
           />
         </div>

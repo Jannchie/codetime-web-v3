@@ -106,7 +106,7 @@ useHead({
               <div
                 v-if="tab === currentTab"
               >
-                <div class="h-0.5 bg-sky-7" />
+                <div class="h-0.5 bg-sky-6" />
               </div>
             </div>
           </div>

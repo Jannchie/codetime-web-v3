@@ -84,6 +84,18 @@ const t = useI18N()
     </CardBase>
     <CardBase sparse>
       <div class="text-xl mb-4">
+        {{ t.dashboard.settings.theme.title }}
+      </div>
+      <div class="mb-2 flex gap-2">
+        <ThemeItem id="dark" />
+        <ThemeItem id="light" />
+      </div>
+      <div class="op50 text-xs">
+        {{ t.dashboard.settings.theme.tip }}
+      </div>
+    </CardBase>
+    <CardBase sparse>
+      <div class="text-xl mb-4">
         {{ t.dashboard.settings.language.title }}
       </div>
       <div class="mb-2">
@@ -152,7 +164,7 @@ const t = useI18N()
         {{ t.dashboard.settings.export.tip }}
       </div>
     </CardBase>
-    <CardBase class="p-6">
+    <CardBase sparse>
       <div class="text-xl mb-4">
         {{ t.dashboard.settings.other.title }}
       </div>
@@ -169,7 +181,10 @@ const t = useI18N()
         </RBtn>
       </div>
     </CardBase>
-    <CardBase class="p-6 border-red-9">
+    <CardBase
+      sparse
+      class="border-red-9"
+    >
       <div class="text-xl mb-4 text-red-5">
         {{ t.dashboard.settings.dangerZone.title }}
       </div>

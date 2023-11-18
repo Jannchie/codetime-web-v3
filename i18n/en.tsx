@@ -115,6 +115,12 @@ export const en = {
         description: 'We support website data export to ensure secure backup, convenient migration, in-depth analysis, and compliance, while giving you complete control and transparency over your data.',
         tip: 'Export your data to a CSV file.',
       },
+      theme: {
+        title: 'Theme',
+        tip: 'Choose the theme for your CodeTime Web UI.',
+        dark: 'Dark',
+        light: 'Light',
+      },
       dangerZone: {
         title: 'Danger Zone',
         description: 'These settings will permanently affect your data and cannot be undone. Please proceed with caution.',

@@ -10,7 +10,9 @@ provide('user', user)
     color="#fff"
     :height="1"
   />
-  <slot />
+  <ThemeProvider>
+    <slot />
+  </ThemeProvider>
 </template>
 
 <style>
