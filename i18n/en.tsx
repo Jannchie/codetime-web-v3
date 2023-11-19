@@ -120,6 +120,7 @@ export const en = {
         tip: 'Choose the theme for your CodeTime Web UI.',
         dark: 'Dark',
         light: 'Light',
+        system: 'System',
       },
       dangerZone: {
         title: 'Danger Zone',

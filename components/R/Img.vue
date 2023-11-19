@@ -11,14 +11,14 @@ const loaded = ref(false)
 
 <template>
   <NuxtImg
+    v-if="src && loaded"
     placeholder
-
     :src="src"
     :class="{ [className]: true, hidden: !loaded }"
     @load="loaded = true"
   />
   <div
-    v-if="!loaded"
+    v-else
     class="animate-pulse bg-back-2"
     :class="className"
   />

@@ -6,7 +6,7 @@ const locale = computed(
 )
 
 const cookie = useCookie('locale', {
-  expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+  expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000 * 100),
 })
 const currentLocale = ref(locale.value ?? (cookie.value ?? 'en'))
 

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import '@unocss/reset/tailwind-compat.css'
 
+
 const user = await fetchUser()
 provide('user', user)
+
 </script>
 
 <template>
@@ -10,14 +12,13 @@ provide('user', user)
     color="var(--color-primary-1)"
     :height="1"
   />
-  <ThemeProvider class="min-h-100vh flex-col flex">
     <slot />
-  </ThemeProvider>
 </template>
 
 <style>
 :root {
   color-scheme: light dark;
+  background-color: var(--color-background);
 }
 
 input[type="password"] {
@@ -68,13 +69,13 @@ marker {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-front: #eee; --color-primary-1: #0284c7; --color-primary-2: #075985; --color-primary-3: #0c4a6e; --color-bg-1: #404040; --color-bg-2: #262626; --color-bg-3: #171717; --color-border-1: #404040; --color-border-2: #262626; --color-border-3: #171717; --color-error-1: #ef4444; --color-error-2: #b91c1c; --color-error-3: #7f1d1d; --color-success-1: #10b981; --color-success-2: #047857; --color-success-3: #064e3b; --color-warning-1: #f59e0b; --color-warning-2: #b45309; --color-warning-3: #78350f;
+    --color-frontground: #eee; --color-background: #111; --color-primary-1: #0284c7; --color-primary-2: #075985; --color-primary-3: #0c4a6e; --color-bg-1: #404040; --color-bg-2: #262626; --color-bg-3: #171717; --color-border-1: #404040; --color-border-2: #262626; --color-border-3: #171717; --color-error-1: #ef4444; --color-error-2: #b91c1c; --color-error-3: #7f1d1d; --color-success-1: #10b981; --color-success-2: #047857; --color-success-3: #064e3b; --color-warning-1: #f59e0b; --color-warning-2: #b45309; --color-warning-3: #78350f;
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --color-primary-1: #0284c7; --color-primary-2: #075985; --color-primary-3: #0c4a6e; --color-bg-1: #ffffff; --color-bg-2: #fefefe; --color-bg-3: #fcfcfc; --color-border-1: #e5e5e5; --color-border-2: #d4d4d4; --color-border-3: #a3a3a3; --color-error-1: #ef4444; --color-error-2: #b91c1c; --color-error-3: #7f1d1d; --color-success-1: #10b981; --color-success-2: #047857; --color-success-3: #064e3b; --color-warning-1: #f59e0b; --color-warning-2: #b45309; --color-warning-3: #78350f;
+    --color-frontground: #111; --color-background: #eee; --color-primary-1: #0284c7; --color-primary-2: #0284c7; --color-primary-3: #0284c7; --color-bg-1: #ffffff; --color-bg-2: #fefefe; --color-bg-3: #fcfcfc; --color-border-1: #d4d4d4; --color-border-2: #a3a3a3; --color-border-3: #a3a3a3; --color-error-1: #dc2626; --color-error-2: #dc2626; --color-error-3: #dc2626; --color-success-1: #059669; --color-success-2: #059669; --color-success-3: #059669; --color-warning-1: #d97706; --color-warning-2: #d97706; --color-warning-3: #d97706;
   }
 }
 </style>

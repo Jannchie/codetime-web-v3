@@ -87,8 +87,16 @@ const t = useI18N()
         {{ t.dashboard.settings.theme.title }}
       </div>
       <div class="mb-2 flex gap-2">
-        <ThemeItem id="dark" />
-        <ThemeItem id="light" />
+        <ClientOnly>
+          <template #placeholder>
+            <div class="h-145px">
+              <div class="m-8 bg-back-1 animate-pulse" />
+            </div>
+          </template>
+          <ThemeItem theme="dark" />
+          <ThemeItem theme="light" />
+          <ThemeItem theme="system" />
+        </ClientOnly>
       </div>
       <div class="op50 text-xs">
         {{ t.dashboard.settings.theme.tip }}
@@ -192,7 +200,7 @@ const t = useI18N()
         {{ t.dashboard.settings.dangerZone.description }}
       </div>
       <div class="mb-2">
-        <RBtn class="hover:bg-error-3! hover:border-error-3! flex gap-2 items-center">
+        <RBtn class="hover:text-white hover:bg-error-3! hover:border-error-3! flex gap-2 items-center">
           <i class="i-tabler-trash" />
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </RBtn>

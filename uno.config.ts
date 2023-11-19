@@ -4,7 +4,8 @@ import { iconMap } from './utils/icon'
 export default defineConfig({
   theme: {
     colors: {
-      front: 'var(--color-front)',
+      frontground: 'var(--color-frontground)',
+      background: 'var(--color-background)',
       primary: {
         1: 'var(--color-primary-1)',
         2: 'var(--color-primary-2)',

@@ -4,7 +4,9 @@ interface ColorVariants {
   3: string
 }
 export interface ThemeData {
-  front: string
+  dark: boolean
+  frontground: string
+  background: string
   primary: ColorVariants
   back: ColorVariants
   success: ColorVariants
@@ -14,7 +16,9 @@ export interface ThemeData {
 }
 
 export const darkTheme: ThemeData = {
-  front: '#eee',
+  dark: true,
+  frontground: '#eee',
+  background: '#111',
   primary: {
     1: '#0284c7',
     2: '#075985',
@@ -48,7 +52,9 @@ export const darkTheme: ThemeData = {
 }
 
 export const lightTheme: ThemeData = {
-  front: '#111',
+  dark: false,
+  frontground: '#111',
+  background: '#fff',
   primary: {
     1: '#0284c7',
     2: '#0284c7',

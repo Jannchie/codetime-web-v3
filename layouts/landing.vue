@@ -1,4 +1,5 @@
 <script setup lang="ts">
+initTheme()
 useSeoMeta({
   title: 'CodeTime - 追迹你的编程时间',
   description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
@@ -30,23 +31,25 @@ watchEffect(() => {
 </script>
 
 <template>
-  <RHeader class="px-4 py-3">
-    <NuxtImg
-      alt="Code Time"
-      src="/icon.svg"
-      width="26"
-      class="ml-2 mr-3"
-    />
-    <div>
-      <LanguageSelect />
-    </div>
-  </RHeader>
-  <NuxtLayout
-    name="default"
-  >
-    <slot />
-  </NuxtLayout>
-  <CodetimeFooter />
+  <ThemeProvider class="min-h-100vh flex-col flex">
+    <RHeader class="px-4 py-3">
+      <NuxtImg
+        alt="Code Time"
+        src="/icon.svg"
+        width="26"
+        class="ml-2 mr-3"
+      />
+      <div>
+        <LanguageSelect />
+      </div>
+    </RHeader>
+    <NuxtLayout
+      name="default"
+    >
+      <slot />
+    </NuxtLayout>
+    <CodetimeFooter />
+  </ThemeProvider>
 </template>
 
 <style>

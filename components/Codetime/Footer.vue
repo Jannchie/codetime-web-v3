@@ -11,7 +11,7 @@
     </div>
     <div class="mt-6">
       <NuxtLink
-        class="op50 hover:op75 transition-all"
+        class="op50 hover:op75"
         to="https://github.com/Jannchie/codetime-web-v3"
         target="_blank"
       >

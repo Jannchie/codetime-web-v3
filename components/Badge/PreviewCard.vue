@@ -21,6 +21,7 @@ const loaded = ref(false)
         }"
       />
       <NuxtImg
+        v-if="link"
         :class="loaded ? '' : 'hidden'"
         placeholder
         :src="link"
