@@ -45,7 +45,10 @@ export async function fetchUser() {
   const { data } = await useAPIFetch<User>('/user', {
     credentials: 'include',
   })
-  return data
+  if (data.value?.id === 0) {
+    return null
+  }
+  return data.value
 }
 
 export async function fetchSumMinutes() {
@@ -55,7 +58,7 @@ export async function fetchSumMinutes() {
 }
 
 export function useUser() {
-  return inject<Ref<User | null>>('user', ref(null))
+  return inject<User | null>('user', null)
 }
 
 export interface TopData {

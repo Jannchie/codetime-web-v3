@@ -22,6 +22,7 @@ useSeoMeta({
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)
 const user = await fetchUser()
+provide('user', user)
 useHead({
   htmlAttrs: {
     lang: locale.value,
@@ -80,7 +81,7 @@ useHead({
                 :to="`/${locale}/dashboard`"
               >
                 <NuxtImg
-                  v-if="user.avatar"
+                  v-if="user && user.avatar"
                   :src="user.avatar"
                   class="rounded-full w-5 h-5"
                 />

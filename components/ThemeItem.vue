@@ -29,8 +29,14 @@ const title = computed(() => {
     @click="() => currentTheme = props.theme ?? 'system'"
   >
     <div
-      class="p-2 border-b border-border-1 text-sm op75"
+      class="p-2 border-b border-border-1 text-sm op75 flex gap-2 items-center"
     >
+      <i
+        class="i-tabler-palette"
+        :class="{
+          'text-primary-1': isCurrent,
+        }"
+      />
       {{ title }}
     </div>
     <ThemeProvider :theme="theme">

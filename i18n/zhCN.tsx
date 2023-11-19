@@ -115,6 +115,13 @@ export const zhCN: Partial<I18NData> = {
         description: '我们支持网站数据导出功能，以确保数据的安全备份、便捷迁移、深入分析与合规性，同时赋予您对其数据完全的控制权和透明度。',
         tip: '导出您的数据到 CSV 文件。',
       },
+      theme: {
+        title: '主题',
+        tip: '选择您的 CodeTime Web UI 的主题。',
+        dark: '暗色',
+        light: '亮色',
+        system: '跟随系统',
+      },
       dangerZone: {
         title: '危险区域',
         description: '这些设置会永久影响你的数据，不可恢复。请谨慎操作。',
