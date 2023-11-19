@@ -10,7 +10,7 @@ defineEmits(['change', 'update:modelValue'])
 <template>
   <input
     :value="modelValue"
-    class="py-1 px-2 rounded border border-neutral-7 bg-neutral-8 outline-none"
+    class="py-1 px-2 rounded border border-border-1 bg-back-2 outline-none"
     @input="$emit('update:modelValue', ($event.target as any)?.value ?? '')"
   >
 </template>

@@ -20,12 +20,14 @@ const title = computed(() => {
     <div class="px-2 pt-2">
       {{ title }}
     </div>
-    <div class="w-86 h-32 p-2">
-      <CardBase>
-        <div class="h-1em w-32 bg-white mb-2" />
-        <div class="h-1em w-full bg-white text-sm op-50 mb-1" />
-        <div class="h-1em w-full bg-white text-sm op-50" />
-      </CardBase>
-    </div>
+    <ThemeProvider :theme="id">
+      <div class="w-86 h-full p-2">
+        <CardBase>
+          <div class="h-1em w-32 bg-primary-1 mb-2 rounded-full" />
+          <div class="h-1em w-full bg-front text-sm rounded-full op-50 mb-1" />
+          <div class="h-1em w-2/3 bg-front rounded-full text-sm op-50" />
+        </CardBase>
+      </div>
+    </ThemeProvider>
   </CardBase>
 </template>

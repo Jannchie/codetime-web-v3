@@ -77,7 +77,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
         />
         <i
           v-else
-          class="w-10 h-10 rounded-full bg-neutral-8 flex items-center justify-center text-neutral-7"
+          class="w-10 h-10 rounded-full bg-back-2 flex items-center justify-center text-back-1"
         />
         <div class="w-32 max-w-32">
           <div class="overflow-hidden truncate">
@@ -90,13 +90,13 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
         <div class="grow-1 pr-4">
           <div
             v-if="i !== 0"
-            class="text-right text-xs sm:text-sm text-sky-6"
+            class="text-right text-xs sm:text-sm text-primary-1"
           >
             {{ t.dashboard.leaderboard.delta(getDurationString(60 * 1000 * (-item.minutes + resp.data.value[i - 1].minutes))) }}
           </div>
-          <div class="h-0.5 bg-neutral-7 w-full">
+          <div class="h-0.5 bg-back-1 w-full">
             <div
-              class="h-full bg-sky-9"
+              class="h-full bg-primary-3"
               :style="{
                 width: `${item.minutes / maxMinutes * 100}%`,
               }"

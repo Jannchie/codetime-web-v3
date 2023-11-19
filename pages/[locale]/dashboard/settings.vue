@@ -71,7 +71,7 @@ const t = useI18N()
       </div>
       <div class="mb-2 flex gap-2">
         <RTextField
-          class="py-1 px-2 rounded border border-neutral-7 bg-neutral-8 outline-none"
+          class="py-1 px-2 rounded border border-border-1 bg-back-2 outline-none"
           readonly
           type="password"
           :value="token"
@@ -119,9 +119,9 @@ const t = useI18N()
         <RBtn
           class="flex gap-2 items-center"
           :class="{
-            ['!bg-red-9 !border-red-9 !hover:bg-red-9 !hover:border-red-9']: exportFailed,
-            ['!bg-green-9 !border-green-9 !hover:bg-green-9 !hover:border-green-9']: exportSucceed,
-            ['!bg-sky-9 !border-sky-9 !hover:bg-sky-9 !hover:border-sky-9']: exporting,
+            ['!bg-error-3 !border-error-3 !hover:bg-error-3 !hover:border-error-3']: exportFailed,
+            ['!bg-success-3 !border-success-3 !hover:bg-success-3 !hover:border-success-3']: exportSucceed,
+            ['!bg-primary-3 !border-primary-3 !hover:bg-primary-3 !hover:border-primary-3']: exporting,
           }"
           @click="exportData"
         >
@@ -183,16 +183,16 @@ const t = useI18N()
     </CardBase>
     <CardBase
       sparse
-      class="border-red-9"
+      class="border-error-3"
     >
-      <div class="text-xl mb-4 text-red-5">
+      <div class="text-xl mb-4 text-error-1">
         {{ t.dashboard.settings.dangerZone.title }}
       </div>
       <div class="op75 text-sm mb-4">
         {{ t.dashboard.settings.dangerZone.description }}
       </div>
       <div class="mb-2">
-        <RBtn class="hover:bg-red-9! hover:border-red-9! flex gap-2 items-center">
+        <RBtn class="hover:bg-error-3! hover:border-error-3! flex gap-2 items-center">
           <i class="i-tabler-trash" />
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </RBtn>

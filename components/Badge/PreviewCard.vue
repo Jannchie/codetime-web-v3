@@ -17,7 +17,7 @@ const loaded = ref(false)
     >
       <div
         :class="{
-          'bg-neutral-8 h-32px rounded-lg w-282px animate-pulse': !loaded,
+          'bg-back-2 h-32px rounded-lg w-282px animate-pulse': !loaded,
         }"
       />
       <NuxtImg

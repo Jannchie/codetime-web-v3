@@ -17,7 +17,7 @@ function onClick() {
 
 <template>
   <RBtn
-    :class="{ ['hover:bg-green-9! hover:border-green-9!']: ok }"
+    :class="{ ['hover:bg-success-3! hover:border-success-3!']: ok }"
     @click="onClick"
   >
     <div

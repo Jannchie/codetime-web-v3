@@ -133,11 +133,11 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase class="p-6 flex gap-2">
       <div class="leading-0">
         <i
-          class="w-6 h-6 text-sky-6 i-mdi:alert-circle-outline"
+          class="w-6 h-6 text-primary-1 i-mdi:alert-circle-outline"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <div class="text-sky-6 font-black">
+        <div class="text-primary-1 font-black">
           {{ t.dashboard.overview.noData.notice.title }}
         </div>
         <NoDataBody />

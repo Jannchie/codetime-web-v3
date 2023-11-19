@@ -10,8 +10,8 @@ const cardRef = ref<HTMLElement | null>(null)
   <div
     ref="cardRef"
     :class="{
-      ['after:bg-neutral-9 rotating-border']: loading,
-      ['border-neutral-7 bg-neutral-9 border']: !loading,
+      ['after:bg-back-3 rotating-border']: loading,
+      ['border-border-1 bg-back-3 border']: !loading,
       ['p-6']: sparse,
       ['p-4']: !sparse,
     }"

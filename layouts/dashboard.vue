@@ -44,9 +44,9 @@ useHead({
     >
       <CardBase>
         <div class="flex flex-col gap-1">
-          <div class="text-sky-6 font-black flex items-center gap-1.5">
+          <div class="text-primary-1 font-black flex items-center gap-1.5">
             <i
-              class="w-5 h-5 text-sky-6 i-mdi:alert-circle-outline"
+              class="w-5 h-5 text-primary-1 i-mdi:alert-circle-outline"
             />
             title
           </div>
@@ -98,7 +98,7 @@ useHead({
           >
             <NuxtLink
               :to="`/${locale}${tab.path}`"
-              class="px-3 py-2 hover:bg-neutral-7 rounded transition-all op50 hover:op75 text-sm"
+              class="px-3 py-2 hover:bg-back-1 rounded transition-all op50 hover:op75 text-sm"
             >
               {{ tab.label }}
             </NuxtLink>
@@ -106,7 +106,7 @@ useHead({
               <div
                 v-if="tab === currentTab"
               >
-                <div class="h-0.5 bg-sky-6" />
+                <div class="h-0.5 bg-primary-1" />
               </div>
             </div>
           </div>

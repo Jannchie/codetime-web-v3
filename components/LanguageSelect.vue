@@ -5,7 +5,9 @@ const locale = computed(
   () => route.params.locale as string,
 )
 
-const cookie = useCookie('locale')
+const cookie = useCookie('locale', {
+  expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+})
 const currentLocale = ref(locale.value ?? (cookie.value ?? 'en'))
 
 function onChange(value: string) {

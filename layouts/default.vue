@@ -7,10 +7,10 @@ provide('user', user)
 
 <template>
   <NuxtLoadingIndicator
-    color="#fff"
+    color="var(--color-primary-1)"
     :height="1"
   />
-  <ThemeProvider>
+  <ThemeProvider class="min-h-100vh flex-col flex">
     <slot />
   </ThemeProvider>
 </template>
@@ -33,11 +33,11 @@ input[type="password"] {
 }
 
 .plot {
-  --plot-background: rgb(23 23 23);
+  --plot-background: var(--color-bg-3);
   background: var(--plot-background) !important;
 }
 .y-dot-plot {
-  --plot-background: rgb(23 23 23);
+  --plot-background: var(--color-bg-3);
   background: var(--plot-background) !important;
 }
 
@@ -64,5 +64,17 @@ marker {
   stroke-linejoin: round;
   paint-order: stroke;
   stroke-width: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-front: #eee; --color-primary-1: #0284c7; --color-primary-2: #075985; --color-primary-3: #0c4a6e; --color-bg-1: #404040; --color-bg-2: #262626; --color-bg-3: #171717; --color-border-1: #404040; --color-border-2: #262626; --color-border-3: #171717; --color-error-1: #ef4444; --color-error-2: #b91c1c; --color-error-3: #7f1d1d; --color-success-1: #10b981; --color-success-2: #047857; --color-success-3: #064e3b; --color-warning-1: #f59e0b; --color-warning-2: #b45309; --color-warning-3: #78350f;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-primary-1: #0284c7; --color-primary-2: #075985; --color-primary-3: #0c4a6e; --color-bg-1: #ffffff; --color-bg-2: #fefefe; --color-bg-3: #fcfcfc; --color-border-1: #e5e5e5; --color-border-2: #d4d4d4; --color-border-3: #a3a3a3; --color-error-1: #ef4444; --color-error-2: #b91c1c; --color-error-3: #7f1d1d; --color-success-1: #10b981; --color-success-2: #047857; --color-success-3: #064e3b; --color-warning-1: #f59e0b; --color-warning-2: #b45309; --color-warning-3: #78350f;
+  }
 }
 </style>

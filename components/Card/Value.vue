@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <CardBase>
-    <div class="text-sky-6 text-sm">
+    <div class="text-primary-1 text-sm">
       {{ title }}
     </div>
     <div class="text-xl">

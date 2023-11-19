@@ -4,25 +4,36 @@ import { iconMap } from './utils/icon'
 export default defineConfig({
   theme: {
     colors: {
+      front: 'var(--color-front)',
       primary: {
         1: 'var(--color-primary-1)',
         2: 'var(--color-primary-2)',
         3: 'var(--color-primary-3)',
       },
-      front: {
-        1: 'var(--color-fg-1)',
-        2: 'var(--color-fg-2)',
-        3: 'var(--color-fg-3)',
+      border: {
+        1: 'var(--color-border-1)',
+        2: 'var(--color-border-2)',
+        3: 'var(--color-border-3)',
       },
       back: {
         1: 'var(--color-bg-1)',
         2: 'var(--color-bg-2)',
         3: 'var(--color-bg-3)',
       },
-      border: {
-        1: 'var(--color-board-1)',
-        2: 'var(--color-board-2)',
-        3: 'var(--color-board-3)',
+      error: {
+        1: 'var(--color-error-1)',
+        2: 'var(--color-error-2)',
+        3: 'var(--color-error-3)',
+      },
+      success: {
+        1: 'var(--color-success-1)',
+        2: 'var(--color-success-2)',
+        3: 'var(--color-success-3)',
+      },
+      warning: {
+        1: 'var(--color-warning-1)',
+        2: 'var(--color-warning-2)',
+        3: 'var(--color-warning-3)',
       },
     },
   },

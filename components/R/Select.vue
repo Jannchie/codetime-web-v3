@@ -105,7 +105,7 @@ function onItemPointerDown(option: Option) {
     <div class="w-full flex items-center">
       <input
         ref="inputRef"
-        class="r-select-input w-inherit cursor-pointer pl-2 py-1 pr-8 outline-none focus:border-sky-6 border border-neutral-7 rounded text-neutral-0 bg-neutral-8"
+        class="r-select-input w-inherit cursor-pointer pl-2 py-1 pr-8 outline-none focus:border-primary-1 border border-border-1 rounded bg-back-2"
         placeholder="Select"
         readonly
         :value="currentLabel"
@@ -117,14 +117,14 @@ function onItemPointerDown(option: Option) {
     </div>
     <div
       v-if="focused"
-      class="r-select-list p-1 overflow-hidden flex-col w-full mt-2 absolute border border-neutral-7 rounded bg-neutral-8 z-1"
+      class="r-select-list p-1 overflow-hidden flex-col w-full mt-2 absolute border border-border-1 rounded bg-back-2 z-1"
     >
       <div
         v-for="option, i in options"
         :key="getId(option)"
         :class="{
-          'hover-bg-neutral-9': keyboardIndex !== i,
-          'bg-sky-6': keyboardIndex === i,
+          'hover-bg-back-3': keyboardIndex !== i,
+          'bg-primary-1': keyboardIndex === i,
         }"
         class="r-select-item px-2 p-1 rounded flex gap-2 cursor-pointer items-center justify-between"
         @pointerdown="onItemPointerDown(option)"

@@ -65,7 +65,7 @@ onMounted(() => {
       >
         <div
           class="flex justify-between gap-2 text-sm cursor-pointer"
-          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-sky-6' : ''"
+          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-1' : ''"
           @click="onClickItem(d.field, type)"
         >
           <div class="overflow-hidden truncate text-nowrap">
@@ -80,9 +80,9 @@ onMounted(() => {
             {{ getDurationString(d.minutes * 60 * 1000) }}
           </div>
         </div>
-        <div class="h-0.5 my-0.5 bg-neutral-8 rounded-xl overflow-hidden">
+        <div class="h-0.5 my-0.5 bg-back-2 rounded-xl overflow-hidden">
           <div
-            class="h-full bg-sky-6"
+            class="h-full bg-primary-1"
             :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
           />
         </div>

@@ -12,7 +12,7 @@ const t = useI18N()
     >
       <NuxtLink
         :to="`/${locale}/dashboard`"
-        class="px-4 py-3 rounded-xl bg-transparent border border-neutral-7 bg-neutral-8 hover:bg-neutral-7 transition-all"
+        class="px-4 py-3 rounded-xl bg-transparent border border-border-1 bg-back-2 hover:bg-back-1 transition-all"
       >
         <div class="flex gap-2 items-center">
           <i
@@ -25,7 +25,7 @@ const t = useI18N()
       </NuxtLink>
       <NuxtLink
         :href="`${$config.public.apiHost}/auth/github`"
-        class="px-4 py-3 rounded-xl bg-transparent border border-sky-8 hover:bg-sky-8 transition-all"
+        class="px-4 py-3 rounded-xl bg-transparent border border-primary-2 hover:bg-primary-2 transition-all"
       >
         <div class="flex gap-2 items-center">
           <i class="w-4 h-4 i-eva-github-outline" />
@@ -38,7 +38,7 @@ const t = useI18N()
     <NuxtLink
       v-else
       :to="`/${locale}/dashboard`"
-      class="px-4 py-3 flex gap-2 items-center rounded-xl bg-transparent border border-sky-8 hover:bg-sky-8 transition-all"
+      class="px-4 py-3 flex gap-2 items-center rounded-xl bg-transparent border border-primary-2 hover:bg-primary-2 transition-all"
     >
       <NuxtImg
         v-if="user.avatar"
