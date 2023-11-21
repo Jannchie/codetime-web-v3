@@ -80,7 +80,7 @@ onMounted(() => {
             {{ getDurationString(d.minutes * 60 * 1000) }}
           </div>
         </div>
-        <div class="h-0.5 my-0.5 bg-back-2 rounded-xl overflow-hidden">
+        <div class="h-0.5 my-0.5 bg-border-1 rounded-xl overflow-hidden">
           <div
             class="h-full bg-primary-1"
             :style="{ width: `${d.minutes / maxMinutes * 100}%` }"

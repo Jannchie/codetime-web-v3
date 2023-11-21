@@ -29,9 +29,9 @@ const options = computed<PlotOptions>(() => ({
     tickFormat: (d: number) => d3.format(',d')(d / 60 / 60 / 1000),
   },
   marks: [
-    Plot.dotY(data.value, { x: 'date', y: 'duration', fill: '#333' }),
-    Plot.lineY(data.value, Plot.windowY({ k: 7, x: 'date', y: 'duration', stroke: 'rgb(2 132 199)', curve: 'natural' })),
-    Plot.linearRegressionY(data.value, { x: 'date', y: 'duration', stroke: '#c2410c' }),
+    Plot.dotY(data.value, { x: 'date', y: 'duration', fill: 'var(--color-fg-2)', fillOpacity: 0.25 }),
+    Plot.lineY(data.value, Plot.windowY({ k: 7, x: 'date', y: 'duration', stroke: 'var(--color-primary-1)', curve: 'natural' })),
+    Plot.linearRegressionY(data.value, { x: 'date', y: 'duration', stroke: 'var(--color-error-1)' }),
   ],
 }))
 </script>

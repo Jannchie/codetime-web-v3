@@ -38,7 +38,7 @@ const t = useI18N()
     <NuxtLink
       v-else
       :to="`/${locale}/dashboard`"
-      class="px-4 py-3 flex gap-2 items-center rounded-xl bg-transparent border border-primary-2 hover:bg-primary-2 transition-all"
+      class="px-4 py-3 flex gap-2 items-center rounded-xl bg-transparent border border-primary-2 hover:bg-primary-2 transition-all hover:text-white"
     >
       <NuxtImg
         v-if="user.avatar"

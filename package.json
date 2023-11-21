@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "npx nuxi dev --https --ssl-cert ./localhost.pem --ssl-key ./localhost-key.pem",
-    "dev:http": "nuxt dev",
+    "dev:https": "npx nuxi dev --https --ssl-cert ./localhost.pem --ssl-key ./localhost-key.pem",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

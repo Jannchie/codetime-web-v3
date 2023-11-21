@@ -26,7 +26,7 @@ const t = useI18N()
         <div class="text-6xl op75 flex items-end gap-2">
           <div
             key="a"
-            class="font-bold font-mono min-w-72 h-60px bg-back-2 animate-pulse rounded"
+            class="font-bold font-mono min-w-72 h-60px bg-neutral-5 animate-pulse rounded"
           />
           <span class="text-xl">
             {{ t.landing.minutes }}

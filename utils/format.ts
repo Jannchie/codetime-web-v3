@@ -1,5 +1,7 @@
 import { formatDuration } from 'date-fns'
-import { enUS, ja, zhCN } from 'date-fns/locale'
+import enUS from 'date-fns/locale/en-US/index'
+import ja from 'date-fns/locale/ja/index'
+import zhCN from 'date-fns/locale/zh-CN/index'
 import languageIdentifiers from './LanguageIdentifiers.json'
 
 export function getDurationData(ms: number): { hour: number; minute: number; second: number } {

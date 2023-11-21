@@ -90,7 +90,7 @@ const t = useI18N()
         <ClientOnly>
           <template #placeholder>
             <div class="h-145px">
-              <div class="m-8 bg-back-1 animate-pulse" />
+              <div class="m-8 bg-neutral-5 animate-pulse" />
             </div>
           </template>
           <ThemeItem theme="dark" />
