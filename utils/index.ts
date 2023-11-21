@@ -32,7 +32,6 @@ export async function fetchStats(by: string = 'time', limit: number = 60, unit: 
 
 export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}) {
   const apiHost = useRuntimeConfig().public.apiHost
-  fetch(`${apiHost}${path}`, { credentials: 'include' })
   return await useFetch<T>(`${path}`, {
     $fetch: useRequestFetch(),
     baseURL: apiHost,
@@ -42,6 +41,8 @@ export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T e
 }
 
 export async function fetchUser() {
+  // const event = useRequestEvent()
+  // await fetchWithCookie(event, `https://api.codetime.dev/user`)
   const { data } = await useAPIFetch<User>('/user', {
     credentials: 'include',
   })
