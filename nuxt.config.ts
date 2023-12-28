@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiHost: 'https://api.codetime.dev',
+      mode: 'development',
     },
   },
   devtools: {
@@ -32,5 +33,6 @@ export default defineNuxtConfig({
       },
     }],
     '@nuxt/image',
+    '@formkit/auto-animate',
   ],
 })

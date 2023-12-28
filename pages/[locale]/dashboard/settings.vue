@@ -3,7 +3,7 @@ definePageMeta({
   layout: 'dashboard',
 })
 const user = useUser()
-const token = computed(() => user?.upload_token ?? '')
+const token = computed(() => user.value?.upload_token ?? '')
 const router = useRouter()
 router.push({
   params: { locale: 'zh-CN' },
@@ -14,7 +14,7 @@ const exporting = ref(false)
 const exportSucceed = autoResetRef(false, 3000)
 const exportFailed = autoResetRef(false, 3000)
 const exportURL = ref('')
-const fileName = `${user?.username}-codetime-records-${new Date().toLocaleString()}.csv`
+const fileName = `${user.value?.username}-codetime-records-${new Date().toLocaleString()}.csv`
 async function exportData() {
   if (exporting.value) {
     return

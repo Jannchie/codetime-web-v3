@@ -21,7 +21,7 @@ useSeoMeta({
 })
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)
-const user = await fetchUser()
+const { data: user, pending } = await fetchUser()
 provide('user', user)
 useHead({
   htmlAttrs: {
@@ -81,7 +81,6 @@ useHead({
                 :to="`/${locale}/dashboard`"
               >
                 <NuxtImg
-                  v-if="user && user.avatar"
                   :src="user.avatar"
                   class="rounded-full w-5 h-5"
                 />
@@ -117,22 +116,41 @@ useHead({
           </div>
         </div>
       </RHeader>
-      <slot v-if="user" />
-      <div
-        v-else
-        class="flex flex-col items-center justify-center h-full op75"
-      >
-        <div class="mb-8">
-          <NuxtImg
-            alt="Code Time"
-            src="/icon.svg"
-            width="64"
-          />
+      <div v-if="pending">
+        <!-- loading -->
+        <div class="flex flex-col items-center justify-center h-full op75">
+          <!-- <div class="mb-8">
+            <NuxtImg
+              alt="Code Time"
+              src="/icon.svg"
+              width="64"
+            />
+          </div> -->
+          <div class="animate-pulse">
+            <div class="w-32 h-4 bg-back-2 rounded mt-2" />
+            <div class="w-32 h-4 bg-back-2 rounded mt-2" />
+            <div class="w-60vw h-32 bg-back-2 rounded mt-2" />
+          </div>
         </div>
-        <span class="text-sm pb-6 max-w-2xl text-center">
-          {{ t.dashboard.loginRequired }}
-        </span>
-        <LoginButton />
+      </div>
+      <div v-else>
+        <slot v-if="user" />
+        <div
+          v-else
+          class="flex flex-col items-center justify-center h-full op75"
+        >
+          <div class="mb-8">
+            <NuxtImg
+              alt="Code Time"
+              src="/icon.svg"
+              width="64"
+            />
+          </div>
+          <span class="text-sm pb-6 max-w-2xl text-center">
+            {{ t.dashboard.loginRequired }}
+          </span>
+          <LoginButton />
+        </div>
       </div>
       <CodetimeFooter />
     </NuxtLayout>

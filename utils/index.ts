@@ -30,26 +30,25 @@ export async function fetchStats(by: string = 'time', limit: number = 60, unit: 
   return await useAPIFetch<{ data: { duration: number; time: string; by?: string }[] }>(`/stats?${params}`)
 }
 
-export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}) {
+export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}, needLogin = true) {
   const apiHost = useRuntimeConfig().public.apiHost
-  return await useFetch<T>(`${path}`, {
-    $fetch: useRequestFetch(),
+  const resp = await useFetch<T>(`${path}`, {
+    server: !needLogin,
     baseURL: apiHost,
-    credentials: 'include',
+    credentials: needLogin ? 'include' : undefined,
     ...options,
   })
+  if (resp.error.value) {
+    console.error(resp.error.value)
+  }
+  return resp
 }
 
 export async function fetchUser() {
-  // const event = useRequestEvent()
-  // await fetchWithCookie(event, `https://api.codetime.dev/user`)
-  const { data } = await useAPIFetch<User>('/user', {
+  const { data, pending } = await useAPIFetch<User>('/user', {
     credentials: 'include',
   })
-  if (data.value?.id === 0) {
-    return null
-  }
-  return data.value
+  return { data: reactive(data), pending }
 }
 
 export async function fetchSumMinutes() {
@@ -59,7 +58,7 @@ export async function fetchSumMinutes() {
 }
 
 export function useUser() {
-  return inject<User | null>('user', null)
+  return inject<Ref<User | null>>('user', ref(null))
 }
 
 export interface TopData {
@@ -81,14 +80,12 @@ export async function fetchTop(field: string, minutes: number = 0, limit: number
     }
     return params
   })
-  const apiHost = useRuntimeConfig().public.apiHost
-  const resp = await useFetch<TopData[]>(`${apiHost}/top`, {
+  return await useAPIFetch<TopData[]>(`/top`, {
     ...options,
     credentials: 'include',
     query: params,
     $fetch: useRequestFetch(),
   })
-  return resp
 }
 
 export interface FilterItem {

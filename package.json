@@ -11,7 +11,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^0.8.1",
     "@iconify/vue": "^4.1.1",
     "@observablehq/plot": "^0.6.11",
     "auxlines": "^0.3.0",
@@ -20,6 +19,7 @@
     "vue-wf": "^0.1.0"
   },
   "devDependencies": {
+    "@formkit/auto-animate": "^0.8.1",
     "@iconify/json": "^2.2.140",
     "@jannchie/eslint-config": "^2.4.1",
     "@nuxt/devtools": "^1.0.0",
