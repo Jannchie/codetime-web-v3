@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Select } from '@roku-ui/vue'
+
 const route = useRoute()
 const router = useRouter()
 const locale = computed(
@@ -30,7 +32,7 @@ watchEffect(() => {
 
 <template>
   <div class="relative">
-    <RSelect
+    <Select
       v-model="currentLocale"
       class="w-28"
       :options="[

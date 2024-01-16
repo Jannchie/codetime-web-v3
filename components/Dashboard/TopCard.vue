@@ -64,15 +64,15 @@ onMounted(() => {
         :key="d.field"
       >
         <div
-          class="flex justify-between gap-2 text-sm cursor-pointer"
-          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-1' : ''"
+          class="flex cursor-pointer justify-between gap-2 text-sm"
+          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-container' : ''"
           @click="onClickItem(d.field, type)"
         >
           <div class="overflow-hidden truncate text-nowrap">
             <i
               v-if="d.icon"
               :class="d.icon"
-              class="mr-1 inline-block mb-0.5"
+              class="mb-0.5 mr-1 inline-block"
             />
             {{ type === 'language' ? getLanguageName(d.field) : d.field }}
           </div>
@@ -80,9 +80,9 @@ onMounted(() => {
             {{ getDurationString(d.minutes * 60 * 1000) }}
           </div>
         </div>
-        <div class="h-0.5 my-0.5 bg-border-1 rounded-xl overflow-hidden">
+        <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-low">
           <div
-            class="h-full bg-primary-1"
+            class="h-full bg-primary-container"
             :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
           />
         </div>

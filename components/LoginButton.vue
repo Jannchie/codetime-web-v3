@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { vAutoAnimate } from '@formkit/auto-animate'
+// import { vAutoAnimate } from '@formkit/auto-animate'
 
 const locale = useRoute().params.locale as string
 const user = useUser()
@@ -10,9 +10,7 @@ const t = useI18N()
   <div
     class="flex flex-col items-center"
   >
-    <div
-      v-auto-animate
-    >
+    <div>
       <div
         v-if="!user"
         class="flex gap-2"
@@ -20,10 +18,10 @@ const t = useI18N()
         <NuxtLink
           key="demo"
           :to="`/${locale}/dashboard`"
-          class="px-4 py-3 rounded-xl bg-transparent border border-border-1 bg-back-2 hover:bg-back-1 transition-all"
+          class="border border-surface-border-low rounded-xl bg-surface-base bg-transparent px-4 py-3 transition-all hover:bg-surface-low"
         >
-          <div class="flex gap-2 items-center text-sm">
-            <i class="w-4 h-4 i-eva-bar-chart-outline" />
+          <div class="flex items-center gap-2 text-sm">
+            <i class="i-eva-bar-chart-outline h-4 w-4" />
             <span>
               {{ t.landing.demo }}
             </span>
@@ -32,10 +30,10 @@ const t = useI18N()
         <NuxtLink
           key="main"
           :href="`${$config.public.apiHost}/auth/github`"
-          class="px-4 py-3 rounded-xl bg-transparent border border-primary-2 hover:bg-primary-2 transition-all"
+          class="border border-primary-container rounded-xl bg-transparent px-4 py-3 transition-all hover:bg-primary-container"
         >
-          <div class="flex gap-2 items-center text-sm">
-            <i class="w-4 h-4 i-eva-github-outline" />
+          <div class="flex items-center gap-2 text-sm">
+            <i class="i-eva-github-outline h-4 w-4" />
             <span>
               {{ t.landing.loginWithGithub }}
             </span>
@@ -45,13 +43,13 @@ const t = useI18N()
       <NuxtLink
         v-else
         :to="`/${locale}/dashboard`"
-        class="px-4 py-3 flex gap-2 items-center rounded-xl bg-transparent border border-primary-2 hover:bg-primary-2 transition-all hover:text-white"
+        class="flex items-center gap-2 border border-primary-container rounded-xl bg-transparent px-4 py-3 transition-all hover:bg-primary-container hover:text-white"
       >
         <NuxtImg
           v-if="user.avatar"
           key="main"
           :src="user.avatar"
-          class="rounded-full w-5 h-5"
+          class="h-5 w-5 rounded-full"
         />
         <span class="text-sm">
           {{ t.landing.toDashboard }}
@@ -60,7 +58,7 @@ const t = useI18N()
     </div>
     <div
       key="freeMessage"
-      class="text-xs op25 mt-2"
+      class="mt-2 text-xs op25"
     >
       {{ t.landing.freeMessage }}
     </div>

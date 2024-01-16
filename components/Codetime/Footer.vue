@@ -1,12 +1,12 @@
 <template>
-  <footer class="text-center mt-32 pb-8 pt-32 mt-auto">
-    <div class="text-sm op50 flex justify-center">
+  <footer class="mt-32 mt-auto pb-8 pt-32 text-center">
+    <div class="flex justify-center text-sm op50">
       <div class="flex items-center gap-5">
-        <div class="w-16 h-1px bg-back-1" />
+        <div class="h-1px w-16 bg-surface-low" />
         <div>
           datreks @ {{ new Date().getFullYear() }}
         </div>
-        <div class="w-16 h-1px bg-back-1" />
+        <div class="h-1px w-16 bg-surface-low" />
       </div>
     </div>
     <div class="mt-6">

@@ -49,8 +49,8 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
   />
   <DashboardPageContent v-if="hasData">
     <CardBase class="p-0!">
-      <div class="p-4 flex flex-col">
-        <div class="flex gap-2 children:sm:flex-basis-[200px] flex-wrap children:flex-grow">
+      <div class="flex flex-col p-4">
+        <div class="flex flex-wrap gap-2 children:flex-grow children:sm:flex-basis-[200px]">
           <DashboardDataBody
             :title="t.dashboard.overview.statistic.timeTotal"
             :value="getDurationString(totalMinutes)"
@@ -75,7 +75,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <DashboardFilterWrapper />
     <div
       v-if="languageTopData && projectTopData && platformTopData"
-      class="flex gap-2 flex-wrap flex-basis-[100%] flex-col sm:flex-row sm:children:flex-basis-[calc(100%/3-(0.5rem)*2/3)] sm:children:max-w-[calc(100%/3-(0.5rem)*2/3)]"
+      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
     >
       <DashboardTopCard
         icon="i-tabler-braces"
@@ -102,7 +102,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CumulativeLineChart :data="filtedData" />
     <CardBase>
       <div>
-        <div class="text-lg flex items-center gap-2">
+        <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
           <div>
             {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
@@ -116,7 +116,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     </CardBase>
     <CardBase>
       <div>
-        <div class="text-lg flex items-center gap-2">
+        <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
           <div>
             {{ t.dashboard.overview.codetimeProjectTrendTitle }}
@@ -130,14 +130,14 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     </CardBase>
   </DashboardPageContent>
   <DashboardPageContent v-else>
-    <CardBase class="p-6 flex gap-2">
+    <CardBase class="flex gap-2 p-6">
       <div class="leading-0">
         <i
-          class="w-6 h-6 text-primary-1 i-mdi:alert-circle-outline"
+          class="i-mdi:alert-circle-outline h-6 w-6 text-primary-container"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <div class="text-primary-1 font-black">
+        <div class="text-primary-container font-black">
           {{ t.dashboard.overview.noData.notice.title }}
         </div>
         <NoDataBody />

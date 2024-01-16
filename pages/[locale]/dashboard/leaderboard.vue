@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
+import { Image, Paper } from '@roku-ui/vue'
 
 definePageMeta({
   layout: 'dashboard',
@@ -48,62 +49,65 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
     <template v-else-if="resp.error.value" />
     <template v-else-if="!resp.data.value" />
     <template v-else-if="resp.data.value">
-      <div
-        v-for="item, i in resp.data.value"
-        :key="item.username"
-        class="flex items-center gap-4 pl-2"
+      <Paper
+        class="flex flex-col gap-6"
+        rounded="1rem"
+        with-border
       >
-        <div class="w-10 op75 text-right text-lg">
-          <i
-            v-if="i === 0"
-            class="i-fluent-emoji-flat-1st-place-medal w-6 h-6"
-          />
-          <i
-            v-else-if="i === 1"
-            class="i-fluent-emoji-flat-2nd-place-medal w-6 h-6"
-          />
-          <i
-            v-else-if="i === 2"
-            class="i-fluent-emoji-flat-3rd-place-medal w-6 h-6"
-          />
-          <div v-else>
-            #{{ i + 1 }}
-          </div>
-        </div>
-        <RImg
-          v-if="item.avatar"
-          :src="item.avatar"
-          class="w-10 h-10 rounded-full"
-        />
-        <i
-          v-else
-          class="w-10 h-10 rounded-full bg-back-2 flex items-center justify-center text-back-1"
-        />
-        <div class="w-32 max-w-32">
-          <div class="overflow-hidden truncate">
-            {{ item.username }}
-          </div>
-          <div class="text-xs op75 overflow-hidden text-nowrap truncate">
-            {{ getDurationString(item.minutes * 60 * 1000) }}
-          </div>
-        </div>
-        <div class="grow-1 pr-4">
-          <div
-            v-if="i !== 0"
-            class="text-right text-xs sm:text-sm text-primary-1"
-          >
-            {{ t.dashboard.leaderboard.delta(getDurationString(60 * 1000 * (-item.minutes + resp.data.value[i - 1].minutes))) }}
-          </div>
-          <div class="h-0.5 bg-back-1 w-full">
-            <div
-              class="h-full bg-primary-3"
-              :style="{
-                width: `${item.minutes / maxMinutes * 100}%`,
-              }"
+        <div
+          v-for="item, i in resp.data.value"
+          :key="item.username"
+          class="flex items-center gap-4 pl-2"
+        >
+          <div class="w-10 text-right text-lg op75">
+            <i
+              v-if="i === 0"
+              class="i-fluent-emoji-flat-1st-place-medal h-6 w-6"
             />
+            <i
+              v-else-if="i === 1"
+              class="i-fluent-emoji-flat-2nd-place-medal h-6 w-6"
+            />
+            <i
+              v-else-if="i === 2"
+              class="i-fluent-emoji-flat-3rd-place-medal h-6 w-6"
+            />
+            <div v-else>
+              #{{ i + 1 }}
+            </div>
+          </div>
+          <Image
+            width="40px"
+            height="40px"
+            :src="item.avatar"
+            class="h-10 w-10 rounded-full"
+          />
+          <div class="max-w-32 w-32">
+            <div class="overflow-hidden truncate">
+              {{ item.username }}
+            </div>
+            <div class="overflow-hidden truncate text-nowrap text-xs op75">
+              {{ getDurationString(item.minutes * 60 * 1000) }}
+            </div>
+          </div>
+          <div class="grow-1 pr-4">
+            <div
+              v-if="i !== 0"
+              class="text-right text-xs text-primary-container sm:text-sm"
+            >
+              {{ t.dashboard.leaderboard.delta(getDurationString(60 * 1000 * (-item.minutes + resp.data.value[i - 1].minutes))) }}
+            </div>
+            <div class="h-0.5 w-full bg-surface-lowest">
+              <div
+                class="h-full bg-primary-container"
+                :style="{
+                  width: `${item.minutes / maxMinutes * 100}%`,
+                }"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Paper>
     </template>
   </DashboardPageContent>
 </template>

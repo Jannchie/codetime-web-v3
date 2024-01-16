@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Select, TextField } from '@roku-ui/vue'
+
 definePageMeta({
   layout: 'dashboard',
 })
@@ -24,8 +26,8 @@ const t = useI18N()
   />
   <DashboardPageContent>
     <BadgePreviewCard :link="link" />
-    <CardBase class="flex children:flex-grow-1 gap-2 flex-col sm:flex-row">
-      <RSelect
+    <CardBase class="flex flex-col gap-2 children:flex-grow-1 sm:flex-row">
+      <Select
         v-model="style"
         :options="[
           { label: t.dashboard.badge.style.social, id: 'social' },
@@ -36,16 +38,16 @@ const t = useI18N()
         ]"
         :placeholder="t.dashboard.badge.placeholder.style"
       />
-      <RTextField
+      <TextField
         v-if="style !== 'social'"
         v-model="color"
         :placeholder="t.dashboard.badge.placeholder.color"
       />
-      <RTextField
+      <TextField
         v-model="project"
         :placeholder="t.dashboard.badge.placeholder.project"
       />
-      <RTextField
+      <TextField
         v-model="days"
         type="number"
         :placeholder="t.dashboard.badge.placeholder.days"

@@ -33,6 +33,5 @@ export default defineNuxtConfig({
       },
     }],
     '@nuxt/image',
-    '@formkit/auto-animate',
   ],
 })

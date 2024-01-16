@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RokuProvider } from '@roku-ui/vue'
+
 initTheme()
 useSeoMeta({
   title: 'CodeTime - 追迹你的编程时间',
@@ -19,7 +21,8 @@ const locale = useLocale()
 watchEffect(() => {
   useHead({
     htmlAttrs: {
-      lang: locale.value,
+      'lang': locale.value,
+      'data-scheme': 'dark',
     },
     link: [
       {
@@ -33,7 +36,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <ThemeProvider class="min-h-100vh flex-col flex">
+  <RokuProvider class="min-h-100vh flex flex-col">
     <RHeader class="px-4 py-3">
       <NuxtImg
         alt="Code Time"
@@ -45,13 +48,9 @@ watchEffect(() => {
         <LanguageSelect />
       </div>
     </RHeader>
-    <NuxtLayout
-      name="default"
-    >
-      <slot />
-    </NuxtLayout>
+    <slot />
     <CodetimeFooter />
-  </ThemeProvider>
+  </RokuProvider>
 </template>
 
 <style>

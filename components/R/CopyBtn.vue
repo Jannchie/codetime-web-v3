@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import autoAnimate from '@formkit/auto-animate'
-
 const props = defineProps<{
   value: string
 }>()
@@ -17,7 +15,7 @@ function onClick() {
 
 <template>
   <RBtn
-    :class="{ ['hover:bg-success-3! hover:border-success-3!']: ok }"
+    :class="{ ['hover:bg-secondary-container! hover:border-secondary-container!']: ok }"
     @click="onClick"
   >
     <div

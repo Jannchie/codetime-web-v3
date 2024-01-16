@@ -4,3 +4,9 @@ definePageMeta({
   layout: 'landing',
 })
 </script>
+
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>

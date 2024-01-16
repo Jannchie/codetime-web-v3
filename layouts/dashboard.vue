@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RokuProvider } from '@roku-ui/vue'
+
 initTheme()
 const t = useI18N()
 const headerTabs = ref([
@@ -25,7 +27,8 @@ const { data: user, pending } = await fetchUser()
 provide('user', user)
 useHead({
   htmlAttrs: {
-    lang: locale.value,
+    'lang': locale.value,
+    'data-scheme': 'dark',
   },
   link: [
     {
@@ -38,18 +41,18 @@ useHead({
 </script>
 
 <template>
-  <ThemeProvider class="min-h-100vh flex-col flex">
+  <RokuProvider class="min-h-100vh flex flex-col">
     <NuxtLayout name="default">
       <!-- Notification -->
       <div
         v-if="false"
-        class="h-84px min-w-full sm:min-w-sm absolute right-0 p-2 z-1"
+        class="absolute right-0 z-1 h-84px min-w-full p-2 sm:min-w-sm"
       >
         <CardBase>
           <div class="flex flex-col gap-1">
-            <div class="text-primary-1 font-black flex items-center gap-1.5">
+            <div class="flex items-center gap-1.5 text-primary-container font-black">
               <i
-                class="w-5 h-5 text-primary-1 i-mdi:alert-circle-outline"
+                class="i-mdi:alert-circle-outline h-5 w-5 text-primary-container"
               />
               title
             </div>
@@ -60,11 +63,11 @@ useHead({
         </CardBase>
       </div>
       <RHeader class="px-2 pt-2">
-        <div class="flex flex-col gap-2 pt-2 px-2 w-full">
+        <div class="w-full flex flex-col gap-2 px-2 pt-2">
           <div
-            class="flex items-center justify-between h-34px"
+            class="h-34px flex items-center justify-between"
           >
-            <div class="flex gap-2 items-center">
+            <div class="flex items-center gap-2">
               <NuxtLink
                 :to="`/${locale}`"
               >
@@ -77,39 +80,39 @@ useHead({
               </NuxtLink>
               <NuxtLink
                 v-if="user"
-                class="flex gap-3 text-sm items-center"
+                class="flex items-center gap-3 text-sm"
                 :to="`/${locale}/dashboard`"
               >
                 <NuxtImg
                   :src="user.avatar"
-                  class="rounded-full w-5 h-5"
+                  class="h-5 w-5 rounded-full"
                 />
                 {{ user.username }}
               </NuxtLink>
             </div>
             <div class="flex items-center gap-2">
               <ClientOnly>
-                <i class="i-tabler-language-hiragana w-5 h-5" />
+                <i class="i-tabler-language-hiragana h-5 w-5" />
                 <LanguageSelect />
               </ClientOnly>
             </div>
           </div>
-          <div class="flex gap-2 mt-2">
+          <div class="mt-2 flex gap-2">
             <div
               v-for="tab in headerTabs"
               :key="tab.id"
             >
               <NuxtLink
                 :to="`/${locale}${tab.path}`"
-                class="px-3 py-2 hover:bg-back-1 rounded op50 hover:op75 text-sm"
+                class="rounded px-3 py-2 text-sm op50 hover:bg-surface-low hover:op75"
               >
                 {{ tab.label }}
               </NuxtLink>
-              <div class="min-h-0.5 mt-2">
+              <div class="mt-2 min-h-0.5">
                 <div
                   v-if="tab === currentTab"
                 >
-                  <div class="h-0.5 bg-primary-1" />
+                  <div class="h-0.5 bg-primary-container" />
                 </div>
               </div>
             </div>
@@ -118,7 +121,7 @@ useHead({
       </RHeader>
       <div v-if="pending">
         <!-- loading -->
-        <div class="flex flex-col items-center justify-center h-full op75">
+        <div class="h-full flex flex-col items-center justify-center op75">
           <!-- <div class="mb-8">
             <NuxtImg
               alt="Code Time"
@@ -127,9 +130,9 @@ useHead({
             />
           </div> -->
           <div class="animate-pulse">
-            <div class="w-32 h-4 bg-back-2 rounded mt-2" />
-            <div class="w-32 h-4 bg-back-2 rounded mt-2" />
-            <div class="w-60vw h-32 bg-back-2 rounded mt-2" />
+            <div class="mt-2 h-4 w-32 rounded bg-surface-base" />
+            <div class="mt-2 h-4 w-32 rounded bg-surface-base" />
+            <div class="mt-2 h-32 w-60vw rounded bg-surface-base" />
           </div>
         </div>
       </div>
@@ -137,7 +140,7 @@ useHead({
         <slot v-if="user" />
         <div
           v-else
-          class="flex flex-col items-center justify-center h-full op75"
+          class="h-full flex flex-col items-center justify-center op75"
         >
           <div class="mb-8">
             <NuxtImg
@@ -146,7 +149,7 @@ useHead({
               width="64"
             />
           </div>
-          <span class="text-sm pb-6 max-w-2xl text-center">
+          <span class="max-w-2xl pb-6 text-center text-sm">
             {{ t.dashboard.loginRequired }}
           </span>
           <LoginButton />
@@ -154,7 +157,7 @@ useHead({
       </div>
       <CodetimeFooter />
     </NuxtLayout>
-  </ThemeProvider>
+  </RokuProvider>
 </template>
 
 <style scoped>

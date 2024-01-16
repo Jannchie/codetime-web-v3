@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { TextField } from '@roku-ui/vue'
+
 const props = defineProps<{
   link: string
 }>()
@@ -11,9 +13,10 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
   <CardBase class="flex flex-col gap-2">
     <div class="flex items-center gap-2">
       <i class="i-tabler-markdown" />
-      <RTextField
+      <TextField
+        size="sm"
         :value="markdown"
-        class="text-xs grow-1"
+        class="grow-1 text-xs"
       />
       <RCopyBtn
         class="text-xs"
@@ -22,9 +25,10 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
     </div>
     <div class="flex items-center gap-2">
       <i class="i-tabler-code" />
-      <RTextField
+      <TextField
+        size="sm"
         :value="html"
-        class="text-xs grow-1"
+        class="grow-1 text-xs"
       />
       <RCopyBtn
         class="text-xs"
@@ -33,9 +37,10 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
     </div>
     <div class="flex items-center gap-2">
       <i class="i-tabler-link" />
-      <RTextField
+      <TextField
+        size="sm"
         :value="link"
-        class="text-xs grow-1"
+        class="grow-1 text-xs"
       />
       <RCopyBtn
         class="text-xs"

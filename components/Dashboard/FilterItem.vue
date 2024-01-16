@@ -68,7 +68,7 @@ onUnmounted(() => {
       top: `${pos.y}px`,
       left: `${pos.x}px`,
     }"
-    class="rounded-full bg-primary-1 px-2 py-1 flex gap-2 items-center text-white"
+    class="flex items-center gap-2 rounded-full bg-primary-container px-2 py-1 text-white"
   >
     <div>
       {{ k }}: {{ filter.key === 'language' ? getLanguageName(filter.value) : filter.value }}
@@ -78,7 +78,7 @@ onUnmounted(() => {
       @click="onClickFilterItem(filter.key, filter.value)"
     >
       <i
-        class="i-tabler-x w-4 h-4"
+        class="i-tabler-x h-4 w-4"
       />
     </button>
   </span>

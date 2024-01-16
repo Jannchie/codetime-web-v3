@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type FilterItemVue from './FilterItem.vue'
-
 const filters = inject<FilterItem[]>('filters')
 
 watchEffect(() => {
@@ -18,7 +16,7 @@ watchEffect(() => {
 
 <template>
   <div
-    class="text-xs px-2 min-h-6 flex gap-2 flex-wrap relative"
+    class="relative min-h-6 flex flex-wrap gap-2 px-2 text-xs"
   >
     <TransitionGroup
       enter-from-class="opacity-0"

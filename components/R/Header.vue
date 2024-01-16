@@ -1,5 +1,5 @@
 <template>
-  <header class="relative border-b border-border-2 mb-8 flex gap-2 justify-between items-center">
+  <header class="relative mb-8 flex items-center justify-between gap-2 border-b border-surface-border-low">
     <slot />
   </header>
 </template>

@@ -16,7 +16,7 @@ export function useCurrentPath() {
   return path
 }
 
-export function useCurrentTab(headerTabs: Ref<{ path: string; label: string; id: string }[]>) {
+export function useCurrentTab(headerTabs: Ref<{ path: string, label: string, id: string }[]>) {
   const locale = useLocale()
   const currentPath = useCurrentPath()
   const currentTab = computed(() => {

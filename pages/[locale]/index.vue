@@ -19,16 +19,15 @@ const t = useI18N()
         class="flex flex-col items-center"
       >
         <LandingTitle />
-        <div class="text-sm op50 p-2">
+        <div class="p-2 text-sm op50">
           {{ t.landing.description }}
         </div>
       </div>
     </div>
   </Auxlines>
-  <div class="flex justify-center m-8">
+  <div class="m-8 flex justify-center">
     <LoginButton />
   </div>
-
   <div class="mt-32">
     <LandingSumHours />
   </div>

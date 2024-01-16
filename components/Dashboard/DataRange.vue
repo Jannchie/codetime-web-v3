@@ -8,7 +8,7 @@ const t = useI18N()
 </script>
 
 <template>
-  <div class="mt-8 ml-4">
+  <div class="ml-4 mt-8">
     <div>
       {{ t.dashboard.overview.dataRange.title(days) }}
     </div>

@@ -27,7 +27,7 @@ export async function fetchStats(by: string = 'time', limit: number = 60, unit: 
     limit: String(limit),
     unit,
   })
-  return await useAPIFetch<{ data: { duration: number; time: string; by?: string }[] }>(`/stats?${params}`)
+  return await useAPIFetch<{ data: { duration: number, time: string, by?: string }[] }>(`/stats?${params}`)
 }
 
 export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}, needLogin = true) {

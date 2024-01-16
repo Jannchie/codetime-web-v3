@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ThemeProvider, darkTheme, lightTheme, useCurrentTheme } from '@roku-ui/vue'
+
 const props = defineProps<{
   theme?: string
 }>()
@@ -18,35 +20,47 @@ const title = computed(() => {
       return t.value.dashboard.settings.theme.system
   }
 })
+const preferColor = usePreferredDark()
+
+const theme = computed(() => {
+  switch (props.theme) {
+    case 'dark':
+      return darkTheme
+    case 'light':
+      return lightTheme
+    default:
+      return preferColor.value ? darkTheme : lightTheme
+  }
+})
 </script>
 
 <template>
   <CardBase
-    class="!p-0 overflow-hidden cursor-pointer"
+    class="cursor-pointer overflow-hidden !p-0"
     :class="{
-      'border-primary-1': isCurrent,
+      'border-primary-container': isCurrent,
     }"
     @click="() => currentTheme = props.theme ?? 'system'"
   >
     <div
-      class="p-2 border-b border-border-1 text-sm op75 flex gap-2 items-center"
+      class="flex items-center gap-2 border-b border-surface-border-low p-2 text-sm op75"
     >
       <i
         class="i-tabler-palette"
         :class="{
-          'text-primary-1': isCurrent,
+          'text-primary-container': isCurrent,
         }"
       />
       {{ title }}
     </div>
     <ThemeProvider :theme="theme">
       <div
-        class="w-86 h-full p-2 bg-background"
+        class="bg-background h-full w-86 p-2"
       >
         <CardBase>
-          <div class="h-1em w-32 bg-primary-1 mb-2 rounded-full" />
-          <div class="h-1em w-full bg-frontground text-sm rounded-full op-25 mb-1" />
-          <div class="h-1em w-2/3 bg-frontground rounded-full text-sm op-25" />
+          <div class="mb-2 h-1em w-32 rounded-full bg-primary-container" />
+          <div class="bg-frontground mb-1 h-1em w-full rounded-full text-sm op-25" />
+          <div class="bg-frontground h-1em w-2/3 rounded-full text-sm op-25" />
         </CardBase>
       </div>
     </ThemeProvider>

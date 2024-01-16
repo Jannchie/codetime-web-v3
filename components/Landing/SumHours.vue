@@ -23,17 +23,17 @@ const t = useI18N()
     </span>
     <ClientOnly>
       <template #placeholder>
-        <div class="text-6xl op75 flex items-end gap-2">
+        <div class="flex items-end gap-2 text-6xl op75">
           <div
             key="a"
-            class="font-bold font-mono min-w-72 h-60px bg-neutral-5 animate-pulse rounded"
+            class="h-60px min-w-72 animate-pulse rounded bg-neutral-5 font-bold font-mono"
           />
           <span class="text-xl">
             {{ t.landing.minutes }}
           </span>
         </div>
       </template>
-      <div class="text-6xl op75 flex items-end gap-2">
+      <div class="flex items-end gap-2 text-6xl op75">
         <span
           key="b"
           class="font-bold font-mono"

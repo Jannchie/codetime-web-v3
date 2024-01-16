@@ -1,5 +1,4 @@
 import * as d3 from 'd3'
-import type { AsyncData } from 'nuxt/app'
 import type { TopData } from '.'
 
 export function useMaxStreak(data: Ref<{

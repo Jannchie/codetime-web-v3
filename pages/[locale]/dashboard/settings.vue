@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { TextField } from '@roku-ui/vue'
+
 definePageMeta({
   layout: 'dashboard',
 })
@@ -66,31 +68,30 @@ const t = useI18N()
   />
   <DashboardPageContent>
     <CardBase sparse>
-      <div class="text-xl mb-4">
+      <div class="mb-4 text-xl">
         {{ t.dashboard.settings.token.title }}
       </div>
       <div class="mb-2 flex gap-2">
-        <RTextField
-          class="py-1 px-2 rounded border border-border-1 bg-back-2 outline-none"
+        <TextField
           readonly
           type="password"
           :value="token"
         />
         <RCopyBtn :value="token" />
       </div>
-      <div class="op50 text-xs">
+      <div class="text-xs op50">
         {{ t.dashboard.settings.token.tip }}
       </div>
     </CardBase>
     <CardBase sparse>
-      <div class="text-xl mb-4">
+      <div class="mb-4 text-xl">
         {{ t.dashboard.settings.theme.title }}
       </div>
       <div class="mb-2 flex gap-2">
         <ClientOnly>
           <template #placeholder>
             <div class="h-145px">
-              <div class="m-8 bg-neutral-5 animate-pulse" />
+              <div class="m-8 animate-pulse bg-neutral-5" />
             </div>
           </template>
           <ThemeItem theme="dark" />
@@ -98,18 +99,18 @@ const t = useI18N()
           <ThemeItem theme="system" />
         </ClientOnly>
       </div>
-      <div class="op50 text-xs">
+      <div class="text-xs op50">
         {{ t.dashboard.settings.theme.tip }}
       </div>
     </CardBase>
     <CardBase sparse>
-      <div class="text-xl mb-4">
+      <div class="mb-4 text-xl">
         {{ t.dashboard.settings.language.title }}
       </div>
       <div class="mb-2">
         <LanguageSelect />
       </div>
-      <div class="op50 text-xs">
+      <div class="text-xs op50">
         {{ t.dashboard.settings.language.tip }}
       </div>
     </CardBase>
@@ -117,19 +118,19 @@ const t = useI18N()
       sparse
       :loading="exporting"
     >
-      <div class="text-xl mb-4">
+      <div class="mb-4 text-xl">
         {{ t.dashboard.settings.export.title }}
       </div>
-      <div class="op75 text-sm mb-4">
+      <div class="mb-4 text-sm op75">
         {{ t.dashboard.settings.export.description }}
       </div>
       <div class="mb-2 flex items-center gap-2">
         <RBtn
-          class="flex gap-2 items-center"
+          class="flex items-center gap-2"
           :class="{
-            ['!bg-error-3 !border-error-3 !hover:bg-error-3 !hover:border-error-3']: exportFailed,
-            ['!bg-success-3 !border-success-3 !hover:bg-success-3 !hover:border-success-3']: exportSucceed,
-            ['!bg-primary-3 !border-primary-3 !hover:bg-primary-3 !hover:border-primary-3']: exporting,
+            ['!bg-error-container !border-error-container !hover:bg-error-container !hover:border-error-container']: exportFailed,
+            ['!bg-secondary-container !border-secondary-container !hover:bg-secondary-container !hover:border-secondary-container']: exportSucceed,
+            ['!bg-primary-container !border-primary-3 !hover:bg-primary-container !hover:border-primary-3']: exporting,
           }"
           @click="exportData"
         >
@@ -168,20 +169,20 @@ const t = useI18N()
           </a>
         </div>
       </div>
-      <div class="op50 text-xs">
+      <div class="text-xs op50">
         {{ t.dashboard.settings.export.tip }}
       </div>
     </CardBase>
     <CardBase sparse>
-      <div class="text-xl mb-4">
+      <div class="mb-4 text-xl">
         {{ t.dashboard.settings.other.title }}
       </div>
-      <div class="op75 text-sm mb-4">
+      <div class="mb-4 text-sm op75">
         {{ t.dashboard.settings.other.description }}
       </div>
       <div class="mb-2">
         <RBtn
-          class="flex gap-2 items-center"
+          class="flex items-center gap-2"
           @click="logout"
         >
           <i class="i-tabler-logout" />
@@ -191,16 +192,16 @@ const t = useI18N()
     </CardBase>
     <CardBase
       sparse
-      class="border-error-3"
+      class="border-error-container"
     >
-      <div class="text-xl mb-4 text-error-1">
+      <div class="mb-4 text-xl text-error-container">
         {{ t.dashboard.settings.dangerZone.title }}
       </div>
-      <div class="op75 text-sm mb-4">
+      <div class="mb-4 text-sm op75">
         {{ t.dashboard.settings.dangerZone.description }}
       </div>
       <div class="mb-2">
-        <RBtn class="hover:text-white hover:bg-error-3! hover:border-error-3! flex gap-2 items-center">
+        <RBtn class="flex items-center gap-2 hover:text-white hover:border-error-container! hover:bg-error-container!">
           <i class="i-tabler-trash" />
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </RBtn>

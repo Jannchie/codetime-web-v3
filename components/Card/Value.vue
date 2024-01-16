@@ -8,12 +8,12 @@ defineProps<{
 
 <template>
   <CardBase>
-    <div class="text-primary-1 text-sm">
+    <div class="text-sm text-primary-container">
       {{ title }}
     </div>
     <div class="text-xl">
       {{ value }}
-      <span class="op50 text-sm">{{ unit }}</span>
+      <span class="text-sm op50">{{ unit }}</span>
     </div>
     <div />
   </CardBase>

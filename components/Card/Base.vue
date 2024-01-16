@@ -10,15 +10,13 @@ const cardRef = ref<HTMLElement | null>(null)
   <div
     ref="cardRef"
     :class="{
-      ['after:bg-back-3 rotating-border']: loading,
-      ['border-border-1 bg-back-3 border']: !loading,
       ['p-6']: sparse,
       ['p-4']: !sparse,
     }"
     :style="{
       '--padding': sparse ? '1.5rem' : '1rem',
     }"
-    class="relative rounded"
+    class="relative border border-surface-border-low rounded-2xl bg-surface-low"
   >
     <slot />
   </div>

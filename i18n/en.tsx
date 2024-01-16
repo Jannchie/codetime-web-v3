@@ -62,7 +62,7 @@ export const en = {
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="text-primary-1 px-2"
+                    class="px-2 text-primary-container"
                   >
                     {/* [ 設定 ] */}
                     [ Settings ]

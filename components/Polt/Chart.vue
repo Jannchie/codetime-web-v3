@@ -5,7 +5,7 @@ const props = defineProps<{
   options: PlotOptions
 }>()
 
-const options = ref(props.options)
+const options = ref<any>(props.options)
 watchEffect(() => {
   options.value = props.options
 })

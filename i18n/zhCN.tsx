@@ -63,7 +63,7 @@ export const zhCN: Partial<I18NData> = {
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="text-primary-1"
+                    class="text-primary-container"
                   >
                     [ 设置 ]
                   </NuxtLink>

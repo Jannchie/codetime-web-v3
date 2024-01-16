@@ -1,10 +1,10 @@
 import { formatDuration } from 'date-fns'
-import enUS from 'date-fns/locale/en-US/index'
-import ja from 'date-fns/locale/ja/index'
-import zhCN from 'date-fns/locale/zh-CN/index'
+import enUS from 'date-fns/locale/en-US'
+import ja from 'date-fns/locale/ja'
+import zhCN from 'date-fns/locale/zh-CN'
 import languageIdentifiers from './LanguageIdentifiers.json'
 
-export function getDurationData(ms: number): { hour: number; minute: number; second: number } {
+export function getDurationData(ms: number): { hour: number, minute: number, second: number } {
   const MS_OF_HOUR = 3600000
   const MS_OF_MINUTE = 60000
   const MS_OF_SECOND = 1000
