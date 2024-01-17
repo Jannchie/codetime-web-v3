@@ -44,12 +44,12 @@ const theme = computed(() => {
   >
     <div
       class="flex items-center gap-2 border-b border-surface-border-low p-2 text-sm op75"
+      :class="{
+        'text-primary-container': isCurrent,
+      }"
     >
       <i
         class="i-tabler-palette"
-        :class="{
-          'text-primary-container': isCurrent,
-        }"
       />
       {{ title }}
     </div>

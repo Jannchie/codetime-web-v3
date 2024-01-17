@@ -74,6 +74,8 @@ const t = useI18N()
       <div class="mb-2 flex gap-2">
         <TextField
           readonly
+          class="w-full"
+          style="letter-spacing: 8px"
           type="password"
           :value="token"
         />
@@ -204,7 +206,7 @@ const t = useI18N()
         {{ t.dashboard.settings.dangerZone.description }}
       </div>
       <div class="mb-2">
-        <RBtn class="flex items-center gap-2 hover:text-white hover:border-error-container! hover:bg-error-container!">
+        <RBtn color="error">
           <i class="i-tabler-trash" />
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </RBtn>
