@@ -12,7 +12,7 @@ const t = useI18N()
     <div>
       {{ t.dashboard.overview.dataRange.title(days) }}
     </div>
-    <div class="text-sm op50">
+    <div class="text-sm text-surface-onlow">
       <span>
         {{ d3.timeFormat('%Y-%m-%d')(new Date()) }}
       </span>

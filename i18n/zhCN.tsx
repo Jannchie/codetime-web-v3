@@ -58,7 +58,7 @@ export const zhCN: Partial<I18NData> = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="op50">
+                  <span class="text-surface-onlow">
                     目前，我们尚未收到您的编码时间记录。我们的应用程序依赖于代码编辑器或集成开发环境（例如 VSCode、JetBrains IDE ）的插件。为了确保正常运作，请您前往
                   </span>
                   <NuxtLink
@@ -67,7 +67,7 @@ export const zhCN: Partial<I18NData> = {
                   >
                     [ 设置 ]
                   </NuxtLink>
-                  <span class="op50">
+                  <span class="text-surface-onlow">
                     页面并在您所使用的支持插件的代码编辑器中进行相应配置。感谢您的合作。
                   </span>
                 </div>

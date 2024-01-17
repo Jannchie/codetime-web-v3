@@ -53,6 +53,9 @@ const t = useI18N()
         :placeholder="t.dashboard.badge.placeholder.days"
       />
     </CardBase>
-    <BadgeCopyCard :link="link" />
+    <BadgeCopyCard
+      :link="link"
+      class="z-1"
+    />
   </DashboardPageContent>
 </template>

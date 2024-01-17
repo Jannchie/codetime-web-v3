@@ -77,9 +77,12 @@ const t = useI18N()
           type="password"
           :value="token"
         />
-        <RCopyBtn :value="token" />
+        <RCopyBtn
+          :value="token"
+          class="w-24"
+        />
       </div>
-      <div class="text-xs op50">
+      <div class="text-xs text-surface-onlow">
         {{ t.dashboard.settings.token.tip }}
       </div>
     </CardBase>
@@ -96,10 +99,10 @@ const t = useI18N()
           </template>
           <ThemeItem theme="dark" />
           <ThemeItem theme="light" />
-          <ThemeItem theme="system" />
+          <!-- <ThemeItem theme="system" /> -->
         </ClientOnly>
       </div>
-      <div class="text-xs op50">
+      <div class="text-xs text-surface-onlow">
         {{ t.dashboard.settings.theme.tip }}
       </div>
     </CardBase>
@@ -110,7 +113,7 @@ const t = useI18N()
       <div class="mb-2">
         <LanguageSelect />
       </div>
-      <div class="text-xs op50">
+      <div class="text-xs text-surface-onlow">
         {{ t.dashboard.settings.language.tip }}
       </div>
     </CardBase>
@@ -169,7 +172,7 @@ const t = useI18N()
           </a>
         </div>
       </div>
-      <div class="text-xs op50">
+      <div class="text-xs text-surface-onlow">
         {{ t.dashboard.settings.export.tip }}
       </div>
     </CardBase>

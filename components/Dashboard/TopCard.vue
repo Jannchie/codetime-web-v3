@@ -4,19 +4,29 @@ import autoAnimate from '@formkit/auto-animate'
 const props = defineProps<{
   icon: string
   title: string
-  data: TopData[] | null
   type: 'language' | 'project' | 'platform'
-  loading: MaybeRef<boolean>
+  filters: FilterItem[]
 }>()
 
-const isLoading = computed(() => unref(props.loading) ?? false)
+const transform = computed(() => {
+  switch (props.type) {
+    case 'language':
+      return transformTopLanguageData
+    case 'platform':
+      return transformTopPlatformData
+  }
+})
 
+const { pending: loading, data: rawData } = await fetchTop(props.type, 24 * 60 * 60 * 1000, 5, props.filters, { transform: transform.value })
+
+const isLoading = computed(() => unref(loading) ?? false)
+const data = computed(() => unref(rawData))
 const filters = inject<FilterItem[]>('filters')
 const maxMinutes = computed(() => {
-  if (props.data === null) {
+  if (data.value === null) {
     return 0
   }
-  return Math.max(...props.data.map(d => d.minutes))
+  return Math.max(...data.value.map(d => d.minutes))
 })
 
 function onClickItem(field: string, type: 'language' | 'project' | 'platform') {
@@ -33,10 +43,10 @@ function onClickItem(field: string, type: 'language' | 'project' | 'platform') {
     }
   }
 }
-const test = ref()
+const ani = ref()
 onMounted(() => {
   nextTick(() => {
-    autoAnimate(test.value!)
+    autoAnimate(ani.value!)
   })
 })
 </script>
@@ -45,10 +55,10 @@ onMounted(() => {
   <CardBase
     :loading="isLoading"
     style="width: -webkit-fill-available;"
-    class="max-w-[calc(100vw-0.5rem)]"
+    class="h-232px max-w-[calc(100vw-0.5rem)]"
   >
     <div
-      ref="test"
+      ref="ani"
       class="flex flex-col gap-2"
     >
       <div class="flex items-center gap-2">
@@ -59,34 +69,58 @@ onMounted(() => {
           {{ title }}
         </div>
       </div>
-      <div
-        v-for="d in data"
-        :key="d.field"
-      >
+      <template v-if="loading && !data">
         <div
-          class="flex cursor-pointer justify-between gap-2 text-sm"
-          :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-container' : ''"
-          @click="onClickItem(d.field, type)"
+          v-for="i in 5"
+          :key="i"
+          class="flex justify-between py-1"
+          :style="{
+            opacity: 0.5 + 0.5 * (-i / 5),
+          }"
         >
-          <div class="overflow-hidden truncate text-nowrap">
-            <i
-              v-if="d.icon"
-              :class="d.icon"
-              class="mb-0.5 mr-1 inline-block"
+          <div class="flex gap-1">
+            <div
+              class="h-20px w-20px animate-pulse bg-surface-onlow"
             />
-            {{ type === 'language' ? getLanguageName(d.field) : d.field }}
+            <div
+              class="h-20px w-20 animate-pulse bg-surface-onlow"
+            />
           </div>
-          <div class="flex-shrink-0">
-            {{ getDurationString(d.minutes * 60 * 1000) }}
-          </div>
-        </div>
-        <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-low">
           <div
-            class="h-full bg-primary-container"
-            :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
+            class="h-20px w-30 animate-pulse bg-surface-onlow"
           />
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div
+          v-for="d in data"
+          :key="d.field"
+        >
+          <div
+            class="flex cursor-pointer justify-between gap-2 text-sm"
+            :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-container' : ''"
+            @click="onClickItem(d.field, type)"
+          >
+            <div class="overflow-hidden truncate text-nowrap">
+              <i
+                v-if="d.icon"
+                :class="d.icon"
+                class="mb-0.5 mr-1 inline-block"
+              />
+              {{ type === 'language' ? getLanguageName(d.field) : d.field }}
+            </div>
+            <div class="flex-shrink-0">
+              {{ getDurationString(d.minutes * 60 * 1000) }}
+            </div>
+          </div>
+          <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest">
+            <div
+              class="h-full bg-primary-container"
+              :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
+            />
+          </div>
+        </div>
+      </template>
     </div>
   </CardBase>
 </template>

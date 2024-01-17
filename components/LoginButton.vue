@@ -2,7 +2,7 @@
 // import { vAutoAnimate } from '@formkit/auto-animate'
 
 const locale = useRoute().params.locale as string
-const user = useUser()
+const { data: user, pending } = await fetchUser()
 const t = useI18N()
 </script>
 
@@ -11,8 +11,11 @@ const t = useI18N()
     class="flex flex-col items-center"
   >
     <div>
+      <div v-if="pending">
+        <div class="h-46px w-132px animate-pulse rounded-xl bg-surface-onlow" />
+      </div>
       <div
-        v-if="!user"
+        v-else-if="!user"
         class="flex gap-2"
       >
         <NuxtLink
@@ -58,7 +61,7 @@ const t = useI18N()
     </div>
     <div
       key="freeMessage"
-      class="mt-2 text-xs op25"
+      class="mt-2 text-xs text-surface-onlow"
     >
       {{ t.landing.freeMessage }}
     </div>

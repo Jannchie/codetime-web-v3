@@ -19,7 +19,7 @@ const t = useI18N()
         class="flex flex-col items-center"
       >
         <LandingTitle />
-        <div class="p-2 text-sm op50">
+        <div class="p-2 text-sm text-surface">
           {{ t.landing.description }}
         </div>
       </div>

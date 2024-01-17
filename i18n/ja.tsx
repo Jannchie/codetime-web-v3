@@ -58,7 +58,7 @@ export const ja: Partial<I18NData> = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="op50">
+                  <span class="text-surface-onlow">
                     現在、あなたのコーディング時間の記録を受け取っていません。このアプリケーションは、コードエディタまたは統合開発環境（ VSCode、JetBrains IDEなど ）のプラグインに依存しています。正常に動作するようにするには、
                   </span>
                   <NuxtLink
@@ -67,7 +67,7 @@ export const ja: Partial<I18NData> = {
                   >
                     [ 設定 ]
                   </NuxtLink>
-                  <span class="op50">
+                  <span class="text-surface-onlow">
                     ページに移動し、使用しているプラグインをサポートするコードエディタで対応する設定を行ってください。ご協力ありがとうございます。
                   </span>
                 </div>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ThemeProvider, darkTheme, lightTheme, useCurrentTheme } from '@roku-ui/vue'
+import { ThemeProvider, darkTheme, lightTheme, useScheme } from '@roku-ui/vue'
 
 const props = defineProps<{
   theme?: string
 }>()
 
 const t = useI18N()
-const currentTheme = useTheme()
+const currentScheme = useScheme()
 const isCurrent = computed(() => {
-  return props.theme === currentTheme?.value
+  return props.theme === currentScheme?.value
 })
 const title = computed(() => {
   switch (props.theme) {
@@ -40,7 +40,7 @@ const theme = computed(() => {
     :class="{
       'border-primary-container': isCurrent,
     }"
-    @click="() => currentTheme = props.theme ?? 'system'"
+    @click="() => currentScheme = props.theme ?? 'system'"
   >
     <div
       class="flex items-center gap-2 border-b border-surface-border-low p-2 text-sm op75"
@@ -55,12 +55,12 @@ const theme = computed(() => {
     </div>
     <ThemeProvider :theme="theme">
       <div
-        class="bg-background h-full w-86 p-2"
+        class="h-full w-86 p-2"
       >
         <CardBase>
           <div class="mb-2 h-1em w-32 rounded-full bg-primary-container" />
-          <div class="bg-frontground mb-1 h-1em w-full rounded-full text-sm op-25" />
-          <div class="bg-frontground h-1em w-2/3 rounded-full text-sm op-25" />
+          <div class="mb-1 h-1em w-full rounded-full bg-surface-on text-sm op-25" />
+          <div class="h-1em w-2/3 rounded-full bg-surface-on text-sm op-25" />
         </CardBase>
       </div>
     </ThemeProvider>

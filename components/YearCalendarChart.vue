@@ -7,15 +7,17 @@ const props = defineProps<{
     duration: number
   }[]>
 }>()
-const data = unref(props.data)
+const data = computed(() => {
+  return unref(props.data)
+})
 const yearStartDate = d3.utcDay.offset(new Date(), -365)
 const years = d3.utcDay.range(yearStartDate, new Date())
 const yearData = computed(() => {
-  const d = data.filter((d) => {
+  const d = data.value.filter((d) => {
     return d.date.getTime() >= yearStartDate.getTime()
   })
 
-  return years.map((date) => {
+  const da = years.map((date) => {
     const day = d.find((d) => {
       return d.date.getTime() === date.getTime()
     })
@@ -24,6 +26,10 @@ const yearData = computed(() => {
       duration: day?.duration ?? 0,
     }
   })
+  if (da.every(d => d.duration === 0)) {
+    return []
+  }
+  return da
 })
 
 const latestWeekDate = computed(() => {
@@ -31,7 +37,7 @@ const latestWeekDate = computed(() => {
 })
 
 const t = useI18N()
-const options = {
+const options = computed(() => ({
   width: 700,
   height: 130,
   x: {
@@ -45,9 +51,9 @@ const options = {
   color: {
     interpolate: (d: number) => {
       if (d === 0) {
-        return 'var(--color-bg-3)'
+        return 'rgb(var(--r-color-surface-low))'
       }
-      return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#38bdf822', '#38bdf8')))(d)
+      return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#38bdf822', '#1c89b8')))(d)
     },
   },
   marks: [
@@ -76,14 +82,21 @@ const options = {
       },
       rx: 2,
       ry: 2,
-      stroke: 'var(--color-border-1)',
+      stroke: 'rgb(var(--r-color-surface-border-base))',
       strokeOpacity: 0.3,
       inset: 0.5,
     }),
   ],
-}
+}))
 </script>
 
 <template>
-  <PoltCalendar :options="options" />
+  <div
+    v-if="yearData.length === 0"
+    class="m-2 h-100px w-168 animate-pulse bg-primary-container bg-op25"
+  />
+  <PoltCalendar
+    v-else
+    :options="options"
+  />
 </template>

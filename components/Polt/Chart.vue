@@ -5,21 +5,21 @@ const props = defineProps<{
   options: PlotOptions
 }>()
 
-const options = ref<any>(props.options)
+const op = ref<any>(props.options)
 watchEffect(() => {
-  options.value = props.options
+  op.value = props.options
 })
 const chartWrapper = ref<HTMLElement | null>(null)
 const { width } = useElementBounding(chartWrapper)
-const basicHeight = options.value.height ?? 400
+const basicHeight = op.value.height ?? 400
 watchEffect(() => {
   if (chartWrapper.value) {
-    options.value.width = width.value
-    if (options.value.width * 0.7 < basicHeight) {
-      options.value.height = options.value.width * 0.7
+    op.value.width = width.value
+    if (op.value.width * 0.7 < basicHeight) {
+      op.value.height = op.value.width * 0.7
     }
     else {
-      options.value.height = basicHeight
+      op.value.height = basicHeight
     }
   }
 })

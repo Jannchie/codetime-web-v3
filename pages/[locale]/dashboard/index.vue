@@ -14,13 +14,12 @@ const allData = await fetchStats('time', 525600, 'days')
 const allLanguageData = await fetchStats('language', days.value, 'days')
 const allProjectData = await fetchStats('project', days.value, 'days')
 const hasData = computed(() => {
-  if (allData.data === null) {
-    return false
+  if (allData.data.value === null) {
+    return true
   }
   return (allData.data.value?.data.length ?? 0) > 0
 })
 
-const [languageTopData, projectTopData, platformTopData] = await useAllTopData(hasData, days, filters)
 const totalMinutes = useTotalMinutes(allData.data)
 const todayMinutes = useTodayMinutes(allData.data)
 
@@ -48,8 +47,12 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     :description="t.dashboard.pageHeader.description.overview"
   />
   <DashboardPageContent v-if="hasData">
-    <CardBase class="p-0!">
-      <div class="flex flex-col p-4">
+    <CardBase
+      class="min-h-210px"
+      dense
+      :loading="!!allData.pending.value"
+    >
+      <div class="flex flex-col p-2">
         <div class="flex flex-wrap gap-2 children:flex-grow children:sm:flex-basis-[200px]">
           <DashboardDataBody
             :title="t.dashboard.overview.statistic.timeTotal"
@@ -68,35 +71,33 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
             :value="formateDays(maxStreak)"
           />
         </div>
-        <YearCalendarChart :data="pAllData" />
+        <YearCalendarChart
+          :data="pAllData"
+        />
       </div>
     </CardBase>
     <DashboardDataRange :days="days" />
     <DashboardFilterWrapper />
     <div
-      v-if="languageTopData && projectTopData && platformTopData"
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
     >
       <DashboardTopCard
         icon="i-tabler-braces"
         type="language"
+        :filters="filters"
         :title="t.dashboard.overview.top.language"
-        :data="languageTopData.data.value"
-        :loading="languageTopData.pending"
       />
       <DashboardTopCard
         icon="i-tabler-app-window"
         type="project"
+        :filters="filters"
         :title="t.dashboard.overview.top.project"
-        :data="projectTopData.data.value"
-        :loading="languageTopData.pending"
       />
       <DashboardTopCard
         icon="i-tabler-terminal"
         type="platform"
+        :filters="filters"
         :title="t.dashboard.overview.top.platform"
-        :data="platformTopData.data.value"
-        :loading="languageTopData.pending"
       />
     </div>
     <CumulativeLineChart :data="filtedData" />

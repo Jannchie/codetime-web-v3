@@ -20,6 +20,7 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
       />
       <RCopyBtn
         class="text-xs"
+        size="sm"
         :value="markdown"
       />
     </div>
@@ -32,6 +33,7 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
       />
       <RCopyBtn
         class="text-xs"
+        size="sm"
         :value="html"
       />
     </div>
@@ -44,6 +46,7 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
       />
       <RCopyBtn
         class="text-xs"
+        size="sm"
         :value="link"
       />
     </div>

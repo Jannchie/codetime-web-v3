@@ -40,7 +40,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
       <div class="text-xl op75">
         {{ t.dashboard.leaderboard.title(days) }}
       </div>
-      <div class="op50">
+      <div class="text-surface-onlow">
         {{ fromDate.toISOString().slice(0, 10) }} ~ {{ new Date().toISOString().slice(0, 10) }}
       </div>
     </div>

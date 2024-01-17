@@ -57,7 +57,7 @@ export const en = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="op50">
+                  <span class="text-surface-onlow">
                     Currently, we haven't received any records of your coding time. This application relies on the plugin for your code editor or integrated development environment (such as VSCode, JetBrains IDE). To ensure smooth operation, please visit the
                   </span>
                   <NuxtLink
@@ -67,7 +67,7 @@ export const en = {
                     {/* [ 設定 ] */}
                     [ Settings ]
                   </NuxtLink>
-                  <span class="op50">
+                  <span class="text-surface-onlow">
                     page and configure the necessary settings in the code editor that supports the plugin you are using. Thank you for your cooperation.
                   </span>
                 </div>

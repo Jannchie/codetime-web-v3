@@ -36,6 +36,7 @@ export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T e
     server: !needLogin,
     baseURL: apiHost,
     credentials: needLogin ? 'include' : undefined,
+    lazy: true,
     ...options,
   })
   if (resp.error.value) {
@@ -67,13 +68,13 @@ export interface TopData {
   icon?: string
 }
 
-export async function fetchTop(field: string, minutes: number = 0, limit: number = 5, filters: Ref<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
+export async function fetchTop(field: string, minutes: number = 0, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
   const params = computed(() => {
     const params = {
       field,
       minutes: String(minutes),
       limit: String(limit),
-      ...filters.value.reduce((acc, cur) => {
+      ...unref(filters).reduce((acc, cur) => {
         acc[cur.key] = cur.value
         return acc
       }, {} as Record<string, string>),

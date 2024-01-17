@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RokuProvider } from '@roku-ui/vue'
 
-initTheme()
 const t = useI18N()
 const headerTabs = ref([
   { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
@@ -27,8 +26,7 @@ const { data: user, pending } = await fetchUser()
 provide('user', user)
 useHead({
   htmlAttrs: {
-    'lang': locale.value,
-    'data-scheme': 'dark',
+    lang: locale.value,
   },
   link: [
     {
@@ -43,26 +41,7 @@ useHead({
 <template>
   <RokuProvider class="min-h-100vh flex flex-col">
     <NuxtLayout name="default">
-      <!-- Notification -->
-      <div
-        v-if="false"
-        class="absolute right-0 z-1 h-84px min-w-full p-2 sm:min-w-sm"
-      >
-        <CardBase>
-          <div class="flex flex-col gap-1">
-            <div class="flex items-center gap-1.5 text-primary-container font-black">
-              <i
-                class="i-mdi:alert-circle-outline h-5 w-5 text-primary-container"
-              />
-              title
-            </div>
-            <div class="text-sm">
-              desc
-            </div>
-          </div>
-        </CardBase>
-      </div>
-      <RHeader class="px-2 pt-2">
+      <RHeader class="bg-surface-low px-2 pt-2">
         <div class="w-full flex flex-col gap-2 px-2 pt-2">
           <div
             class="h-34px flex items-center justify-between"
@@ -85,16 +64,25 @@ useHead({
               >
                 <NuxtImg
                   :src="user.avatar"
-                  class="h-5 w-5 rounded-full"
+                  class="h-7 w-7 rounded-full"
                 />
-                {{ user.username }}
+                <div>
+                  {{ user.username }}
+                </div>
               </NuxtLink>
+              <div
+                v-else
+                class="flex items-center gap-3 text-sm"
+              >
+                <div
+                  class="h-7 w-7 animate-pulse rounded-full bg-surface-onlow bg-op50"
+                />
+                <div class="h-1em w-16 animate-pulse rounded bg-surface-onlow bg-op50" />
+              </div>
             </div>
             <div class="flex items-center gap-2">
-              <ClientOnly>
-                <i class="i-tabler-language-hiragana h-5 w-5" />
-                <LanguageSelect />
-              </ClientOnly>
+              <i class="i-tabler-language-hiragana h-6 w-6" />
+              <LanguageSelect />
             </div>
           </div>
           <div class="mt-2 flex gap-2">
@@ -104,7 +92,7 @@ useHead({
             >
               <NuxtLink
                 :to="`/${locale}${tab.path}`"
-                class="rounded px-3 py-2 text-sm op50 hover:bg-surface-low hover:op75"
+                class="rounded px-3 py-2 text-sm hover:bg-surface-base"
               >
                 {{ tab.label }}
               </NuxtLink>
@@ -121,18 +109,10 @@ useHead({
       </RHeader>
       <div v-if="pending">
         <!-- loading -->
-        <div class="h-full flex flex-col items-center justify-center op75">
-          <!-- <div class="mb-8">
-            <NuxtImg
-              alt="Code Time"
-              src="/icon.svg"
-              width="64"
-            />
-          </div> -->
-          <div class="animate-pulse">
-            <div class="mt-2 h-4 w-32 rounded bg-surface-base" />
-            <div class="mt-2 h-4 w-32 rounded bg-surface-base" />
-            <div class="mt-2 h-32 w-60vw rounded bg-surface-base" />
+        <div class="m-auto h-full op75">
+          <DashboardPageTitle loading />
+          <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
+            <div class="mt-2 h-32 w-full rounded-2xl bg-surface-base" />
           </div>
         </div>
       </div>

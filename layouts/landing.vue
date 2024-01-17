@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RokuProvider } from '@roku-ui/vue'
 
-initTheme()
 useSeoMeta({
   title: 'CodeTime - 追迹你的编程时间',
   description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
@@ -21,8 +20,7 @@ const locale = useLocale()
 watchEffect(() => {
   useHead({
     htmlAttrs: {
-      'lang': locale.value,
-      'data-scheme': 'dark',
+      lang: locale.value,
     },
     link: [
       {

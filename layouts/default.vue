@@ -28,11 +28,11 @@ input[type="password"] {
 }
 
 .plot {
-  --plot-background: var(--color-bg-3);
+  --plot-background: var(--r-color-surface-low);
   background: var(--plot-background) !important;
 }
 .y-dot-plot {
-  --plot-background: var(--color-bg-3);
+  --plot-background: var(--r-color-surface-low);
   background: var(--plot-background) !important;
 }
 
@@ -41,6 +41,7 @@ input[type="password"] {
 }
 
 [aria-label="tip"] {
+  --plot-background: rgb(var(--r-color-surface-low));
   background: var(--plot-background) !important;
   border: 1px solid var(--plot-background) !important;
   fill: var(--plot-background) !important;
@@ -50,6 +51,7 @@ marker {
   stroke: var(--plot-background)!important;
 }
 .y-dot-plot [aria-label="y-axis tick label"] > text {
+  --plot-background: rgb(var(--r-color-surface-low));
   stroke: var(--plot-background);
   -webkit-font-smoothing: antialiased;
   font-family: 'Inter', sans-serif;

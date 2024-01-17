@@ -37,7 +37,7 @@ const options = computed<PlotOptions>(() => ({
 </script>
 
 <template>
-  <CardBase class="p-4">
+  <CardBase>
     <div>
       <div class="flex items-center gap-2 text-lg">
         <i class="i-tabler-calendar-event" />

@@ -1,24 +1,42 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   loading?: boolean
   sparse?: boolean
+  dense?: boolean
 }>()
 const cardRef = ref<HTMLElement | null>(null)
+
+const padding = computed(() => {
+  if (props.dense) {
+    return '0.5rem'
+  }
+  else if (props.sparse) {
+    return '1.5rem'
+  }
+  else {
+    return '1rem'
+  }
+})
 </script>
 
 <template>
   <div
     ref="cardRef"
     :class="{
-      ['p-6']: sparse,
-      ['p-4']: !sparse,
+      ['after:bg-surface-low rotating-border']: loading,
+      ['border-surface-border-low bg-surface-low border']: !loading,
     }"
     :style="{
-      '--padding': sparse ? '1.5rem' : '1rem',
+      '--padding': padding,
     }"
-    class="relative border border-surface-border-low rounded-2xl bg-surface-low"
+    class="relative rounded-2xl p-[--padding]"
   >
-    <slot />
+    <div
+      class="relative z-3"
+      v-bind="$attrs"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -29,9 +47,9 @@ const cardRef = ref<HTMLElement | null>(null)
 }
 
 .rotating-border {
-  --border-radius: 0.25rem;
+  --border-radius: 1rem;
   --border-size: 1px;
-  --border-bg: conic-gradient(#404040, #075985);
+  --border-bg: conic-gradient(rgb(var(--r-color-surface-border-base)), rgb(var(--r-color-primary-container)));
   --padding: 1rem;
   position: relative;
   overflow: hidden;
@@ -51,7 +69,7 @@ const cardRef = ref<HTMLElement | null>(null)
   top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 100%;
-  z-index: -2;
+  z-index: 1;
   animation: spin 0.5s linear infinite;
 }
 
@@ -63,7 +81,7 @@ const cardRef = ref<HTMLElement | null>(null)
   content: '';
   position: absolute;
   inset: var(--border-size);
-  z-index: -1;
+  z-index: 2;
   border-radius: calc(var(--border-radius) - var(--border-size));
 }
 </style>

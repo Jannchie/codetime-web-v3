@@ -13,7 +13,7 @@ defineProps<{
     </div>
     <div class="text-xl">
       {{ value }}
-      <span class="text-sm op50">{{ unit }}</span>
+      <span class="text-sm text-surface-onlow">{{ unit }}</span>
     </div>
     <div />
   </CardBase>
