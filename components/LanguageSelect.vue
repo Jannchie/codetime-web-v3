@@ -31,16 +31,14 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="relative">
-    <Select
-      v-model="currentLocale"
-      class="w-28"
-      :options="[
-        { label: 'English', id: 'en' },
-        { label: '中文', id: 'zh-CN' },
-        { label: '日本語', id: 'ja' },
-      ]"
-      @change="onChange"
-    />
-  </div>
+  <Select
+    v-model="currentLocale"
+    class="w-28"
+    :options="[
+      { label: 'English', id: 'en' },
+      { label: '中文', id: 'zh-CN' },
+      { label: '日本語', id: 'ja' },
+    ]"
+    @change="onChange"
+  />
 </template>

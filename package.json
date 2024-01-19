@@ -13,8 +13,8 @@
   "dependencies": {
     "@iconify/vue": "^4.1.1",
     "@observablehq/plot": "^0.6.13",
-    "@roku-ui/preset": "^0.6.1",
-    "@roku-ui/vue": "^0.6.1",
+    "@roku-ui/preset": "^0.7.1",
+    "@roku-ui/vue": "^0.7.1",
     "auxlines": "^0.3.0",
     "d3": "^7.8.5",
     "date-fns": "^3.2.0",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.1",
-    "@iconify/json": "^2.2.170",
+    "@iconify/json": "^2.2.171",
     "@jannchie/eslint-config": "^3.0.0",
     "@nuxt/devtools": "^1.0.8",
     "@nuxt/image": "^1.2.0",
@@ -35,8 +35,8 @@
     "@unocss/reset": "^0.58.3",
     "@vueuse/nuxt": "^10.7.2",
     "eslint": "^8.56.0",
-    "nuxt": "^3.9.2",
-    "vue": "^3.4.14",
+    "nuxt": "^3.9.3",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   }
 }

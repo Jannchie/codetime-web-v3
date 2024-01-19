@@ -24,12 +24,12 @@ const padding = computed(() => {
     ref="cardRef"
     :class="{
       ['after:bg-surface-low rotating-border']: loading,
-      ['border-surface-border-low bg-surface-low border']: !loading,
+      ['bg-surface-low border border-transparent']: !loading,
     }"
     :style="{
       '--padding': padding,
     }"
-    class="relative rounded-2xl p-[--padding]"
+    class="relative rounded-2xl p-[--padding] transition-background-color,border-color"
   >
     <div
       class="relative z-3"

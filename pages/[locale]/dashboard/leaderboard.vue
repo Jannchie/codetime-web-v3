@@ -40,9 +40,8 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
 
     <template v-if="resp.pending.value">
       <Paper
-        class="flex flex-col gap-6 rounded-2xl"
+        class="flex flex-col gap-6 border-transparent rounded-2xl"
         rounded="1rem"
-        with-border
       >
         <div
           v-for="_, i in 32"
@@ -50,7 +49,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
           class="flex items-center justify-between gap-4 pl-2"
         >
           <div class="flex items-center gap-2">
-            <div class="w-10 text-right text-lg">
+            <div class="w-12 text-center">
               <i
                 v-if="i === 0"
                 class="i-fluent-emoji-flat-1st-place-medal h-6 w-6"
@@ -96,7 +95,6 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
       <Paper
         class="flex flex-col gap-6 rounded-2xl"
         rounded="1rem"
-        with-border
       >
         <div
           v-for="item, i in resp.data.value"
@@ -104,7 +102,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
           class="flex items-center justify-between gap-4 pl-2"
         >
           <div class="flex items-center gap-2">
-            <div class="w-10 text-right text-lg">
+            <div class="w-12 text-center">
               <i
                 v-if="i === 0"
                 class="i-fluent-emoji-flat-1st-place-medal h-6 w-6"
@@ -120,8 +118,11 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
               <div v-else-if="i === 32">
                 -
               </div>
-              <div v-else>
-                # {{ i + 1 }}
+              <div
+                v-else
+                class="text-sm"
+              >
+                #{{ i + 1 }}
               </div>
             </div>
             <Image

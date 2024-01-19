@@ -99,7 +99,9 @@ export const en = {
     settings: {
       token: {
         title: 'Token',
-        tip: 'Your token is used for access to the CodeTime API. Keep it private. You can generate a new token here.',
+        tip: 'Your token is used for access to the CodeTime API. Keep it private.',
+        refresh: 'Refresh',
+        refreshTip: 'If you suspect that your token has been leaked, you can regenerate a new token here.',
       },
       language: {
         title: 'Language',

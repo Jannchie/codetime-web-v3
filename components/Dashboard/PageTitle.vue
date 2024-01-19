@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex border-b border-surface-border-low bg-surface-low pt-6">
+  <div class="flex border-b border-surface-border-low bg-surface-low pt-6 transition-background-color,border-color">
     <div class="mx-auto my-8 max-w-6xl w-6xl px-7">
       <div
         v-if="loading"

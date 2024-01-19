@@ -14,11 +14,13 @@ const t = useI18N()
     </div>
     <div class="text-sm text-surface-onlow">
       <span>
-        {{ d3.timeFormat('%Y-%m-%d')(new Date()) }}
-      </span>
-      <span> ~ </span>
-      <span>
         {{ d3.timeFormat('%Y-%m-%d')(new Date(Date.now() - days * 24 * 60 * 60 * 1000)) }}
+      </span>
+
+      <span> ~ </span>
+
+      <span>
+        {{ d3.timeFormat('%Y-%m-%d')(new Date()) }}
       </span>
     </div>
   </div>

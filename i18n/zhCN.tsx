@@ -100,6 +100,8 @@ export const zhCN: Partial<I18NData> = {
       token: {
         title: '令牌',
         tip: '您的令牌用于 CodeTime API 的访问，请保持它的私密性。您可以在此处生成新的令牌。',
+        refresh: '刷新',
+        refreshTip: '如果您怀疑令牌泄露，您可以在此处生成新的令牌。',
       },
       language: {
         title: '语言 (Language)',

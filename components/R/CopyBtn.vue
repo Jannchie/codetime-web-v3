@@ -19,24 +19,34 @@ function onClick() {
 <template>
   <Btn
     hover-variant="filled"
-    class="w-20"
+    class="w-18"
     :size="props.size ?? 'md'"
+    :color="ok ? 'secondary' : 'primary'"
     @click="onClick"
   >
+    <template #leftSection>
+      <i
+        v-if="ok"
+        class="i-tabler-check"
+      />
+      <i
+        v-else
+        class="i-tabler-copy"
+      />
+    </template>
+
     <div
       v-if="ok"
       class="w-full flex items-center justify-around gap-2"
     >
-      <i class="i-tabler-check" />
       <div>
-        {{ t.button.copied }}
+        {{ t.button.copy }}
       </div>
     </div>
     <div
       v-else
       class="w-full flex items-center justify-around gap-2"
     >
-      <i class="i-tabler-copy" />
       <div>
         {{ t.button.copy }}
       </div>

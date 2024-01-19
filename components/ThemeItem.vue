@@ -36,14 +36,15 @@ const theme = computed(() => {
 
 <template>
   <CardBase
-    class="cursor-pointer overflow-hidden !p-0"
+    class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
     :class="{
       'border-primary-container': isCurrent,
+      'border-surface-border-base': !isCurrent,
     }"
     @click="() => currentScheme = props.theme ?? 'system'"
   >
     <div
-      class="flex items-center gap-2 border-b border-surface-border-low p-2 text-sm op75"
+      class="flex items-center gap-2 border-b border-surface-border-base p-2 text-sm op75"
       :class="{
         'text-primary-container': isCurrent,
       }"
@@ -53,9 +54,11 @@ const theme = computed(() => {
       />
       {{ title }}
     </div>
-    <ThemeProvider :theme="theme">
+    <ThemeProvider
+      :theme="theme"
+    >
       <div
-        class="h-full w-86 p-2"
+        class="h-full w-86 p-4"
       >
         <CardBase>
           <div class="mb-2 h-1em w-32 rounded-full bg-primary-container" />

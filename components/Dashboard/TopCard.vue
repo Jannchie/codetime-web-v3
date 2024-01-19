@@ -6,6 +6,7 @@ const props = defineProps<{
   title: string
   type: 'language' | 'project' | 'platform'
   filters: FilterItem[]
+  days: number
 }>()
 
 const transform = computed(() => {
@@ -17,7 +18,7 @@ const transform = computed(() => {
   }
 })
 
-const { pending: loading, data: rawData } = await fetchTop(props.type, 24 * 60 * 60 * 1000, 5, props.filters, { transform: transform.value })
+const { pending: loading, data: rawData } = await fetchTop(props.type, 24 * 60 * props.days, 5, props.filters, { transform: transform.value })
 
 const isLoading = computed(() => unref(loading) ?? false)
 const data = computed(() => unref(rawData))

@@ -73,19 +73,30 @@ const t = useI18N()
       </div>
       <div class="mb-2 flex gap-2">
         <TextField
+          v-model="token"
           readonly
           class="w-full"
           style="letter-spacing: 8px"
           type="password"
-          :value="token"
         />
         <RCopyBtn
           :value="token"
-          class="w-24"
+          class="min-w-24"
         />
       </div>
-      <div class="text-xs text-surface-onlow">
+      <div class="mb-4 text-xs text-surface-onlow">
         {{ t.dashboard.settings.token.tip }}
+      </div>
+      <!-- TODO: DO REFRESH -->
+      <RBtn
+        class="mb-2"
+        color="error"
+      >
+        <i class="i-tabler-refresh" />
+        {{ t.dashboard.settings.token.refresh }}
+      </RBtn>
+      <div class="mb-2 text-xs text-surface-onlow">
+        {{ t.dashboard.settings.token.refreshTip }}
       </div>
     </CardBase>
     <CardBase sparse>
@@ -108,7 +119,10 @@ const t = useI18N()
         {{ t.dashboard.settings.theme.tip }}
       </div>
     </CardBase>
-    <CardBase sparse>
+    <CardBase
+      sparse
+      class="z-4"
+    >
       <div class="mb-4 text-xl">
         {{ t.dashboard.settings.language.title }}
       </div>

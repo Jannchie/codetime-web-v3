@@ -84,18 +84,21 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       <DashboardTopCard
         icon="i-tabler-braces"
         type="language"
+        :days="days"
         :filters="filters"
         :title="t.dashboard.overview.top.language"
       />
       <DashboardTopCard
         icon="i-tabler-app-window"
         type="project"
+        :days="days"
         :filters="filters"
         :title="t.dashboard.overview.top.project"
       />
       <DashboardTopCard
         icon="i-tabler-terminal"
         type="platform"
+        :days="days"
         :filters="filters"
         :title="t.dashboard.overview.top.platform"
       />

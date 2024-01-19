@@ -100,6 +100,8 @@ export const ja: Partial<I18NData> = {
       token: {
         title: 'トークン',
         tip: 'あなたのトークンは CodeTime API へのアクセスに使用されるので、それを秘密に保ってください。ここで新しいトークンを生成できます。',
+        refresh: '更新',
+        refreshTip: 'トークンが漏洩したと疑われる場合は、ここで新しいトークンを生成できます。',
       },
       language: {
         title: '言語 (Language)',

@@ -14,8 +14,9 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
     <div class="flex items-center gap-2">
       <i class="i-tabler-markdown" />
       <TextField
+        v-model="markdown"
         size="sm"
-        :value="markdown"
+        readonly
         class="grow-1 text-xs"
       />
       <RCopyBtn
@@ -27,8 +28,9 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
     <div class="flex items-center gap-2">
       <i class="i-tabler-code" />
       <TextField
+        v-model="html"
         size="sm"
-        :value="html"
+        readonly
         class="grow-1 text-xs"
       />
       <RCopyBtn
@@ -40,8 +42,9 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
     <div class="flex items-center gap-2">
       <i class="i-tabler-link" />
       <TextField
+        v-model="link"
         size="sm"
-        :value="link"
+        readonly
         class="grow-1 text-xs"
       />
       <RCopyBtn
