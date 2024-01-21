@@ -11,12 +11,15 @@ dependencies:
   '@observablehq/plot':
     specifier: ^0.6.13
     version: 0.6.13
+  '@paypal/paypal-js':
+    specifier: ^8.0.0
+    version: 8.0.0
   '@roku-ui/preset':
     specifier: ^0.7.1
     version: 0.7.1
   '@roku-ui/vue':
-    specifier: file:../roku-ui-vue/packages/vue
-    version: file:../roku-ui-vue/packages/vue(typescript@5.3.3)
+    specifier: ^0.7.1
+    version: 0.7.1(typescript@5.3.3)
   auxlines:
     specifier: ^0.3.0
     version: 0.3.0(vue@3.4.15)
@@ -1754,6 +1757,12 @@ packages:
       '@parcel/watcher-win32-x64': 2.4.0
     dev: true
 
+  /@paypal/paypal-js@8.0.0:
+    resolution: {integrity: sha512-wiABljZw5IbvuWkuspmRA/xN9T78zXbEfBzz6Ea94Nxg5hoxs1l9u4rzjO30IEglmIFH3+fLsGla+PfnUzvFSw==}
+    dependencies:
+      promise-polyfill: 8.3.0
+    dev: false
+
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -1772,6 +1781,19 @@ packages:
 
   /@roku-ui/preset@0.7.1:
     resolution: {integrity: sha512-L0KZ4XkgPNfB0awvjV4irvtWainKHL4+bOtCeqeSfiKd1az258hfFZ5JgUcyITbS1m1Fzaugn3DDG9qApNo3HA==}
+    dev: false
+
+  /@roku-ui/vue@0.7.1(typescript@5.3.3):
+    resolution: {integrity: sha512-AKHs8AJ5tgdIzl84jQ+KFgPYMc3wCQqihB+MDok3a5JsjMD8AKJPdicU9S7wZq6dZ1+WNb7sYFH6ORwdYlsSyw==}
+    dependencies:
+      '@formkit/auto-animate': 0.8.1
+      '@unocss/reset': 0.58.3
+      '@vueuse/core': 10.7.2(vue@3.4.15)
+      tinycolor2: 1.6.0
+      vue: 3.4.15(typescript@5.3.3)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - typescript
     dev: false
 
   /@rollup/plugin-alias@5.1.0(rollup@4.9.5):
@@ -6524,6 +6546,7 @@ packages:
   /node-addon-api@7.1.0:
     resolution: {integrity: sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==}
     engines: {node: ^16 || ^18 || >= 20}
+    requiresBuild: true
     dev: true
 
   /node-fetch-native@1.6.1:
@@ -7449,6 +7472,10 @@ packages:
       bluebird:
         optional: true
     dev: true
+
+  /promise-polyfill@8.3.0:
+    resolution: {integrity: sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==}
+    dev: false
 
   /promise-retry@2.0.1:
     resolution: {integrity: sha512-y+WKFlBR8BGXnsNlIHFGPZmyDf3DFMoLhaflAnyZgV6rG6xu+JwesTo2Q9R6XwYmtmwAFCkAk3e35jEdoeh/3g==}
@@ -9153,18 +9180,3 @@ packages:
       compress-commons: 5.0.1
       readable-stream: 3.6.2
     dev: true
-
-  file:../roku-ui-vue/packages/vue(typescript@5.3.3):
-    resolution: {directory: ../roku-ui-vue/packages/vue, type: directory}
-    id: file:../roku-ui-vue/packages/vue
-    name: '@roku-ui/vue'
-    dependencies:
-      '@formkit/auto-animate': 0.8.1
-      '@unocss/reset': 0.58.3
-      '@vueuse/core': 10.7.2(vue@3.4.15)
-      tinycolor2: 1.6.0
-      vue: 3.4.15(typescript@5.3.3)
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - typescript
-    dev: false

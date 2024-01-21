@@ -14,6 +14,7 @@ export interface User {
   username: string
   avatar: string
   github_id: number
+  google_id: string
   bio: string
   upload_token: string
 }
@@ -32,24 +33,21 @@ export async function fetchStats(by: string = 'time', limit: number = 60, unit: 
 
 export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}, needLogin = true) {
   const apiHost = useRuntimeConfig().public.apiHost
-  const resp = await useFetch<T>(`${path}`, {
-    server: !needLogin,
+  const resp = useLazyFetch<T>(`${path}`, {
+    server: false,
     baseURL: apiHost,
     credentials: needLogin ? 'include' : undefined,
-    lazy: true,
     ...options,
   })
-  if (resp.error.value) {
-    console.error(resp.error.value)
-  }
   return resp
 }
 
 export async function fetchUser() {
-  const { data, pending } = await useAPIFetch<User>('/user', {
+  const { data, pending, error, status } = await useAPIFetch<User>('/user', {
     credentials: 'include',
+    lazy: true,
   })
-  return { data: reactive(data), pending }
+  return { data: reactive(data), pending, error, status }
 }
 
 export async function fetchSumMinutes() {

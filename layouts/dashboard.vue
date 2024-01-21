@@ -22,7 +22,7 @@ useSeoMeta({
 })
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)
-const { data: user, pending } = await fetchUser()
+const { data: user, pending, error } = await fetchUser()
 provide('user', user)
 useHead({
   htmlAttrs: {
@@ -71,7 +71,7 @@ useHead({
                 </div>
               </NuxtLink>
               <div
-                v-else
+                v-else-if="pending && !error"
                 class="flex items-center gap-3 text-sm"
               >
                 <div
@@ -107,7 +107,7 @@ useHead({
           </div>
         </div>
       </RHeader>
-      <div v-if="pending">
+      <div v-if="pending && !error">
         <!-- loading -->
         <div class="m-auto h-full op75">
           <DashboardPageTitle loading />
@@ -120,7 +120,7 @@ useHead({
         <slot v-if="user" />
         <div
           v-else
-          class="h-full flex flex-col items-center justify-center op75"
+          class="h-full flex flex-col items-center justify-center py-16 op75"
         >
           <div class="mb-8">
             <NuxtImg

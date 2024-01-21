@@ -9,13 +9,12 @@ definePageMeta({
 })
 
 const days = ref(28)
-
 const allData = await fetchStats('time', 525600, 'days')
 const allLanguageData = await fetchStats('language', days.value, 'days')
 const allProjectData = await fetchStats('project', days.value, 'days')
 const hasData = computed(() => {
   if (allData.data.value === null) {
-    return true
+    return false
   }
   return (allData.data.value?.data.length ?? 0) > 0
 })

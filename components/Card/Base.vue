@@ -23,7 +23,7 @@ const padding = computed(() => {
   <div
     ref="cardRef"
     :class="{
-      ['after:bg-surface-low rotating-border']: loading,
+      ['after:bg-surface-low rotating-border border-transparent']: loading,
       ['bg-surface-low border border-transparent']: !loading,
     }"
     :style="{

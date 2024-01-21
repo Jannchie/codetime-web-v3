@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TextField } from '@roku-ui/vue'
+import { Modal, TextField } from '@roku-ui/vue'
 
 definePageMeta({
   layout: 'dashboard',
@@ -88,13 +88,7 @@ const t = useI18N()
         {{ t.dashboard.settings.token.tip }}
       </div>
       <!-- TODO: DO REFRESH -->
-      <RBtn
-        class="mb-2"
-        color="error"
-      >
-        <i class="i-tabler-refresh" />
-        {{ t.dashboard.settings.token.refresh }}
-      </RBtn>
+      <DashboardRefreshBtn />
       <div class="mb-2 text-xs text-surface-onlow">
         {{ t.dashboard.settings.token.refreshTip }}
       </div>
@@ -209,22 +203,6 @@ const t = useI18N()
         </RBtn>
       </div>
     </CardBase>
-    <CardBase
-      sparse
-      class="border-error-container"
-    >
-      <div class="mb-4 text-xl text-error-container">
-        {{ t.dashboard.settings.dangerZone.title }}
-      </div>
-      <div class="mb-4 text-sm op75">
-        {{ t.dashboard.settings.dangerZone.description }}
-      </div>
-      <div class="mb-2">
-        <RBtn color="error">
-          <i class="i-tabler-trash" />
-          {{ t.dashboard.settings.dangerZone.button.removeAllData }}
-        </RBtn>
-      </div>
-    </CardBase>
+    <DashboardSettingsDangerZone />
   </DashboardPageContent>
 </template>

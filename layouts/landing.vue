@@ -36,12 +36,12 @@ watchEffect(() => {
 <template>
   <RokuProvider class="min-h-100vh flex flex-col">
     <RHeader class="px-4 py-3">
-      <NuxtImg
+      <img
         alt="Code Time"
         src="/icon.svg"
         width="26"
         class="ml-2 mr-3"
-      />
+      >
       <div class="flex items-center gap-2">
         <LanguageSelect />
       </div>

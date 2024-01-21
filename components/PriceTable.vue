@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Btn, Paper } from '@roku-ui/vue'
+import { loadScript } from '@paypal/paypal-js'
 
 const target = ref<HTMLElement | null>(null)
 const targetIsVisible = useElementVisibility(target)
@@ -8,6 +9,39 @@ const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-pri
 const beforeMonthlyGradientCls = 'before:bg-gradient-to-r before:from-primary-8 before:via-primary-6 before:to-primary-5 before:op-10'
 const annualGradientCls = 'bg-gradient-to-rb from-red-6 via-purple-6 to-purple-5 inline-block text-transparent bg-clip-text'
 const beforeAnnualGradientCls = 'before:bg-gradient-to-rb before:from-red-6 before:via-purple-6 before:to-purple-5 before:inline-block before:op-10'
+
+async function onClick() {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  const paypal = await loadScript({
+    clientId: 'AXck1kiF-dt9WSHiBF3GlrZTHX3rcL4WJpR-LjJ3QUVtgVUvlTZ7UniOXLe9XPHZIRtIgqiVdQknmZES',
+    vault: true,
+    intent: 'subscription',
+  })
+  if (!paypal) {
+    return
+  }
+  paypal.Buttons?.({
+    createSubscription(data, actions) {
+      return actions.subscription.create({
+        plan_id: 'P-6WC83102U1223815SMWVY7WI',
+      })
+    },
+    style: {
+      color: 'gold',
+      tagline: false,
+    },
+  }).render('#subscribe')
+}
+
+onMounted(() => {
+  if (typeof window === 'undefined') {
+    return
+  }
+  onClick()
+})
 </script>
 
 <template>
@@ -86,7 +120,7 @@ const beforeAnnualGradientCls = 'before:bg-gradient-to-rb before:from-red-6 befo
       >
         <Paper
           ref="target"
-          class="h-full w-full flex flex-col justify-between"
+          class="h-full w-full flex flex-col justify-between pb-0"
         >
           <div class="absolute right-4 top-0 rounded-full bg-primary-container px-4 py-1 text-sm text-white -translate-y-50%">
             {{ !isAnuual ? 'Most popular' : 'Best Choice ;)' }}
@@ -105,7 +139,7 @@ const beforeAnnualGradientCls = 'before:bg-gradient-to-rb before:from-red-6 befo
                 }"
                 class="text-4xl"
               >
-                {{ isAnuual ? '$20' : '$4' }}
+                {{ isAnuual ? '$24' : '$4' }}
               </div>
               <div class="text-sm text-surface-onlow">
                 / {{ isAnuual ? 'year' : 'month' }}
@@ -129,13 +163,17 @@ const beforeAnnualGradientCls = 'before:bg-gradient-to-rb before:from-red-6 befo
               </FeatureItem>
             </div>
           </div>
-          <div>
-            <Btn
+          <div style="color-scheme: light;">
+            <div
+              id="subscribe"
+            />
+            <!-- <Btn
               class="w-full"
               variant="filled"
+              @click="onClick"
             >
               立刻订阅
-            </Btn>
+            </Btn> -->
           </div>
         </Paper>
       </div>
