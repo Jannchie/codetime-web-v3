@@ -12,6 +12,9 @@ export default defineNuxtConfig({
       MonthlyPlanId: 'P-9GB45134DW5272217MWWSZ5Y',
     },
   },
+  gtag: {
+    id: 'G-36N091FBKT',
+  },
   devtools: {
     enabled: true,
     timeline: {
@@ -25,19 +28,13 @@ export default defineNuxtConfig({
       'i18n/**',
     ],
   },
-  modules: [
-    '@unocss/nuxt',
-    '@vueuse/nuxt',
-    '@nuxtjs/robots',
-    ['@nuxtjs/google-fonts', {
-      preload: true,
-      download: true,
-      families: {
-        'Share Tech Mono': true,
-        'Noto Sans JP': true,
-        'Noto Sans SC': true,
-      },
-    }],
-    '@nuxt/image',
-  ],
+  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', ['@nuxtjs/google-fonts', {
+    preload: true,
+    download: true,
+    families: {
+      'Share Tech Mono': true,
+      'Noto Sans JP': true,
+      'Noto Sans SC': true,
+    },
+  }], '@nuxt/image', 'nuxt-gtag'],
 })
