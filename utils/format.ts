@@ -1,7 +1,13 @@
-import { formatDuration } from 'date-fns'
+import { type Duration, type Locale, formatDuration } from 'date-fns'
 import enUS from 'date-fns/locale/en-US'
 import ja from 'date-fns/locale/ja'
 import zhCN from 'date-fns/locale/zh-CN'
+import ptBR from 'date-fns/locale/pt-BR'
+import it from 'date-fns/locale/it'
+import m from 'date-fns/locale/ms'
+import ru from 'date-fns/locale/ru'
+import ua from 'date-fns/locale/uk'
+import es from 'date-fns/locale/es'
 import languageIdentifiers from './LanguageIdentifiers.json'
 
 export function getDurationData(ms: number): { hour: number, minute: number, second: number } {
@@ -16,14 +22,20 @@ export function getDurationData(ms: number): { hour: number, minute: number, sec
   return { hour, minute, second }
 }
 
-export function getDurationString(ms: number, format = ['hours', 'minutes', 'seconds']): string {
+export function getDurationString(ms: number, format: (keyof Duration)[] = ['hours', 'minutes', 'seconds']): string {
   const route = useRoute()
   const locale = route.params.locale as string
   const { hour, minute, second } = getDurationData(ms)
-  const localeMap = new Map<string, Locale>([
-    ['en', enUS],
+  const localeMap = new Map<string, any>([
     ['zh-CN', zhCN],
+    ['en', enUS],
     ['ja', ja],
+    ['pt-BR', ptBR],
+    ['it', it],
+    ['ms', m],
+    ['ru', ru],
+    ['ua', ua],
+    ['es', es],
   ])
   return formatDuration({ hours: hour, minutes: minute, seconds: second }, {
     locale: localeMap.get(locale) ?? localeMap.get('en'),
@@ -34,10 +46,16 @@ export function getDurationString(ms: number, format = ['hours', 'minutes', 'sec
 export function formateDays(days: number) {
   const route = useRoute()
   const locale = route.params.locale as string
-  const localeMap = new Map<string, Locale>([
-    ['en', enUS],
+  const localeMap = new Map<string, any>([
     ['zh-CN', zhCN],
+    ['en', enUS],
     ['ja', ja],
+    ['pt-BR', ptBR],
+    ['it', it],
+    ['ms', m],
+    ['ru', ru],
+    ['ua', ua],
+    ['es', es],
   ])
   return formatDuration({ days }, {
     locale: localeMap.get(locale) ?? localeMap.get('en'),
