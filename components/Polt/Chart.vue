@@ -5,10 +5,7 @@ const props = defineProps<{
   options: PlotOptions
 }>()
 
-const op = ref<any>(props.options)
-watchEffect(() => {
-  op.value = props.options
-})
+const op = computed(() => props.options)
 const chartWrapper = ref<HTMLElement | null>(null)
 const { width } = useElementBounding(chartWrapper)
 const basicHeight = op.value.height ?? 400

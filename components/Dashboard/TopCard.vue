@@ -17,8 +17,11 @@ const transform = computed(() => {
       return transformTopPlatformData
   }
 })
-
-const { pending: loading, data: rawData } = await fetchTop(props.type, 24 * 60 * props.days, 5, props.filters, { transform: transform.value })
+const minutes = computed(() => props.days * 24 * 60)
+const { pending: loading, data: rawData, refresh } = await fetchTop(props.type, minutes, 5, props.filters, { transform: transform.value })
+watch([props], () => {
+  refresh()
+})
 
 const isLoading = computed(() => unref(loading) ?? false)
 const data = computed(() => unref(rawData))

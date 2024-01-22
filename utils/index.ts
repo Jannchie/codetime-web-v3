@@ -17,18 +17,23 @@ export interface User {
   google_id: string
   bio: string
   upload_token: string
+  plan: 'free' | 'pro'
+  plan_expires_at: string
+  plan_status: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid'
 }
 
-export async function fetchStats(by: string = 'time', limit: number = 60, unit: 'minutes' | 'days' | 'hours' = 'minutes') {
+export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 'minutes' | 'days' | 'hours' = 'minutes') {
   // get timezone, eg. -09:00
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-  const params = new URLSearchParams({
-    by,
-    tz,
-    limit: String(limit),
-    unit,
+  return await useAPIFetch<{ data: { duration: number, time: string, by?: string }[] }>(`/stats`, {
+    params: {
+      by,
+      tz,
+      limit,
+      unit,
+    },
+    watch: [limit],
   })
-  return await useAPIFetch<{ data: { duration: number, time: string, by?: string }[] }>(`/stats?${params}`)
 }
 
 export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}, needLogin = true) {
@@ -66,11 +71,11 @@ export interface TopData {
   icon?: string
 }
 
-export async function fetchTop(field: string, minutes: number = 0, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
+export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
   const params = computed(() => {
     const params = {
       field,
-      minutes: String(minutes),
+      minutes: String(minutes.value),
       limit: String(limit),
       ...unref(filters).reduce((acc, cur) => {
         acc[cur.key] = cur.value
@@ -82,7 +87,7 @@ export async function fetchTop(field: string, minutes: number = 0, limit: number
   return await useAPIFetch<TopData[]>(`/top`, {
     ...options,
     credentials: 'include',
-    query: params,
+    params,
     $fetch: useRequestFetch(),
   })
 }

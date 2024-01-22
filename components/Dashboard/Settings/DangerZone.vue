@@ -38,17 +38,17 @@ function deleteAllData() {
     <Modal v-model="modal">
       <Paper class="max-w-md">
         <div>
-          删除所有数据
+          {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </div>
         <div class="py-2 text-sm text-surface-onlow">
           <div class="pb-2">
-            你确定要删除所有数据吗？这会导致你的所有数据都会被删除，且无法恢复。
+            {{ t.dashboard.settings.dangerZone.button.modal.p1 }}
           </div>
           <div class="pb-2">
-            你的数据非常重要，你可以先导出数据，再进行数据删除。
+            {{ t.dashboard.settings.dangerZone.button.modal.p2 }}
           </div>
           <div class="pb-2">
-            如果你想删除所有数据，请在下方输入 DELETE，然后点击确定。
+            {{ t.dashboard.settings.dangerZone.button.modal.p3 }}
           </div>
         </div>
         <div class="py-2">

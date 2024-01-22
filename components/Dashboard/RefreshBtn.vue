@@ -41,22 +41,22 @@ async function refreshToken() {
   <Modal v-model="modal">
     <Paper class="max-w-md">
       <div>
-        刷新令牌
+        {{ t.dashboard.settings.token.refresh }}
       </div>
       <div class="py-2 text-sm text-surface-onlow">
-        你确定要刷新令牌吗？这会导致你已经应用在编辑器插件上的令牌失效。你需要重新输入新的令牌。
+        {{ t.dashboard.settings.token.confirmRefresh }}
       </div>
       <div class="flex justify-end">
         <RBtn
           class="mr-2"
           @click="modal = false"
         >
-          取消
+          {{ t.general.cancel }}
         </RBtn>
         <RBtn
           @click="refreshToken"
         >
-          确定
+          {{ t.general.confirm }}
         </RBtn>
       </div>
     </Paper>

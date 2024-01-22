@@ -1,57 +1,22 @@
 <script setup lang="ts">
 import { Btn, Paper } from '@roku-ui/vue'
-import { loadScript } from '@paypal/paypal-js'
 
 const target = ref<HTMLElement | null>(null)
 const targetIsVisible = useElementVisibility(target)
-const isAnuual = ref(false)
-const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-primary-5 inline-block text-transparent bg-clip-text bg-primary-container'
+const isAnuual = ref(true)
 const beforeMonthlyGradientCls = 'before:bg-gradient-to-r before:from-primary-8 before:via-primary-6 before:to-primary-5 before:op-10'
-const annualGradientCls = 'bg-gradient-to-rb from-red-6 via-purple-6 to-purple-5 inline-block text-transparent bg-clip-text'
 const beforeAnnualGradientCls = 'before:bg-gradient-to-rb before:from-red-6 before:via-purple-6 before:to-purple-5 before:inline-block before:op-10'
-
-async function onClick() {
-  if (typeof window === 'undefined') {
-    return
-  }
-
-  const paypal = await loadScript({
-    clientId: 'AXck1kiF-dt9WSHiBF3GlrZTHX3rcL4WJpR-LjJ3QUVtgVUvlTZ7UniOXLe9XPHZIRtIgqiVdQknmZES',
-    vault: true,
-    intent: 'subscription',
-  })
-  if (!paypal) {
-    return
-  }
-  paypal.Buttons?.({
-    createSubscription(data, actions) {
-      return actions.subscription.create({
-        plan_id: 'P-6WC83102U1223815SMWVY7WI',
-      })
-    },
-    style: {
-      color: 'gold',
-      tagline: false,
-    },
-  }).render('#subscribe')
-}
-
-onMounted(() => {
-  if (typeof window === 'undefined') {
-    return
-  }
-  onClick()
-})
+const t = useI18N()
 </script>
 
 <template>
   <div>
     <div class="pb-16 pt-8 text-center">
       <div class="text-4xl font-bold">
-        Pricing
+        {{ t.landing.pricing.title }}
       </div>
       <div class="text-surface-onlow">
-        选择适合你的计划
+        {{ t.landing.pricing.description }}
       </div>
     </div>
     <div class="m-auto mb-18 flex justify-center">
@@ -61,40 +26,46 @@ onMounted(() => {
       <Paper class="flex flex-col justify-between md:min-w-72">
         <div>
           <div class="text-base font-light">
-            Basic
+            {{ t.plan.basic.title }}
           </div>
           <div class="flex items-end gap-2 font-light">
             <div class="text-4xl font-light">
               $0
             </div>
             <div class="text-sm text-surface-onlow">
-              forever
+              {{ t.plan.basic.forever }}
             </div>
           </div>
           <div class="mb-2 mt-4 text-xl">
-            Features
+            {{ t.plan.basic.features.title }}
           </div>
           <div class="flex flex-col gap-2 text-sm text-surface-onlow">
             <FeatureItem>
-              永久保存历史数据
+              {{ t.plan.basic.features.item.saveHistory }}
             </FeatureItem>
             <FeatureItem>
-              可浏览最近 28 天的数据
+              {{ t.plan.basic.features.item.browseRecent }}
             </FeatureItem>
             <FeatureItem>
-              编程时间趋势报表
+              {{ t.plan.basic.features.item.codetimeTrend }}
             </FeatureItem>
             <FeatureItem>
-              编程语言趋势报表
+              {{ t.plan.basic.features.item.codetimeLanguaeTrend }}
             </FeatureItem>
             <FeatureItem>
-              项目趋势报表
+              {{ t.plan.basic.features.item.codetimeProjectTrend }}
             </FeatureItem>
             <FeatureItem>
-              可生成在展示用的图片
+              {{ t.plan.basic.features.item.badge }}
             </FeatureItem>
             <FeatureItem>
-              数据导出
+              {{ t.plan.basic.features.item.export }}
+            </FeatureItem>
+            <FeatureItem not-yet>
+              {{ t.plan.basic.features.item.import }}
+            </FeatureItem>
+            <FeatureItem not-yet>
+              {{ t.plan.basic.features.item.more }}
             </FeatureItem>
           </div>
           <div class="pt-24">
@@ -103,7 +74,7 @@ onMounted(() => {
               variant="transparent"
               disabled
             >
-              免费用户
+              {{ t.plan.basic.button }}
             </Btn>
           </div>
         </div>
@@ -118,64 +89,10 @@ onMounted(() => {
           },
         ]"
       >
-        <Paper
+        <ProPricePaper
           ref="target"
-          class="h-full w-full flex flex-col justify-between pb-0"
-        >
-          <div class="absolute right-4 top-0 rounded-full bg-primary-container px-4 py-1 text-sm text-white -translate-y-50%">
-            {{ !isAnuual ? 'Most popular' : 'Best Choice ;)' }}
-          </div>
-          <div>
-            <div class="text-base font-light">
-              Pro
-            </div>
-            <div
-              class="flex items-end gap-2 font-light"
-            >
-              <div
-                :class="{
-                  [monthlyGradientCls]: !isAnuual,
-                  [annualGradientCls]: isAnuual,
-                }"
-                class="text-4xl"
-              >
-                {{ isAnuual ? '$24' : '$4' }}
-              </div>
-              <div class="text-sm text-surface-onlow">
-                / {{ isAnuual ? 'year' : 'month' }}
-              </div>
-            </div>
-            <div class="mb-2 mt-4 text-xl">
-              Features
-            </div>
-            <div class="flex flex-col gap-2 text-sm text-surface-onlow">
-              <FeatureItem>
-                包含 Basic Plan 所有功能
-              </FeatureItem>
-              <FeatureItem>
-                可浏览全部历史数据
-              </FeatureItem>
-              <FeatureItem not-yet>
-                基于规则的数据处理
-              </FeatureItem>
-              <FeatureItem not-yet>
-                标签系统
-              </FeatureItem>
-            </div>
-          </div>
-          <div style="color-scheme: light;">
-            <div
-              id="subscribe"
-            />
-            <!-- <Btn
-              class="w-full"
-              variant="filled"
-              @click="onClick"
-            >
-              立刻订阅
-            </Btn> -->
-          </div>
-        </Paper>
+          :is-anuual="isAnuual"
+        />
       </div>
     </div>
   </div>

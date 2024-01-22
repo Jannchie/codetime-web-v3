@@ -38,8 +38,8 @@ const latestWeekDate = computed(() => {
 
 const t = useI18N()
 const options = computed(() => ({
-  width: 700,
-  height: 130,
+  width: 800,
+  height: 140,
   x: {
     axis: null,
     tickSize: 0,
@@ -51,9 +51,9 @@ const options = computed(() => ({
   color: {
     interpolate: (d: number) => {
       if (d === 0) {
-        return 'rgb(var(--r-color-surface-low))'
+        return 'rgb(var(--r-color-surface-lowest))'
       }
-      return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#38bdf822', '#1c89b8')))(d)
+      return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#5AF2', '#2AF')))(d)
     },
   },
   marks: [
@@ -82,9 +82,9 @@ const options = computed(() => ({
       },
       rx: 2,
       ry: 2,
-      stroke: 'rgb(var(--r-color-surface-border-base))',
-      strokeOpacity: 0.3,
-      inset: 0.5,
+      stroke: 'rgb(var(--r-color-surface-border-low))',
+      strokeOpacity: 0,
+      inset: 1,
     }),
   ],
 }))

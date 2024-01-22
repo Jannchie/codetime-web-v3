@@ -2,6 +2,18 @@ import NuxtLink from './NuxtLink.vue'
 import type { I18NData } from '.'
 
 export const zhCN: Partial<I18NData> = {
+  meta: {
+    title: 'CodeTime - 追迹你的编程时间',
+    description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
+    ogTitle: 'CodeTime - 追迹你的编程时间',
+    ogDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
+    twitterTitle: 'CodeTime - 追迹你的编程时间',
+    twitterDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
+  },
+  general: {
+    cancel: '取消',
+    confirm: '确认',
+  },
   landing: {
     description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析您的编程时间。',
     toDashboard: '前往仪表盘',
@@ -10,6 +22,85 @@ export const zhCN: Partial<I18NData> = {
     loginWithGithub: '使用 GitHub 登录',
     freeMessage: '目前完全免费，无需信用卡',
     demo: '演示',
+    features: {
+      save: {
+        title: '永久保存您的编程时间数据。',
+        description: '我们知道历史数据的美好。没有什么比自己的辛勤劳动被抹去更令人沮丧的了。为了让所有用户都能够在多年之后回顾自己的成长历史，我们会永久保存您的数据，直到您主动销毁它们，即使您从未付费。',
+      },
+      export: {
+        title: '支持数据导出。',
+        description: '世界上最安全的地方就是您自己的硬盘。因此，我们支持数据导出，您可以随时退出，并连接到其他平台或自建服务。',
+      },
+      editor: {
+        title: '支持多种编辑器。',
+        description: '我们是一个非常小的团队。这意味着我们无法支持所有 IDE 或代码编辑器。但是，我们目前支持 VSCode 和 JetBrain 系列 IDE。我们相信它们涵盖了大多数用户的需求。我们将尽最大努力支持更多平台，造福更多人。',
+      },
+    },
+    pricing: {
+      title: '定价',
+      description: '选择适合您的计划。',
+    },
+  },
+  plan: {
+    modal: {
+      title: '升级订阅',
+      p1: '我们需要您的支持来保持我们的开发热情，从而提供更丰富的数据报告和更好的用户体验。',
+      p2: '您可以选择升级到 Pro 订阅以解锁更多功能。',
+      p3: '如果您在支付过程中遇到任何问题，请通过电子邮件与我们联系。',
+    },
+    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+      switch (str) {
+        case 'active':
+          return '有效'
+        case 'cancelled':
+          return '已取消'
+        case 'expired':
+          return '已过期'
+        case 'on-trial':
+          return '试用中'
+        case 'paused':
+          return '已暂停'
+        case 'past-due':
+          return '已逾期'
+        case 'unpaid':
+          return '未支付'
+      }
+    },
+    basic: {
+      title: 'Basic',
+      forever: '永久',
+      features: {
+        title: '功能',
+        item: {
+          saveHistory: '永久保存历史数据',
+          browseRecent: '浏览最近 90 天的数据',
+          codetimeTrend: '编程时间趋势报告',
+          codetimeLanguaeTrend: '编程语言趋势报告',
+          codetimeProjectTrend: '项目趋势报告',
+          badge: '生成展示徽章',
+          export: '数据导出',
+          import: '数据导入',
+          more: '更多报告',
+        },
+      },
+      button: '永久免费',
+    },
+    pro: {
+      title: 'Pro',
+      preMonth: '/ 月',
+      preYear: '/ 年',
+      features: {
+        item: {
+          include: '包含 Basic 计划的所有功能',
+          browseAll: '浏览所有历史数据',
+          rule: '基于规则的数据处理',
+          tag: '标签系统',
+        },
+      },
+      notYet: '表示尚未开放',
+      button: '立即订阅',
+    },
+    needLogin: '需要登录',
   },
   dashboard: {
     loginRequired: '欢迎访问 CodeTime 仪表板！请登录以查看你的编程时间数据，或者点击下方的演示按钮体验演示仪表盘。',
@@ -35,13 +126,14 @@ export const zhCN: Partial<I18NData> = {
         title(days: number) {
           return `过去 ${days} 天`
         },
+        allTime: '全部时间',
       },
       statistic: {
         timeTotal: '编程时间/总计',
         timeToday: '编程时间/今日',
         timeAverage: '编程时间/平均',
-        longestStreak: '连续天数/当前',
-        currentStreak: '连续天数/最大',
+        longestStreak: '连续天数/最大',
+        currentStreak: '连续天数/当前',
       },
       top: {
         language: '语言',
@@ -102,6 +194,8 @@ export const zhCN: Partial<I18NData> = {
         tip: '您的令牌用于 CodeTime API 的访问，请保持它的私密性。您可以在此处生成新的令牌。',
         refresh: '刷新',
         refreshTip: '如果您怀疑令牌泄露，您可以在此处生成新的令牌。',
+        refreshToken: '刷新令牌',
+        confirmRefresh: '您确定要刷新令牌吗？这将使您已应用于编辑器插件的令牌失效。您需要输入新的令牌。',
       },
       language: {
         title: '语言 (Language)',
@@ -129,7 +223,19 @@ export const zhCN: Partial<I18NData> = {
         description: '这些设置会永久影响你的数据，不可恢复。请谨慎操作。',
         button: {
           removeAllData: '删除所有数据',
+          modal: {
+            p1: '您确定要删除所有数据吗？此操作不可撤销。',
+            p2: '您的数据非常重要，您可以先导出数据，再删除数据。',
+            p3: '如果您要删除所有数据，请在下方输入 DELETE，然后点击确定。',
+          },
         },
+      },
+      account: {
+        title: '账户',
+        description: '账户设置。',
+        expiresIn: '过期时间',
+        manageSubscription: '管理订阅',
+        subscribe: '订阅',
       },
       other: {
         title: '其他',

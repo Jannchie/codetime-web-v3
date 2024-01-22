@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev:https": "npx nuxi dev --https --ssl-cert ./localhost.pem --ssl-key ./localhost-key.pem",
+    "dev:staging": "npx nuxi dev --dotenv .env.staging",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

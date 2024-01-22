@@ -1,6 +1,12 @@
 import { zhCN } from './zhCN'
 import { ja } from './ja'
 import { en } from './en'
+import { it } from './it'
+import { ms } from './ms'
+import { ua } from './ua'
+import { es } from './es'
+import { ru } from './ru'
+import { ptBR } from './ptBR'
 
 export type I18NData = typeof en
 
@@ -8,6 +14,12 @@ const i18NMap = new Map<string, Partial<I18NData>>([
   ['zh-CN', zhCN],
   ['en', en],
   ['ja', ja],
+  ['pt-BR', ptBR],
+  ['it', it],
+  ['ms', ms],
+  ['ru', ru],
+  ['ua', ua],
+  ['es', es],
 ])
 
 function mergeI18N(a: any, b: any): I18NData {

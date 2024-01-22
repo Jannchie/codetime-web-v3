@@ -25,7 +25,7 @@ const unselectedCls = 'hover:bg-surface-border-base'
       Annual
       <span class="text-xs">
 
-        (save 50%)
+        (save 25%)
       </span>
     </div>
   </div>

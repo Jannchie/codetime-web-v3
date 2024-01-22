@@ -19,8 +19,10 @@ defineProps<{
       </div>
       <div
         v-else
-        class="bg-text-surface-onlow my-[2px] h-16px w-20 animate-pulse bg-surface-onlow/50 text-sm"
-      />
+        class="text-sm text-surface-onlow"
+      >
+        -
+      </div>
     </div>
   </div>
 </template>

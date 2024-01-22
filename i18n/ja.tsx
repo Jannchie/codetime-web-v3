@@ -2,6 +2,18 @@ import NuxtLink from './NuxtLink.vue'
 import type { I18NData } from '.'
 
 export const ja: Partial<I18NData> = {
+  meta: {
+    title: 'CodeTime - コーディング時間を追跡',
+    description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+    ogTitle: 'CodeTime - コーディング時間を追跡',
+    ogDescription: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+    twitterTitle: 'CodeTime - コーディング時間を追跡',
+    twitterDescription: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+  },
+  general: {
+    cancel: 'キャンセル',
+    confirm: '確認',
+  },
   landing: {
     description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
     toDashboard: 'ダッシュボードへ',
@@ -10,6 +22,85 @@ export const ja: Partial<I18NData> = {
     loginWithGithub: 'GitHub でログイン',
     freeMessage: '現在完全無料、クレジットカード不要',
     demo: 'デモ',
+    features: {
+      save: {
+        title: 'コーディング時間のデータを永久に保存。',
+        description: '私たちは歴史的なデータの美しさを知っています。あなたの努力が消されることは、何よりもイライラすることです。多くの年月が経っても、すべてのユーザーが成長の歴史を振り返れるように、あなたのデータを永久に保存します。あなたが積極的に破壊しない限り、あなたのデータを永久に保存します。あなたが決して支払わなくても。',
+      },
+      export: {
+        title: 'データのエクスポートをサポート。',
+        description: '世界で最も安全な場所は、あなた自身のハードドライブです。そのため、データのエクスポートをサポートしています。いつでもやめることができます。他のプラットフォームや自己構築サービスに接続します。',
+      },
+      editor: {
+        title: '複数のエディタをサポート。',
+        description: '私たちはとても小さなチームです。これは、すべての IDE またはコードエディタをサポートすることはできないことを意味します。しかし、現在は VSCode と JetBrain シリーズの IDE をサポートしています。これらは、ほとんどのユーザーのニーズをカバーしていると考えています。私たちは、より多くのプラットフォームをサポートし、より多くの人々に利益をもたらすために最善を尽くします。',
+      },
+    },
+    pricing: {
+      title: '価格',
+      description: 'あなたに合ったプランを選択してください。',
+    },
+  },
+  plan: {
+    modal: {
+      title: 'アップグレード',
+      p1: '私たちは、開発の情熱を維持し、より豊富なデータレポートとより良いユーザーエクスペリエンスを提供するために、あなたのサポートが必要です。',
+      p2: 'あなたは Pro サブスクリプションにアップグレードして、より多くの機能をアンロックすることができます。',
+      p3: '支払いプロセスで問題が発生した場合は、メールでお問い合わせください。',
+    },
+    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+      switch (str) {
+        case 'active':
+          return '有効'
+        case 'cancelled':
+          return 'キャンセル済み'
+        case 'expired':
+          return '期限切れ'
+        case 'on-trial':
+          return 'トライアル中'
+        case 'paused':
+          return '一時停止'
+        case 'past-due':
+          return '期限切れ'
+        case 'unpaid':
+          return '未払い'
+      }
+    },
+    basic: {
+      title: '基本',
+      forever: '永久',
+      features: {
+        title: '機能',
+        item: {
+          saveHistory: '永久に履歴データを保存',
+          browseRecent: '過去 90 日間のデータを閲覧',
+          codetimeTrend: 'コーディング時間のトレンドレポート',
+          codetimeLanguaeTrend: 'コーディング言語のトレンドレポート',
+          codetimeProjectTrend: 'プロジェクトのトレンドレポート',
+          badge: 'バッジを生成して表示',
+          export: 'データのエクスポート',
+          import: 'データのインポート',
+          more: 'その他のレポート',
+        },
+      },
+      button: '永久に無料',
+    },
+    pro: {
+      title: 'Pro',
+      preMonth: '/ 月',
+      preYear: '/ 年',
+      features: {
+        item: {
+          include: '基本プランのすべての機能を含む',
+          browseAll: 'すべての履歴データを閲覧',
+          rule: 'ルールベースのデータ処理',
+          tag: 'タグシステム',
+        },
+      },
+      notYet: 'まだ利用できません',
+      button: '今すぐ購読',
+    },
+    needLogin: 'ログインが必要です',
   },
   dashboard: {
     loginRequired: 'CodeTime ダッシュボードへようこそ！\n コーディング時間のデータを閲覧するには、ログインしていただくか、下のデモボタンをクリックしてデモダッシュボードをお試しいただけます。',
@@ -35,6 +126,7 @@ export const ja: Partial<I18NData> = {
         title(days: number) {
           return `${days} 日間`
         },
+        allTime: 'すべての時間',
       },
       statistic: {
         timeTotal: 'コーディング時間/合計',
@@ -102,6 +194,8 @@ export const ja: Partial<I18NData> = {
         tip: 'あなたのトークンは CodeTime API へのアクセスに使用されるので、それを秘密に保ってください。ここで新しいトークンを生成できます。',
         refresh: '更新',
         refreshTip: 'トークンが漏洩したと疑われる場合は、ここで新しいトークンを生成できます。',
+        refreshToken: 'トークンを更新',
+        confirmRefresh: 'トークンを更新してもよろしいですか？これにより、エディタプラグインに適用したトークンが無効になります。新しいトークンを入力する必要があります。',
       },
       language: {
         title: '言語 (Language)',
@@ -129,7 +223,19 @@ export const ja: Partial<I18NData> = {
         description: 'これらの設定はあなたのデータに永続的な影響を与え、また、回復不可能です。注意して操作してください。',
         button: {
           removeAllData: 'すべてのデータを削除',
+          modal: {
+            p1: 'すべてのデータを削除してもよろしいですか？この操作は元に戻すことはできません。',
+            p2: 'あなたのデータはとても重要です。データをエクスポートしてから、データを削除してください。',
+            p3: 'すべてのデータを削除する場合は、以下に DELETE を入力し、確認をクリックしてください。',
+          },
         },
+      },
+      account: {
+        title: 'アカウント',
+        description: 'アカウントの設定。',
+        expiresIn: '有効期限',
+        manageSubscription: 'サブスクリプションを管理',
+        subscribe: '購読',
       },
       other: {
         title: 'その他',

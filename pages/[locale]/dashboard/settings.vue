@@ -67,6 +67,7 @@ const t = useI18N()
     :description="t.dashboard.pageHeader.description.settings"
   />
   <DashboardPageContent>
+    <DashboardSettingsUser />
     <CardBase sparse>
       <div class="mb-4 text-xl">
         {{ t.dashboard.settings.token.title }}

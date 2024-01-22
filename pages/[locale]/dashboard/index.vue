@@ -8,10 +8,11 @@ definePageMeta({
   layout: 'dashboard',
 })
 
-const days = ref(28)
-const allData = await fetchStats('time', 525600, 'days')
-const allLanguageData = await fetchStats('language', days.value, 'days')
-const allProjectData = await fetchStats('project', days.value, 'days')
+const user = useUser()
+const days = ref(user.value?.plan === 'pro' ? 365 : 28)
+const allData = await fetchStats(days, 'time', 'days')
+const allLanguageData = await fetchStats(days, 'language', 'days')
+const allProjectData = await fetchStats(days, 'project', 'days')
 const hasData = computed(() => {
   if (allData.data.value === null) {
     return false
@@ -45,7 +46,11 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     :title="t.dashboard.pageHeader.title.overview"
     :description="t.dashboard.pageHeader.description.overview"
   />
-  <DashboardPageContent v-if="hasData">
+  <DashboardPageContent v-if="allData.status.value !== 'success' && !allData.data.value">
+    <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-onlow/20" />
+  </DashboardPageContent>
+  <DashboardPageContent v-else-if="hasData">
+    <DashboardDataRange v-model:days="days" />
     <CardBase
       class="min-h-210px"
       dense
@@ -75,7 +80,6 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         />
       </div>
     </CardBase>
-    <DashboardDataRange :days="days" />
     <DashboardFilterWrapper />
     <div
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"

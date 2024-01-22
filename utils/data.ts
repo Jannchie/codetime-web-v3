@@ -20,7 +20,7 @@ export function useMaxStreak(data: Ref<{
       }
       streak++
     }
-    return maxStreak
+    return Math.max(maxStreak, streak)
   })
 }
 

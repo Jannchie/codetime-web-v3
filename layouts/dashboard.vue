@@ -1,25 +1,28 @@
 <script setup lang="ts">
-import { RokuProvider } from '@roku-ui/vue'
+import { Image, RokuProvider } from '@roku-ui/vue'
 
 const t = useI18N()
-const headerTabs = ref([
+const headerTabs = computed(() => [
   { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
   { label: t.value.dashboard.pageHeader.title.badge, id: 'badges', path: `/dashboard/badges` },
   { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
   { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
 ])
-useSeoMeta({
-  title: 'CodeTime - 追迹你的编程时间',
-  description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  ogTitle: 'CodeTime - 追迹你的编程时间',
-  ogDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  ogImage: '/icon.png',
-  ogUrl: 'https://codetime.dev',
-  twitterTitle: 'CodeTime - 追迹你的编程时间',
-  twitterDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  twitterImage: '/icon.png',
-  twitterCard: 'summary',
+watchEffect(() => {
+  useSeoMeta({
+    title: t.value.meta.title,
+    description: t.value.meta.description,
+    ogTitle: t.value.meta.ogTitle,
+    ogDescription: t.value.meta.ogDescription,
+    twitterTitle: t.value.meta.twitterTitle,
+    twitterDescription: t.value.meta.twitterDescription,
+    ogImage: '/icon.png',
+    ogUrl: 'https://codetime.dev',
+    twitterImage: '/icon.png',
+    twitterCard: 'summary',
+  })
 })
+
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)
 const { data: user, pending, error } = await fetchUser()
@@ -62,13 +65,18 @@ useHead({
                 class="flex items-center gap-3 text-sm"
                 :to="`/${locale}/dashboard`"
               >
-                <NuxtImg
+                <Image
                   :src="user.avatar"
                   class="h-7 w-7 rounded-full"
+                  height="28px"
+                  width="28px"
                 />
-                <div>
+                <div class="hidden sm:block">
                   {{ user.username }}
                 </div>
+                <PlanTag
+                  :plan="user.plan"
+                />
               </NuxtLink>
               <div
                 v-else-if="pending && !error"
@@ -80,7 +88,7 @@ useHead({
                 <div class="h-1em w-16 animate-pulse rounded bg-surface-onlow bg-op50" />
               </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="hidden items-center gap-2 sm:flex">
               <i class="i-tabler-language-hiragana h-6 w-6" />
               <LanguageSelect />
             </div>
@@ -89,6 +97,7 @@ useHead({
             <div
               v-for="tab in headerTabs"
               :key="tab.id"
+              class="max-w-[calc(100vw-1px)] overflow-hidden"
             >
               <NuxtLink
                 :to="`/${locale}${tab.path}`"
