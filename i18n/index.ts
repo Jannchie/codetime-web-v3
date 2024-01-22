@@ -7,6 +7,8 @@ import { ua } from './ua'
 import { es } from './es'
 import { ru } from './ru'
 import { ptBR } from './ptBR'
+import { fr } from './fr'
+import { de } from './de'
 
 export type I18NData = typeof en
 
@@ -20,6 +22,8 @@ const i18NMap = new Map<string, Partial<I18NData>>([
   ['ru', ru],
   ['ua', ua],
   ['es', es],
+  ['fr', fr],
+  ['de', de],
 ])
 
 function mergeI18N(a: any, b: any): I18NData {

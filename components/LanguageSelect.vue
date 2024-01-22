@@ -38,6 +38,8 @@ watchEffect(() => {
       { label: 'English', id: 'en' },
       { label: '中文', id: 'zh-CN' },
       { label: '日本語', id: 'ja' },
+      { label: 'Deutsch', id: 'de' },
+      { label: 'Français', id: 'fr' },
       { label: 'Português', id: 'pt-BR' },
       { label: 'Italiano', id: 'it' },
       { label: 'Русский', id: 'ru' },

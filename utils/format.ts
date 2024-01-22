@@ -1,5 +1,5 @@
 import { type Duration, formatDuration } from 'date-fns'
-import { enUS, es, ja, ms, ptBR, ru, uk, zhCN } from 'date-fns/locale'
+import { de, enUS, es, fr, it, ja, ms, ptBR, ru, uk, zhCN } from 'date-fns/locale'
 import languageIdentifiers from './LanguageIdentifiers.json'
 
 const m = ms
@@ -30,6 +30,8 @@ export function getDurationString(ms: number, format: (keyof Duration)[] = ['hou
     ['ru', ru],
     ['ua', uk],
     ['es', es],
+    ['fr', fr],
+    ['de', de],
   ])
   return formatDuration({ hours: hour, minutes: minute, seconds: second }, {
     locale: localeMap.get(locale) ?? localeMap.get('en'),
@@ -50,6 +52,8 @@ export function formateDays(days: number) {
     ['ru', ru],
     ['ua', uk],
     ['es', es],
+    ['fr', fr],
+    ['de', de],
   ])
   return formatDuration({ days }, {
     locale: localeMap.get(locale) ?? localeMap.get('en'),
