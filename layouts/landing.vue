@@ -14,8 +14,6 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 
-const { data: user } = await fetchUser()
-provide('user', user)
 const locale = useLocale()
 watchEffect(() => {
   useHead({

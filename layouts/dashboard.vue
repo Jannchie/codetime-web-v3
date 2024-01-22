@@ -25,8 +25,11 @@ watchEffect(() => {
 
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)
-const { data: user, pending, error } = await fetchUser()
-provide('user', user)
+const user = useUser()
+
+const pending = autoResetRef(false, 1000)
+pending.value = true
+
 useHead({
   htmlAttrs: {
     lang: locale.value,

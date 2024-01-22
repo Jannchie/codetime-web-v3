@@ -10,8 +10,15 @@ const annualGradientCls = 'bg-gradient-to-rb from-red-6 via-purple-6 to-purple-5
 const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-primary-5 inline-block text-transparent bg-clip-text bg-primary-container'
 
 const user = useUser()
-
-const checkoutLink = await useCheckoutLink(isAnuual)
+const checkoutLink = computed(async () => {
+  if (!user.value) {
+    return ''
+  }
+  if (user.value.plan === 'pro') {
+    return ''
+  }
+  return (await useCheckoutLink(isAnuual)).value
+})
 const t = useI18N()
 
 function onLogin() {
@@ -24,7 +31,7 @@ function onLogin() {
 
 <template>
   <Paper
-    class="h-full w-full flex flex-col justify-between"
+    class="h-full min-h-600px w-full flex flex-col justify-between"
   >
     <div class="absolute right-4 top-0 rounded-full bg-primary-container px-4 py-1 text-sm text-white -translate-y-50%">
       {{ !isAnuual ? 'Most popular' : 'Best Choice ;)' }}

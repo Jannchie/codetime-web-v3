@@ -50,7 +50,7 @@ export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T e
 export async function fetchUser() {
   const { data, pending, error, status } = await useAPIFetch<User>('/user', {
     credentials: 'include',
-    lazy: true,
+    lazy: false,
   })
   return { data: reactive(data), pending, error, status }
 }
