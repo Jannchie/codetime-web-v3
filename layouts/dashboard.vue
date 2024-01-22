@@ -82,7 +82,7 @@ useHead({
                 />
               </NuxtLink>
               <div
-                v-else-if="pending && !error"
+                v-else-if="pending "
                 class="flex items-center gap-3 text-sm"
               >
                 <div
@@ -119,7 +119,7 @@ useHead({
           </div>
         </div>
       </RHeader>
-      <div v-if="pending && !error">
+      <div v-if="pending">
         <!-- loading -->
         <div class="m-auto h-full op75">
           <DashboardPageTitle loading />

@@ -34,7 +34,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
   </div>
   <template v-if="resp.pending.value">
     <Paper
-      class="flex flex-col gap-6 border-transparent rounded-2xl"
+      class="max-w-358px flex flex-col gap-6 border-transparent rounded-2xl"
       rounded="1rem"
     >
       <div
