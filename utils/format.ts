@@ -1,14 +1,8 @@
-import { type Duration, type Locale, formatDuration } from 'date-fns'
-import enUS from 'date-fns/locale/en-US'
-import ja from 'date-fns/locale/ja'
-import zhCN from 'date-fns/locale/zh-CN'
-import ptBR from 'date-fns/locale/pt-BR'
-import it from 'date-fns/locale/it'
-import m from 'date-fns/locale/ms'
-import ru from 'date-fns/locale/ru'
-import ua from 'date-fns/locale/uk'
-import es from 'date-fns/locale/es'
+import { type Duration, formatDuration } from 'date-fns'
+import { enUS, es, ja, ms, ptBR, ru, uk, zhCN } from 'date-fns/locale'
 import languageIdentifiers from './LanguageIdentifiers.json'
+
+const m = ms
 
 export function getDurationData(ms: number): { hour: number, minute: number, second: number } {
   const MS_OF_HOUR = 3600000
@@ -34,7 +28,7 @@ export function getDurationString(ms: number, format: (keyof Duration)[] = ['hou
     ['it', it],
     ['ms', m],
     ['ru', ru],
-    ['ua', ua],
+    ['ua', uk],
     ['es', es],
   ])
   return formatDuration({ hours: hour, minutes: minute, seconds: second }, {
@@ -54,7 +48,7 @@ export function formateDays(days: number) {
     ['it', it],
     ['ms', m],
     ['ru', ru],
-    ['ua', ua],
+    ['ua', uk],
     ['es', es],
   ])
   return formatDuration({ days }, {

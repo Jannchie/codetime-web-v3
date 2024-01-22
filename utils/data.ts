@@ -124,29 +124,6 @@ export function useMergedFilters(filters: FilterItem[]) {
   })
 }
 
-export async function useAllTopData(hasData: MaybeRef<boolean>, days: MaybeRef<number>, filters: FilterItem[]) {
-  const mergedFilters = useMergedFilters(filters)
-  let languageTopData
-  let projectTopData
-  let platformTopData
-  if (unref(hasData)) {
-    const limit = 5
-    const durationInMinutes = unref(days) * 1440
-    try {
-      [languageTopData, projectTopData, platformTopData] = await Promise.all([
-        fetchTop('language', durationInMinutes, limit, mergedFilters, { transform: transformTopLanguageData }),
-        fetchTop('project', durationInMinutes, limit, mergedFilters),
-        fetchTop('platform', durationInMinutes, limit, mergedFilters, { transform: transformTopPlatformData }),
-      ])
-    }
-    catch (error) {
-      // Handle errors here
-      console.error(error)
-    }
-  }
-  return [languageTopData, projectTopData, platformTopData]
-}
-
 export function useProcessedData(data: Ref<{
   data: {
     duration: number
