@@ -18,7 +18,7 @@ watchEffect(() => {
     twitterDescription: t.value.meta.twitterDescription,
     ogImage: 'https://codetime.dev/icon.png',
     ogUrl: 'https://codetime.dev',
-    twitterImage: '/icon.png',
+    twitterImage: 'https://codetime.dev/icon.png',
     twitterCard: 'summary',
   })
 })
