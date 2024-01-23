@@ -34,7 +34,7 @@ const checkoutLink = await useCheckoutLink(ref(false), ref(true))
             :status="t.plan.status(user.plan_status)"
           />
           <div
-            v-if="(user?.plan ?? 'free') !== 'free'"
+            v-if="(user?.plan ?? 'free') !== 'free' && user?.plan_status !== 'active'"
             class="text-xs text-surface-onlow/80"
           >
             {{ t.dashboard.settings.account.expiresIn }}

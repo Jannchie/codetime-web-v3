@@ -2,11 +2,11 @@ import NuxtLink from './NuxtLink.vue'
 
 export const en = {
   meta: {
-    title: 'CodeTime - Track your coding time',
+    title: 'CodeTime - Track your coding time automatically',
     description: 'CodeTime is an application designed for developers to help you track, analyze and improve your coding time management skills.',
-    ogTitle: 'CodeTime - Track your coding time',
+    ogTitle: 'CodeTime - Track your coding time automatically',
     ogDescription: 'CodeTime is an application designed for developers to help you track, analyze and improve your coding time management skills.',
-    twitterTitle: 'CodeTime - Track your coding time',
+    twitterTitle: 'CodeTime - Track your coding time automatically',
     twitterDescription: 'CodeTime is an application designed for developers to help you track, analyze and improve your coding time management skills.',
   },
   general: {
