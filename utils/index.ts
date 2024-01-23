@@ -37,14 +37,14 @@ export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 
 }
 
 export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}, needLogin = true) {
-  const apiHost = useRuntimeConfig().public.apiHost
-  const resp = useLazyFetch<T>(`${path}`, {
+  const { apiHost } = useRuntimeConfig().public
+  return useLazyFetch<T>(`${path}`, {
     server: false,
     baseURL: apiHost,
     credentials: needLogin ? 'include' : undefined,
     ...options,
+    
   })
-  return resp
 }
 
 export async function fetchUser() {
@@ -56,7 +56,7 @@ export async function fetchUser() {
 }
 
 export async function fetchSumMinutes() {
-  const apiHost = useRuntimeConfig().public.apiHost
+  const { apiHost } = useRuntimeConfig().public
   const { data } = await useFetch<{ minutes: number }>(`${apiHost}/sum-minutes`)
   return data
 }
@@ -73,7 +73,7 @@ export interface TopData {
 
 export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
   const params = computed(() => {
-    const params = {
+    return {
       field,
       minutes: String(minutes.value),
       limit: String(limit),
@@ -82,7 +82,6 @@ export async function fetchTop(field: string, minutes: ComputedRef<number>, limi
         return acc
       }, {} as Record<string, string>),
     }
-    return params
   })
   return await useAPIFetch<TopData[]>(`/top`, {
     ...options,

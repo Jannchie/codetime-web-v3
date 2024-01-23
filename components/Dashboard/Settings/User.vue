@@ -3,7 +3,7 @@ import { Avatar, Btn, Modal, Paper, TextField } from '@roku-ui/vue'
 
 const user = useUser()
 const t = useI18N()
-const checkoutLink = await useCheckoutLink(ref(false))
+const checkoutLink = await useCheckoutLink(ref(false), ref(true))
 </script>
 
 <template>

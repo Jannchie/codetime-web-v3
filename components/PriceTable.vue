@@ -3,7 +3,13 @@ import { Btn, Paper } from '@roku-ui/vue'
 
 const target = ref<HTMLElement | null>(null)
 const targetIsVisible = useElementVisibility(target)
-const isAnuual = ref(true)
+const variant = ref<'monthly' | 'annual' | 'one-time'>('monthly')
+const isAnuual = computed({
+  get: () => variant.value === 'annual',
+  set: (val) => {
+    variant.value = val ? 'annual' : 'monthly'
+  },
+})
 const beforeMonthlyGradientCls = 'before:bg-gradient-to-r before:from-primary-8 before:via-primary-6 before:to-primary-5 before:op-10'
 const beforeAnnualGradientCls = 'before:bg-gradient-to-rb before:from-red-6 before:via-purple-6 before:to-purple-5 before:inline-block before:op-10'
 const t = useI18N()
@@ -20,11 +26,11 @@ const t = useI18N()
       </div>
     </div>
     <div class="m-auto mb-18 flex justify-center">
-      <LandingPriceTab v-model="isAnuual" />
+      <LandingPriceTab v-model="variant" />
     </div>
     <div class="m-auto flex flex-col justify-center gap-4 container md:flex-row">
       <Paper class="flex flex-col justify-between md:min-w-72">
-        <div>
+        <div class="h-full flex flex-col">
           <div class="text-base font-light">
             {{ t.plan.basic.title }}
           </div>
@@ -39,7 +45,7 @@ const t = useI18N()
           <div class="mb-2 mt-4 text-xl">
             {{ t.plan.basic.features.title }}
           </div>
-          <div class="flex flex-col gap-2 text-sm text-surface-onlow">
+          <div class="flex flex-grow-1 flex-col gap-2 text-sm text-surface-onlow">
             <FeatureItem>
               {{ t.plan.basic.features.item.saveHistory }}
             </FeatureItem>
@@ -91,7 +97,7 @@ const t = useI18N()
       >
         <ProPricePaper
           ref="target"
-          :is-anuual="isAnuual"
+          :variant="variant"
         />
       </div>
     </div>

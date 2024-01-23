@@ -42,6 +42,13 @@ export const ja: Partial<I18NData> = {
     },
   },
   plan: {
+    monthly: '月額',
+    yearly: '年額',
+    save25: '25% オフ',
+    oneTime: '一度きり',
+    mostFlexible: '最も柔軟',
+    mostPopular: '最も人気',
+    bestValue: '最高の価値',
     modal: {
       title: 'アップグレード',
       p1: '私たちは、開発の情熱を維持し、より豊富なデータレポートとより良いユーザーエクスペリエンスを提供するために、あなたのサポートが必要です。',

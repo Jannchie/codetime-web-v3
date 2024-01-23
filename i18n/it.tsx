@@ -41,6 +41,13 @@ export const it: Partial<I18NData> = {
     },
   },
   plan: {
+    monthly: 'Mensile',
+    yearly: 'Annuale',
+    save25: 'Risparmia il 25%',
+    oneTime: 'Una tantum',
+    mostFlexible: 'Più flessibile',
+    mostPopular: 'Più popolare',
+    bestValue: 'Miglior valore',
     modal: {
       title: 'Aggiorna l\'abbonamento',
       p1: 'Abbiamo bisogno del tuo supporto per mantenere il nostro entusiasmo per lo sviluppo, in modo da fornire report di dati più ricchi e una migliore esperienza utente.',

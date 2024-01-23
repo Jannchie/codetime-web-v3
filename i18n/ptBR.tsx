@@ -41,6 +41,13 @@ export const ptBR: Partial<I18NData> = {
     },
   },
   plan: {
+    monthly: 'Mensal',
+    yearly: 'Anual',
+    save25: 'Economize 25%',
+    oneTime: 'Única vez',
+    mostFlexible: 'Mais flexível',
+    mostPopular: 'Mais popular',
+    bestValue: 'Melhor valor',
     modal: {
       title: 'Atualizar inscrição',
       p1: 'Precisamos do seu apoio para manter nosso entusiasmo pelo desenvolvimento, a fim de fornecer relatórios de dados mais ricos e uma melhor experiência do usuário.',

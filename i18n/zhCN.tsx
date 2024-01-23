@@ -42,6 +42,13 @@ export const zhCN: Partial<I18NData> = {
     },
   },
   plan: {
+    monthly: '月付',
+    yearly: '年付',
+    save25: '省 25%',
+    oneTime: '一次性',
+    mostFlexible: '最灵活',
+    mostPopular: '最受欢迎',
+    bestValue: '最超值',
     modal: {
       title: '升级订阅',
       p1: '我们需要您的支持来保持我们的开发热情，从而提供更丰富的数据报告和更好的用户体验。',

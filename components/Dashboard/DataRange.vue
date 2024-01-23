@@ -66,7 +66,7 @@ const isAnuual = ref(true)
       </Paper>
       <div class="relative">
         <ProPricePaper
-          :is-anuual="isAnuual"
+          variant="monthly"
           class="min-h-500px"
         />
       </div>

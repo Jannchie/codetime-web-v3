@@ -1,24 +1,16 @@
 <script setup lang="ts">
-// import { loadScript } from '@paypal/paypal-js'
 import { Btn, Paper } from '@roku-ui/vue'
 
 const props = defineProps<{
-  isAnuual: boolean
+  variant: 'monthly' | 'annual' | 'one-time'
 }>()
-const isAnuual = computed(() => props.isAnuual)
+const isAnuual = computed(() => props.variant === 'annual')
+const isOneTime = computed(() => props.variant === 'one-time')
 const annualGradientCls = 'bg-gradient-to-rb from-red-6 via-purple-6 to-purple-5 inline-block text-transparent bg-clip-text'
 const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-primary-5 inline-block text-transparent bg-clip-text bg-primary-container'
 
 const user = useUser()
-const checkoutLink = computed(async () => {
-  if (!user.value) {
-    return ''
-  }
-  if (user.value.plan === 'pro') {
-    return ''
-  }
-  return (await useCheckoutLink(isAnuual)).value
-})
+
 const t = useI18N()
 
 function onLogin() {
@@ -27,6 +19,8 @@ function onLogin() {
   }
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
+const checkoutLink = await useCheckoutLink(isAnuual, isOneTime)
 </script>
 
 <template>
@@ -34,11 +28,11 @@ function onLogin() {
     class="h-full min-h-600px w-full flex flex-col justify-between"
   >
     <div class="absolute right-4 top-0 rounded-full bg-primary-container px-4 py-1 text-sm text-white -translate-y-50%">
-      {{ !isAnuual ? 'Most popular' : 'Best Choice ;)' }}
+      {{ !isAnuual ? t.plan.mostPopular : t.plan.bestValue }}
     </div>
     <div>
       <div class="text-base font-light">
-        Pro
+        {{ t.plan.pro.title }}
       </div>
       <div
         class="flex items-end gap-2 font-light"
@@ -53,11 +47,11 @@ function onLogin() {
           {{ isAnuual ? '$36' : '$4' }}
         </div>
         <div class="text-sm text-surface-onlow">
-          / {{ isAnuual ? 'year' : 'month' }}
+          {{ isAnuual ? t.plan.pro.preYear : t.plan.pro.preMonth }}
         </div>
       </div>
       <div class="mb-2 mt-4 text-xl">
-        Features
+        {{ t.plan.basic.features.title }}
       </div>
       <div class="flex flex-col gap-2 text-sm text-surface-onlow">
         <FeatureItem>
@@ -99,11 +93,48 @@ function onLogin() {
       <div v-else-if="user && user.plan === 'free'">
         <Btn
           is="a"
+          variant="filled"
           :href="checkoutLink"
           class="lemonsqueezy-button w-full"
           color="primary"
         >
-          {{ t.plan.pro.button }}
+          <template #leftSection>
+            <i class="i-tabler-credit-card" />
+            <i
+              v-if="isOneTime"
+              class="i-ant-design-alipay-circle-outlined"
+            />
+            <i
+              v-if="isOneTime"
+              class="i-ant-design-wechat-filled"
+            />
+            <i
+              v-if="isOneTime"
+              class="i-entypo-social-paypal"
+            />
+          </template>
+          <div class="w-full text-center">
+            {{ t.plan.pro.button }}
+          </div>
+          <template
+            #rightSection
+          >
+            <i
+              class="i-tabler-credit-card op0"
+            />
+            <i
+              v-if="isOneTime"
+              class="i-ant-design-alipay-circle-outlined op0"
+            />
+            <i
+              v-if="isOneTime"
+              class="i-ant-design-wechat-filled op0"
+            />
+            <i
+              v-if="isOneTime"
+              class="i-entypo-social-paypal op0"
+            />
+          </template>
         </Btn>
       </div>
       <div

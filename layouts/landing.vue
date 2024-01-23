@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import { RokuProvider } from '@roku-ui/vue'
 
-useSeoMeta({
-  title: 'CodeTime - 追迹你的编程时间',
-  description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  ogTitle: 'CodeTime - 追迹你的编程时间',
-  ogDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  ogImage: '/icon.png',
-  ogUrl: 'https://codetime.dev',
-  twitterTitle: 'CodeTime - 追迹你的编程时间',
-  twitterDescription: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
-  twitterImage: '/icon.png',
-  twitterCard: 'summary',
+const t = useI18N()
+watchEffect(() => {
+  useSeoMeta({
+    title: t.value.meta.title,
+    description: t.value.meta.description,
+    ogTitle: t.value.meta.ogTitle,
+    ogDescription: t.value.meta.ogDescription,
+    twitterTitle: t.value.meta.twitterTitle,
+    twitterDescription: t.value.meta.twitterDescription,
+    ogImage: '/icon.png',
+    ogUrl: 'https://codetime.dev',
+    twitterImage: '/icon.png',
+    twitterCard: 'summary',
+  })
 })
-
 const locale = useLocale()
 watchEffect(() => {
   useHead({

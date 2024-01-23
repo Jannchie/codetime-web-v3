@@ -41,6 +41,13 @@ export const en = {
     },
   },
   plan: {
+    monthly: 'Monthly',
+    yearly: 'Yearly',
+    save25: 'Save 25%',
+    oneTime: 'One-time',
+    mostFlexible: 'Most Flexible',
+    mostPopular: 'Most Popular',
+    bestValue: 'Best Value',
     modal: {
       title: 'Upgrade Subscription',
       p1: 'We need your support to maintain our development enthusiasm, so as to provide richer data reports and better user experience.',

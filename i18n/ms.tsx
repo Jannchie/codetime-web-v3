@@ -41,6 +41,13 @@ export const ms: Partial<I18NData> = {
     },
   },
   plan: {
+    monthly: 'Bulanan',
+    yearly: 'Tahunan',
+    save25: 'Jimat 25%',
+    oneTime: 'Sekali',
+    mostFlexible: 'Paling Fleksibel',
+    mostPopular: 'Paling Popular',
+    bestValue: 'Nilai Terbaik',
     modal: {
       title: 'Naik Taraf Langganan',
       p1: 'Kami memerlukan sokongan anda untuk mengekalkan semangat pembangunan kami, untuk menyediakan laporan data yang lebih kaya dan pengalaman pengguna yang lebih baik.',
