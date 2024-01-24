@@ -15,6 +15,7 @@ export const zhCN: Partial<I18NData> = {
     confirm: '确认',
   },
   landing: {
+    login: '登录',
     description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析您的编程时间。',
     toDashboard: '前往仪表盘',
     alreadyStatistical: '已统计编程时间',

@@ -14,6 +14,7 @@ export const ms: Partial<I18NData> = {
     confirm: 'Sahkan',
   },
   landing: {
+    login: 'Log masuk',
     description: 'CodeTime adalah aplikasi yang direka untuk pembangun bagi membantu anda menjejaki dan menganalisis masa kod anda.',
     toDashboard: 'Pergi ke Papan Pemuka',
     alreadyStatistical: 'Masa kod sudah dijejaki',

@@ -14,6 +14,7 @@ export const ua: Partial<I18NData> = {
     confirm: 'Підтвердити',
   },
   landing: {
+    login: 'Увійти',
     description: 'CodeTime - це програма, призначена для розробників, яка допоможе вам відстежувати та аналізувати свій час програмування.',
     toDashboard: 'Перейти до панелі',
     alreadyStatistical: 'Час програмування вже відстежувався',

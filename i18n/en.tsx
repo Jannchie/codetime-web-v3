@@ -14,6 +14,7 @@ export const en = {
     confirm: 'Confirm',
   },
   landing: {
+    login: 'Login',
     description: 'CodeTime is an application designed for developers to help you track and analyze your coding time.',
     toDashboard: 'Go to Dashboard',
     alreadyStatistical: 'Coding time already tracked',

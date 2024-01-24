@@ -14,6 +14,7 @@ export const ptBR: Partial<I18NData> = {
     confirm: 'Confirmar',
   },
   landing: {
+    login: 'Entrar',
     description: 'CodeTime é um aplicativo projetado para desenvolvedores que ajuda você a rastrear e analisar seu tempo de codificação.',
     toDashboard: 'Ir para o painel',
     alreadyStatistical: 'Tempo de codificação já rastreado',

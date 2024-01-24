@@ -15,6 +15,7 @@ export const ja: Partial<I18NData> = {
     confirm: '確認',
   },
   landing: {
+    login: 'ログイン',
     description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
     toDashboard: 'ダッシュボードへ',
     alreadyStatistical: '統計済み',

@@ -69,12 +69,6 @@ const checkoutLink = await useCheckoutLink(isAnuual, isOneTime)
       </div>
     </div>
     <div>
-      <div class="flex items-center justify-center gap-2 py-2 text-xs text-surface-onlow">
-        <i class="i-line-md-loading-twotone-loop" />
-        <div>
-          {{ t.plan.pro.notYet }}
-        </div>
-      </div>
       <div
         v-if="user && user.plan === 'pro'"
         class="flex gap-2"

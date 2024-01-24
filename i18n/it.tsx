@@ -14,6 +14,7 @@ export const it: Partial<I18NData> = {
     confirm: 'Conferma',
   },
   landing: {
+    login: 'Accedi',
     description: 'CodeTime è un\'applicazione progettata per gli sviluppatori che ti aiuta a tenere traccia e analizzare il tuo tempo di programmazione.',
     toDashboard: 'Vai alla Dashboard',
     alreadyStatistical: 'Tempo di programmazione già registrato',

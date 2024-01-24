@@ -64,7 +64,7 @@ watchEffect(() => {
           </div>
           <div class="flex flex-col items-center gap-3">
             <div class="text-sm text-surface-onlow">
-              登录
+              {{ t.landing.login }}
             </div>
             <div class="flex gap-2">
               <div
