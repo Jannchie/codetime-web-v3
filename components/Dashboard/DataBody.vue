@@ -13,7 +13,7 @@ defineProps<{
       </div>
       <div
         v-if="value !== ''"
-        class="text-sm text-surface-onlow"
+        class="text-nowrap text-sm text-surface-onlow"
       >
         {{ value }}
       </div>

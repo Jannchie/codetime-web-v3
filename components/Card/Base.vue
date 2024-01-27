@@ -29,7 +29,7 @@ const padding = computed(() => {
     :style="{
       '--padding': padding,
     }"
-    class="relative rounded-2xl p-[--padding] transition-background-color,border-color"
+    class="relative rounded-2xl p-[--padding]"
   >
     <div
       class="relative z-3"

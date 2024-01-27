@@ -8,6 +8,7 @@ const props = defineProps<{
     duration: number
     date: Date
   }[]>
+  loading: boolean
 }>()
 
 const t = useI18N()
@@ -37,7 +38,7 @@ const options = computed<PlotOptions>(() => ({
 </script>
 
 <template>
-  <CardBase>
+  <CardBase :loading="loading">
     <div>
       <div class="flex items-center gap-2 text-lg">
         <i class="i-tabler-calendar-event" />

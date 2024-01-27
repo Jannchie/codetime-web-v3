@@ -24,6 +24,10 @@ export const zhCN: Partial<I18NData> = {
     freeMessage: '目前完全免费，无需信用卡',
     demo: '演示',
     features: {
+      visualization: {
+        title: '数据可视化',
+        description: '我们致力于提供最美观的现代化仪表盘，帮助您更好地了解您的编程时间。',
+      },
       save: {
         title: '永久保存您的编程时间数据。',
         description: '我们知道历史数据的美好。没有什么比自己的辛勤劳动被抹去更令人沮丧的了。为了让所有用户都能够在多年之后回顾自己的成长历史，我们会永久保存您的数据，直到您主动销毁它们，即使您从未付费。',
@@ -130,6 +134,7 @@ export const zhCN: Partial<I18NData> = {
       codetimeTrendTitle: '编程时间趋势',
       codetimeLanguaeTrendTitle: '编程语言趋势',
       codetimeProjectTrendTitle: '项目趋势',
+      dailyCodingDistributionTitle: '编程时间分布',
       dataRange: {
         title(days: number) {
           return `过去 ${days} 天`

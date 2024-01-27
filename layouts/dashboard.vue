@@ -28,7 +28,9 @@ const currentTab = useCurrentTab(headerTabs)
 const user = useUser()
 
 const pending = autoResetRef(false, 1000)
-pending.value = true
+onMounted(() => {
+  pending.value = true
+})
 
 useHead({
   htmlAttrs: {
@@ -52,45 +54,48 @@ useHead({
           <div
             class="h-34px flex items-center justify-between"
           >
-            <div class="flex items-center gap-2">
-              <NuxtLink
-                :to="`/${locale}`"
-              >
-                <NuxtImg
-                  alt="Code Time"
-                  src="/icon.svg"
-                  width="26"
-                  class="ml-2 mr-3"
-                />
-              </NuxtLink>
-              <NuxtLink
-                v-if="user"
-                class="flex items-center gap-3 text-sm"
-                :to="`/${locale}/dashboard`"
-              >
-                <Image
-                  :src="user.avatar"
-                  class="h-7 w-7 rounded-full"
-                  height="28px"
-                  width="28px"
-                />
-                <div class="hidden sm:block">
-                  {{ user.username }}
-                </div>
-                <PlanTag
-                  :plan="user.plan"
-                />
-              </NuxtLink>
-              <div
-                v-else-if="pending "
-                class="flex items-center gap-3 text-sm"
-              >
+            <ClientOnly>
+              <div class="flex items-center gap-2">
+                <NuxtLink
+                  :to="`/${locale}`"
+                >
+                  <NuxtImg
+                    alt="Code Time"
+                    src="/icon.svg"
+                    width="26"
+                    class="ml-2 mr-3"
+                  />
+                </NuxtLink>
+                <NuxtLink
+                  v-if="user"
+                  class="flex items-center gap-3 text-sm"
+                  :to="`/${locale}/dashboard`"
+                >
+                  <Image
+                    :src="user.avatar"
+                    class="h-7 w-7 rounded-full"
+                    height="28px"
+                    width="28px"
+                  />
+                  <div class="hidden sm:block">
+                    {{ user.username }}
+                  </div>
+                  <PlanTag
+                    :plan="user.plan"
+                  />
+                </NuxtLink>
                 <div
-                  class="h-7 w-7 animate-pulse rounded-full bg-surface-onlow bg-op50"
-                />
-                <div class="h-1em w-16 animate-pulse rounded bg-surface-onlow bg-op50" />
+                  v-else-if="pending "
+                  class="flex items-center gap-3 text-sm"
+                >
+                  <div
+                    class="h-7 w-7 animate-pulse rounded-full bg-surface-onlow bg-op50"
+                  />
+                  <div class="h-1em w-16 animate-pulse rounded bg-surface-onlow bg-op50" />
+                </div>
               </div>
-            </div>
+            </ClientOnly>
+
             <div class="hidden items-center gap-2 sm:flex">
               <i class="i-tabler-language-hiragana h-6 w-6" />
               <LanguageSelect />

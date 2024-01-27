@@ -9,13 +9,27 @@
         <div class="h-1px w-16 bg-surface-low" />
       </div>
     </div>
-    <div class="mt-6">
+    <div class="mt-6 flex items-center justify-center gap-4">
       <NuxtLink
         class="text-surface-onlow hover:op75"
         to="https://github.com/Jannchie/codetime-web-v3"
         target="_blank"
       >
         <i class="i-tabler-brand-github h-6 w-6" />
+      </NuxtLink>
+      <NuxtLink
+        class="text-surface-onlow hover:op75"
+        to="https://twitter.com/__codetime"
+        target="_blank"
+      >
+        <i class="i-tabler-brand-twitter h-6 w-6" />
+      </NuxtLink>
+      <NuxtLink
+        class="text-surface-onlow hover:op75"
+        to="mailto:admin@codetime.dev"
+        target="_blank"
+      >
+        <i class="i-tabler-mail h-6 w-6" />
       </NuxtLink>
     </div>
   </footer>

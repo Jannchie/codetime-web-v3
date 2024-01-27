@@ -23,6 +23,10 @@ export const en = {
     freeMessage: 'Currently completely free, no credit card required',
     demo: 'Demo',
     features: {
+      visualization: {
+        title: 'Data visualization',
+        description: 'We are committed to providing the most visually pleasing modern dashboard to help you better understand your code time.',
+      },
       save: {
         title: 'Save your coding time data forever.',
         description: 'We know the beauty of historical data. Nothing is more frustrating than having your own hard work erased. In order for all users to be able to review their growth history even after many years, we will save your data forever, until you actively destroy them, even if you have never paid.',
@@ -129,6 +133,7 @@ export const en = {
       codetimeTrendTitle: 'Coding Time Trend',
       codetimeLanguaeTrendTitle: 'Programming Language Trend',
       codetimeProjectTrendTitle: 'Project Trend',
+      dailyCodingDistributionTitle: 'Daily Coding Distribution',
       dataRange: {
         title(days: number) {
           return `Past ${days} days`

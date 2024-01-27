@@ -23,6 +23,10 @@ export const ptBR: Partial<I18NData> = {
     freeMessage: 'Atualmente completamente gratuito, não é necessário cartão de crédito',
     demo: 'Demo',
     features: {
+      visualization: {
+        title: 'Visualização de dados',
+        description: 'Nosso foco é fornecer o painel mais bonito e moderno para ajudá-lo a entender melhor seu tempo de codificação.',
+      },
       save: {
         title: 'Salve seus dados de tempo de codificação para sempre.',
         description: 'Conhecemos a beleza dos dados históricos. Nada é mais frustrante do que ter seu próprio trabalho árduo apagado. Para que todos os usuários possam revisar seu histórico de crescimento mesmo depois de muitos anos, salvaremos seus dados para sempre, até que você os destrua ativamente, mesmo que nunca tenha pago.',
@@ -129,6 +133,7 @@ export const ptBR: Partial<I18NData> = {
       codetimeTrendTitle: 'Tendência de tempo de codificação',
       codetimeLanguaeTrendTitle: 'Tendência de linguagem de programação',
       codetimeProjectTrendTitle: 'Tendência de projeto',
+      dailyCodingDistributionTitle: 'Distribuição de tempo de codificação',
       dataRange: {
         title(days: number) {
           return `Últimos ${days} dias`

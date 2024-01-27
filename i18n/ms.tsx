@@ -23,6 +23,10 @@ export const ms: Partial<I18NData> = {
     freeMessage: 'Sekarang sepenuhnya percuma, tiada kad kredit diperlukan',
     demo: 'Demo',
     features: {
+      visualization: {
+        title: 'Visualisasi data',
+        description: 'Kami berkomitmen untuk menyediakan papan pemuka moden yang paling memuaskan secara visual untuk membantu anda memahami masa kod anda dengan lebih baik.',
+      },
       save: {
         title: 'Simpan data masa kod anda selamanya.',
         description: 'Kami tahu keindahan data sejarah. Tiada yang lebih frustrasi daripada melihat hasil kerja keras anda dipadamkan. Untuk membolehkan semua pengguna menilai sejarah pertumbuhan mereka walaupun selepas beberapa tahun, kami akan menyimpan data anda selamanya, sehingga anda menghapuskan mereka secara aktif, walaupun anda tidak pernah membayar.',
@@ -131,6 +135,7 @@ export const ms: Partial<I18NData> = {
       codetimeTrendTitle: 'Trend Masa Kod',
       codetimeLanguaeTrendTitle: 'Trend Bahasa Pengaturcaraan',
       codetimeProjectTrendTitle: 'Trend Projek',
+      dailyCodingDistributionTitle: 'Taburan Masa Kod Harian',
       dataRange: {
         title(days: number) {
           return `Masa ${days} hari yang lalu`

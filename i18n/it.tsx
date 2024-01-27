@@ -23,6 +23,10 @@ export const it: Partial<I18NData> = {
     freeMessage: 'Attualmente completamente gratuito, non è richarta la carta di credito',
     demo: 'Demo',
     features: {
+      visualization: {
+        title: 'Visualizzazione dei dati',
+        description: 'Ci impegniamo a fornire il dashboard moderno più piacevole alla vista per aiutarti a capire meglio il tuo tempo di programmazione.',
+      },
       save: {
         title: 'Salva i tuoi dati di tempo di programmazione per sempre.',
         description: 'Sappiamo la bellezza dei dati storici. Niente è più frustrante che cancellare il tuo duro lavoro. Per consentire a tutti gli utenti di poter rivedere la loro storia di crescita anche dopo molti anni, salveremo i tuoi dati per sempre, fino a quando non li distruggerai attivamente, anche se non hai mai pagato.',
@@ -129,6 +133,7 @@ export const it: Partial<I18NData> = {
       codetimeTrendTitle: 'Tendenza del tempo di programmazione',
       codetimeLanguaeTrendTitle: 'Tendenza del linguaggio di programmazione',
       codetimeProjectTrendTitle: 'Tendenza del progetto',
+      dailyCodingDistributionTitle: 'Distribuzione giornaliera del tempo di programmazione',
       dataRange: {
         title(days: number): string {
           return `Ultimi ${days} giorni`

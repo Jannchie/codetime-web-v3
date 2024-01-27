@@ -24,9 +24,13 @@ export const ja: Partial<I18NData> = {
     freeMessage: '現在完全無料、クレジットカード不要',
     demo: 'デモ',
     features: {
+      visualization: {
+        title: 'データ可視化',
+        description: 'コーディング時間をより良く理解するために、最も美しいモダンなダッシュボードを提供することに専念しています。',
+      },
       save: {
         title: 'コーディング時間のデータを永久に保存。',
-        description: '「歴史的データの美しさを深く理解し、尽力が無駄になることの悔しさを知っています。年月が経過しても、ユーザーが成長の軌跡を振り返れるよう、データは永遠に保存されます。意図的な削除がない限り、保護は続き、費用が発生しなくても変わりません。',
+        description: '歴史的データの美しさを深く理解し、尽力が無駄になることの悔しさを知っています。年月が経過しても、ユーザーが成長の軌跡を振り返れるよう、データは永遠に保存されます。意図的な削除がない限り、保護は続き、費用が発生しなくても変わりません。',
       },
       export: {
         title: 'データのエクスポートをサポート。',
@@ -130,6 +134,7 @@ export const ja: Partial<I18NData> = {
       codetimeTrendTitle: 'コーディング時間のトレンド',
       codetimeLanguaeTrendTitle: 'コーディング言語のトレンド',
       codetimeProjectTrendTitle: 'プロジェクトのトレンド',
+      dailyCodingDistributionTitle: 'コーディング時間の分布',
       dataRange: {
         title(days: number) {
           return `${days} 日間`
