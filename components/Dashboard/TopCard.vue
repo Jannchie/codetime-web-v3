@@ -18,10 +18,8 @@ const transform = computed(() => {
   }
 })
 const minutes = computed(() => props.days * 24 * 60)
-const { pending: loading, data: rawData, refresh } = await fetchTop(props.type, minutes, 5, props.filters, { transform: transform.value })
-watch([props], () => {
-  refresh()
-})
+
+const { pending: loading, data: rawData } = await fetchTop(props.type, minutes, 5, props.filters, { transform: transform.value })
 
 const isLoading = computed(() => unref(loading) ?? false)
 const data = computed(() => unref(rawData))

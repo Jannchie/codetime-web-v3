@@ -43,7 +43,7 @@ export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T e
     baseURL: apiHost,
     credentials: needLogin ? 'include' : undefined,
     ...options,
-    
+
   })
 }
 
@@ -75,8 +75,8 @@ export async function fetchTop(field: string, minutes: ComputedRef<number>, limi
   const params = computed(() => {
     return {
       field,
-      minutes: String(minutes.value),
-      limit: String(limit),
+      minutes: minutes.value,
+      limit,
       ...unref(filters).reduce((acc, cur) => {
         acc[cur.key] = cur.value
         return acc
@@ -87,7 +87,6 @@ export async function fetchTop(field: string, minutes: ComputedRef<number>, limi
     ...options,
     credentials: 'include',
     params,
-    $fetch: useRequestFetch(),
   })
 }
 

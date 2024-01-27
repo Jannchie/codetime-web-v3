@@ -28,9 +28,7 @@ const currentTab = useCurrentTab(headerTabs)
 const user = useUser()
 
 const pending = autoResetRef(false, 1000)
-onMounted(() => {
-  pending.value = true
-})
+pending.value = true
 
 useHead({
   htmlAttrs: {
