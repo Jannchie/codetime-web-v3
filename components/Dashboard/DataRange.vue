@@ -40,8 +40,6 @@ function onNext() {
   next()
 }
 useI18N()
-
-const isAnuual = ref(true)
 </script>
 
 <template>

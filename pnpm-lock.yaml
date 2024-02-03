@@ -15,11 +15,11 @@ dependencies:
     specifier: ^8.0.0
     version: 8.0.0
   '@roku-ui/preset':
-    specifier: ^0.7.1
-    version: 0.7.1
+    specifier: ^0.7.2
+    version: 0.7.2
   '@roku-ui/vue':
-    specifier: ^0.7.1
-    version: 0.7.1(typescript@5.3.3)
+    specifier: ^0.7.2
+    version: 0.7.2(typescript@5.3.3)
   auxlines:
     specifier: ^0.3.0
     version: 0.3.0(vue@3.4.15)
@@ -1080,6 +1080,12 @@ packages:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
 
+  /@iconify-json/line-md@1.1.34:
+    resolution: {integrity: sha512-GqbJBXHGx2Bek+FsxKOrqyU/JXIvPaxCKHZDWmD4WQLs9ZPG9A+BxTbEjtGJ4IV7WdHANQHZ0lpFTAA8/XM7tw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
+
   /@iconify/json@2.2.178:
     resolution: {integrity: sha512-AYw9z/Lu9Y0Q5V0DvyhysJA3ohwKMOgXxCJ1AzTnsZizbUqZ7zh5/wnBegv1ikBEISAY0tC/R46j0tJBjliHkw==}
     dependencies:
@@ -2005,14 +2011,15 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@roku-ui/preset@0.7.1:
-    resolution: {integrity: sha512-L0KZ4XkgPNfB0awvjV4irvtWainKHL4+bOtCeqeSfiKd1az258hfFZ5JgUcyITbS1m1Fzaugn3DDG9qApNo3HA==}
+  /@roku-ui/preset@0.7.2:
+    resolution: {integrity: sha512-zjYuLGe87FTa+fBRWJZnHf1OBhvdQmbzJwMVNfGeI5Mipj6Zax82NP1rcGUgZ2fWmMLxZLtOV0JQAs810GxaPg==}
     dev: false
 
-  /@roku-ui/vue@0.7.1(typescript@5.3.3):
-    resolution: {integrity: sha512-AKHs8AJ5tgdIzl84jQ+KFgPYMc3wCQqihB+MDok3a5JsjMD8AKJPdicU9S7wZq6dZ1+WNb7sYFH6ORwdYlsSyw==}
+  /@roku-ui/vue@0.7.2(typescript@5.3.3):
+    resolution: {integrity: sha512-mMUCsozR1gJKmqfijd8MzmgwLbU1bpuCl+Jq2+/OsvzYsoVNR6FqDCkHnJrJocw7KUOddv3PB51Udpwmj5ESag==}
     dependencies:
       '@formkit/auto-animate': 0.8.1
+      '@iconify-json/line-md': 1.1.34
       '@unocss/reset': 0.58.4
       '@vueuse/core': 10.7.2(vue@3.4.15)
       tinycolor2: 1.6.0
@@ -6165,8 +6172,8 @@ packages:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
 
-  /js-tokens@8.0.2:
-    resolution: {integrity: sha512-Olnt+V7xYdvGze9YTbGFZIfQXuGV4R3nQwwl8BrtgaPE/wq8UFpUHWuTNc05saowhSr1ZO6tx+V6RjE9D5YQog==}
+  /js-tokens@8.0.3:
+    resolution: {integrity: sha512-UfJMcSJc+SEXEl9lH/VLHSZbThQyLpw1vLO1Lb+j4RWDvG3N2f7yj3PVQA3cmkTBNldJ9eFnM+xEXxHIXrYiJw==}
     dev: true
 
   /js-yaml@4.1.0:
@@ -8391,7 +8398,7 @@ packages:
   /strip-literal@2.0.0:
     resolution: {integrity: sha512-f9vHgsCWBq2ugHAkGMiiYY+AYG0D/cbloKKg0nhaaaSNsujdGIpVXCNsrJpCKr5M0f4aI31mr13UjY6GAuXCKA==}
     dependencies:
-      js-tokens: 8.0.2
+      js-tokens: 8.0.3
     dev: true
 
   /stylehacks@6.0.2(postcss@8.4.33):
