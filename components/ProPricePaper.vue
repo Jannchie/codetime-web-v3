@@ -21,12 +21,65 @@ function onLogin() {
 }
 
 const checkoutLink = await useCheckoutLink(isAnuual, isOneTime)
+const locale = useLocale()
+const discountRef = ref()
+watchEffect(() => {
+  if (discountRef.value) {
+    try {
+      const dom = discountRef.value
+      const body = document.querySelector('body')
+      body?.insertBefore(dom, body.firstChild)
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
+})
+const discountText = computed(() => {
+  switch (locale.value) {
+    case 'en':
+      return 'Apply discount code "CODETIME2024" for 50% Off on all our products.'
+    case 'zh-CN':
+      return '使用折扣码 "CODETIME2024" 享受所有产品 5 折优惠。'
+    case 'de':
+      return 'Verwenden Sie den Rabattcode "CODETIME2024", um 50% Rabatt auf alle unsere Produkte zu erhalten.'
+    case 'es':
+      return 'Utilice el código de descuento "CODETIME2024" para obtener un 50% de descuento en todos nuestros productos.'
+    case 'fr':
+      return 'Utilisez le code de réduction "CODETIME2024" pour obtenir 50% de réduction sur tous nos produits.'
+    case 'it':
+      return 'Utilizza il codice sconto "CODETIME2024" per ottenere il 50% di sconto su tutti i nostri prodotti.'
+    case 'ja':
+      return 'すべての製品が 50% オフの割引コード "CODETIME2024" を適用してください。'
+    case 'ms':
+      return 'Gunakan kod diskaun "CODETIME2024" untuk mendapatkan 50% diskaun pada semua produk kami.'
+    case 'ko':
+      return '모든 제품에 대해 50% 할인 코드 "CODETIME2024" 를 적용하십시오.'
+    case 'pt-BR':
+      return 'Use o código de desconto "CODETIME2024" para obter 50% de desconto em todos os nossos produtos.'
+    case 'ru':
+      return 'Используйте код скидки "CODETIME2024" для получения 50% скидки на все наши продукты.'
+    case 'ua':
+      return 'Використовуйте код знижки "CODETIME2024" для отримання 50% знижки на всі наші продукти.'
+    default:
+      return 'Apply discount code "CODETIME2024" for 50% Off on all our products.'
+  }
+})
 </script>
 
 <template>
   <Paper
     class="h-full min-h-600px w-full flex flex-col justify-between"
   >
+    <Teleport to="body">
+      <div
+        v-if="user && user.plan !== 'pro'"
+        ref="discountRef"
+        class="z-10 min-h-2em w-full flex items-center justify-center bg-sky-9 px-1 py-2 text-sm"
+      >
+        {{ discountText }}
+      </div>
+    </Teleport>
     <div class="absolute right-4 top-0 rounded-full bg-primary-container px-4 py-1 text-sm text-white -translate-y-50%">
       {{ !isAnuual ? t.plan.mostPopular : t.plan.bestValue }}
     </div>
