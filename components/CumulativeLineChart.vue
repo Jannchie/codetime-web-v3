@@ -13,7 +13,11 @@ const props = defineProps<{
 
 const t = useI18N()
 const data = computed(() => unref(props.data))
+const chart = ref()
+const { width, height } = useElementBounding(chart)
 const options = computed<PlotOptions>(() => ({
+  w: width.value,
+  h: height.value,
   x: {
     interval: 'day',
   },
@@ -47,6 +51,9 @@ const options = computed<PlotOptions>(() => ({
         </div>
       </div>
     </div>
-    <PoltChart :options="options" />
+    <PoltChart
+      ref="chart"
+      :options="options"
+    />
   </CardBase>
 </template>

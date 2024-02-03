@@ -46,3 +46,14 @@ const t = useI18N()
     </div>
   </CardBase>
 </template>
+
+<style>
+[aria-label="tip"] {
+  color: var(--r-color-surface-low);
+  --plot-background: rgb(var(--r-color-surface-low));
+  stroke-opacity: 0;
+  background: var(--plot-background) !important;
+  border: 1px solid var(--plot-background) !important;
+  fill: var(--plot-background) !important;
+}
+</style>

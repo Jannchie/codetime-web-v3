@@ -41,6 +41,7 @@ input[type="password"] {
 }
 
 [aria-label="tip"] {
+  color: var(--r-color-surface-low);
   --plot-background: rgb(var(--r-color-surface-low));
   background: var(--plot-background) !important;
   border: 1px solid var(--plot-background) !important;

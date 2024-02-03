@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { Modal, Paper } from '@roku-ui/vue'
-import type { AsyncDataRequestStatus } from 'nuxt/dist/app/composables/asyncData'
 
 const user = useUser()
 const t = useI18N()
 const modal = ref(false)
-const status = autoResetRef<AsyncDataRequestStatus>('idle', 3000)
+const status = autoResetRef<string>('idle', 3000)
 async function refreshToken() {
   modal.value = false
   const resp = await useAPIFetch<User>('/user/token/refresh', {

@@ -30,8 +30,12 @@ const data = computed<DataPoint[]>(() => {
   }
   return aggregateData(props.data ?? [], props.interval)
 })
+const chart = ref()
+const { width, height } = useElementBounding(chart)
 const options = computed<Plot.PlotOptions>(() => {
   return {
+    w: width.value,
+    h: height.value,
     className: 'y-dot-plot',
     color: {
       scheme: 'Warm',
@@ -40,15 +44,9 @@ const options = computed<Plot.PlotOptions>(() => {
     y: {
       grid: true,
       axis: 'right',
-      // tickSize: 0,
-      // tickFormat: () => '',
-      // ariaLabel: props.yLabel,
-      // label: props.yLabel,
       domain: [0, 1],
     },
     x: {
-      // insetRight: maxR.value,
-      // insetLeft: maxR.value,
       tickFormat: (d: number) => {
         const hour = Math.floor(d / 60)
         const minute = d % 60
@@ -58,7 +56,6 @@ const options = computed<Plot.PlotOptions>(() => {
     },
     width: 1110,
     height: 300,
-    // r: { range: [0, maxR.value] },
     marks: [
       Plot.dot(data.value, {
         x: 'time',
@@ -73,6 +70,7 @@ const options = computed<Plot.PlotOptions>(() => {
 
 <template>
   <PoltChart
+    ref="chart"
     :options="options"
   />
 </template>
