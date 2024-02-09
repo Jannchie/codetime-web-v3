@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware((to) => {
     if (cookie.value) {
       return navigateTo(`/${cookie.value}${to.path}`)
     }
-    let preferredLanguages = 'en'
+    let preferredLanguages = ['en']
     try {
       preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
     }
