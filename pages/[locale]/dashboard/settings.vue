@@ -78,7 +78,7 @@ const t = useI18N()
           readonly
           class="w-full"
           style="letter-spacing: 8px"
-          type="password"
+          password
         />
         <RCopyBtn
           :value="token"
