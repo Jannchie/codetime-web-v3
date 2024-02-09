@@ -12,7 +12,13 @@ export default defineNuxtRouteMiddleware((to) => {
     if (cookie.value) {
       return navigateTo(`/${cookie.value}${to.path}`)
     }
-    const preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
+    let preferredLanguages = 'en'
+    try {
+      preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
+    }
+    catch (e) {
+      console.error(e)
+    }
     for (const preferredLanguage of preferredLanguages) {
       let trueLanguage = preferredLanguage
       if (trueLanguage === 'zh-TW' || trueLanguage === 'zh-HK' || trueLanguage === 'zh') {
