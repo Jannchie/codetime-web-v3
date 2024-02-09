@@ -6,7 +6,6 @@ export default defineNuxtRouteMiddleware((to) => {
     if (locales.includes(locale)) {
       return
     }
-    console.log(to.path)
     // get preferred language from browser
     const headers = useRequestHeaders()
     const cookie = useCookie('locale')
