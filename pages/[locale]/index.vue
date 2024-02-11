@@ -9,7 +9,7 @@ definePageMeta({
 const t = useI18N()
 
 function useDemoAllData() {
-  const pending = autoResetRef(false, 500)
+  const pending = autoResetRef(false, 0)
   pending.value = true
   const data = computed(() => {
     if (pending.value) {

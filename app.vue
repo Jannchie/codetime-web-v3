@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const { data: user } = await fetchUser()
+const { data: user, pending } = await fetchUser()
 provide('user', user)
+provide('user-pending', pending)
 </script>
 
 <template>

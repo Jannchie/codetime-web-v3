@@ -1,22 +1,18 @@
 <script setup lang="ts">
-// import { vAutoAnimate } from '@formkit/auto-animate'
-
 const locale = useRoute().params.locale as string
-const { data: user, pending } = await fetchUser()
+const user = inject<Ref<User | null>>('user', ref(null))
 const t = useI18N()
 
+const userPending = inject('user-pending')
+const notLogin = computed(() => !user.value && !userPending)
 watchEffect(() => {
-  if (!pending.value && !user.value) {
-    setTimeout(() => {
-      useHead({
-        script: [
-          {
-            src: 'https://accounts.google.com/gsi/client',
-            async: true,
-          },
-        ],
-      })
-    }, 1000)
+  if (notLogin && typeof window !== 'undefined') {
+    const script = document.createElement('script')
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    nextTick(() => {
+      document.head.appendChild(script)
+    })
   }
 })
 </script>
@@ -28,7 +24,7 @@ watchEffect(() => {
     <ClientOnly>
       <div>
         <div
-          v-if="pending"
+          v-if="userPending"
           class="h-96px"
         />
         <div
@@ -49,18 +45,6 @@ watchEffect(() => {
                 </span>
               </div>
             </NuxtLink>
-          <!-- <NuxtLink
-            key="main"
-            :href="`${$config.public.apiHost}/auth/github`"
-            class="border border-primary-container rounded-xl bg-transparent px-4 py-3 transition-all hover:bg-primary-container hover:text-white"
-          >
-            <div class="flex items-center gap-2 text-sm">
-              <i class="i-eva-github-outline h-4 w-4" />
-              <span>
-                {{ t.landing.loginWithGithub }}
-              </span>
-            </div>
-          </NuxtLink> -->
           </div>
           <div class="flex flex-col items-center gap-3">
             <div class="text-sm text-surface-onlow">

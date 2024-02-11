@@ -1,8 +1,5 @@
 import * as Plot from '@observablehq/plot'
 
-import type { AsyncDataOptions, UseFetchOptions } from 'nuxt/dist/app/composables'
-import type { KeysOf } from 'nuxt/dist/app/composables/asyncData'
-
 export { Plot }
 
 export interface User {
@@ -43,16 +40,17 @@ export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T e
     baseURL: apiHost,
     credentials: needLogin ? 'include' : undefined,
     ...options,
-
   })
 }
 
 export async function fetchUser() {
-  const { data, pending, error, status } = await useAPIFetch<User>('/user', {
-    credentials: 'include',
-    lazy: false,
-  })
-  return { data: reactive(data), pending, error, status }
+  try {
+    return await useAPIFetch<User>('/user', {
+      credentials: 'include',
+      lazy: false,
+    })
+  }
+  catch (e) {}
 }
 
 export async function fetchSumMinutes() {

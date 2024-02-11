@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     ],
   },
   modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', ['@nuxtjs/google-fonts', {
-    preload: true,
+    preload: false,
     download: true,
     families: {
       'Share Tech Mono': true,
