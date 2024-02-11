@@ -11,6 +11,7 @@
     </div>
     <div class="mt-6 flex items-center justify-center gap-4">
       <NuxtLink
+        aria-label="github"
         class="text-surface-onlow hover:op75"
         to="https://github.com/Jannchie/codetime-web-v3"
         target="_blank"
@@ -18,6 +19,7 @@
         <i class="i-tabler-brand-github h-6 w-6" />
       </NuxtLink>
       <NuxtLink
+        aria-label="twitter"
         class="text-surface-onlow hover:op75"
         to="https://twitter.com/__codetime"
         target="_blank"
@@ -25,6 +27,7 @@
         <i class="i-tabler-brand-twitter h-6 w-6" />
       </NuxtLink>
       <NuxtLink
+        aria-label="email"
         class="text-surface-onlow hover:op75"
         to="mailto:admin@codetime.dev"
         target="_blank"

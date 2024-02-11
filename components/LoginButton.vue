@@ -35,6 +35,7 @@ watchEffect(() => {
           <div class="flex">
             <NuxtLink
               key="demo"
+              aria-label="demo"
               :to="`/${locale}/dashboard`"
               class="hidden border border-surface-border-low rounded-xl bg-surface-base bg-transparent px-4 py-3 transition-all hover:bg-surface-low"
             >
@@ -70,6 +71,7 @@ watchEffect(() => {
               />
               <NuxtLink
                 key="main"
+                aria-label="github"
                 :href="`${$config.public.apiHost}/auth/github`"
                 class="h-32px w-32px flex items-center justify-center rounded-full bg-white"
               >
@@ -84,6 +86,7 @@ watchEffect(() => {
           class="h-96px"
         >
           <NuxtLink
+            aria-label="dashboard"
             :to="`/${locale}/dashboard`"
             class="flex items-center gap-2 border border-primary-container rounded-xl bg-transparent px-4 py-3 transition-all hover:bg-primary-container hover:text-white"
           >

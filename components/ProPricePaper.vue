@@ -80,7 +80,7 @@ const discountText = computed(() => {
         {{ discountText }}
       </div>
     </Teleport>
-    <div class="absolute right-4 top-0 rounded-full bg-primary-container px-4 py-1 text-sm text-white -translate-y-50%">
+    <div class="absolute right-4 top-0 rounded-full bg-primary-containerd px-4 py-1 text-sm text-white -translate-y-50%">
       {{ !isAnuual ? t.plan.mostPopular : t.plan.bestValue }}
     </div>
     <div>

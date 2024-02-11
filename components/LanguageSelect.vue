@@ -33,6 +33,7 @@ watchEffect(() => {
 <template>
   <Select
     v-model="currentLocale"
+    aria-label="Language"
     class="w-46"
     :options="[
       { label: 'English', id: 'en' },

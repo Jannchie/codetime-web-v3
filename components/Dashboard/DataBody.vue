@@ -8,7 +8,7 @@ defineProps<{
 <template>
   <div class="p-2">
     <div>
-      <div class="text-base text-primary-containerl">
+      <div class="text-base text-primary-containerd">
         {{ title }}
       </div>
       <div

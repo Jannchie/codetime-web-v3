@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const variant = defineModel<string>()
-const selectedCls = 'bg-primary-container text-white'
+const selectedCls = 'bg-primary-containerd text-white'
 const unselectedCls = 'hover:bg-surface-border-base'
 const t = useI18N()
 </script>
