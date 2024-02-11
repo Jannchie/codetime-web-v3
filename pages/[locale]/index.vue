@@ -93,9 +93,8 @@ const allData = useDemoAllData()
             :filters="[]"
           />
         </div>
-        <DashboardCalendarCard
+        <DashboardCalendarCardDemo
           class="h-234px w-full"
-          :all-data="allData"
         />
       </div>
     </div>

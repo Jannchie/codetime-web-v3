@@ -1,98 +1,185 @@
-<script setup lang="ts">
-import autoAnimate from '@formkit/auto-animate'
-
-const props = withDefaults(defineProps<{
-  loading: boolean
-  data: TopData[] | null
-  icon: string
-  title: string
-  filters?: FilterItem[]
-  type: 'language' | 'project' | 'platform'
-}>(), {
-  filters: () => [],
-})
-defineEmits<{
-  clickItem: [field: string, type: 'language' | 'project' | 'platform']
-}>()
-const ani = ref()
-const maxMinutes = computed(() => {
-  if (props.data === null) {
-    return 0
-  }
-  return Math.max(...props.data.map(d => d.minutes))
-})
-</script>
-
 <template>
-  <CardBase
-    :loading="loading"
-    style="width: -webkit-fill-available;"
-    class="h-232px max-w-[calc(100vw-0.5rem)]"
+  <div
+    class="w-76"
+    data-v-inspector="pages/[locale]/index.vue:61:9"
   >
     <div
-      ref="ani"
-      class="flex flex-col gap-2"
+      class="relative h-232px h-234px max-w-[calc(100vw-0.5rem)] border border-transparent rounded-2xl bg-surface-low p-[--padding]"
+      style="--padding: 1rem; width: -webkit-fill-available;"
+      data-v-inspector="components/Card/Base.vue:23:3"
+      data-v-0c8add2d=""
     >
-      <div class="flex items-center gap-2">
-        <i
-          :class="icon"
-        />
-        <div class="text-lg">
-          {{ title }}
-        </div>
-      </div>
-      <template v-if="loading && !data">
-        <div
-          v-for="i in 5"
-          :key="i"
-          class="flex justify-between py-1"
-          :style="{
-            opacity: 0.5 + 0.5 * (-i / 5),
-          }"
-        >
-          <div class="flex gap-1">
-            <div
-              class="h-20px w-20px animate-pulse bg-surface-onlow"
-            />
-            <div
-              class="h-20px w-20 animate-pulse bg-surface-onlow"
-            />
-          </div>
-          <div
-            class="h-20px w-30 animate-pulse bg-surface-onlow"
-          />
-        </div>
-      </template>
-      <template v-else>
-        <div
-          v-for="d in data"
-          :key="d.field"
+      <div
+        class="relative z-3 h-232px h-234px max-w-[calc(100vw-0.5rem)]"
+        style="width:-webkit-fill-available;"
+        data-v-inspector="components/Card/Base.vue:34:5"
+        data-v-0c8add2d=""
+      >
+        <!-- [ --><div
+          class="flex flex-col gap-2"
+          data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:32:5"
         >
           <div
-            class="flex cursor-pointer justify-between gap-2 text-sm"
-            :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-container' : ''"
-            @click="$emit('clickItem', d.field, type)"
+            class="flex items-center gap-2"
+            data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:36:7"
           >
-            <div class="overflow-hidden truncate text-nowrap">
-              <i
-                v-if="d.icon"
-                :class="d.icon"
-                class="mb-0.5 mr-1 inline-block"
-              />
-              {{ d.field }}
+            <i
+              class="i-tabler-braces"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:37:9"
+            /><div
+              class="text-lg"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:40:9"
+            >
+              Language
             </div>
-            <div class="flex-shrink-0">
-              {{ getDurationString(d.minutes * 60 * 1000) }}
-            </div>
-          </div>
-          <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest">
+          </div><!-- [ --><div data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:67:9">
             <div
-              class="h-full bg-primary-container"
-              :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
-            />
-          </div>
-        </div>
-      </template>
+              class="flex cursor-pointer justify-between gap-2 text-sm"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:71:11"
+            >
+              <div
+                class="overflow-hidden truncate text-nowrap"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:76:13"
+              >
+                <i
+                  class="i-vscode-icons-file-type-vue mb-0.5 mr-1 inline-block"
+                  data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:77:15"
+                /> Vue
+              </div><div
+                class="flex-shrink-0"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:84:13"
+              >
+                59 hrs 41 mins
+              </div>
+            </div><div
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
+            >
+              <div
+                class="h-full bg-primary-container"
+                style="width:100%;"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
+              />
+            </div>
+          </div><div data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:67:9">
+            <div
+              class="flex cursor-pointer justify-between gap-2 text-sm"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:71:11"
+            >
+              <div
+                class="overflow-hidden truncate text-nowrap"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:76:13"
+              >
+                <i
+                  class="i-vscode-icons-file-type-typescript mb-0.5 mr-1 inline-block"
+                  data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:77:15"
+                /> Typescript
+              </div><div
+                class="flex-shrink-0"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:84:13"
+              >
+                22 hrs 2 mins
+              </div>
+            </div><div
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
+            >
+              <div
+                class="h-full bg-primary-container"
+                style="width: 36.9171%;"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
+              />
+            </div>
+          </div><div data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:67:9">
+            <div
+              class="flex cursor-pointer justify-between gap-2 text-sm"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:71:11"
+            >
+              <div
+                class="overflow-hidden truncate text-nowrap"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:76:13"
+              >
+                <i
+                  class="i-vscode-icons-file-type-go mb-0.5 mr-1 inline-block"
+                  data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:77:15"
+                /> Go
+              </div><div
+                class="flex-shrink-0"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:84:13"
+              >
+                15 hrs 58 mins
+              </div>
+            </div><div
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
+            >
+              <div
+                class="h-full bg-primary-container"
+                style="width: 26.7523%;"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
+              />
+            </div>
+          </div><div data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:67:9">
+            <div
+              class="flex cursor-pointer justify-between gap-2 text-sm"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:71:11"
+            >
+              <div
+                class="overflow-hidden truncate text-nowrap"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:76:13"
+              >
+                <i
+                  class="i-vscode-icons-file-type-python mb-0.5 mr-1 inline-block"
+                  data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:77:15"
+                /> Python
+              </div><div
+                class="flex-shrink-0"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:84:13"
+              >
+                15 hrs 18 mins
+              </div>
+            </div><div
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
+            >
+              <div
+                class="h-full bg-primary-container"
+                style="width: 25.6353%;"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
+              />
+            </div>
+          </div><div data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:67:9">
+            <div
+              class="flex cursor-pointer justify-between gap-2 text-sm"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:71:11"
+            >
+              <div
+                class="overflow-hidden truncate text-nowrap"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:76:13"
+              >
+                <i
+                  class="i-vscode-icons-file-type-docker2 mb-0.5 mr-1 inline-block"
+                  data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:77:15"
+                /> Dockerfile
+              </div><div
+                class="flex-shrink-0"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:84:13"
+              >
+                5 hrs 24 mins
+              </div>
+            </div><div
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
+            >
+              <div
+                class="h-full bg-primary-container"
+                style="width: 9.04775%;"
+                data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
+              />
+            </div>
+          </div><!-- ] -->
+        </div><!-- ] -->
+      </div>
     </div>
-  </CardBase>
+  </div>
 </template>
