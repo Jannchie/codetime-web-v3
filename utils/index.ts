@@ -66,7 +66,7 @@ export interface TopData {
   icon?: string
 }
 
-export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: AsyncDataOptions<TopData[], TopData[], KeysOf<TopData[]>, null>) {
+export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
   const params = computed(() => {
     return {
       field,

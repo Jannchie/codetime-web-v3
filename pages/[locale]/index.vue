@@ -59,30 +59,30 @@ const allData = useDemoAllData()
       </div>
       <div class="my-8 flex gap-2">
         <div class="w-76">
-          <DashboardTopCardTemplate
+          <DashboardTopCardTemplateDemo
             class="h-234px"
             :data="[{
-                      field: 'vue',
+                      field: 'Vue',
                       minutes: 3581,
                       icon: 'i-vscode-icons-file-type-vue',
                     },
                     {
-                      field: 'typescript',
+                      field: 'Typescript',
                       minutes: 1322,
                       icon: 'i-vscode-icons-file-type-typescript',
                     },
                     {
-                      field: 'go',
+                      field: 'Go',
                       minutes: 958,
                       icon: 'i-vscode-icons-file-type-go',
                     },
                     {
-                      field: 'python',
+                      field: 'Python',
                       minutes: 918,
                       icon: 'i-vscode-icons-file-type-python',
                     },
                     {
-                      field: 'dockerfile',
+                      field: 'Dockerfile',
                       minutes: 324,
                       icon: 'i-vscode-icons-file-type-docker2',
                     }]"

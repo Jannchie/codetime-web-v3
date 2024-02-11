@@ -5748,7 +5748,7 @@ export const extensions = {
 
 export const iconMap = new Map(extensions.supported.filter(d => d.languages).map((d) => {
   return d.languages!.map((l) => {
-    let ids = l.ids
+    let { ids } = l
     if (typeof l.ids === 'string') {
       ids = [l.ids]
     }
