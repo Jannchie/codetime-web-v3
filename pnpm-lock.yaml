@@ -12,11 +12,11 @@ dependencies:
     specifier: ^0.6.13
     version: 0.6.13
   '@roku-ui/preset':
-    specifier: ^0.7.5
-    version: 0.7.5
+    specifier: ^0.7.6
+    version: 0.7.6
   '@roku-ui/vue':
-    specifier: ^0.7.5
-    version: 0.7.5(typescript@5.3.3)
+    specifier: ^0.7.6
+    version: 0.7.6(typescript@5.3.3)
   auxlines:
     specifier: ^0.3.0
     version: 0.3.0(vue@3.4.18)
@@ -2003,12 +2003,12 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@roku-ui/preset@0.7.5:
-    resolution: {integrity: sha512-CkjLq5wA53D1HNmm9s0QJ80+2mlkJ9tJfQdlMbOf/agkeb9176c/CeeyFZ1cDWIxEVHnehYcf9fA7xmjPJ2zhA==}
+  /@roku-ui/preset@0.7.6:
+    resolution: {integrity: sha512-zNKbOLiBGhJxo27Vs8kTF44O+KohQJnzuQNzALYSZKvEHyrIW/TubrnbtnR/hxNaOWKFDmfW7OfTxb0KnPSa+Q==}
     dev: false
 
-  /@roku-ui/vue@0.7.5(typescript@5.3.3):
-    resolution: {integrity: sha512-cMNJdQw5+eOq0sBr65DIW9zgjroYN7RFKfQ2+g1kgG+H/dg/etWPSSgnex8TA61lBGzjv0WR1wBhJSxvwVNjHg==}
+  /@roku-ui/vue@0.7.6(typescript@5.3.3):
+    resolution: {integrity: sha512-aCQmBYZeezr5g/+zhVqrLozG1yjoxYdEbBSpZtYWj4W5ndCD+HVnaIZde7TsKxs0Gs9ghkSy/6qmSkwMi5zxEA==}
     dependencies:
       '@formkit/auto-animate': 0.8.1
       '@iconify-json/line-md': 1.1.36
