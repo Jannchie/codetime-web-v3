@@ -29,8 +29,7 @@ export default defineNuxtConfig({
     ],
   },
   modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', ['@nuxtjs/google-fonts', {
-    preload: false,
-    download: true,
+    useStylesheet: true,
     families: {
       'Share Tech Mono': true,
       'Noto Sans JP': true,

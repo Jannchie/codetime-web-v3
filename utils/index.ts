@@ -44,13 +44,10 @@ export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T e
 }
 
 export async function fetchUser() {
-  try {
-    return await useAPIFetch<User>('/user', {
-      credentials: 'include',
-      lazy: false,
-    })
-  }
-  catch (e) {}
+  return await useAPIFetch<User>('/user', {
+    credentials: 'include',
+    lazy: false,
+  })
 }
 
 export async function fetchSumMinutes() {

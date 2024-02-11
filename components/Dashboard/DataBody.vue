@@ -8,18 +8,18 @@ defineProps<{
 <template>
   <div class="p-2">
     <div>
-      <div class="text-base text-primary-container">
+      <div class="text-base text-primary-containerl">
         {{ title }}
       </div>
       <div
         v-if="value !== ''"
-        class="text-nowrap text-sm text-surface-onlow"
+        class="text-nowrap text-sm text-surface-on"
       >
         {{ value }}
       </div>
       <div
         v-else
-        class="text-sm text-surface-onlow"
+        class="text-sm text-surface-on"
       >
         -
       </div>
