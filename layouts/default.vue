@@ -19,14 +19,6 @@ input[type="password"] {
   font-family: "system-ui", "Segoe UI", sans-serif;
 }
 
-[lang="ja"]  {
-  font-family: 'Noto Sans JP', 'Inter', sans-serif;
-}
-
-[lang="zh-CN"] {
-  font-family: 'Noto Sans SC', 'Inter', sans-serif;
-}
-
 .plot {
   --plot-background: var(--r-color-surface-low);
   background: var(--plot-background) !important;
