@@ -33,7 +33,7 @@ export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 
   })
 }
 
-export async function useAPIFetch<T>(path: string, options: UseFetchOptions<(T extends void ? unknown : T), (T extends void ? unknown : T), KeysOf<(T extends void ? unknown : T)>, any, any, any > = {}, needLogin = true) {
+export async function useAPIFetch<T>(path: string, options: any, needLogin = true) {
   const { apiHost } = useRuntimeConfig().public
   return useLazyFetch<T>(`${path}`, {
     server: false,
