@@ -26,6 +26,7 @@ const maxMinutes = computed(() => {
   }
   return Math.max(...props.data.map(d => d.minutes))
 })
+console.log((props.icon))
 </script>
 
 <template>
@@ -79,11 +80,20 @@ const maxMinutes = computed(() => {
             @click="$emit('clickItem', d.field, type)"
           >
             <div class="overflow-hidden truncate text-nowrap">
-              <i
-                v-if="d.icon"
-                :class="d.icon"
-                class="mb-0.5 mr-1 inline-block"
-              />
+              <template v-if="d.icon">
+                <i
+                  v-if="!d.icon.startsWith('i-vscode-icons')"
+                  :class="d.icon"
+                  class="mb-0.5 mr-1 inline-block h-14px w-14px"
+                />
+                <NuxtImg
+                  v-else
+                  :src="`vscode-icons/vscode-icons_${d.icon.split('vscode-icons-')[1]}.svg`"
+                  class="mb-0.5 mr-1 inline-block"
+                  width="14"
+                  height="14"
+                />
+              </template>
               {{ type === 'language' ? getLanguageName(d.field) : d.field }}
             </div>
             <div class="flex-shrink-0">
