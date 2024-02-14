@@ -168,7 +168,7 @@ export const zhCN: Partial<I18NData> = {
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="text-primary-container"
+                    class="text-primary-on"
                   >
                     [ 设置 ]
                   </NuxtLink>

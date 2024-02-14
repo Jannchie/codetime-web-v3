@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { ThemeProvider, darkTheme, lightTheme, useScheme } from '@roku-ui/vue'
+import { ThemeProvider, defaultTheme } from '@roku-ui/vue'
 
 const props = defineProps<{
   theme?: string
 }>()
 
 const t = useI18N()
-const currentScheme = useScheme()
+const currentScheme = computed({ get() {
+  if (typeof window !== 'undefined') {
+    return document.documentElement.dataset.scheme
+  }
+}, set(value: string) {
+  if (typeof window !== 'undefined') {
+    document.documentElement.dataset.scheme = value
+  }
+} })
 const isCurrent = computed(() => {
   return props.theme === currentScheme?.value
 })
@@ -18,18 +26,6 @@ const title = computed(() => {
       return t.value.dashboard.settings.theme.light
     case 'system':
       return t.value.dashboard.settings.theme.system
-  }
-})
-const preferColor = usePreferredDark()
-
-const theme = computed(() => {
-  switch (props.theme) {
-    case 'dark':
-      return darkTheme
-    case 'light':
-      return lightTheme
-    default:
-      return preferColor.value ? darkTheme : lightTheme
   }
 })
 </script>
@@ -46,7 +42,7 @@ const theme = computed(() => {
     <div
       class="flex items-center gap-2 border-b border-surface-border-base p-2 text-sm op75"
       :class="{
-        'text-primary-container': isCurrent,
+        'text-primary-on': isCurrent,
       }"
     >
       <i
@@ -55,10 +51,11 @@ const theme = computed(() => {
       {{ title }}
     </div>
     <ThemeProvider
-      :theme="theme"
+      :theme="defaultTheme"
+      :scheme="theme"
     >
       <div
-        class="h-full w-86 p-4"
+        class="h-full w-86 bg-surface-lowest p-4"
       >
         <CardBase>
           <div class="mb-2 h-1em w-32 rounded-full bg-primary-container" />

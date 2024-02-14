@@ -147,11 +147,11 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase class="flex gap-2 p-6">
       <div class="leading-0">
         <i
-          class="i-mdi:alert-circle-outline h-6 w-6 text-primary-container"
+          class="i-mdi:alert-circle-outline h-6 w-6 text-primary-on"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <div class="text-primary-container font-black">
+        <div class="text-primary-on font-black">
           {{ t.dashboard.overview.noData.notice.title }}
         </div>
         <NoDataBody />

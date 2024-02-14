@@ -26,7 +26,6 @@ const maxMinutes = computed(() => {
   }
   return Math.max(...props.data.map(d => d.minutes))
 })
-console.log((props.icon))
 </script>
 
 <template>
@@ -76,7 +75,7 @@ console.log((props.icon))
         >
           <div
             class="flex cursor-pointer justify-between gap-2 text-sm"
-            :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-container' : ''"
+            :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-on' : ''"
             @click="$emit('clickItem', d.field, type)"
           >
             <div class="overflow-hidden truncate text-nowrap">

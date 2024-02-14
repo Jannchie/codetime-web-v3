@@ -13,7 +13,7 @@
         >
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-containerd">
+              <div class="text-base text-primary-on">
                 Time/Total
               </div>
               <div class="text-nowrap text-sm text-surface-on">
@@ -23,7 +23,7 @@
           </div>
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-containerd">
+              <div class="text-base text-primary-on">
                 Time/Today
               </div>
               <div class="text-nowrap text-sm text-surface-on">
@@ -33,7 +33,7 @@
           </div>
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-containerd">
+              <div class="text-base text-primary-on">
                 Streak/Current
               </div>
               <div class="text-nowrap text-sm text-surface-on">
@@ -43,7 +43,7 @@
           </div>
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-containerd">
+              <div class="text-base text-primary-on">
                 Streak/Largest
               </div>
               <div class="text-nowrap text-sm text-surface-on">

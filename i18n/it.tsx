@@ -167,7 +167,7 @@ export const it: Partial<I18NData> = {
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="px-2 text-primary-container"
+                    class="px-2 text-primary-on"
                   >
                     [ Impostazioni ]
                   </NuxtLink>
