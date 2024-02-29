@@ -75,7 +75,7 @@ const discountText = computed(() => {
       <div
         v-if="user && user.plan !== 'pro'"
         ref="discountRef"
-        class="z-10 min-h-2em w-full flex items-center justify-center bg-sky-9 px-1 py-2 text-sm"
+        class="z-10 min-h-2em w-full flex items-center justify-center bg-sky-9 px-1 py-2 text-sm text-white"
       >
         {{ discountText }}
       </div>
@@ -99,14 +99,14 @@ const discountText = computed(() => {
         >
           {{ isAnuual ? '$36' : '$4' }}
         </div>
-        <div class="text-sm text-surface-onlow">
+        <div class="text-surface-onlow text-sm">
           {{ isAnuual ? t.plan.pro.preYear : t.plan.pro.preMonth }}
         </div>
       </div>
       <div class="mb-2 mt-4 text-xl">
         {{ t.plan.basic.features.title }}
       </div>
-      <div class="flex flex-col gap-2 text-sm text-surface-onlow">
+      <div class="text-surface-onlow flex flex-col gap-2 text-sm">
         <FeatureItem>
           {{ t.plan.pro.features.item.include }}
         </FeatureItem>
