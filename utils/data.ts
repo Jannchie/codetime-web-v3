@@ -11,8 +11,9 @@ export function useMaxStreak(data: Ref<{
     }
     let streak = 0
     let maxStreak = 0
-    for (let i = 0; i < data.value.length; i++) {
-      const d = data.value[i]
+    const sortedData = data.value.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
+    for (let i = 0; i < sortedData.length; i++) {
+      const d = sortedData[i]
       if (d.duration === 0) {
         maxStreak = Math.max(maxStreak, streak)
         streak = 0
@@ -33,8 +34,9 @@ export function useCurrentStreak(data: Ref<{
       return 0
     }
     let streak = 0
-    for (let i = 0; i < data.value.length; i++) {
-      const d = data.value[i]
+    const sortedData = data.value.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
+    for (let i = 0; i < sortedData.length; i++) {
+      const d = sortedData[i]
       if (d.duration === 0) {
         break
       }
