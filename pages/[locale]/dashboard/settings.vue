@@ -85,12 +85,12 @@ const t = useI18N()
           class="min-w-24"
         />
       </div>
-      <div class="mb-4 text-xs text-surface-onlow">
+      <div class="text-surface-onlow mb-4 text-xs">
         {{ t.dashboard.settings.token.tip }}
       </div>
       <!-- TODO: DO REFRESH -->
       <DashboardRefreshBtn />
-      <div class="mb-2 text-xs text-surface-onlow">
+      <div class="text-surface-onlow mb-2 text-xs">
         {{ t.dashboard.settings.token.refreshTip }}
       </div>
     </CardBase>
@@ -110,7 +110,7 @@ const t = useI18N()
           <!-- <ThemeItem theme="system" /> -->
         </ClientOnly>
       </div>
-      <div class="text-xs text-surface-onlow">
+      <div class="text-surface-onlow text-xs">
         {{ t.dashboard.settings.theme.tip }}
       </div>
     </CardBase>
@@ -124,7 +124,7 @@ const t = useI18N()
       <div class="mb-2">
         <LanguageSelect />
       </div>
-      <div class="text-xs text-surface-onlow">
+      <div class="text-surface-onlow text-xs">
         {{ t.dashboard.settings.language.tip }}
       </div>
     </CardBase>
@@ -183,7 +183,7 @@ const t = useI18N()
           </a>
         </div>
       </div>
-      <div class="text-xs text-surface-onlow">
+      <div class="text-surface-onlow text-xs">
         {{ t.dashboard.settings.export.tip }}
       </div>
     </CardBase>

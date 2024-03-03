@@ -20,7 +20,7 @@ function deleteAllData() {
     sparse
     class="border-error-container"
   >
-    <div class="mb-4 text-xl text-error-container">
+    <div class="mb-4 text-xl text-error-7 dark:text-error-5">
       {{ t.dashboard.settings.dangerZone.title }}
     </div>
     <div class="mb-4 text-sm op75">
@@ -40,7 +40,7 @@ function deleteAllData() {
         <div>
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </div>
-        <div class="py-2 text-sm text-surface-onlow">
+        <div class="text-surface-onlow py-2 text-sm">
           <div class="pb-2">
             {{ t.dashboard.settings.dangerZone.button.modal.p1 }}
           </div>

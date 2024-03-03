@@ -65,7 +65,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     :description="t.dashboard.pageHeader.description.overview"
   />
   <DashboardPageContent v-if="allData.status.value !== 'success' && !allData.data.value">
-    <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-onlow/20" />
+    <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-on-low/20" />
   </DashboardPageContent>
   <DashboardPageContent v-else-if="hasData">
     <DashboardDataRange v-model:days="days" />

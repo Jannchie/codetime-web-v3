@@ -38,7 +38,7 @@ watchEffect(() => {
 const discountText = computed(() => {
   switch (locale.value) {
     case 'en':
-      return 'Apply discount code "CODETIME2024" for 50% Off on all our products.'
+      return 'Apply discount code "CODETIME2024" for 50% Off.'
     case 'zh-CN':
       return '使用折扣码 "CODETIME2024" 享受所有产品 5 折优惠。'
     case 'de':
@@ -75,7 +75,7 @@ const discountText = computed(() => {
       <div
         v-if="user && user.plan !== 'pro'"
         ref="discountRef"
-        class="z-10 min-h-2em w-full flex items-center justify-center bg-sky-9 px-1 py-2 text-sm text-white"
+        class="relative z-110 min-h-2em w-full flex items-center justify-center bg-sky-9 px-1 py-2 text-sm text-white"
       >
         {{ discountText }}
       </div>

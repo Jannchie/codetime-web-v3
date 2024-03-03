@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ThemeProvider, defaultTheme } from '@roku-ui/vue'
+import { ThemeProvider, defaultTheme, useSchemeString } from '@roku-ui/vue'
 
 const props = defineProps<{
   theme?: string
@@ -8,15 +8,17 @@ const props = defineProps<{
 const t = useI18N()
 const currentScheme = computed({ get() {
   if (typeof window !== 'undefined') {
-    return document.documentElement.dataset.scheme
+    return document.documentElement.dataset.scheme ?? 'light'
   }
+  return 'light'
 }, set(value: string) {
   if (typeof window !== 'undefined') {
     document.documentElement.dataset.scheme = value
   }
 } })
+const scheme = useSchemeString()
 const isCurrent = computed(() => {
-  return props.theme === currentScheme?.value
+  return props.theme === scheme.value
 })
 const title = computed(() => {
   switch (props.theme) {
@@ -32,6 +34,7 @@ const title = computed(() => {
 
 <template>
   <CardBase
+    with-border
     class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
     :class="{
       'border-primary-container': isCurrent,
@@ -40,7 +43,7 @@ const title = computed(() => {
     @click="() => currentScheme = props.theme ?? 'system'"
   >
     <div
-      class="flex items-center gap-2 border-b border-surface-border-base p-2 text-sm op75"
+      class="flex items-center gap-2 border-b border-surface-border-base p-2 text-sm op75 transition-border-color"
       :class="{
         'text-primary-on': isCurrent,
       }"

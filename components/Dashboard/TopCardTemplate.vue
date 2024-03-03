@@ -57,14 +57,14 @@ const maxMinutes = computed(() => {
         >
           <div class="flex gap-1">
             <div
-              class="h-20px w-20px animate-pulse bg-surface-onlow"
+              class="h-20px w-20px animate-pulse bg-surface-on-low"
             />
             <div
-              class="h-20px w-20 animate-pulse bg-surface-onlow"
+              class="h-20px w-20 animate-pulse bg-surface-on-low"
             />
           </div>
           <div
-            class="h-20px w-30 animate-pulse bg-surface-onlow"
+            class="h-20px w-30 animate-pulse bg-surface-on-low"
           />
         </div>
       </template>

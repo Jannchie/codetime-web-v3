@@ -48,7 +48,7 @@ watchEffect(() => {
             </NuxtLink>
           </div>
           <div class="flex flex-col items-center gap-3">
-            <div class="text-sm text-surface-onlow">
+            <div class="text-surface-onlow text-sm">
               {{ t.landing.login }}
             </div>
             <div class="flex gap-2">
@@ -92,7 +92,7 @@ watchEffect(() => {
           >
             <ClientOnly>
               <template #placeholder>
-                <div class="h-5 w-5 animate-pulse rounded-full bg-surface-onlow" />
+                <div class="h-5 w-5 animate-pulse rounded-full bg-surface-on-low" />
               </template>
               <NuxtImg
                 v-if="user && user.avatar"

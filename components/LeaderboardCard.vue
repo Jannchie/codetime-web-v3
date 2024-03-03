@@ -25,7 +25,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
 
 <template>
   <div class="mb-4 pl-6">
-    <div class="text-xl text-surface-onlow">
+    <div class="text-surface-onlow text-xl">
       {{ t.dashboard.leaderboard.title(days) }}
     </div>
     <div class="text-surface-onlow">
@@ -69,16 +69,16 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
           <Image
             width="40px"
             height="40px"
-            class="h-10 w-10 animate-pulse rounded-full bg-surface-onlow op50"
+            class="h-10 w-10 animate-pulse rounded-full bg-surface-on-low op50"
           />
           <div class="max-w-32 w-32">
-            <div class="my-1 h-[16px] w-16 animate-pulse overflow-hidden truncate bg-surface-onlow op50" />
-            <div class="h-[14px] w-32 animate-pulse overflow-hidden truncate bg-surface-onlow text-nowrap text-xs op50" />
+            <div class="my-1 h-[16px] w-16 animate-pulse overflow-hidden truncate bg-surface-on-low op50" />
+            <div class="h-[14px] w-32 animate-pulse overflow-hidden truncate bg-surface-on-low text-nowrap text-xs op50" />
           </div>
         </div>
 
         <div class="pr-4">
-          <div class="w-32 animate-pulse overflow-hidden truncate bg-surface-onlow text-nowrap text-surface-onlow op50" />
+          <div class="text-surface-onlow w-32 animate-pulse overflow-hidden truncate bg-surface-on-low text-nowrap op50" />
         </div>
       </div>
     </Paper>
@@ -136,7 +136,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
         </div>
 
         <div class="pr-4">
-          <div class="overflow-hidden truncate text-nowrap text-surface-onlow">
+          <div class="text-surface-onlow overflow-hidden truncate text-nowrap">
             {{ `${(((item.minutes * 60 * 1000) / (days * 60 * 24 * 60 * 1000) * 100)).toFixed(2)}%` }}
           </div>
         </div>

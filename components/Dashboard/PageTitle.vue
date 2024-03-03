@@ -11,7 +11,7 @@ defineProps<{
     <div class="mx-auto my-8 max-w-6xl w-6xl px-7">
       <div
         v-if="loading"
-        class="mb-4 h-36px w-40 animate-pulse bg-surface-onlow bg-op50 text-3xl"
+        class="mb-4 h-36px w-40 animate-pulse bg-surface-on-low bg-op50 text-3xl"
       />
       <div
         v-else
