@@ -1,6 +1,10 @@
-# Nuxt 3 Minimal Starter
+# Codetime Web V3
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Introduction
+
+This is the third version of Codetime Web. We've gone through iterations from Vue SPA to Next.js and now to Nuxt.js. We've made the switch from ECharts to Observable Plot.
+
+It's consistent with the code running at <https://codetime.dev>.
 
 ## Setup
 
