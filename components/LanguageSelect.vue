@@ -10,12 +10,27 @@ const locale = computed(
 const cookie = useCookie('locale', {
   expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000 * 100),
 })
-const currentLocale = ref(locale.value ?? (cookie.value ?? 'en'))
+const defaultLocale = locale.value ?? (cookie.value ?? 'en')
 
-function onChange(value: string) {
-  cookie.value = value
+function onChange(value: { label: string, id: string } | undefined) {
+  cookie.value = value?.id ?? 'en'
 }
 
+const languageOptions = [
+  { label: 'English', id: 'en' },
+  { label: '中文', id: 'zh-CN' },
+  { label: '日本語', id: 'ja' },
+  { label: 'Deutsch', id: 'de' },
+  { label: 'Français', id: 'fr' },
+  { label: 'Português', id: 'pt-BR' },
+  { label: 'Italiano', id: 'it' },
+  { label: 'Русский', id: 'ru' },
+  { label: 'Українська', id: 'ua' },
+  { label: 'Bahasa Melayu', id: 'ms' },
+  { label: 'Español', id: 'es' },
+]
+const currentLocaleObj = ref<{ label: string, id: string } | undefined>()
+const currentLocale = computed(() => currentLocaleObj.value?.id ?? defaultLocale)
 watchEffect(() => {
   nextTick(() => {
     router.push({
@@ -32,22 +47,10 @@ watchEffect(() => {
 
 <template>
   <Select
-    v-model="currentLocale"
+    v-model="currentLocaleObj"
     aria-label="Language"
     class="w-46"
-    :options="[
-      { label: 'English', id: 'en' },
-      { label: '中文', id: 'zh-CN' },
-      { label: '日本語', id: 'ja' },
-      { label: 'Deutsch', id: 'de' },
-      { label: 'Français', id: 'fr' },
-      { label: 'Português', id: 'pt-BR' },
-      { label: 'Italiano', id: 'it' },
-      { label: 'Русский', id: 'ru' },
-      { label: 'Українська', id: 'ua' },
-      { label: 'Bahasa Melayu', id: 'ms' },
-      { label: 'Español', id: 'es' },
-    ]"
+    :options="languageOptions"
     @change="onChange"
   />
 </template>
