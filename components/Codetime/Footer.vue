@@ -1,6 +1,6 @@
 <template>
   <footer class="mt-32 mt-auto pb-8 pt-32 text-center">
-    <div class="flex justify-center text-sm text-surface-onlow">
+    <div class="text-surface-onlow flex justify-center text-sm">
       <div class="flex items-center gap-5">
         <div class="h-1px w-16 bg-surface-low" />
         <div>

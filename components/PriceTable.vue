@@ -38,14 +38,14 @@ const t = useI18N()
             <div class="text-4xl font-light">
               $0
             </div>
-            <div class="text-sm text-surface-onlow">
+            <div class="text-surface-onlow text-sm">
               {{ t.plan.basic.forever }}
             </div>
           </div>
           <div class="mb-2 mt-4 text-xl">
             {{ t.plan.basic.features.title }}
           </div>
-          <div class="flex flex-grow-1 flex-col gap-2 text-sm text-surface-onlow">
+          <div class="text-surface-onlow flex flex-grow-1 flex-col gap-2 text-sm">
             <FeatureItem>
               {{ t.plan.basic.features.item.saveHistory }}
             </FeatureItem>
