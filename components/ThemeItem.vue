@@ -34,6 +34,7 @@ const title = computed(() => {
 
 <template>
   <CardBase
+    no-padding
     with-border
     class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
     :class="{

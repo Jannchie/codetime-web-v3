@@ -6,6 +6,7 @@ const props = defineProps<{
   sparse?: boolean
   dense?: boolean
   withBorder?: boolean
+  noPadding?: boolean
   color?: 'primary' | 'secondary' | 'surface' | 'error' | 'success' | 'warning'
 }>()
 const cardRef = ref<HTMLElement | null>(null)
@@ -19,8 +20,9 @@ const cardRef = ref<HTMLElement | null>(null)
     :loading="props.loading"
     class="relative rounded-2xl"
     :class="{
-      'p-2!': props.sparse,
-      'p-1!': props.dense,
+      'p-6!': props.sparse && !props.noPadding,
+      'p-1!': props.dense && !props.noPadding,
+      'p-4!': !props.sparse && !props.dense && !props.noPadding,
     }"
   >
     <slot />
