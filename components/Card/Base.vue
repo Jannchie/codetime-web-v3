@@ -19,7 +19,6 @@ const cardRef = ref<HTMLElement | null>(null)
     :loading="props.loading"
     class="relative rounded-2xl"
     :class="{
-      'p-4!': !props.sparse && !props.dense,
       'p-2!': props.sparse,
       'p-1!': props.dense,
     }"
