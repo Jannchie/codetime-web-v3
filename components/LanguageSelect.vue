@@ -29,7 +29,7 @@ const languageOptions = [
   { label: 'Bahasa Melayu', id: 'ms' },
   { label: 'Español', id: 'es' },
 ]
-const currentLocaleObj = ref<{ label: string, id: string } | undefined>()
+const currentLocaleObj = ref<{ label: string, id: string } | undefined>(languageOptions.find(item => item.id === defaultLocale) ?? languageOptions[0])
 const currentLocale = computed(() => currentLocaleObj.value?.id ?? defaultLocale)
 watchEffect(() => {
   nextTick(() => {
