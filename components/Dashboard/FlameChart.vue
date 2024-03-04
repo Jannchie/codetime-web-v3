@@ -178,7 +178,7 @@ function getAscii(str: string) {
           <div class="h-full p-1px">
             <div
               :style="`background-color: rgb(var(--r-color-primary-${((getAscii(flareNode.path) % 4 + 7))}))`"
-              class="box-border h-full w-full flex items-center overflow-hidden px-2 text-nowrap"
+              class="box-border h-full w-full flex items-center overflow-hidden px-2 text-nowrap text-white"
             >
               {{ flareNode.name }} ({{ getDurationString(flareNode.value * 60 * 1000) }}, {{ Math.floor(((flareNode.end - flareNode.start) * 100)) }}%)
             </div>
