@@ -31,6 +31,7 @@ const t = useI18N()
     searchable
     :placeholder="t.dashboard.badge.placeholder.project"
     :options="options"
+    :filter="() => true"
     :none-text="t.dashboard.projectSelector.noneText"
     @input="tempRef = $event"
   />
