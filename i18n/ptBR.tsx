@@ -115,18 +115,24 @@ export const ptBR: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: 'Bem-vindo ao painel CodeTime! Faça login para visualizar seus dados de tempo de codificação ou clique no botão de demonstração abaixo para experimentar o painel de demonstração.',
+    projectSelector: {
+      placeholder: 'Selecione um espaço de trabalho',
+      noneText: 'Digite o nome do espaço de trabalho',
+    },
     pageHeader: {
       title: {
         overview: 'Visão geral',
         badge: 'Crachás',
         settings: 'Configurações',
         leaderboard: 'Quadro de líderes',
+        workspace: 'Espaço de trabalho',
       },
       description: {
         overview: 'Visualize todos os seus dados do CodeTime.',
         badge: 'Exiba seu tempo de codificação em seus projetos com crachás concisos, consistentes e claros.',
         settings: 'Gerencie suas configurações do CodeTime, incluindo aparência, idioma, dados, etc.',
         leaderboard: 'Visualize o quadro de líderes CodeTime de todos os usuários.',
+        workspace: 'Visualize os dados de um espaço de trabalho específico.',
       },
     },
     overview: {
@@ -253,6 +259,19 @@ export const ptBR: Partial<I18NData> = {
         title: 'Outro',
         description: 'Outras configurações.',
         logout: 'Sair',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Selecione um espaço de trabalho',
+        none: 'Digite o nome do espaço de trabalho',
+      },
+      flameGraph: {
+        title: 'Gráfico de chamas',
+        noData: 'Sem dados',
+      },
+      fileList: {
+        title: 'Lista de arquivos',
       },
     },
     leaderboard: {

@@ -115,18 +115,24 @@ export const fr: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: 'Bienvenue dans le tableau de bord CodeTime! Veuillez vous connecter pour afficher vos données de temps de codage, ou cliquez sur le bouton de démonstration ci-dessous pour découvrir le tableau de bord de démonstration.',
+    projectSelector: {
+      placeholder: 'Sélectionnez un espace de travail',
+      noneText: 'Entrez le nom de l\'espace de travail',
+    },
     pageHeader: {
       title: {
         overview: 'Aperçu',
         badge: 'Badges',
         settings: 'Paramètres',
         leaderboard: 'Classement',
+        workspace: 'Espace de travail',
       },
       description: {
         overview: 'Affichez toutes vos données CodeTime.',
         badge: 'Affichez votre temps de codage dans vos projets avec des badges concis, cohérents et clairs.',
         settings: 'Gérez vos paramètres CodeTime, y compris l\'apparence, la langue, les données, etc.',
         leaderboard: 'Afficher le classement CodeTime de tous les utilisateurs.',
+        workspace: 'Affichez les données d\'un espace de travail spécifique.',
       },
     },
     overview: {
@@ -253,6 +259,19 @@ export const fr: Partial<I18NData> = {
         title: 'Autre',
         description: 'Autres paramètres.',
         logout: 'Déconnexion',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Sélectionnez un espace de travail',
+        none: 'Entrez le nom de l\'espace de travail',
+      },
+      flameGraph: {
+        title: 'Graphique en flammes',
+        noData: 'Pas de données',
+      },
+      fileList: {
+        title: 'Liste de fichiers',
       },
     },
     leaderboard: {

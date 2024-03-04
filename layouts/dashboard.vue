@@ -5,8 +5,9 @@ const t = useI18N()
 const headerTabs = computed(() => [
   { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
   { label: t.value.dashboard.pageHeader.title.badge, id: 'badges', path: `/dashboard/badges` },
-  { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
+  { label: t.value.dashboard.pageHeader.title.workspace, id: 'workspace', path: `/dashboard/workspace` },
   { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
+  { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
 ])
 watchEffect(() => {
   useSeoMeta({

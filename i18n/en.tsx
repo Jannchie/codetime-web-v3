@@ -115,18 +115,24 @@ export const en = {
   },
   dashboard: {
     loginRequired: 'Welcome to the CodeTime dashboard! Please log in to view your coding time data, or click the demo button below to experience the demo dashboard.',
+    projectSelector: {
+      placeholder: 'Select a project',
+      noneText: 'Input your project name',
+    },
     pageHeader: {
       title: {
         overview: 'Overview',
         badge: 'Badges',
         settings: 'Settings',
         leaderboard: 'Leaderboard',
+        workspace: 'Workspace',
       },
       description: {
         overview: 'View all your CodeTime data.',
         badge: 'Display your coding time in your projects with concise, consistent, and clear badges.',
         settings: 'Manage your CodeTime settings, including appearance, language, data, etc.',
         leaderboard: 'View the CodeTime leaderboard of all users.',
+        workspace: 'View your workspace details.',
       },
     },
     overview: {
@@ -253,6 +259,19 @@ export const en = {
         title: 'Other',
         description: 'Other settings.',
         logout: 'Logout',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Select a workspace',
+        none: 'Input a workspace name',
+      },
+      flameGraph: {
+        title: 'Flame Graph',
+        noData: 'No data yet',
+      },
+      fileList: {
+        title: 'File List',
       },
     },
     leaderboard: {

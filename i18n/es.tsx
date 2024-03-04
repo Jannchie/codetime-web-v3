@@ -115,18 +115,24 @@ export const es: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: '¡Bienvenido al panel de CodeTime! Por favor, inicia sesión para ver tus datos de tiempo de programación, o haz clic en el botón de demostración a continuación para experimentar el panel de demostración.',
+    projectSelector: {
+      placeholder: 'Selecciona un espacio de trabajo',
+      noneText: 'Escribe el nombre del espacio de trabajo',
+    },
     pageHeader: {
       title: {
         overview: 'Resumen',
         badge: 'Insignias',
         settings: 'Configuración',
         leaderboard: 'Clasificación',
+        workspace: 'Espacio de trabajo',
       },
       description: {
         overview: 'Ver todos tus datos de CodeTime.',
         badge: 'Muestra tu tiempo de programación en tus proyectos con insignias concisas, consistentes y claras.',
         settings: 'Administra la configuración de CodeTime, incluyendo la apariencia, el idioma, los datos, etc.',
         leaderboard: 'Ver la clasificación de CodeTime de todos los usuarios.',
+        workspace: 'Ver los datos de un espacio de trabajo específico.',
       },
     },
     overview: {
@@ -253,6 +259,19 @@ export const es: Partial<I18NData> = {
         title: 'Otros',
         description: 'Otros ajustes.',
         logout: 'Cerrar sesión',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Selecciona un espacio de trabajo',
+        none: 'Escribe el nombre del espacio de trabajo',
+      },
+      flameGraph: {
+        title: 'Gráfico de llama',
+        noData: 'No hay datos',
+      },
+      fileList: {
+        title: 'Lista de archivos',
       },
     },
     leaderboard: {

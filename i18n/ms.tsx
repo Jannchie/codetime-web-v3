@@ -117,18 +117,24 @@ export const ms: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: 'Selamat datang ke papan pemuka CodeTime! Sila log masuk untuk melihat data masa kod anda, atau klik butang demo di bawah untuk mengalami papan pemuka demo.',
+    projectSelector: {
+      placeholder: 'Pilih Ruang Kerja',
+      noneText: 'Masukkan Nama Ruang Kerja',
+    },
     pageHeader: {
       title: {
         overview: 'Tinjauan',
         badge: 'Lencana',
         settings: 'Tetapan',
         leaderboard: 'Papan Kepimpinan',
+        workspace: 'Ruang Kerja',
       },
       description: {
         overview: 'Lihat semua data CodeTime anda.',
         badge: 'Paparkan masa kod anda dalam projek anda dengan lencana yang ringkas, konsisten, dan jelas.',
         settings: 'Uruskan tetapan CodeTime anda, termasuk penampilan, bahasa, data, dan sebagainya.',
         leaderboard: 'Lihat papan kepimpinan CodeTime semua pengguna.',
+        workspace: 'Lihat data masa kod, fail, dan grafik API untuk ruang kerja yang dipilih.',
       },
     },
     overview: {
@@ -255,6 +261,19 @@ export const ms: Partial<I18NData> = {
         title: 'Lain-lain',
         description: 'Tetapan lain-lain.',
         logout: 'Log Keluar',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Pilih Ruang Kerja',
+        none: 'Masukkan Nama Ruang Kerja',
+      },
+      flameGraph: {
+        title: 'Graf Api',
+        noData: 'Tiada Data',
+      },
+      fileList: {
+        title: 'Senarai Fail',
       },
     },
     leaderboard: {

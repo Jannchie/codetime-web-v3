@@ -116,18 +116,24 @@ export const zhCN: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: '欢迎访问 CodeTime 仪表板！请登录以查看你的编程时间数据，或者点击下方的演示按钮体验演示仪表盘。',
+    projectSelector: {
+      placeholder: '选择一个工作区',
+      noneText: '输入工作区名称',
+    },
     pageHeader: {
       title: {
         overview: '概览',
         badge: '徽章',
         settings: '设置',
         leaderboard: '排行榜',
+        workspace: '工作区',
       },
       description: {
         overview: '查看您的所有 CodeTime 数据。',
         badge: '在你的项目中用简明、一致、清晰的徽章展示你的编程时间。',
         settings: '管理您的 CodeTime 设置，包含外观、语言、数据等。',
         leaderboard: '查看 CodeTime 用户的排行榜。',
+        workspace: '查看特定工作区的数据。',
       },
     },
     overview: {
@@ -254,6 +260,19 @@ export const zhCN: Partial<I18NData> = {
         title: '其他',
         description: '其他设置。',
         logout: '登出',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: '选择工作区',
+        none: '输入工作区名称',
+      },
+      flameGraph: {
+        title: '火焰图',
+        noData: '暂无数据',
+      },
+      fileList: {
+        title: '文件列表',
       },
     },
     leaderboard: {

@@ -12,6 +12,7 @@ const { data } = await useAPIFetch<{
     limit: 10,
     word: searchText,
   },
+  immediate: false,
 })
 
 const options = computed(() => {
@@ -30,6 +31,7 @@ const t = useI18N()
     searchable
     :placeholder="t.dashboard.badge.placeholder.project"
     :options="options"
+    :none-text="t.dashboard.projectSelector.noneText"
     @input="tempRef = $event"
   />
 </template>

@@ -35,6 +35,7 @@ watchEffect(() => {
   nextTick(() => {
     router.push({
       params: { locale: currentLocale.value },
+      query: { ...route.query },
     })
   })
   useHead({

@@ -115,18 +115,24 @@ export const ua: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: 'Ласкаво просимо до панелі CodeTime! Будь ласка, увійдіть, щоб переглянути дані часу кодування або натисніть кнопку демо нижче, щоб використати демо панель.',
+    projectSelector: {
+      placeholder: 'Виберіть робочий простір',
+      noneText: 'Введіть назву робочого простору',
+    },
     pageHeader: {
       title: {
         overview: 'Огляд',
         badge: 'Значки',
         settings: 'Налаштування',
         leaderboard: 'Рейтинг',
+        workspace: 'Робочий',
       },
       description: {
         overview: 'Перегляньте всі свої дані CodeTime.',
         badge: 'Відображайте свій час кодування у ваших проектах за допомогою зрозумілих, послідовних та чітких значків.',
         settings: 'Керуйте налаштуваннями CodeTime, включаючи вигляд, мову, дані тощо.',
         leaderboard: 'Перегляньте рейтинг CodeTime всіх користувачів.',
+        workspace: 'Перегляньте дані конкретного робочого простору.',
       },
     },
     overview: {
@@ -253,6 +259,19 @@ export const ua: Partial<I18NData> = {
         title: 'Інше',
         description: 'Інші налаштування.',
         logout: 'Вийти',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Виберіть робочий простір',
+        none: 'Введіть назву робочого простору',
+      },
+      flameGraph: {
+        title: 'Графік пламенів',
+        noData: 'Немає даних',
+      },
+      fileList: {
+        title: 'Список файлів',
       },
     },
     leaderboard: {

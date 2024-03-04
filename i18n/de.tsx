@@ -114,6 +114,10 @@ export const de: Partial<I18NData> = {
     needLogin: 'Einloggen',
   },
   dashboard: {
+    projectSelector: {
+      placeholder: 'Projektname',
+      noneText: 'Kein Projekt',
+    },
     loginRequired: 'Willkommen beim CodeTime-Dashboard! Bitte melden Sie sich an, um Ihre Codierungszeitdaten anzuzeigen, oder klicken Sie unten auf die Schaltfläche Demo, um das Demo-Dashboard zu erleben.',
     pageHeader: {
       title: {
@@ -121,12 +125,14 @@ export const de: Partial<I18NData> = {
         badge: 'Abzeichen',
         settings: 'Einstellungen',
         leaderboard: 'Bestenliste',
+        workspace: 'Arbeitsbereich',
       },
       description: {
         overview: 'Zeigen Sie alle Ihre CodeTime-Daten an.',
         badge: 'Zeigen Sie Ihre Codierungszeit in Ihren Projekten mit prägnanten, konsistenten und klaren Abzeichen an.',
         settings: 'Verwalten Sie Ihre CodeTime-Einstellungen, einschließlich Aussehen, Sprache, Daten usw.',
         leaderboard: 'Zeigen Sie die CodeTime-Bestenliste aller Benutzer an.',
+        workspace: 'Zeigen Sie Ihre Arbeitsbereichdetails an.',
       },
     },
     overview: {
@@ -253,6 +259,19 @@ export const de: Partial<I18NData> = {
         title: 'Andere',
         description: 'Andere Einstellungen.',
         logout: 'Ausloggen',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'Wählen Sie einen Arbeitsbereich',
+        none: 'Geben Sie einen Arbeitsbereichsnamen ein',
+      },
+      flameGraph: {
+        title: 'Flammen-Graph',
+        noData: 'Noch keine Daten',
+      },
+      fileList: {
+        title: 'Dateiliste',
       },
     },
     leaderboard: {

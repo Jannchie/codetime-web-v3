@@ -116,18 +116,24 @@ export const ja: Partial<I18NData> = {
   },
   dashboard: {
     loginRequired: 'CodeTime ダッシュボードへようこそ！\n コーディング時間のデータを閲覧するには、ログインしていただくか、下のデモボタンをクリックしてデモダッシュボードをお試しいただけます。',
+    projectSelector: {
+      placeholder: 'ワークスペースを選択',
+      noneText: 'ワークスペース名を入力',
+    },
     pageHeader: {
       title: {
         overview: '概観',
         badge: 'シールド',
         settings: '設定',
         leaderboard: 'リーダーボード',
+        workspace: 'ワークスペース',
       },
       description: {
         overview: 'すべての CodeTime データを見る。',
         badge: 'あなたのプロジェクトでスマート、統一感のある、明瞭なシールドで CodeTime を表示。',
         settings: 'CodeTime の設定を管理する、外観、言語、データ等を含む。',
         leaderboard: 'CodeTime ユーザーのリーダーボードを見る。',
+        workspace: 'ワークスペースのデータを見る。',
       },
     },
     overview: {
@@ -254,6 +260,19 @@ export const ja: Partial<I18NData> = {
         title: 'その他',
         description: 'その他の設定。',
         logout: 'ログアウト',
+      },
+    },
+    workspace: {
+      select: {
+        placeholder: 'ワークスペースを選択',
+        none: 'ワークスペース名を入力',
+      },
+      flameGraph: {
+        title: 'フレームグラフ',
+        noData: 'データがありません',
+      },
+      fileList: {
+        title: 'ファイルリスト',
       },
     },
     leaderboard: {
