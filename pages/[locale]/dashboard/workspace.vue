@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Btn } from '@roku-ui/vue'
+
 definePageMeta({
   layout: 'dashboard',
 })
@@ -17,8 +19,16 @@ const router = useRouter()
 const projectName = computed(() => {
   return project.value?.label
 })
+
+const workspaceLRU = useLRU<string>('workspace-select', 5)
+
+const historyWorkspaceNameList = computed(() => {
+  return workspaceLRU.values.value
+})
+
 watch(project, (newVal) => {
   if (newVal) {
+    workspaceLRU.set(newVal.id, newVal.label)
     router.push({
       query: {
         project: newVal.id,
@@ -53,10 +63,23 @@ const height = 26
     :description="t.dashboard.pageHeader.description.workspace"
   />
   <DashboardPageContent>
-    <DashboardDataRange v-model:days="days" />
+    <div class="mx-4 text-xl">
+      {{ projectName }}
+    </div>
     <CardBase>
       <ProjectSelect v-model="project" />
+      <div class="mt-4 flex gap-2">
+        <Btn
+          v-for="name in historyWorkspaceNameList"
+          :key="name"
+          rounded="full"
+          @click="project = { label: name, id: name }"
+        >
+          {{ name }}
+        </Btn>
+      </div>
     </CardBase>
+    <DashboardDataRange v-model:days="days" />
     <CardBase
       :loading="pending"
       class="relative min-h-64"

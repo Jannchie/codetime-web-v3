@@ -50,14 +50,10 @@ useHead({
     <NuxtLayout name="default">
       <RHeader class="bg-surface-low px-2 pt-2">
         <div class="w-full flex flex-col gap-2 px-2 pt-2">
-          <div
-            class="h-34px flex items-center justify-between"
-          >
+          <div class="h-34px flex items-center justify-between">
             <ClientOnly>
               <div class="flex items-center gap-2">
-                <NuxtLink
-                  :to="`/${locale}`"
-                >
+                <NuxtLink :to="`/${locale}`">
                   <NuxtImg
                     alt="Code Time"
                     src="/icon.svg"
@@ -79,17 +75,13 @@ useHead({
                   <div class="hidden sm:block">
                     {{ user.username }}
                   </div>
-                  <PlanTag
-                    :plan="user.plan"
-                  />
+                  <PlanTag :plan="user.plan" />
                 </NuxtLink>
                 <div
-                  v-else-if="pending "
+                  v-else-if="pending"
                   class="flex items-center gap-3 text-sm"
                 >
-                  <div
-                    class="h-7 w-7 animate-pulse rounded-full bg-surface-on-low bg-op50"
-                  />
+                  <div class="h-7 w-7 animate-pulse rounded-full bg-surface-on-low bg-op50" />
                   <div class="h-1em w-16 animate-pulse rounded bg-surface-on-low bg-op50" />
                 </div>
               </div>
@@ -113,9 +105,7 @@ useHead({
                 {{ tab.label }}
               </NuxtLink>
               <div class="mt-2 min-h-0.5">
-                <div
-                  v-if="tab === currentTab"
-                >
+                <div v-if="tab === currentTab">
                   <div class="h-0.5 bg-primary-container" />
                 </div>
               </div>
