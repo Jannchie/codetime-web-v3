@@ -1,6 +1,6 @@
-import NuxtLink from './NuxtLink.vue';
+import NuxtLink from './NuxtLink.vue'
 
-export const ru: Partial<I18NData> = {
+export const ua: Partial<I18NData> = {
   meta: {
     title: 'CodeTime - Відстежуйте свій час програмування',
     description:
@@ -65,7 +65,7 @@ export const ru: Partial<I18NData> = {
       title: 'Оновити підписку',
       p1: 'Ми потребуємо вашої підтримки, щоб зберегти наш ентузіазм до розробки та забезпечити більш якісне обслуговування користувачів з більш повними звітами даних.',
       p2: 'Ви можете обрати підписку Pro, щоб розблокувати більше можливостей.',
-      p3: "Якщо ви зіткнетеся з якими-небудь проблемами під час оплати, будь ласка, зв'яжіться з нами по електронній пошті.",
+      p3: 'Якщо ви зіткнетеся з якими-небудь проблемами під час оплати, будь ласка, зв\'яжіться з нами по електронній пошті.',
     },
     status(
       str:
@@ -75,23 +75,23 @@ export const ru: Partial<I18NData> = {
         | 'on-trial'
         | 'paused'
         | 'past-due'
-        | 'unpaid'
+        | 'unpaid',
     ): string {
       switch (str) {
         case 'active':
-          return 'Активний';
+          return 'Активний'
         case 'cancelled':
-          return 'Скасовано';
+          return 'Скасовано'
         case 'expired':
-          return 'Термін дії закінчився';
+          return 'Термін дії закінчився'
         case 'on-trial':
-          return 'Пробний період';
+          return 'Пробний період'
         case 'paused':
-          return 'Призупинено';
+          return 'Призупинено'
         case 'past-due':
-          return 'Закінчився термін дії';
+          return 'Закінчився термін дії'
         case 'unpaid':
-          return 'Неоплачений';
+          return 'Неоплачений'
       }
     },
     basic: {
@@ -162,7 +162,7 @@ export const ru: Partial<I18NData> = {
       dailyCodingDistributionTitle: 'Розподіл часу кодування',
       dataRange: {
         title(days: number) {
-          return `Останні ${days} днів`;
+          return `Останні ${days} днів`
         },
         allTime: 'За весь час',
       },
@@ -208,7 +208,7 @@ export const ru: Partial<I18NData> = {
                     співпрацю.
                   </span>
                 </div>
-              );
+              )
             },
           }),
         },
@@ -307,10 +307,10 @@ export const ru: Partial<I18NData> = {
     },
     leaderboard: {
       title(days: number) {
-        return `Рейтинг часу кодування за останні ${days} днів`;
+        return `Рейтинг часу кодування за останні ${days} днів`
       },
       delta(string: string) {
-        return `${string} позаду`;
+        return `${string} позаду`
       },
     },
   },
@@ -329,4 +329,4 @@ export const ru: Partial<I18NData> = {
       unknown: 'Невідомо',
     },
   },
-};
+}

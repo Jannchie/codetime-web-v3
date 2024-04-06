@@ -1,4 +1,4 @@
-import NuxtLink from './NuxtLink.vue';
+import NuxtLink from './NuxtLink.vue'
 
 export const ru: Partial<I18NData> = {
   meta: {
@@ -76,23 +76,23 @@ export const ru: Partial<I18NData> = {
         | 'on-trial'
         | 'paused'
         | 'past-due'
-        | 'unpaid'
+        | 'unpaid',
     ): string {
       switch (str) {
         case 'active':
-          return 'Активный';
+          return 'Активный'
         case 'cancelled':
-          return 'Отменен';
+          return 'Отменен'
         case 'expired':
-          return 'Просроченный';
+          return 'Просроченный'
         case 'on-trial':
-          return 'Пробный период';
+          return 'Пробный период'
         case 'paused':
-          return 'Приостановленный';
+          return 'Приостановленный'
         case 'past-due':
-          return 'Просроченный';
+          return 'Просроченный'
         case 'unpaid':
-          return 'Неоплаченный';
+          return 'Неоплаченный'
       }
     },
     basic: {
@@ -163,7 +163,7 @@ export const ru: Partial<I18NData> = {
       dailyCodingDistributionTitle: 'Распределение времени программирования',
       dataRange: {
         title(days: number) {
-          return `Прошедшие ${days} дней`;
+          return `Прошедшие ${days} дней`
         },
         allTime: 'За все время',
       },
@@ -209,7 +209,7 @@ export const ru: Partial<I18NData> = {
                     Спасибо за сотрудничество.
                   </span>
                 </div>
-              );
+              )
             },
           }),
         },
@@ -308,10 +308,10 @@ export const ru: Partial<I18NData> = {
     },
     leaderboard: {
       title(days: number) {
-        return `Таблица лидеров CodeTime за последние ${days} дней`;
+        return `Таблица лидеров CodeTime за последние ${days} дней`
       },
       delta(string: string) {
-        return `отстает ${string}`;
+        return `отстает ${string}`
       },
     },
   },
@@ -330,4 +330,4 @@ export const ru: Partial<I18NData> = {
       unknown: 'Неизвестный',
     },
   },
-};
+}
