@@ -9,7 +9,7 @@ definePageMeta({
 })
 
 const user = useUser()
-const days = ref(user.value?.plan === 'pro' ? 365 : 28)
+const days = useLocalStorage('days', ref(user.value?.plan === 'pro' ? 365 : 28))
 const allData = await fetchStats(days, 'time', 'days')
 const allLanguageData = await fetchStats(days, 'language', 'days')
 const allProjectData = await fetchStats(days, 'project', 'days')
