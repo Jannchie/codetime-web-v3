@@ -215,6 +215,44 @@ export const zhCN: Partial<I18NData> = {
         refreshTip: '如果您怀疑令牌泄露，您可以在此处生成新的令牌。',
         refreshToken: '刷新令牌',
         confirmRefresh: '您确定要刷新令牌吗？这将使您已应用于编辑器插件的令牌失效。您需要输入新的令牌。',
+        getPlugin: defineComponent({
+          components: {
+            NuxtLink,
+          },
+          setup() {
+            return () => (
+              <div class="text-surface-onlow">
+                <span>
+                  为了使 CodeTime 正常工作，您需要安装我们的插件，并在开发环境中配置令牌。目前，我们支持
+                </span>
+                <NuxtLink
+                  to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-tabler-brand-vscode" />
+                  <span>
+                    VSCode
+                  </span>
+                </NuxtLink>
+                <span>
+                  和
+                </span>
+                <NuxtLink
+                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-devicon-plain-jetbrains pr-2" />
+                  <span>
+                    Jetbrains
+                  </span>
+                </NuxtLink>
+                。
+              </div>
+            )
+          },
+        }),
       },
       language: {
         title: '语言 (Language)',

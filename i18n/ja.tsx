@@ -215,6 +215,44 @@ export const ja: Partial<I18NData> = {
         refreshTip: 'トークンが漏洩したと疑われる場合は、ここで新しいトークンを生成できます。',
         refreshToken: 'トークンを更新',
         confirmRefresh: 'トークンを更新してもよろしいですか？これにより、エディタプラグインに適用したトークンが無効になります。新しいトークンを入力する必要があります。',
+        getPlugin: defineComponent({
+          components: {
+            NuxtLink,
+          },
+          setup() {
+            return () => (
+              <div class="text-surface-onlow">
+                <span>
+                  CodeTime の正常な動作のためには、プラグインをインストールして開発環境でトークンを設定する必要があります。現在、
+                </span>
+                <NuxtLink
+                  to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-tabler-brand-vscode" />
+                  <span>
+                    VSCode
+                  </span>
+                </NuxtLink>
+                <span>
+                  と
+                </span>
+                <NuxtLink
+                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-devicon-plain-jetbrains pr-2" />
+                  <span>
+                    Jetbrains
+                  </span>
+                </NuxtLink>
+                がサポートされています。
+              </div>
+            )
+          },
+        }),
       },
       language: {
         title: '言語 (Language)',

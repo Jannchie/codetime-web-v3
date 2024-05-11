@@ -48,7 +48,7 @@
         target="_blank"
         to="https://plugins.jetbrains.com/plugin/15507-codetime"
       >
-        <i class="i-devicon-plain-jetbrains h-5 w-5" />
+        <i class="i-devicon-plain-jetbrains h-5 w-5 text-surface-onlow hover:op75" />
       </NuxtLink>
     </div>
   </footer>

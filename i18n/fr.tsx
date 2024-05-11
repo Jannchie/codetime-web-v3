@@ -214,6 +214,44 @@ export const fr: Partial<I18NData> = {
         refreshTip: 'Si vous soupçonnez que votre jeton a été divulgué, vous pouvez en générer un nouveau ici.',
         refreshToken: 'Actualiser le jeton',
         confirmRefresh: 'Êtes-vous sûr de vouloir actualiser le jeton? Cela invalidera le jeton que vous avez appliqué au plugin de l\'éditeur. Vous devez saisir un nouveau jeton.',
+        getPlugin: defineComponent({
+          components: {
+            NuxtLink,
+          },
+          setup() {
+            return () => (
+              <div class="text-surface-onlow">
+                <span>
+                  Pour que CodeTime fonctionne correctement, vous devez installer notre plugin et configurer le jeton dans votre environnement de développement. Actuellement, nous prenons en charge
+                </span>
+                <NuxtLink
+                  to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-tabler-brand-vscode" />
+                  <span>
+                    VSCode
+                  </span>
+                </NuxtLink>
+                <span>
+                  et
+                </span>
+                <NuxtLink
+                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-devicon-plain-jetbrains pr-2" />
+                  <span>
+                    Jetbrains
+                  </span>
+                </NuxtLink>
+                .
+              </div>
+            )
+          },
+        }),
       },
       language: {
         title: 'Langue',

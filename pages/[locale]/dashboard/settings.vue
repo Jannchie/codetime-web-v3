@@ -72,6 +72,9 @@ const t = useI18N()
       <div class="mb-4 text-xl">
         {{ t.dashboard.settings.token.title }}
       </div>
+      <div class="text-surface-onlow mb-2 text-xs">
+        <component :is="t.dashboard.settings.token.getPlugin" />
+      </div>
       <div class="mb-2 flex gap-2">
         <TextField
           v-model="token"

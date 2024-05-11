@@ -244,7 +244,45 @@ export const ru: Partial<I18NData> = {
         refreshToken: 'Обновить токен',
         confirmRefresh:
           'Вы уверены, что хотите обновить токен? Это сделает недействительным токен, который вы применили к плагину редактора. Вам нужно будет ввести новый токен.',
-      },
+          getPlugin: defineComponent({
+            components: {
+              NuxtLink,
+            },
+            setup() {
+              return () => (
+                <div class="text-surface-onlow">
+                  <span>
+                    Для правильной работы CodeTime вам необходимо установить наш плагин и настроить токен в вашей среде разработки. В настоящее время мы поддерживаем
+                  </span>
+                  <NuxtLink
+                    to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+                    class="px-2 text-primary-on inline-flex gap-1 items-center"
+                    style="baseline-source: last;"
+                  >
+                    <i class="i-tabler-brand-vscode" />
+                    <span>
+                      VSCode
+                    </span>
+                  </NuxtLink>
+                  <span>
+                    и
+                  </span>
+                  <NuxtLink
+                    to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                    class="px-2 text-primary-on inline-flex gap-1 items-center"
+                    style="baseline-source: last;"
+                  >
+                    <i class="i-devicon-plain-jetbrains pr-2" />
+                    <span>
+                      Jetbrains
+                    </span>
+                  </NuxtLink>
+                  .
+                </div>
+              )
+            },
+          }),
+        },
       language: {
         title: 'Язык',
         tip: 'Выберите язык для своего веб-интерфейса CodeTime.',

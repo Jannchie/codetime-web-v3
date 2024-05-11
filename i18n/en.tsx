@@ -214,6 +214,44 @@ export const en = {
         refreshTip: 'If you suspect that your token has been leaked, you can regenerate a new token here.',
         refreshToken: 'Refresh Token',
         confirmRefresh: 'Are you sure you want to refresh the token? This will invalidate the token you have applied to the editor plugin. You need to enter a new token.',
+        getPlugin: defineComponent({
+          components: {
+            NuxtLink,
+          },
+          setup() {
+            return () => (
+              <div class="text-surface-onlow">
+                <span>
+                  In order for CodeTime to work properly, you need to install our plugin and configure the token in your development environment. Currently, we support
+                </span>
+                <NuxtLink
+                  to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-tabler-brand-vscode" />
+                  <span>
+                    VSCode
+                  </span>
+                </NuxtLink>
+                <span>
+                  and
+                </span>
+                <NuxtLink
+                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-devicon-plain-jetbrains pr-2" />
+                  <span>
+                    Jetbrains
+                  </span>
+                </NuxtLink>
+                .
+              </div>
+            )
+          },
+        }),
       },
       language: {
         title: 'Language',
