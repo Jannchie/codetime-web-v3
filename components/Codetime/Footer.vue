@@ -34,6 +34,22 @@
       >
         <i class="i-tabler-mail h-6 w-6" />
       </NuxtLink>
+      <NuxtLink
+        aria-label="vscode"
+        class="text-surface-onlow hover:op75"
+        to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+        target="_blank"
+      >
+        <i class="i-tabler-brand-vscode h-6 w-6 text-surface-onlow hover:op75" />
+      </NuxtLink>
+      <NuxtLink
+        aria-label="jetbrains"
+        class="text-surface-onlow hover:op75"
+        target="_blank"
+        to="https://plugins.jetbrains.com/plugin/15507-codetime"
+      >
+        <i class="i-devicon-plain-jetbrains h-5 w-5" />
+      </NuxtLink>
     </div>
   </footer>
 </template>
