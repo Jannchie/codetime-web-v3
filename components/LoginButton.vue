@@ -6,7 +6,7 @@ const t = useI18N()
 const userPending = inject('user-pending')
 const notLogin = computed(() => !user.value && !userPending)
 watchEffect(() => {
-  if (notLogin && typeof window !== 'undefined') {
+  if (notLogin.value && typeof window !== 'undefined') {
     const script = document.createElement('script')
     script.src = 'https://accounts.google.com/gsi/client'
     script.async = true

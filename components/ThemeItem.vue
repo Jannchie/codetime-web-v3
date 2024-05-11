@@ -29,6 +29,7 @@ const title = computed(() => {
     case 'system':
       return t.value.dashboard.settings.theme.system
   }
+  return ''
 })
 </script>
 

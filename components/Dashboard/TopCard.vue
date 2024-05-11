@@ -16,6 +16,7 @@ const transform = computed(() => {
     case 'platform':
       return transformTopPlatformData
   }
+  return ''
 })
 const minutes = computed(() => props.days * 24 * 60)
 

@@ -2,12 +2,12 @@
 import { Image, RokuProvider } from '@roku-ui/vue'
 
 const t = useI18N()
-const headerTabs = computed(() => [
-  { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
-  { label: t.value.dashboard.pageHeader.title.badge, id: 'badges', path: `/dashboard/badges` },
-  { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
-  { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
-])
+// const headerTabs = computed(() => [
+//   { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
+//   { label: t.value.dashboard.pageHeader.title.badge, id: 'badges', path: `/dashboard/badges` },
+//   { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
+//   { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
+// ])
 watchEffect(() => {
   useSeoMeta({
     title: t.value.meta.title,
@@ -24,7 +24,7 @@ watchEffect(() => {
 })
 
 const locale = useLocale()
-const currentTab = useCurrentTab(headerTabs)
+// const currentTab = useCurrentTab(headerTabs)
 const user = useUser()
 
 const pending = autoResetRef(false, 1000)
@@ -96,56 +96,19 @@ useHead({
               <LanguageSelect />
             </div>
           </div>
-          <div class="mt-2 flex gap-2">
-            <div
-              v-for="tab in headerTabs"
-              :key="tab.id"
-              class="max-w-[calc(100vw-1px)] overflow-hidden"
-            >
-              <NuxtLink
-                :to="`/${locale}${tab.path}`"
-                class="rounded px-3 py-2 text-sm hover:bg-surface-base"
-              >
-                {{ tab.label }}
-              </NuxtLink>
-              <div class="mt-2 min-h-0.5">
-                <div
-                  v-if="tab === currentTab"
-                >
-                  <div class="h-0.5 bg-primary-container" />
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="mt-2 flex gap-2" />
         </div>
       </RHeader>
       <div v-if="pending">
         <!-- loading -->
         <div class="m-auto h-full op75">
-          <DashboardPageTitle loading />
           <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
             <div class="mt-2 h-32 w-full rounded-2xl bg-surface-base" />
           </div>
         </div>
       </div>
       <div v-else>
-        <slot v-if="user" />
-        <div
-          v-else
-          class="h-full flex flex-col items-center justify-center py-16 op75"
-        >
-          <div class="mb-8">
-            <NuxtImg
-              alt="Code Time"
-              src="/icon.svg"
-              width="64"
-            />
-          </div>
-          <span class="max-w-2xl pb-6 text-center text-sm">
-            {{ t.dashboard.loginRequired }}
-          </span>
-          <LoginButton />
-        </div>
+        <slot />
       </div>
       <CodetimeFooter />
     </NuxtLayout>

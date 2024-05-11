@@ -44,6 +44,7 @@ const days = ref(user.value?.plan === 'pro' ? 365 * 100 : 28)
 const { data, pending } = await useAPIFetch<{
   language: string
   relativeFile: string
+  gitBranch: string
   createdAt: string
 }[]>('/workspace', {
   method: 'GET',
@@ -54,6 +55,25 @@ const { data, pending } = await useAPIFetch<{
   },
 })
 
+const gitBranchCountMap = computed(() => {
+  const map = new Map<string, number>()
+  data.value?.forEach((d) => {
+    if (d.gitBranch === '') {
+      d.gitBranch = 'Unknown'
+    }
+    if (map.has(d.gitBranch)) {
+      map.set(d.gitBranch, map.get(d.gitBranch)! + 1)
+    }
+    else {
+      map.set(d.gitBranch, 1)
+    }
+  })
+  const arr = Array.from(map)
+  return arr.sort((a, b) => b[1] - a[1])
+})
+const maxBranchCount = computed(() => {
+  return Math.max(...gitBranchCountMap.value.map(([, count]) => count))
+})
 const height = 26
 </script>
 
@@ -92,7 +112,43 @@ const height = 26
         :data="data"
       />
     </CardBase>
+    <div
+      v-if="data && data.length > 0"
+      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
+    >
+      <CardBase :loading="pending">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <i class="i-tabler-git-branch" />
+            <div class="text-lg">
+              Top Branch
+            </div>
+          </div>
 
+          <div
+            v-for="([branch, count]) in gitBranchCountMap.slice(0, 5)"
+            :key="branch"
+          >
+            <div
+              class="flex justify-between gap-2 text-sm"
+            >
+              <div class="overflow-hidden truncate text-nowrap">
+                {{ branch }}
+              </div>
+              <div class="flex-shrink-0">
+                {{ getDurationString(count * 60 * 1000) }}
+              </div>
+            </div>
+            <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest">
+              <div
+                class="h-full bg-primary-container"
+                :style="{ width: `${count / maxBranchCount * 100}%` }"
+              />
+            </div>
+          </div>
+        </div>
+      </CardBase>
+    </div>
     <!-- <CardBase
       :loading="pending"
     >
