@@ -12,34 +12,34 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify/vue": "^4.1.1",
+    "@iconify/vue": "^4.1.2",
     "@observablehq/plot": "^0.6.14",
     "@roku-ui/preset": "^0.8.4",
     "@roku-ui/vue": "^0.8.4",
     "auxlines": "^0.3.0",
     "d3-flame-graph": "^4.1.3",
-    "date-fns": "^3.5.0",
-    "vue-wf": "^0.1.0"
+    "date-fns": "^3.6.0",
+    "vue-wf": "^0.1.2"
   },
   "devDependencies": {
-    "@formkit/auto-animate": "^0.8.1",
-    "@iconify/json": "^2.2.192",
-    "@jannchie/eslint-config": "^3.0.0",
-    "@nuxt/devtools": "^1.0.8",
-    "@nuxt/image": "^1.4.0",
+    "@formkit/auto-animate": "^0.8.2",
+    "@iconify/json": "^2.2.208",
+    "@jannchie/eslint-config": "^3.2.0",
+    "@nuxt/devtools": "^1.3.1",
+    "@nuxt/image": "^1.7.0",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/robots": "^3.0.0",
     "@types/d3": "^7.4.3",
-    "@unocss/eslint-plugin": "^0.58.6",
-    "@unocss/nuxt": "^0.58.6",
-    "@unocss/preset-icons": "^0.58.6",
-    "@unocss/reset": "^0.58.6",
+    "@unocss/eslint-plugin": "^0.60.0",
+    "@unocss/nuxt": "^0.60.0",
+    "@unocss/preset-icons": "^0.60.0",
+    "@unocss/reset": "^0.60.0",
     "@vueuse/nuxt": "^10.9.0",
     "d3": "^7.9.0",
-    "eslint": "^8.57.0",
-    "nuxt": "^3.10.3",
+    "eslint": "^9.2.0",
+    "nuxt": "^3.11.2",
     "nuxt-gtag": "^2.0.5",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
   }
 }
