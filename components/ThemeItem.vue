@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ThemeProvider, defaultTheme, useSchemeString } from '@roku-ui/vue'
+import { borderCS, defaultTheme, ThemeProvider, useContainerFilledCS, useCS, useSchemeString, useTextCS } from '@roku-ui/vue'
 
 const props = defineProps<{
   theme?: string
@@ -31,6 +31,12 @@ const title = computed(() => {
   }
   return ''
 })
+const filledCS = useContainerFilledCS('primary')
+const textCS = useCS({
+  type: 'bg',
+  color: 'surface',
+  index: { dark: 3, light: 7 },
+})
 </script>
 
 <template>
@@ -45,10 +51,11 @@ const title = computed(() => {
     @click="() => currentScheme = props.theme ?? 'system'"
   >
     <div
-      class="flex items-center gap-2 border-b border-surface-border-base p-2 text-sm op75 transition-border-color"
+      class="flex items-center gap-2 border-b p-2 text-sm op75 transition-border-color"
       :class="{
         'text-primary-on': isCurrent,
       }"
+      v-bind="borderCS"
     >
       <i
         class="i-tabler-palette"
@@ -60,12 +67,18 @@ const title = computed(() => {
       :scheme="theme"
     >
       <div
-        class="h-full w-86 bg-surface-lowest p-4"
+        class="h-full w-86 bg-[var(--r-surface-background-base-color)] p-4"
       >
         <CardBase>
-          <div class="mb-2 h-1em w-32 rounded-full bg-primary-container" />
-          <div class="mb-1 h-1em w-full rounded-full bg-surface-on text-sm op-25" />
-          <div class="h-1em w-2/3 rounded-full bg-surface-on text-sm op-25" />
+          <div
+            v-bind="filledCS"
+            class="mb-2 h-1em w-32 rounded-full"
+          />
+          <div
+            v-bind="textCS"
+            class="mb-1 h-1em w-full rounded-full text-sm op-25"
+          />
+          <div class="h-1em w-2/3 rounded-full text-sm op-25" />
         </CardBase>
       </div>
     </ThemeProvider>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import * as d3 from 'd3'
 import { Btn, Modal, Paper } from '@roku-ui/vue'
+import * as d3 from 'd3'
 
 const days = defineModel<number>('days', { default: 28 })
 
@@ -49,7 +49,7 @@ useI18N()
         <div class="text-xl font-bold">
           {{ t.plan.modal.title }}
         </div>
-        <div class="text-surface-onlow mt-4 w-full text-sm children:py-1">
+        <div class="text-surface-dimmed mt-4 w-full text-sm children:py-1">
           <p>
             {{ t.plan.modal.p1 }}
           </p>
@@ -95,7 +95,7 @@ useI18N()
             <i class="i-tabler-chevron-right" />
           </Btn>
         </div>
-        <div class="text-surface-onlow text-sm">
+        <div class="text-surface-dimmed text-sm">
           <div v-if="days !== 36500">
             <span>
               {{ d3.timeFormat('%Y-%m-%d')(new Date(Date.now() - days * 24 * 60 * 60 * 1000)) }}

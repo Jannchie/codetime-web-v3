@@ -21,6 +21,7 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+
   imports: {
     dirs: [
       'composables/**',
@@ -28,10 +29,22 @@ export default defineNuxtConfig({
       'i18n/**',
     ],
   },
-  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', ['@nuxtjs/google-fonts', {
-    download: true,
-    families: {
-      'Share Tech Mono': true,
-    },
-  }], '@nuxt/image', 'nuxt-gtag'],
+
+  modules: [
+    '@unocss/nuxt',
+    '@vueuse/nuxt',
+    '@nuxtjs/robots',
+    '@nuxt/image',
+    'nuxt-gtag',
+    [
+      '@nuxtjs/google-fonts',
+      {
+        download: true,
+        families: {
+          'Share Tech Mono': true,
+        },
+      },
+    ],
+  ],
+  compatibilityDate: '2024-10-13',
 })

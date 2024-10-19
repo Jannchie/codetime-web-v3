@@ -170,16 +170,16 @@ export const ms: Partial<I18NData> = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     Buat masa ini, kami belum berjaya memproses data masa kod anda. Aplikasi ini bergantung pada plugin untuk editor kod anda atau persekitaran pembangunan bersepadu (seperti VSCode, JetBrains IDE). Sila lawati
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="px-2 text-primary-on"
+                    class="text-primary-on px-2"
                   >
                     [ Tetapan ]
                   </NuxtLink>
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     laman dan konfigurasi tetapan yang diperlukan dalam editor kod yang menyokong plugin yang anda gunakan. Selepas menerima data anda, kami memerlukan lebih kurang dua minit untuk memprosesnya. Terima kasih atas kerjasama anda.
                   </span>
                 </div>
@@ -222,13 +222,13 @@ export const ms: Partial<I18NData> = {
           },
           setup() {
             return () => (
-              <div class="text-surface-onlow">
+              <div class="text-surface-dimmed">
                 <span>
                   Untuk CodeTime berfungsi dengan betul, anda perlu memasang plugin kami dan mengkonfigurasi token dalam persekitaran pembangunan anda. Pada masa ini, kami menyokong
                 </span>
                 <NuxtLink
                   to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-tabler-brand-vscode" />
@@ -241,7 +241,7 @@ export const ms: Partial<I18NData> = {
                 </span>
                 <NuxtLink
                   to="https://plugins.jetbrains.com/plugin/15507-codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-devicon-plain-jetbrains pr-2" />

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-210px border border-transparent rounded-2xl bg-surface-low p-[--padding]"
+    class="bg-surface-low relative min-h-210px border rounded-2xl p-[--padding]"
     style="--padding: 0.5rem;"
   >
     <div
@@ -13,40 +13,40 @@
         >
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-on">
+              <div class="text-primary-on text-base">
                 Time/Total
               </div>
-              <div class="text-nowrap text-sm text-surface-on">
+              <div class="text-surface-on text-nowrap text-sm">
                 1374 hrs 31 mins
               </div>
             </div>
           </div>
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-on">
+              <div class="text-primary-on text-base">
                 Time/Today
               </div>
-              <div class="text-nowrap text-sm text-surface-on">
+              <div class="text-surface-on text-nowrap text-sm">
                 8 hrs 11 mins
               </div>
             </div>
           </div>
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-on">
+              <div class="text-primary-on text-base">
                 Streak/Current
               </div>
-              <div class="text-nowrap text-sm text-surface-on">
+              <div class="text-surface-on text-nowrap text-sm">
                 24 days
               </div>
             </div>
           </div>
           <div class="p-2">
             <div>
-              <div class="text-base text-primary-on">
+              <div class="text-primary-on text-base">
                 Streak/Largest
               </div>
-              <div class="text-nowrap text-sm text-surface-on">
+              <div class="text-surface-on text-nowrap text-sm">
                 71 days
               </div>
             </div>

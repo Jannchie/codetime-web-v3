@@ -1,18 +1,18 @@
 <template>
   <footer class="mt-32 mt-auto pb-8 pt-32 text-center">
-    <div class="text-surface-onlow flex justify-center text-sm">
+    <div class="text-surface-dimmed flex justify-center text-sm">
       <div class="flex items-center gap-5">
-        <div class="h-1px w-16 bg-surface-low" />
+        <div class="bg-surface-low h-1px w-16" />
         <div>
           datreks @ {{ new Date().getFullYear() }}
         </div>
-        <div class="h-1px w-16 bg-surface-low" />
+        <div class="bg-surface-low h-1px w-16" />
       </div>
     </div>
     <div class="mt-6 flex items-center justify-center gap-4">
       <NuxtLink
         aria-label="github"
-        class="text-surface-onlow hover:op75"
+        class="text-surface-dimmed hover:op75"
         to="https://github.com/Jannchie/codetime-web-v3"
         target="_blank"
       >
@@ -20,7 +20,7 @@
       </NuxtLink>
       <NuxtLink
         aria-label="twitter"
-        class="text-surface-onlow hover:op75"
+        class="text-surface-dimmed hover:op75"
         to="https://twitter.com/__codetime"
         target="_blank"
       >
@@ -28,7 +28,7 @@
       </NuxtLink>
       <NuxtLink
         aria-label="email"
-        class="text-surface-onlow hover:op75"
+        class="text-surface-dimmed hover:op75"
         to="mailto:admin@codetime.dev"
         target="_blank"
       >
@@ -36,19 +36,19 @@
       </NuxtLink>
       <NuxtLink
         aria-label="vscode"
-        class="text-surface-onlow hover:op75"
+        class="text-surface-dimmed hover:op75"
         to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
         target="_blank"
       >
-        <i class="i-tabler-brand-vscode h-6 w-6 text-surface-onlow hover:op75" />
+        <i class="text-surface-dimmed i-tabler-brand-vscode h-6 w-6 hover:op75" />
       </NuxtLink>
       <NuxtLink
         aria-label="jetbrains"
-        class="text-surface-onlow hover:op75"
+        class="text-surface-dimmed hover:op75"
         target="_blank"
         to="https://plugins.jetbrains.com/plugin/15507-codetime"
       >
-        <i class="i-devicon-plain-jetbrains h-5 w-5 text-surface-onlow hover:op75" />
+        <i class="text-surface-dimmed i-devicon-plain-jetbrains h-5 w-5 hover:op75" />
       </NuxtLink>
     </div>
   </footer>

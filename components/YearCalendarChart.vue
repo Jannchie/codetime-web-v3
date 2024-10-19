@@ -51,7 +51,7 @@ const options = computed(() => ({
   color: {
     interpolate: (d: number) => {
       if (d === 0) {
-        return 'rgb(var(--r-color-surface-lowest))'
+        return 'var(--r-surface-background-variant-color)'
       }
       return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#5AF2', '#2AF')))(d)
     },
@@ -82,7 +82,7 @@ const options = computed(() => ({
       },
       rx: 2,
       ry: 2,
-      stroke: 'rgb(var(--r-color-surface-border-low))',
+      stroke: 'var(--r-color-surface-border-color)',
       strokeOpacity: 0,
       inset: 1,
     }),
@@ -93,7 +93,7 @@ const options = computed(() => ({
 <template>
   <div
     v-if="yearData.length === 0"
-    class="m-2 h-100px w-168 animate-pulse bg-primary-container bg-op25"
+    class="bg-primary-container m-2 h-100px w-168 animate-pulse bg-op25"
   />
   <PoltCalendar
     v-else

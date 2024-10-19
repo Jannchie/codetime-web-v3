@@ -1,5 +1,5 @@
 import { type Duration, formatDuration } from 'date-fns'
-import { de, enUS, es, fr, it, ja, ms, ptBR, ru, uk, zhCN  } from 'date-fns/locale'
+import { de, enUS, es, fr, it, ja, ms, ptBR, ru, uk, zhCN } from 'date-fns/locale'
 import languageIdentifiers from './LanguageIdentifiers.json'
 
 const m = ms

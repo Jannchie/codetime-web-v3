@@ -187,24 +187,26 @@ export default {
         width: 1110, // better default for Codetime
       }),
       ...this.options,
-      className: this.options.className ? this.options.className : 'plot',
+      className: this.options.className && 'plot',
     }
     if (this.defer) {
+      const disconnect = () => {
+        if (this._observer !== undefined) {
+          this._observer.disconnect()
+          this._observer = undefined
+        }
+        if (this._idling !== undefined) {
+          cancelIdleCallback(this._idling)
+          this._idling = undefined
+        }
+      }
+
+      const unmounted = (el) => {
+        while (el.lastChild) el.lastChild.remove()
+        disconnect()
+      }
+
       const mounted = (el) => {
-        const disconnect = () => {
-          if (this._observer !== undefined) {
-            this._observer.disconnect()
-            this._observer = undefined
-          }
-          if (this._idling !== undefined) {
-            cancelIdleCallback(this._idling)
-            this._idling = undefined
-          }
-        }
-        const unmounted = (el) => {
-          while (el.lastChild) el.lastChild.remove()
-          disconnect()
-        }
         disconnect() // remove old listeners
         function observed() {
           unmounted(el) // remove old plot (and listeners)

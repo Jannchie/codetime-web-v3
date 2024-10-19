@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { PlotOptions } from '@observablehq/plot'
 import * as Plot from '@observablehq/plot'
 import * as d3 from 'd3'
-import type { PlotOptions } from '@observablehq/plot'
 
 const props = defineProps<{
   data: MaybeRef<{

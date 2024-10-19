@@ -42,7 +42,7 @@ const allData = useDemoAllData()
       </div>
     </div>
   </Auxlines>
-  <div class="m-8 flex justify-center">
+<div class="m-8 flex justify-center">
     <LoginButton />
   </div>
   <div class="mt-32">
@@ -61,37 +61,38 @@ const allData = useDemoAllData()
         <div class="w-76">
           <DashboardTopCardTemplateDemo
             class="h-234px"
-            :data="[{
-                      field: 'Vue',
-                      minutes: 3581,
-                      icon: 'i-vscode-icons-file-type-vue',
-                    },
-                    {
-                      field: 'Typescript',
-                      minutes: 1322,
-                      icon: 'i-vscode-icons-file-type-typescript',
-                    },
-                    {
-                      field: 'Go',
-                      minutes: 958,
-                      icon: 'i-vscode-icons-file-type-go',
-                    },
-                    {
-                      field: 'Python',
-                      minutes: 918,
-                      icon: 'i-vscode-icons-file-type-python',
-                    },
-                    {
-                      field: 'Dockerfile',
-                      minutes: 324,
-                      icon: 'i-vscode-icons-file-type-docker2',
-                    }]"
+            :data="[
+              {
+                field: 'Vue',
+                minutes: 3581,
+                icon: 'i-vscode-icons-file-type-vue',
+              },
+              {
+                field: 'Typescript',
+                minutes: 1322,
+                icon: 'i-vscode-icons-file-type-typescript',
+              },
+              {
+                field: 'Go',
+                minutes: 958,
+                icon: 'i-vscode-icons-file-type-go',
+              },
+              {
+                field: 'Python',
+                minutes: 918,
+                icon: 'i-vscode-icons-file-type-python',
+              },
+              {
+                field: 'Dockerfile',
+                minutes: 324,
+                icon: 'i-vscode-icons-file-type-docker2',
+              }]"
             icon="i-tabler-braces"
             :title="t.dashboard.overview.top.language"
             type="language"
             :loading="allData.pending.value"
             :filters="[]"
-          />
+          />i-tabler-braces
         </div>
         <DashboardCalendarCardDemo
           class="h-234px w-full"
@@ -99,7 +100,7 @@ const allData = useDemoAllData()
       </div>
     </div>
 
-    <div class="relative my-10 bg-surface-low py-20">
+    <div class="bg-surface-low relative my-10 py-20">
       <h2 class="relative m-auto max-w-xl text-3xl font-bold">
         {{ t.landing.features.save.title }}
         <i
@@ -123,7 +124,7 @@ const allData = useDemoAllData()
       </div>
     </div>
 
-    <div class="my-10 flex items-center justify-center gap-8 bg-surface-low py-20">
+    <div class="bg-surface-low my-10 flex items-center justify-center gap-8 py-20">
       <div class="max-w-xl">
         <h2 class="m-auto max-w-xl text-3xl font-bold">
           {{ t.landing.features.editor.title }}

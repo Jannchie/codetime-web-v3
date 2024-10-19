@@ -65,7 +65,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     :description="t.dashboard.pageHeader.description.overview"
   />
   <DashboardPageContent v-if="allData.status.value !== 'success' && !allData.data.value">
-    <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-on-low/20" />
+    <div class="bg-surface-on-low/20 h-32 w-full animate-pulse rounded-2xl" />
   </DashboardPageContent>
   <DashboardPageContent v-else-if="hasData">
     <DashboardDataRange v-model:days="days" />
@@ -147,7 +147,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase class="flex gap-2 p-6">
       <div class="leading-0">
         <i
-          class="i-mdi:alert-circle-outline h-6 w-6 text-primary-on"
+          class="text-primary-on i-mdi:alert-circle-outline h-6 w-6"
         />
       </div>
       <div class="flex flex-col gap-2">

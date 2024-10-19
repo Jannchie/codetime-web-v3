@@ -4,7 +4,7 @@
     data-v-inspector="pages/[locale]/index.vue:61:9"
   >
     <div
-      class="relative h-232px h-234px max-w-[calc(100vw-0.5rem)] border border-transparent rounded-2xl bg-surface-low p-[--padding]"
+      class="bg-surface-low relative h-232px h-234px max-w-[calc(100vw-0.5rem)] border rounded-2xl p-[--padding]"
       style="--padding: 1rem; width: -webkit-fill-available;"
       data-v-inspector="components/Card/Base.vue:23:3"
       data-v-0c8add2d=""
@@ -52,11 +52,11 @@
                 59 hrs 41 mins
               </div>
             </div><div
-              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
-                class="h-full bg-primary-container"
+                class="bg-primary-container h-full"
                 style="width:100%;"
                 data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
               />
@@ -81,11 +81,11 @@
                 22 hrs 2 mins
               </div>
             </div><div
-              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
-                class="h-full bg-primary-container"
+                class="bg-primary-container h-full"
                 style="width: 36.9171%;"
                 data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
               />
@@ -110,11 +110,11 @@
                 15 hrs 58 mins
               </div>
             </div><div
-              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
-                class="h-full bg-primary-container"
+                class="bg-primary-container h-full"
                 style="width: 26.7523%;"
                 data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
               />
@@ -139,11 +139,11 @@
                 15 hrs 18 mins
               </div>
             </div><div
-              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
-                class="h-full bg-primary-container"
+                class="bg-primary-container h-full"
                 style="width: 25.6353%;"
                 data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
               />
@@ -168,11 +168,11 @@
                 5 hrs 24 mins
               </div>
             </div><div
-              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest"
+              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
-                class="h-full bg-primary-container"
+                class="bg-primary-container h-full"
                 style="width: 9.04775%;"
                 data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:89:13"
               />

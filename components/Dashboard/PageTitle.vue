@@ -1,17 +1,35 @@
 <script setup lang="ts">
+import { useCS, useMergedCS } from '@roku-ui/vue'
+
 defineProps<{
   title?: string
   description?: string
   loading?: boolean
 }>()
+
+const borderCS = useCS({
+  type: 'border',
+  color: 'surface',
+  index: { dark: 7, light: 4 },
+})
+
+const containerCS = useCS({
+  type: 'bg',
+  color: 'surface',
+  index: { dark: 9, light: 1 },
+})
+const cs = useMergedCS(borderCS, containerCS)
 </script>
 
 <template>
-  <div class="flex border-b border-surface-border-low bg-surface-low pt-6 transition-background-color,border-color">
+  <div
+    class="flex border-b pt-6"
+    v-bind="cs"
+  >
     <div class="mx-auto my-8 max-w-6xl w-6xl px-7">
       <div
         v-if="loading"
-        class="mb-4 h-36px w-40 animate-pulse bg-surface-on-low bg-op50 text-3xl"
+        class="bg-surface-on-low mb-4 h-36px w-40 animate-pulse bg-op50 text-3xl"
       />
       <div
         v-else
@@ -21,7 +39,7 @@ defineProps<{
       </div>
       <div
         v-if="loading"
-        class="h-20px w-60 animate-pulse bg-surface-on bg-op50 text-sm"
+        class="bg-surface-on h-20px w-60 animate-pulse bg-op50 text-sm"
       />
       <div
         v-else

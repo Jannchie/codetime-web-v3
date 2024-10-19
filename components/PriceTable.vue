@@ -17,11 +17,11 @@ const t = useI18N()
 
 <template>
   <div>
-    <div class="pb-16 pt-8 text-center">
+    <div class="flex flex-col gap-3 pb-16 pt-8 text-center">
       <div class="text-4xl font-bold">
         {{ t.landing.pricing.title }}
       </div>
-      <div class="text-surface-onlow">
+      <div class="text-surface-dimmed">
         {{ t.landing.pricing.description }}
       </div>
     </div>
@@ -38,14 +38,14 @@ const t = useI18N()
             <div class="text-4xl font-light">
               $0
             </div>
-            <div class="text-surface-onlow text-sm">
+            <div class="text-surface-dimmed text-sm">
               {{ t.plan.basic.forever }}
             </div>
           </div>
           <div class="mb-2 mt-4 text-xl">
             {{ t.plan.basic.features.title }}
           </div>
-          <div class="text-surface-onlow flex flex-grow-1 flex-col gap-2 text-sm">
+          <div class="text-surface-dimmed flex flex-grow-1 flex-col gap-2 text-sm">
             <FeatureItem>
               {{ t.plan.basic.features.item.saveHistory }}
             </FeatureItem>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Avatar, Btn, Modal, Paper, TextField } from '@roku-ui/vue'
+import { Avatar, Btn } from '@roku-ui/vue'
 
 const user = useUser()
 const t = useI18N()
@@ -35,13 +35,13 @@ const checkoutLink = await useCheckoutLink(ref(false), ref(true))
           />
           <div
             v-if="(user?.plan ?? 'free') !== 'free' && user?.plan_status !== 'active'"
-            class="text-surface-onlow/80 text-xs"
+            class="text-surface-dimmed/80 text-xs"
           >
             {{ t.dashboard.settings.account.expiresIn }}
             {{ new Date(user?.plan_expires_at ?? '').toLocaleDateString() }}
           </div>
         </div>
-        <div class="text-surface-onlow text-xs">
+        <div class="text-surface-dimmed text-xs">
           {{ user?.email }}
         </div>
       </div>

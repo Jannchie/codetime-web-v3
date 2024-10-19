@@ -1,5 +1,5 @@
-import * as d3 from 'd3'
 import type { TopData } from '.'
+import * as d3 from 'd3'
 
 export function useMaxStreak(data: Ref<{
   date: Date
@@ -175,9 +175,7 @@ export function useProcessedData(data: Ref<{
     const res = Array.from(dataMap.entries()).map(([keyRaw, data]) => {
       const key = keyRaw.split(',')
       return { date: new Date(key[0]), duration: data, by: key[1] }
-    })
-      .sort((a, b) => a.by.localeCompare(b.by))
-      .sort((a, b) => a.date.getTime() - b.date.getTime())
+    }).sort((a, b) => a.by.localeCompare(b.by)).sort((a, b) => a.date.getTime() - b.date.getTime())
     return res
   })
 }

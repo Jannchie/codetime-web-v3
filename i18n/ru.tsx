@@ -189,7 +189,7 @@ export const ru: Partial<I18NData> = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     В настоящее время мы еще не обработали успешно ваши данные о
                     времени программирования. Это приложение зависит от плагина
                     для вашего редактора кода или IDE (например, VSCode,
@@ -197,11 +197,11 @@ export const ru: Partial<I18NData> = {
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="px-2 text-primary-on"
+                    class="text-primary-on px-2"
                   >
                     [ Настройки ]
                   </NuxtLink>
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     {' '}
                     и сконфигурируйте необходимые параметры в редакторе кода,
                     поддерживающем используемый вами плагин. После получения
@@ -244,45 +244,45 @@ export const ru: Partial<I18NData> = {
         refreshToken: 'Обновить токен',
         confirmRefresh:
           'Вы уверены, что хотите обновить токен? Это сделает недействительным токен, который вы применили к плагину редактора. Вам нужно будет ввести новый токен.',
-          getPlugin: defineComponent({
-            components: {
-              NuxtLink,
-            },
-            setup() {
-              return () => (
-                <div class="text-surface-onlow">
+        getPlugin: defineComponent({
+          components: {
+            NuxtLink,
+          },
+          setup() {
+            return () => (
+              <div class="text-surface-dimmed">
+                <span>
+                  Для правильной работы CodeTime вам необходимо установить наш плагин и настроить токен в вашей среде разработки. В настоящее время мы поддерживаем
+                </span>
+                <NuxtLink
+                  to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-tabler-brand-vscode" />
                   <span>
-                    Для правильной работы CodeTime вам необходимо установить наш плагин и настроить токен в вашей среде разработки. В настоящее время мы поддерживаем
+                    VSCode
                   </span>
-                  <NuxtLink
-                    to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
-                    class="px-2 text-primary-on inline-flex gap-1 items-center"
-                    style="baseline-source: last;"
-                  >
-                    <i class="i-tabler-brand-vscode" />
-                    <span>
-                      VSCode
-                    </span>
-                  </NuxtLink>
+                </NuxtLink>
+                <span>
+                  и
+                </span>
+                <NuxtLink
+                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
+                  style="baseline-source: last;"
+                >
+                  <i class="i-devicon-plain-jetbrains pr-2" />
                   <span>
-                    и
+                    Jetbrains
                   </span>
-                  <NuxtLink
-                    to="https://plugins.jetbrains.com/plugin/15507-codetime"
-                    class="px-2 text-primary-on inline-flex gap-1 items-center"
-                    style="baseline-source: last;"
-                  >
-                    <i class="i-devicon-plain-jetbrains pr-2" />
-                    <span>
-                      Jetbrains
-                    </span>
-                  </NuxtLink>
-                  .
-                </div>
-              )
-            },
-          }),
-        },
+                </NuxtLink>
+                .
+              </div>
+            )
+          },
+        }),
+      },
       language: {
         title: 'Язык',
         tip: 'Выберите язык для своего веб-интерфейса CodeTime.',

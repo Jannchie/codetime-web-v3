@@ -5,7 +5,10 @@ defineProps<{
 </script>
 
 <template>
-  <NuxtLink :to="to">
+  <NuxtLink
+    v-bind="$attrs"
+    :to="to"
+  >
     <slot />
   </NuxtLink>
 </template>

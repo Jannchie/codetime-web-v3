@@ -1,5 +1,5 @@
-import NuxtLink from './NuxtLink.vue'
 import type { I18NData } from '.'
+import NuxtLink from './NuxtLink.vue'
 
 export const zhCN: Partial<I18NData> = {
   meta: {
@@ -169,7 +169,7 @@ export const zhCN: Partial<I18NData> = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     目前，我们尚未收到您的编码时间记录。我们的应用程序依赖于代码编辑器或集成开发环境（例如 VSCode、JetBrains IDE ）的插件。为了确保正常运作，请您前往
                   </span>
                   <NuxtLink
@@ -178,7 +178,7 @@ export const zhCN: Partial<I18NData> = {
                   >
                     [ 设置 ]
                   </NuxtLink>
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     页面并在您所使用的支持插件的代码编辑器中进行相应配置。感谢您的合作。
                   </span>
                 </div>
@@ -221,13 +221,13 @@ export const zhCN: Partial<I18NData> = {
           },
           setup() {
             return () => (
-              <div class="text-surface-onlow">
+              <div class="text-surface-dimmed">
                 <span>
                   为了使 CodeTime 正常工作，您需要安装我们的插件，并在开发环境中配置令牌。目前，我们支持
                 </span>
                 <NuxtLink
                   to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-tabler-brand-vscode" />
@@ -240,7 +240,7 @@ export const zhCN: Partial<I18NData> = {
                 </span>
                 <NuxtLink
                   to="https://plugins.jetbrains.com/plugin/15507-codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-devicon-plain-jetbrains pr-2" />

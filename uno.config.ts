@@ -1,6 +1,6 @@
 import fs from 'node:fs'
-import { defineConfig } from 'unocss'
 import { rokuPreset } from '@roku-ui/preset'
+import { defineConfig } from 'unocss'
 
 const file = fs.readFileSync('node_modules/@roku-ui/vue/dist/index.js', 'utf-8')
 

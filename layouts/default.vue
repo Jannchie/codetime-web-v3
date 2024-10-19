@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RokuProvider } from '@roku-ui/vue'
 </script>
 
 <template>
@@ -6,13 +7,15 @@
     color="var(--color-primary-1)"
     :height="1"
   />
-  <slot />
+  <RokuProvider class="min-h-100vh flex flex-col">
+    <slot />
+  </RokuProvider>
 </template>
 
 <style>
 :root {
   color-scheme: light dark;
-  background-color: rgb(var(--r-color-surface-lowest));
+  background-color: var(--r-surface-background-base-color);
 }
 
 input[type="password"] {
@@ -20,11 +23,11 @@ input[type="password"] {
 }
 
 .plot {
-  --plot-background: var(--r-color-surface-low);
+  --plot-background: var(--r-surface-background-color);
   background: var(--plot-background) !important;
 }
 .y-dot-plot {
-  --plot-background: var(--r-color-surface-low);
+  --plot-background: var(--r-surface-background-color);
   background: var(--plot-background) !important;
 }
 
@@ -33,8 +36,8 @@ input[type="password"] {
 }
 
 [aria-label="tip"] {
-  color: var(--r-color-surface-low);
-  --plot-background: rgb(var(--r-color-surface-low));
+  color: var(--r-surface-text-color);
+  --plot-background: var(--r-surface-background-color);
   background: var(--plot-background) !important;
   border: 1px solid var(--plot-background) !important;
   fill: var(--plot-background) !important;
