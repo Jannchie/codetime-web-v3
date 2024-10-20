@@ -239,7 +239,7 @@ export const zhCN: Partial<I18NData> = {
                   和
                 </span>
                 <NuxtLink
-                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
+                  to="https://plugins.jetbrains.com/plugin/25617-codetime"
                   class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >

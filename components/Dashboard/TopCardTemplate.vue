@@ -3,7 +3,7 @@ import autoAnimate from '@formkit/auto-animate'
 import { useContainerDefaultVariantCS, useContainerFilledCS } from '@roku-ui/vue'
 
 const props = withDefaults(defineProps<{
-  loading: boolean
+  loading?: boolean
   data: TopData[] | null
   icon: string
   title: string

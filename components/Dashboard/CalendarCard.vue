@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const props = defineProps<{
-  allData: {
+  data: {
     duration: number
     time: string
     by?: string
   }[]
+  loading?: boolean
 }>()
-const data = computed(() => props.allData)
+const data = computed(() => props.data)
 
 const pAllData = useProcessedData(data)
 const totalMinutes = useTotalMinutes(data)
@@ -19,6 +20,7 @@ const t = useI18N()
 <template>
   <CardBase
     class="min-h-210px"
+    :loading="loading"
   >
     <div class="flex flex-col p-2">
       <div

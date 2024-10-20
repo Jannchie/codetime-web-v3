@@ -98,6 +98,8 @@ const options = computed<Plot.PlotOptions>(() => {
       Plot.axisY({
         anchor: 'right',
         textAnchor: 'end',
+        textStroke: 'var(--r-surface-background-color)',
+        textStrokeWidth: 4,
         ariaLabel: t.value.plot.label.language,
         tickFormat: (d: string) => getLanguageName(d),
         tickPadding: -8,
@@ -113,3 +115,9 @@ const options = computed<Plot.PlotOptions>(() => {
     :options="options"
   />
 </template>
+
+<style lang="css">
+.y-dot-plot {
+  font-size: 14px;
+}
+</style>

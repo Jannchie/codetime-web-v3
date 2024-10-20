@@ -46,7 +46,7 @@
         aria-label="jetbrains"
         class="text-surface-dimmed hover:op75"
         target="_blank"
-        to="https://plugins.jetbrains.com/plugin/15507-codetime"
+        to="https://plugins.jetbrains.com/plugin/25617-codetime"
       >
         <i class="i-devicon-plain-jetbrains h-5 w-5 text-surface-dimmed hover:op75" />
       </NuxtLink>
