@@ -75,7 +75,10 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
   </DashboardPageContent>
   <DashboardPageContent v-else-if="hasData">
     <DashboardDataRange v-model:days="days" />
-    <DashboardCalendarCard :data="allDataResp.data.value?.data ?? []" />
+    <DashboardCalendarCard
+      :loading="allDataResp.status.value === 'pending'"
+      :data="allData"
+    />
     <DashboardFilterWrapper />
     <div
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
