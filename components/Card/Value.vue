@@ -20,7 +20,7 @@ const textCS = useTextCS('primary')
     </div>
     <div class="text-xl">
       {{ value }}
-      <span class="text-surface-dimmed text-sm">{{ unit }}</span>
+      <span class="text-sm text-surface-dimmed">{{ unit }}</span>
     </div>
     <div />
   </CardBase>

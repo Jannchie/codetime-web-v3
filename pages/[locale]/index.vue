@@ -36,13 +36,13 @@ const allData = useDemoAllData()
         class="flex flex-col items-center"
       >
         <LandingTitle />
-        <div class="text-surface p-2 text-center text-sm">
+        <div class="p-2 text-center text-sm text-surface">
           {{ t.landing.description }}
         </div>
       </div>
     </div>
   </Auxlines>
-<div class="m-8 flex justify-center">
+  <div class="m-8 flex justify-center">
     <LoginButton />
   </div>
   <div class="mt-32">

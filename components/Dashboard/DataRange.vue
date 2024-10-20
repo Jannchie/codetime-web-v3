@@ -49,7 +49,7 @@ useI18N()
         <div class="text-xl font-bold">
           {{ t.plan.modal.title }}
         </div>
-        <div class="text-surface-dimmed mt-4 w-full text-sm children:py-1">
+        <div class="mt-4 w-full text-sm text-surface-dimmed children:py-1">
           <p>
             {{ t.plan.modal.p1 }}
           </p>
@@ -95,7 +95,7 @@ useI18N()
             <i class="i-tabler-chevron-right" />
           </Btn>
         </div>
-        <div class="text-surface-dimmed text-sm">
+        <div class="text-sm text-surface-dimmed">
           <div v-if="days !== 36500">
             <span>
               {{ d3.timeFormat('%Y-%m-%d')(new Date(Date.now() - days * 24 * 60 * 60 * 1000)) }}

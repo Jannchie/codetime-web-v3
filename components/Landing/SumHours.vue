@@ -18,7 +18,7 @@ const t = useI18N()
 
 <template>
   <div class="flex flex-col items-center gap-2">
-    <span class="text-surface-dimmed inline-block">
+    <span class="inline-block text-surface-dimmed">
       {{ t.landing.alreadyStatistical }}
     </span>
     <ClientOnly>

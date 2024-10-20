@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { borderCS, defaultTheme, ThemeProvider, useContainerFilledCS, useCS, useSchemeString, useTextCS } from '@roku-ui/vue'
+import { borderCS, defaultTheme, ThemeProvider, useContainerFilledCS, useCS, useSchemeString } from '@roku-ui/vue'
 
 const props = defineProps<{
   theme?: string
@@ -41,8 +41,9 @@ const textCS = useCS({
 
 <template>
   <CardBase
-    no-padding
+
     with-border
+    no-padding
     class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
     :class="{
       'border-primary-container': isCurrent,

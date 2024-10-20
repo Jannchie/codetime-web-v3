@@ -134,7 +134,7 @@ const fillCS = useContainerFilledCS('primary')
       <div class="m-auto h-full op75">
         <DashboardPageTitle loading />
         <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="bg-surface-base mt-2 h-32 w-full rounded-2xl" />
+          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-base" />
         </div>
       </div>
     </div>

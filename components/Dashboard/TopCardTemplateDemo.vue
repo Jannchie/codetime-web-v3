@@ -52,7 +52,7 @@
                 59 hrs 41 mins
               </div>
             </div><div
-              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
@@ -81,7 +81,7 @@
                 22 hrs 2 mins
               </div>
             </div><div
-              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
@@ -110,7 +110,7 @@
                 15 hrs 58 mins
               </div>
             </div><div
-              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
@@ -139,7 +139,7 @@
                 15 hrs 18 mins
               </div>
             </div><div
-              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div
@@ -168,7 +168,7 @@
                 5 hrs 24 mins
               </div>
             </div><div
-              class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl"
+              class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant"
               data-v-inspector="components/Dashboard/TopCardTemplateDemo.vue:88:11"
             >
               <div

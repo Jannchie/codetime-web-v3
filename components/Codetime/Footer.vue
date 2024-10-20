@@ -1,6 +1,6 @@
 <template>
   <footer class="mt-32 mt-auto pb-8 pt-32 text-center">
-    <div class="text-surface-dimmed flex justify-center text-sm">
+    <div class="flex justify-center text-sm text-surface-dimmed">
       <div class="flex items-center gap-5">
         <div class="bg-surface-low h-1px w-16" />
         <div>
@@ -40,7 +40,7 @@
         to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
         target="_blank"
       >
-        <i class="text-surface-dimmed i-tabler-brand-vscode h-6 w-6 hover:op75" />
+        <i class="i-tabler-brand-vscode h-6 w-6 text-surface-dimmed hover:op75" />
       </NuxtLink>
       <NuxtLink
         aria-label="jetbrains"
@@ -48,7 +48,7 @@
         target="_blank"
         to="https://plugins.jetbrains.com/plugin/15507-codetime"
       >
-        <i class="text-surface-dimmed i-devicon-plain-jetbrains h-5 w-5 hover:op75" />
+        <i class="i-devicon-plain-jetbrains h-5 w-5 text-surface-dimmed hover:op75" />
       </NuxtLink>
     </div>
   </footer>

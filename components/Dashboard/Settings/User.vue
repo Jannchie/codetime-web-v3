@@ -41,7 +41,7 @@ const checkoutLink = await useCheckoutLink(ref(false), ref(true))
             {{ new Date(user?.plan_expires_at ?? '').toLocaleDateString() }}
           </div>
         </div>
-        <div class="text-surface-dimmed text-xs">
+        <div class="text-xs text-surface-dimmed">
           {{ user?.email }}
         </div>
       </div>

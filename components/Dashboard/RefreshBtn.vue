@@ -42,7 +42,7 @@ async function refreshToken() {
       <div>
         {{ t.dashboard.settings.token.refresh }}
       </div>
-      <div class="text-surface-dimmed py-2 text-sm">
+      <div class="py-2 text-sm text-surface-dimmed">
         {{ t.dashboard.settings.token.confirmRefresh }}
       </div>
       <div class="flex justify-end">

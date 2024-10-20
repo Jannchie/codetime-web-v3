@@ -28,7 +28,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
     <div class="text-base">
       {{ t.dashboard.leaderboard.title(days) }}
     </div>
-    <div class="text-surface-dimmed text-sm">
+    <div class="text-sm text-surface-dimmed">
       {{ fromDate.toISOString().slice(0, 10) }} ~ {{ new Date().toISOString().slice(0, 10) }}
     </div>
   </div>
@@ -78,7 +78,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
         </div>
 
         <div class="pr-4">
-          <div class="text-surface-dimmed bg-surface-on-low w-32 animate-pulse overflow-hidden truncate text-nowrap op50" />
+          <div class="bg-surface-on-low w-32 animate-pulse overflow-hidden truncate text-nowrap text-surface-dimmed op50" />
         </div>
       </div>
     </Paper>
@@ -137,7 +137,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
         </div>
 
         <div class="pr-4">
-          <div class="text-surface-dimmed overflow-hidden truncate text-nowrap">
+          <div class="overflow-hidden truncate text-nowrap text-surface-dimmed">
             {{ `${(((item.minutes * 60 * 1000) / (days * 60 * 24 * 60 * 1000) * 100)).toFixed(2)}%` }}
           </div>
         </div>

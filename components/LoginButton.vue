@@ -40,7 +40,7 @@ watchEffect(() => {
               key="demo"
               aria-label="demo"
               :to="`/${locale}/dashboard`"
-              class="bg-surface-base border-surface-border-low hover:bg-surface-low hidden border rounded-xl bg-transparent px-4 py-3 transition-all"
+              class="border-surface-border-low hover:bg-surface-low hidden border rounded-xl bg-surface-base bg-transparent px-4 py-3 transition-all"
             >
               <div class="flex items-center gap-2 text-sm">
                 <i class="i-eva-bar-chart-outline h-4 w-4" />
@@ -51,7 +51,7 @@ watchEffect(() => {
             </NuxtLink>
           </div>
           <div class="flex flex-col items-center gap-3">
-            <div class="text-surface-dimmed text-sm">
+            <div class="text-sm text-surface-dimmed">
               {{ t.landing.login }}
             </div>
             <div class="flex gap-2">

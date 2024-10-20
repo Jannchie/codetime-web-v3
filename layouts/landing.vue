@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { RokuProvider } from '@roku-ui/vue'
-
 const t = useI18N()
 watchEffect(() => {
   useSeoMeta({
