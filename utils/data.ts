@@ -1,17 +1,15 @@
 import type { TopData } from '.'
 import * as d3 from 'd3'
 
-export function useMaxStreak(data: Ref<{
+export function useMaxStreak(data: MaybeRef<{
   date: Date
   duration: number
 }[]>) {
   return computed(() => {
-    if (data.value === null) {
-      return 0
-    }
+    const dataVal = unref(data)
     let streak = 0
     let maxStreak = 0
-    const sortedData = data.value.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
+    const sortedData = dataVal.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
     for (let i = 0; i < sortedData.length; i++) {
       const d = sortedData[i]
       if (d.duration === 0) {
@@ -25,16 +23,14 @@ export function useMaxStreak(data: Ref<{
   })
 }
 
-export function useCurrentStreak(data: Ref<{
+export function useCurrentStreak(data: MaybeRef<{
   date: Date
   duration: number
 }[]>) {
   return computed(() => {
-    if (data.value === null) {
-      return 0
-    }
+    const dataVal = unref(data)
     let streak = 0
-    const sortedData = data.value.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
+    const sortedData = dataVal.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
     for (let i = 0; i < sortedData.length; i++) {
       const d = sortedData[i]
       if (d.duration === 0) {
@@ -46,34 +42,28 @@ export function useCurrentStreak(data: Ref<{
   })
 }
 
-export function useTodayMinutes(data: Ref<{
-  data: {
-    duration: number
-    time: string
-  }[]
-} | null>) {
+export function useTodayMinutes(data: MaybeRef<{
+  duration: number
+  time: string
+}[]
+>) {
   return computed(() => {
-    if (!data.value) {
-      return 0
-    }
+    const dataVal = unref(data)
     const today = new Date()
     const todayString = today.toISOString().slice(0, 10)
-    const todayData = data.value.data.find(d => d.time.slice(0, 10) === todayString)
+    const todayData = dataVal.find(d => d.time.slice(0, 10) === todayString)
     return todayData?.duration ?? 0
   })
 }
 
-export function useTotalMinutes(data: Ref<{
-  data: {
-    duration: number
-    time: string
-  }[]
-} | null>) {
+export function useTotalMinutes(data: MaybeRef< {
+  duration: number
+  time: string
+}[]
+>) {
   return computed(() => {
-    if (!data) {
-      return 0
-    }
-    return data.value?.data.reduce((acc, cur) => acc + cur.duration, 0) ?? 0
+    const dataVal = unref(data)
+    return dataVal.reduce((acc, cur) => acc + cur.duration, 0) ?? 0
   })
 }
 
@@ -126,23 +116,23 @@ export function useMergedFilters(filters: FilterItem[]) {
   })
 }
 
-export function useProcessedData(data: Ref<{
-  data: {
-    duration: number
-    time: string
-    by?: string | undefined
-  }[]
-} | null>) {
+export function useProcessedData(data: MaybeRef<{
+  duration: number
+  time: string
+  by?: string | undefined
+}[]
+>) {
   const t = useI18N()
   return computed(() => {
     const differentBy = new Set<string>()
-    data.value?.data.forEach((d) => {
+    const dataVal = unref(data)
+    dataVal.forEach((d) => {
       differentBy.add(d.by ?? t.value.plot.label.unknown)
     })
 
     // get sum duration for each by
     const sumDurationBy = new Map<string, number>()
-    data.value?.data.forEach((d) => {
+    dataVal.forEach((d) => {
       const duration = sumDurationBy.get(d.by ?? t.value.plot.label.unknown) ?? 0
       sumDurationBy.set(d.by ?? t.value.plot.label.unknown, duration + d.duration)
     })
@@ -150,14 +140,14 @@ export function useProcessedData(data: Ref<{
     // get top by
     const sortedBy = Array.from(sumDurationBy.entries()).sort((a, b) => b[1] - a[1])
     const topBy = sortedBy.slice(0, 5).map(d => d[0])
-    const dataWithOther = data.value?.data.map((d) => {
+    const dataWithOther = dataVal.map((d) => {
       d = { ...d }
       if (!topBy.includes(d.by ?? t.value.plot.label.unknown)) {
         d.by = t.value.plot.label.other
       }
       return d
     }) ?? []
-    const minDateString = d3.min(data.value?.data ?? [], d => d.time)
+    const minDateString = d3.min(dataVal ?? [], d => d.time)
     const minDateDate = minDateString ? new Date(minDateString) : new Date()
     const dateRange = d3.utcDay.range(minDateDate, new Date())
     const dataMap = new Map<string, number>()
@@ -172,10 +162,9 @@ export function useProcessedData(data: Ref<{
       const key = [date.toISOString().slice(0, 10), d.by ?? t.value.plot.label.unknown].join(',')
       dataMap.set(key, d.duration)
     })
-    const res = Array.from(dataMap.entries()).map(([keyRaw, data]) => {
+    return Array.from(dataMap.entries()).map(([keyRaw, data]) => {
       const key = keyRaw.split(',')
       return { date: new Date(key[0]), duration: data, by: key[1] }
     }).sort((a, b) => a.by.localeCompare(b.by)).sort((a, b) => a.date.getTime() - b.date.getTime())
-    return res
   })
 }
