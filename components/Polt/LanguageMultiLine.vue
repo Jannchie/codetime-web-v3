@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import * as d3 from 'd3'
 import * as Plot from '@observablehq/plot'
+import * as d3 from 'd3'
 
 defineProps<{
   data: {

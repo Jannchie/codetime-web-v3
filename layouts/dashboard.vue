@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Image, RokuProvider } from '@roku-ui/vue'
+import { Image, useContainerFilledCS, useCS } from '@roku-ui/vue'
 
 const t = useI18N()
 const headerTabs = computed(() => [
@@ -43,107 +43,122 @@ useHead({
     },
   ],
 })
+const containerCS = useCS({
+  type: 'bg',
+  color: 'surface',
+  index: { dark: 9, light: 1 },
+})
+const hoverCS = useCS({
+  type: 'hover:bg',
+  color: 'surface',
+  index: { dark: 7, light: 3 },
+})
+const fillCS = useContainerFilledCS('primary')
 </script>
 
 <template>
-  <RokuProvider class="min-h-100vh flex flex-col">
-    <NuxtLayout name="default">
-      <RHeader class="bg-surface-low px-2 pt-2">
-        <div class="w-full flex flex-col gap-2 px-2 pt-2">
-          <div class="h-34px flex items-center justify-between">
-            <ClientOnly>
-              <div class="flex items-center gap-2">
-                <NuxtLink :to="`/${locale}`">
-                  <NuxtImg
-                    alt="Code Time"
-                    src="/icon.svg"
-                    width="26"
-                    class="ml-2 mr-3"
-                  />
-                </NuxtLink>
-                <NuxtLink
-                  v-if="user"
-                  class="flex items-center gap-3 text-sm"
-                  :to="`/${locale}/dashboard`"
-                >
-                  <Image
-                    :src="user.avatar"
-                    class="h-7 w-7 rounded-full"
-                    height="28px"
-                    width="28px"
-                  />
-                  <div class="hidden sm:block">
-                    {{ user.username }}
-                  </div>
-                  <PlanTag :plan="user.plan" />
-                </NuxtLink>
-                <div
-                  v-else-if="pending"
-                  class="flex items-center gap-3 text-sm"
-                >
-                  <div class="h-7 w-7 animate-pulse rounded-full bg-surface-on-low bg-op50" />
-                  <div class="h-1em w-16 animate-pulse rounded bg-surface-on-low bg-op50" />
-                </div>
-              </div>
-            </ClientOnly>
-
-            <div class="hidden items-center gap-2 sm:flex">
-              <i class="i-tabler-language-hiragana h-6 w-6" />
-              <LanguageSelect />
-            </div>
-          </div>
-          <div class="mt-2 flex gap-2">
-            <div
-              v-for="tab in headerTabs"
-              :key="tab.id"
-              class="max-w-[calc(100vw-1px)] overflow-hidden"
-            >
-              <NuxtLink
-                :to="`/${locale}${tab.path}`"
-                class="rounded px-3 py-2 text-sm hover:bg-surface-base"
-              >
-                {{ tab.label }}
+  <NuxtLayout name="default">
+    <RHeader
+      class="px-2 pt-2"
+      v-bind="containerCS"
+    >
+      <div class="w-full flex flex-col gap-4 px-2 pt-2">
+        <div class="h-34px flex items-center justify-between">
+          <ClientOnly>
+            <div class="flex items-center gap-2">
+              <NuxtLink :to="`/${locale}`">
+                <NuxtImg
+                  alt="Code Time"
+                  src="/icon.svg"
+                  width="26"
+                  class="ml-2 mr-3"
+                />
               </NuxtLink>
-              <div class="mt-2 min-h-0.5">
-                <div v-if="tab === currentTab">
-                  <div class="h-0.5 bg-primary-container" />
+              <NuxtLink
+                v-if="user"
+                class="flex items-center gap-3 text-sm"
+                :to="`/${locale}/dashboard`"
+              >
+                <Image
+                  :src="user.avatar"
+                  class="h-7 w-7 rounded-full"
+                  height="28px"
+                  width="28px"
+                />
+                <div class="hidden sm:block">
+                  {{ user.username }}
                 </div>
+                <PlanTag :plan="user.plan" />
+              </NuxtLink>
+              <div
+                v-else-if="pending"
+                class="flex items-center gap-3 text-sm"
+              >
+                <div class="h-7 w-7 animate-pulse rounded-full bg-op50" />
+                <div class="h-1em w-16 animate-pulse rounded bg-op50" />
+              </div>
+            </div>
+          </ClientOnly>
+
+          <div class="hidden items-center gap-2 sm:flex">
+            <i class="i-tabler-language-hiragana h-6 w-6" />
+            <LanguageSelect />
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <div
+            v-for="tab in headerTabs"
+            :key="tab.id"
+          >
+            <NuxtLink
+              :to="`/${locale}${tab.path}`"
+              v-bind="hoverCS"
+              class="rounded px-3 py-2 text-sm"
+            >
+              {{ tab.label }}
+            </NuxtLink>
+            <div class="mt-2 min-h-0.5">
+              <div v-if="tab === currentTab">
+                <div
+                  v-bind="fillCS"
+                  class="h-0.5"
+                />
               </div>
             </div>
           </div>
         </div>
-      </RHeader>
-      <div v-if="pending">
-        <!-- loading -->
-        <div class="m-auto h-full op75">
-          <DashboardPageTitle loading />
-          <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-            <div class="mt-2 h-32 w-full rounded-2xl bg-surface-base" />
-          </div>
+      </div>
+    </RHeader>
+    <div v-if="pending">
+      <!-- loading -->
+      <div class="m-auto h-full op75">
+        <DashboardPageTitle loading />
+        <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
+          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-base" />
         </div>
       </div>
-      <div v-else>
-        <slot v-if="user" />
-        <div
-          v-else
-          class="h-full flex flex-col items-center justify-center py-16 op75"
-        >
-          <div class="mb-8">
-            <NuxtImg
-              alt="Code Time"
-              src="/icon.svg"
-              width="64"
-            />
-          </div>
-          <span class="max-w-2xl pb-6 text-center text-sm">
-            {{ t.dashboard.loginRequired }}
-          </span>
-          <LoginButton />
+    </div>
+    <div v-else>
+      <slot v-if="user" />
+      <div
+        v-else
+        class="h-full flex flex-col items-center justify-center py-16 op75"
+      >
+        <div class="mb-8">
+          <NuxtImg
+            alt="Code Time"
+            src="/icon.svg"
+            width="64"
+          />
         </div>
+        <span class="max-w-2xl pb-6 text-center text-sm">
+          {{ t.dashboard.loginRequired }}
+        </span>
+        <LoginButton />
       </div>
-      <CodetimeFooter />
-    </NuxtLayout>
-  </RokuProvider>
+    </div>
+    <CodetimeFooter />
+  </NuxtLayout>
 </template>
 
 <style scoped>

@@ -1,14 +1,14 @@
-import NuxtLink from './NuxtLink.vue'
 import type { I18NData } from '.'
+import NuxtLink from './NuxtLink.vue'
 
 export const ja: Partial<I18NData> = {
   meta: {
     title: 'CodeTime - コーディング時間を追跡',
-    description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+    description: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
     ogTitle: 'CodeTime - コーディング時間を追跡',
-    ogDescription: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+    ogDescription: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
     twitterTitle: 'CodeTime - コーディング時間を追跡',
-    twitterDescription: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+    twitterDescription: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
   },
   general: {
     cancel: 'キャンセル',
@@ -16,7 +16,7 @@ export const ja: Partial<I18NData> = {
   },
   landing: {
     login: 'ログイン',
-    description: 'CodeTime は開発者のためのアプリケーションで、あなたのコーディング時間を追跡、分析するのを助けます。',
+    description: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
     toDashboard: 'ダッシュボードへ',
     alreadyStatistical: '統計済み',
     minutes: '分',
@@ -169,16 +169,16 @@ export const ja: Partial<I18NData> = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     現在、あなたのコーディング時間の記録を受け取っていません。このアプリケーションは、コードエディタまたは統合開発環境（ VSCode、JetBrains IDEなど ）のプラグインに依存しています。正常に動作するようにするには、
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="px-2 text-primary-on"
+                    class="text-primary-on px-2"
                   >
                     [ 設定 ]
                   </NuxtLink>
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     ページに移動し、使用しているプラグインをサポートするコードエディタで対応する設定を行ってください。ご協力ありがとうございます。
                   </span>
                 </div>
@@ -221,13 +221,13 @@ export const ja: Partial<I18NData> = {
           },
           setup() {
             return () => (
-              <div class="text-surface-onlow">
+              <div class="text-surface-dimmed">
                 <span>
                   CodeTime の正常な動作のためには、プラグインをインストールして開発環境でトークンを設定する必要があります。現在、
                 </span>
                 <NuxtLink
                   to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-tabler-brand-vscode" />
@@ -239,8 +239,8 @@ export const ja: Partial<I18NData> = {
                   と
                 </span>
                 <NuxtLink
-                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  to="https://plugins.jetbrains.com/plugin/25617-codetime"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-devicon-plain-jetbrains pr-2" />

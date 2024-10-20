@@ -7,23 +7,6 @@ definePageMeta({
   layout: 'landing',
 })
 const t = useI18N()
-
-function useDemoAllData() {
-  const pending = autoResetRef(false, 0)
-  pending.value = true
-  const data = computed(() => {
-    if (pending.value) {
-      return { data: [] }
-    }
-    return demoAllData
-  })
-  return {
-    data,
-    pending,
-  }
-}
-
-const allData = useDemoAllData()
 </script>
 
 <template>
@@ -36,7 +19,7 @@ const allData = useDemoAllData()
         class="flex flex-col items-center"
       >
         <LandingTitle />
-        <div class="text-surface p-2 text-center text-sm">
+        <div class="p-2 text-center text-sm text-surface">
           {{ t.landing.description }}
         </div>
       </div>
@@ -57,49 +40,20 @@ const allData = useDemoAllData()
       <div class="mb-2 mt-4 text-lg">
         {{ t.landing.features.visualization.description }}
       </div>
-      <div class="my-8 flex gap-2">
-        <div class="w-76">
-          <DashboardTopCardTemplateDemo
-            class="h-234px"
-            :data="[{
-                      field: 'Vue',
-                      minutes: 3581,
-                      icon: 'i-vscode-icons-file-type-vue',
-                    },
-                    {
-                      field: 'Typescript',
-                      minutes: 1322,
-                      icon: 'i-vscode-icons-file-type-typescript',
-                    },
-                    {
-                      field: 'Go',
-                      minutes: 958,
-                      icon: 'i-vscode-icons-file-type-go',
-                    },
-                    {
-                      field: 'Python',
-                      minutes: 918,
-                      icon: 'i-vscode-icons-file-type-python',
-                    },
-                    {
-                      field: 'Dockerfile',
-                      minutes: 324,
-                      icon: 'i-vscode-icons-file-type-docker2',
-                    }]"
-            icon="i-tabler-braces"
-            :title="t.dashboard.overview.top.language"
-            type="language"
-            :loading="allData.pending.value"
-            :filters="[]"
+      <div class="my-8 flex flex-col gap-2">
+        <div class="flex gap-2">
+          <div class="w-86">
+            <DashboardTopCardTemplateDemo />
+          </div>
+          <DashboardCalendarCardDemo
+            class="h-234px w-full"
           />
         </div>
-        <DashboardCalendarCardDemo
-          class="h-234px w-full"
-        />
+        <DashboardProjectYDotCardDemo />
       </div>
     </div>
 
-    <div class="relative my-10 bg-surface-low py-20">
+    <div class="bg-surface-low relative my-10 py-20">
       <h2 class="relative m-auto max-w-xl text-3xl font-bold">
         {{ t.landing.features.save.title }}
         <i
@@ -123,7 +77,7 @@ const allData = useDemoAllData()
       </div>
     </div>
 
-    <div class="my-10 flex items-center justify-center gap-8 bg-surface-low py-20">
+    <div class="bg-surface-low my-10 flex items-center justify-center gap-8 py-20">
       <div class="max-w-xl">
         <h2 class="m-auto max-w-xl text-3xl font-bold">
           {{ t.landing.features.editor.title }}

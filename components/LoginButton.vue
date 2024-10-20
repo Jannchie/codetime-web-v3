@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Btn } from '@roku-ui/vue'
+import NuxtLink from '~/i18n/NuxtLink.vue'
+
 const locale = useRoute().params.locale as string
 const user = inject<Ref<User | null>>('user', ref(null))
 const t = useI18N()
@@ -10,7 +13,7 @@ watchEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://accounts.google.com/gsi/client'
     script.async = true
-    setTimeout(()=>{
+    setTimeout(() => {
       document.head.appendChild(script)
     }, 1000)
   }
@@ -37,7 +40,7 @@ watchEffect(() => {
               key="demo"
               aria-label="demo"
               :to="`/${locale}/dashboard`"
-              class="hidden border border-surface-border-low rounded-xl bg-surface-base bg-transparent px-4 py-3 transition-all hover:bg-surface-low"
+              class="border-surface-border-low hover:bg-surface-low hidden border rounded-xl bg-surface-base bg-transparent px-4 py-3 transition-all"
             >
               <div class="flex items-center gap-2 text-sm">
                 <i class="i-eva-bar-chart-outline h-4 w-4" />
@@ -48,7 +51,7 @@ watchEffect(() => {
             </NuxtLink>
           </div>
           <div class="flex flex-col items-center gap-3">
-            <div class="text-surface-onlow text-sm">
+            <div class="text-sm text-surface-dimmed">
               {{ t.landing.login }}
             </div>
             <div class="flex gap-2">
@@ -72,7 +75,7 @@ watchEffect(() => {
               <NuxtLink
                 key="main"
                 aria-label="github"
-                :href="`${$config.public.apiHost}/auth/github`"
+                :to="`${$config.public.apiHost}/auth/github`"
                 class="h-32px w-32px flex items-center justify-center rounded-full bg-white"
               >
                 <i class="i-eva-github-fill h-5 w-5 bg-black" />
@@ -85,14 +88,18 @@ watchEffect(() => {
           v-else-if="user"
           class="h-96px"
         >
-          <NuxtLink
+          <Btn
+            :is="NuxtLink"
+            variant="light"
+            size="lg"
+            color="black"
             aria-label="dashboard"
             :to="`/${locale}/dashboard`"
-            class="flex items-center gap-2 border border-primary-container rounded-xl bg-transparent px-4 py-3 transition-all hover:bg-primary-container hover:text-white"
+            class="flex items-center gap-2 rounded-xl px-4 py-3"
           >
             <ClientOnly>
               <template #placeholder>
-                <div class="h-5 w-5 animate-pulse rounded-full bg-surface-on-low" />
+                <div class="h-5 w-5 animate-pulse rounded-full" />
               </template>
               <NuxtImg
                 v-if="user && user.avatar"
@@ -104,7 +111,7 @@ watchEffect(() => {
             <span class="text-sm">
               {{ t.landing.toDashboard }}
             </span>
-          </NuxtLink>
+          </Btn>
         </div>
       </div>
     </ClientOnly>

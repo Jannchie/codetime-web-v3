@@ -68,7 +68,7 @@ onUnmounted(() => {
       top: `${pos.y}px`,
       left: `${pos.x}px`,
     }"
-    class="flex items-center gap-2 rounded-full bg-primary-container px-2 py-1 text-white"
+    class="bg-primary-container flex items-center gap-2 rounded-full px-2 py-1 text-white"
   >
     <div>
       {{ k }}: {{ filter.key === 'language' ? getLanguageName(filter.value) : filter.value }}

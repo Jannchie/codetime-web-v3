@@ -11,7 +11,7 @@ const t = useI18N()
     :description="t.dashboard.pageHeader.description.leaderboard"
   />
   <DashboardPageContent>
-    <div class="flex gap-2">
+    <div class="flex gap-2 children:flex-grow-1">
       <div>
         <LeaderboardCard :days="28" />
       </div>

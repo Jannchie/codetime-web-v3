@@ -168,16 +168,16 @@ export const en = {
             setup() {
               return () => (
                 <div class="text-sm">
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     Currently, we have not yet successfully processed your codetime data. This application relies on the plugin for your code editor or integrated development environment (such as VSCode, JetBrains IDE). Please visit the
                   </span>
                   <NuxtLink
                     to="dashboard/settings"
-                    class="px-2 text-primary-on"
+                    class="text-primary-on px-2"
                   >
                     [ Settings ]
                   </NuxtLink>
-                  <span class="text-surface-onlow">
+                  <span class="text-surface-dimmed">
                     page and configure the necessary settings in the code editor that supports the plugin you are using. After receiving your data, we need about two minutes to process it. Thank you for your cooperation.
                   </span>
                 </div>
@@ -220,13 +220,13 @@ export const en = {
           },
           setup() {
             return () => (
-              <div class="text-surface-onlow">
+              <div class="text-surface-dimmed">
                 <span>
                   In order for CodeTime to work properly, you need to install our plugin and configure the token in your development environment. Currently, we support
                 </span>
                 <NuxtLink
                   to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-tabler-brand-vscode" />
@@ -238,8 +238,8 @@ export const en = {
                   and
                 </span>
                 <NuxtLink
-                  to="https://plugins.jetbrains.com/plugin/15507-codetime"
-                  class="px-2 text-primary-on inline-flex gap-1 items-center"
+                  to="https://plugins.jetbrains.com/plugin/25617-codetime"
+                  class="text-primary-on inline-flex items-center gap-1 px-2"
                   style="baseline-source: last;"
                 >
                   <i class="i-devicon-plain-jetbrains pr-2" />

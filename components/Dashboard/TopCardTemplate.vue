@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import autoAnimate from '@formkit/auto-animate'
+import { useContainerDefaultVariantCS, useContainerFilledCS } from '@roku-ui/vue'
 
 const props = withDefaults(defineProps<{
-  loading: boolean
+  loading?: boolean
   data: TopData[] | null
   icon: string
   title: string
@@ -26,6 +27,8 @@ const maxMinutes = computed(() => {
   }
   return Math.max(...props.data.map(d => d.minutes))
 })
+const filledCS = useContainerFilledCS('primary')
+const surfaceVariantCS = useContainerDefaultVariantCS()
 </script>
 
 <template>
@@ -57,14 +60,14 @@ const maxMinutes = computed(() => {
         >
           <div class="flex gap-1">
             <div
-              class="h-20px w-20px animate-pulse bg-surface-on-low"
+              class="bg-surface-on-low h-20px w-20px animate-pulse"
             />
             <div
-              class="h-20px w-20 animate-pulse bg-surface-on-low"
+              class="bg-surface-on-low h-20px w-20 animate-pulse"
             />
           </div>
           <div
-            class="h-20px w-30 animate-pulse bg-surface-on-low"
+            class="bg-surface-on-low h-20px w-30 animate-pulse"
           />
         </div>
       </template>
@@ -99,9 +102,13 @@ const maxMinutes = computed(() => {
               {{ getDurationString(d.minutes * 60 * 1000) }}
             </div>
           </div>
-          <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-lowest">
+          <div
+            v-bind="surfaceVariantCS"
+            class="my-0.5 h-0.5 overflow-hidden rounded-xl"
+          >
             <div
-              class="h-full bg-primary-container"
+              v-bind="filledCS"
+              class="h-full"
               :style="{ width: `${d.minutes / maxMinutes * 100}%` }"
             />
           </div>

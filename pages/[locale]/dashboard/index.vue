@@ -10,22 +10,28 @@ definePageMeta({
 
 const user = useUser()
 const days = useLocalStorage('days', ref(user.value?.plan === 'pro' ? 365 : 28))
-const allData = await fetchStats(days, 'time', 'days')
-const allLanguageData = await fetchStats(days, 'language', 'days')
-const allProjectData = await fetchStats(days, 'project', 'days')
+const allDataResp = await fetchStats(days, 'time', 'days')
+const allLanguageDataResp = await fetchStats(days, 'language', 'days')
+const allProjectDataResp = await fetchStats(days, 'project', 'days')
+const allLanguageData = computed(() => allLanguageDataResp.data.value?.data ?? [])
+const allProjectData = computed(() => allProjectDataResp.data.value?.data ?? [])
 const hasData = computed(() => {
-  if (allData.data.value === null) {
+  if (allDataResp.data.value === null) {
     return false
   }
-  return (allData.data.value?.data.length ?? 0) > 0
+  return (allDataResp.data.value?.data.length ?? 0) > 0
 })
 
-const pAllData = useProcessedData(allData.data)
-const pAllLangData = useProcessedData(allLanguageData.data)
-const pAllProjectData = useProcessedData(allProjectData.data)
+const allData = computed(() => {
+  return allDataResp.data.value?.data ?? []
+})
+
+const pAllData = useProcessedData(allData)
+const pAllLangData = useProcessedData(allLanguageData)
+const pAllProjectData = useProcessedData(allProjectData)
 
 const filtedData = computed(() => {
-  const data = pAllData.value
+  const data = unref(pAllData)
   const res = data.filter((d) => {
     return d.date.getTime() >= d3.utcDay.offset(new Date(), -days.value).getTime()
   })
@@ -64,12 +70,12 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     :title="t.dashboard.pageHeader.title.overview"
     :description="t.dashboard.pageHeader.description.overview"
   />
-  <DashboardPageContent v-if="allData.status.value !== 'success' && !allData.data.value">
-    <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-on-low/20" />
+  <DashboardPageContent v-if="allDataResp.status.value !== 'success' && !allDataResp.data.value">
+    <div class="bg-surface-on-low/20 h-32 w-full animate-pulse rounded-2xl" />
   </DashboardPageContent>
   <DashboardPageContent v-else-if="hasData">
     <DashboardDataRange v-model:days="days" />
-    <DashboardCalendarCard :all-data="allData" />
+    <DashboardCalendarCard :data="allDataResp.data.value?.data ?? []" />
     <DashboardFilterWrapper />
     <div
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
@@ -97,10 +103,10 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       />
     </div>
     <CumulativeLineChart
-      :loading="allData.pending.value"
+      :loading="allDataResp.status.value === 'pending'"
       :data="filtedData"
     />
-    <CardBase :loading="allLanguageData.pending.value">
+    <CardBase :loading="allLanguageDataResp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
@@ -114,7 +120,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         :y-label="t.plot.label.language"
       />
     </CardBase>
-    <CardBase :loading="allProjectData.pending.value">
+    <CardBase :loading="allProjectDataResp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
@@ -128,7 +134,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         :y-label="t.plot.label.project"
       />
     </CardBase>
-    <CardBase :loading="resp.pending.value">
+    <CardBase :loading="resp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
@@ -147,7 +153,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase class="flex gap-2 p-6">
       <div class="leading-0">
         <i
-          class="i-mdi:alert-circle-outline h-6 w-6 text-primary-on"
+          class="text-primary-on i-mdi:alert-circle-outline h-6 w-6"
         />
       </div>
       <div class="flex flex-col gap-2">

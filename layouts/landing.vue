@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { RokuProvider } from '@roku-ui/vue'
-
 const t = useI18N()
 watchEffect(() => {
   useSeoMeta({
@@ -34,7 +32,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <RokuProvider class="min-h-100vh flex flex-col">
+  <NuxtLayout name="default">
     <RHeader class="px-4 py-3">
       <img
         alt="Code Time"
@@ -48,7 +46,7 @@ watchEffect(() => {
     </RHeader>
     <slot />
     <CodetimeFooter />
-  </RokuProvider>
+  </NuxtLayout>
 </template>
 
 <style>

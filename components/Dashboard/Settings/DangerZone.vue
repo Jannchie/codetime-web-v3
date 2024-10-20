@@ -40,7 +40,7 @@ function deleteAllData() {
         <div>
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </div>
-        <div class="text-surface-onlow py-2 text-sm">
+        <div class="py-2 text-sm text-surface-dimmed">
           <div class="pb-2">
             {{ t.dashboard.settings.dangerZone.button.modal.p1 }}
           </div>

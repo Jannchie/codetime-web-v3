@@ -21,10 +21,13 @@ const differentLabel = computed(() => {
 })
 const chart = ref()
 const { width, height } = useElementBounding(chart)
-
 const maxR = computed(() => {
-  const v = (Math.min((width.value - 100) / differentLabel.value.differentDates.size * 1.25, height.value / differentLabel.value.differentLanguages.size) * 0.6)
-  return v === 0 ? 20 : v
+  const dateCount = differentLabel.value.differentDates.size
+  const languageCount = differentLabel.value.differentLanguages.size
+  const widthFactor = (width.value - 100) / dateCount * 1.25
+  const heightFactor = height.value / languageCount
+  const calculatedValue = Math.min(widthFactor, heightFactor) * 0.5
+  return calculatedValue > 0 ? calculatedValue : 20
 })
 
 const options = computed<Plot.PlotOptions>(() => {
@@ -48,46 +51,55 @@ const options = computed<Plot.PlotOptions>(() => {
     height: 300,
     r: { range: [0, maxR.value] },
     marks: [
-      Plot.dot(props.data, Plot.pointer({
-        x: 'date',
-        y: 'by',
-        r: 'duration',
-        fill: 'duration',
-        fillOpacity: 0.25,
-        tip: {
-          stroke: '#404040',
-          channels: {
-            by: {
-              label: props.yLabel,
-              value: d => getLanguageName(d.by),
+      Plot.dot(
+        props.data,
+        Plot.pointer({
+          x: 'date',
+          y: 'by',
+          r: 'duration',
+          fill: 'duration',
+          fillOpacity: 0.25,
+          tip: {
+            stroke: '#404040',
+            channels: {
+              by: {
+                label: props.yLabel,
+                value: d => getLanguageName(d.by),
+              },
+              duration: {
+                label: t.value.plot.label.duration,
+                value: d => getDurationString(d.duration),
+              },
+              date: {
+                label: t.value.plot.label.date,
+                value: d => d.date.toISOString().slice(0, 10),
+              },
             },
-            duration: {
-              label: t.value.plot.label.duration,
-              value: d => getDurationString(d.duration),
-            },
-            date: {
-              label: t.value.plot.label.date,
-              value: d => d.date.toISOString().slice(0, 10),
+            format: {
+              fill: false,
+              r: false,
+              x: false,
+              y: false,
             },
           },
-          format: {
-            fill: false,
-            r: false,
-            x: false,
-            y: false,
-          },
+        }),
+      ),
+      Plot.dot(
+        props.data,
+        {
+          x: 'date',
+          y: 'by',
+          r: 'duration',
+          fill: 'duration',
+          fillOpacity: 0.25,
+          stroke: 'duration',
         },
-      })),
-      Plot.dot(props.data, {
-        x: 'date',
-        y: 'by',
-        r: 'duration',
-        fill: 'duration',
-        fillOpacity: 0.25,
-        stroke: 'duration',
-      }),
+      ),
       Plot.axisY({
         anchor: 'right',
+        textAnchor: 'end',
+        textStroke: 'var(--r-surface-background-color)',
+        textStrokeWidth: 4,
         ariaLabel: t.value.plot.label.language,
         tickFormat: (d: string) => getLanguageName(d),
         tickPadding: -8,
@@ -103,3 +115,9 @@ const options = computed<Plot.PlotOptions>(() => {
     :options="options"
   />
 </template>
+
+<style lang="css">
+.y-dot-plot {
+  font-size: 14px;
+}
+</style>
