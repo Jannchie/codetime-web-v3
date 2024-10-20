@@ -15,11 +15,11 @@ importers:
         specifier: ^0.6.16
         version: 0.6.16
       '@roku-ui/preset':
-        specifier: ^0.15.2
-        version: 0.15.2
+        specifier: ^0.15.3
+        version: 0.15.3
       '@roku-ui/vue':
-        specifier: ^0.15.2
-        version: 0.15.2(typescript@5.6.3)
+        specifier: ^0.15.3
+        version: 0.15.3(typescript@5.6.3)
       auxlines:
         specifier: ^0.3.0
         version: 0.3.0(vue@3.5.12(typescript@5.6.3))
@@ -1072,11 +1072,11 @@ packages:
   '@polka/url@1.0.0-next.28':
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
 
-  '@roku-ui/preset@0.15.2':
-    resolution: {integrity: sha512-BMrxJ+wuGOdEqmJgcAN43OQnoB2BUNStZdK70fMoHMG2Oj++ookLk7uOsSPti0VEeyglmUhm5+GpS89j5KxBKg==}
+  '@roku-ui/preset@0.15.3':
+    resolution: {integrity: sha512-DN35xMg5Gmph9ibf3QE4lNO6c+VoAo0HtYE2GL7p36PL3RTSuY5wxTbEgx8SEvdZlYsoWOABYGJ4FrIAh/qMhg==}
 
-  '@roku-ui/vue@0.15.2':
-    resolution: {integrity: sha512-395o5AvhsWS8ZGBbgXvd/zwYS5TV8fmfDlE3lBJteSBLMKV/rswneWqS7hq2lddCsGgOSPHyR7jn788DwRI+Iw==}
+  '@roku-ui/vue@0.15.3':
+    resolution: {integrity: sha512-BbQ+Y0bl/XzFgC0UOcIDJEPiEMEa9yRZ9MSvJCRocXHBZlKCGw1/HVNjqNrku5ckOtr7BMtg93H9ZOGKr750Pg==}
 
   '@rollup/plugin-alias@5.1.1':
     resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
@@ -6118,9 +6118,9 @@ snapshots:
 
   '@polka/url@1.0.0-next.28': {}
 
-  '@roku-ui/preset@0.15.2': {}
+  '@roku-ui/preset@0.15.3': {}
 
-  '@roku-ui/vue@0.15.2(typescript@5.6.3)':
+  '@roku-ui/vue@0.15.3(typescript@5.6.3)':
     dependencies:
       '@formkit/auto-animate': 0.8.2
       '@unocss/reset': 0.63.4
