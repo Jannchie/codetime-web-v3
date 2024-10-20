@@ -104,6 +104,7 @@ watchEffect(() => {
               <NuxtImg
                 v-if="user && user.avatar"
                 key="main"
+                alt="avatar"
                 :src="user.avatar"
                 class="h-5 w-5 rounded-full"
               />

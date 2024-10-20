@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Avatar, Image, Paper } from '@roku-ui/vue'
+import { Avatar, Paper } from '@roku-ui/vue'
 import * as d3 from 'd3'
 
 const props = defineProps<{

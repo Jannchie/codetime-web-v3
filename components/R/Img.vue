@@ -15,6 +15,7 @@ const loaded = ref(false)
     placeholder
     :src="src"
     :class="{ [className]: true, hidden: !loaded }"
+    :alt="src"
     @load="loaded = true"
   />
   <div

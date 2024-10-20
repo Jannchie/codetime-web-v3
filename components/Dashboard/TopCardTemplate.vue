@@ -60,14 +60,14 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
         >
           <div class="flex gap-1">
             <div
-              class="bg-surface-on-low h-20px w-20px animate-pulse"
+              class="h-20px w-20px animate-pulse bg-surface-variant"
             />
             <div
-              class="bg-surface-on-low h-20px w-20 animate-pulse"
+              class="h-20px w-20 animate-pulse bg-surface-variant"
             />
           </div>
           <div
-            class="bg-surface-on-low h-20px w-30 animate-pulse"
+            class="h-20px w-30 animate-pulse bg-surface-variant"
           />
         </div>
       </template>
@@ -94,6 +94,7 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
                   class="mb-0.5 mr-1 inline-block"
                   width="14"
                   height="14"
+                  :alt="d.icon.split('vscode-icons-file-type-')[1]"
                 />
               </template>
               {{ type === 'language' ? getLanguageName(d.field) : d.field }}

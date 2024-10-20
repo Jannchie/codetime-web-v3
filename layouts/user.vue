@@ -85,9 +85,9 @@ useHead({
               class="flex items-center gap-3 text-sm"
             >
               <div
-                class="bg-surface-on-low h-7 w-7 animate-pulse rounded-full bg-op50"
+                class="h-7 w-7 animate-pulse rounded-full bg-surface-variant bg-op50"
               />
-              <div class="bg-surface-on-low h-1em w-16 animate-pulse rounded bg-op50" />
+              <div class="h-1em w-16 animate-pulse rounded bg-surface-variant bg-op50" />
             </div>
           </div>
           <div class="hidden items-center gap-2 sm:flex">
@@ -102,7 +102,7 @@ useHead({
       <!-- loading -->
       <div class="m-auto h-full op75">
         <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-base" />
+          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant" />
         </div>
       </div>
     </div>
