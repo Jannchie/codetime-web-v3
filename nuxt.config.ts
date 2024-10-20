@@ -30,21 +30,14 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: [
-    '@unocss/nuxt',
-    '@vueuse/nuxt',
-    '@nuxtjs/robots',
-    '@nuxt/image',
-    'nuxt-gtag',
-    [
-      '@nuxtjs/google-fonts',
-      {
-        download: true,
-        families: {
-          'Share Tech Mono': true,
-        },
+  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', '@nuxt/image', 'nuxt-gtag', [
+    '@nuxtjs/google-fonts',
+    {
+      download: true,
+      families: {
+        'Share Tech Mono': true,
       },
-    ],
-  ],
+    },
+  ], '@nuxthub/core'],
   compatibilityDate: '2024-10-13',
 })

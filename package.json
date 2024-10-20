@@ -28,6 +28,7 @@
     "@jannchie/eslint-config": "^3.4.2",
     "@nuxt/devtools": "^1.6.0",
     "@nuxt/image": "^1.8.1",
+    "@nuxthub/core": "^0.7.34",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/robots": "^4.1.9",
     "@types/d3": "^7.4.3",
