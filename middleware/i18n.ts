@@ -14,7 +14,9 @@ export default defineNuxtRouteMiddleware((to) => {
     }
     let preferredLanguages = ['en']
     try {
-      preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
+      if (headers['accept-language']) {
+        preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
+      }
     }
     catch (e) {
       console.error(e)
