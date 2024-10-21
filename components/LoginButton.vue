@@ -76,7 +76,7 @@ watchEffect(() => {
                 key="main"
                 aria-label="github"
                 :to="`${$config.public.apiHost}/auth/github`"
-                class="h-32px w-32px flex items-center justify-center rounded-full bg-white"
+                class="h-32px w-32px flex items-center justify-center border border-[#dadce0] rounded-full bg-white"
               >
                 <i class="i-eva-github-fill h-5 w-5 bg-black" />
               </NuxtLink>

@@ -6,10 +6,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiHost: 'https://test.codetime.dev',
-      mode: 'development',
-      paypalClientId: 'AXck1kiF-dt9WSHiBF3GlrZTHX3rcL4WJpR-LjJ3QUVtgVUvlTZ7UniOXLe9XPHZIRtIgqiVdQknmZES',
-      YearlyPlanId: 'P-08J88880F9217380SMWWSZ6A',
-      MonthlyPlanId: 'P-9GB45134DW5272217MWWSZ5Y',
     },
   },
   gtag: {

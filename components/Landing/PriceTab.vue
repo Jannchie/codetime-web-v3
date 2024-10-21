@@ -15,7 +15,7 @@ const t = useI18N()
     >
       <div>
         {{ t.plan.monthly }}
-        <div class="text-xs op-50">
+        <div class="text-xs op-75">
           {{ t.plan.mostFlexible }}
         </div>
       </div>
@@ -27,7 +27,7 @@ const t = useI18N()
     >
       <div>
         {{ t.plan.oneTime }}
-        <div class="text-xs op-50">
+        <div class="text-xs op-75">
           <i class="i-ant-design-alipay-circle-outlined" />
           <i class="i-ant-design-wechat-filled" />
           <i class="i-entypo-social-paypal" />
@@ -43,7 +43,7 @@ const t = useI18N()
         <div>
           {{ t.plan.yearly }}
         </div>
-        <div class="text-xs op-50">
+        <div class="text-xs op-75">
           {{ t.plan.save25 }}
         </div>
       </div>
