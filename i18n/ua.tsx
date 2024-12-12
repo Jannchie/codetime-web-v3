@@ -1,6 +1,7 @@
+import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
-export const ua: Partial<I18NData> = {
+export const ua: Partial<Translation> = {
   meta: {
     title: 'CodeTime - Відстежуйте свій час програмування',
     description:
@@ -138,6 +139,9 @@ export const ua: Partial<I18NData> = {
       noneText: 'Введіть назву робочого простору',
     },
     pageHeader: {
+      userLatestEvent(project: string) {
+        return `Працюємо над проектом «${project}»`
+      },
       title: {
         overview: 'Огляд',
         badge: 'Значки',

@@ -1,7 +1,7 @@
-import type { I18NData } from '.'
+import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
-export const zhCN: Partial<I18NData> = {
+export const zhCN: Partial<Translation> = {
   meta: {
     title: 'CodeTime - 追迹你的编程时间',
     description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',
@@ -121,6 +121,9 @@ export const zhCN: Partial<I18NData> = {
       noneText: '输入工作区名称',
     },
     pageHeader: {
+      userLatestEvent(project: string) {
+        return `正忙于「${project}」`
+      },
       title: {
         overview: '概览',
         badge: '徽章',

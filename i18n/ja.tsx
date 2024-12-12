@@ -1,7 +1,7 @@
-import type { I18NData } from '.'
+import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
-export const ja: Partial<I18NData> = {
+export const ja: Partial<Translation> = {
   meta: {
     title: 'CodeTime - コーディング時間を追跡',
     description: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
@@ -121,6 +121,9 @@ export const ja: Partial<I18NData> = {
       noneText: 'ワークスペース名を入力',
     },
     pageHeader: {
+      userLatestEvent(project: string) {
+        return `「${project}」で作業中`
+      },
       title: {
         overview: '概観',
         badge: 'シールド',

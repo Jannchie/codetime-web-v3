@@ -18,7 +18,7 @@ function onChange(value: { label: string, id: string } | undefined) {
 
 const languageOptions = [
   { label: 'English', id: 'en' },
-  { label: '中文', id: 'zh-CN' },
+  { label: '简体中文', id: 'zh-CN' },
   { label: '日本語', id: 'ja' },
   { label: 'Deutsch', id: 'de' },
   { label: 'Français', id: 'fr' },

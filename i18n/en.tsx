@@ -1,6 +1,7 @@
+import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
-export const en = {
+export const en: Translation = {
   meta: {
     title: 'CodeTime - Track your coding time automatically',
     description: 'CodeTime is an application designed for developers to help you track, analyze and improve your coding time management skills.',
@@ -120,6 +121,9 @@ export const en = {
       noneText: 'Input your project name',
     },
     pageHeader: {
+      userLatestEvent(project: string) {
+        return `Working on ${project}`
+      },
       title: {
         overview: 'Overview',
         badge: 'Badges',

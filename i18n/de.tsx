@@ -1,6 +1,7 @@
+import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
-export const de: Partial<I18NData> = {
+export const de: Partial<Translation> = {
   meta: {
     title: 'CodeTime - Verfolgen Sie Ihre Codierungszeit',
     description: 'CodeTime ist eine Anwendung, die für Entwickler entwickelt wurde, um Ihnen bei der Verfolgung, Analyse und Verbesserung Ihrer Codierungszeitmanagementfähigkeiten zu helfen.',
@@ -120,6 +121,9 @@ export const de: Partial<I18NData> = {
     },
     loginRequired: 'Willkommen beim CodeTime-Dashboard! Bitte melden Sie sich an, um Ihre Codierungszeitdaten anzuzeigen, oder klicken Sie unten auf die Schaltfläche Demo, um das Demo-Dashboard zu erleben.',
     pageHeader: {
+      userLatestEvent(project: string) {
+        return `Arbeiten an ${project}`
+      },
       title: {
         overview: 'Übersicht',
         badge: 'Abzeichen',

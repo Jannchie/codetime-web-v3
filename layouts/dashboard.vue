@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { localeMap } from '@/utils/format'
 import { Image, useContainerFilledCS, useCS } from '@roku-ui/vue'
+import { formatDistanceToNow } from 'date-fns'
+import VSCodeIcon from '~/components/VSCodeIcon.vue'
 
 const t = useI18N()
 const headerTabs = computed(() => [
@@ -54,6 +57,27 @@ const hoverCS = useCS({
   index: { dark: 7, light: 3 },
 })
 const fillCS = useContainerFilledCS('primary')
+
+interface EventLog {
+  id: number
+  uid: number
+  eventTime: number
+  language: string
+  project: string
+  relativeFile: string
+  absoluteFile: string
+  editor: string
+  platform: string
+  gitOrigin: string
+  gitBranch: string
+  DeletedAt: string | null
+}
+
+async function fetchLatestStats() {
+  return await useAPIFetch<EventLog | null>(`/stats/latest`, { })
+}
+
+const resp = await fetchLatestStats()
 </script>
 
 <template>
@@ -97,6 +121,26 @@ const fillCS = useContainerFilledCS('primary')
                 <div class="h-7 w-7 animate-pulse rounded-full bg-op50" />
                 <div class="h-1em w-16 animate-pulse rounded bg-op50" />
               </div>
+
+              <div v-if="resp.status.value === 'pending'">
+                <div class="h-4 w-20 animate-pulse rounded-full bg-white bg-op50" />
+              </div>
+              <div
+                v-else-if="resp.data.value"
+                class="flex items-center gap-2 text-xs"
+              >
+                <div class="relative">
+                  <div class="h-3 w-3 animate-ping rounded-full bg-primary" />
+                  <div class="absolute left-0 top-0 h-3 w-3 rounded-full bg-primary" />
+                </div>
+                <VSCodeIcon
+                  :language="resp.data.value.language"
+                  class="h-4 w-4"
+                />
+                <span class="truncate">
+                  {{ t.dashboard.pageHeader.userLatestEvent(resp.data.value.project) }}
+                </span>
+              </div>
             </div>
           </ClientOnly>
 
@@ -134,7 +178,7 @@ const fillCS = useContainerFilledCS('primary')
       <div class="m-auto h-full op75">
         <DashboardPageTitle loading />
         <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant" />
+          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant-1" />
         </div>
       </div>
     </div>

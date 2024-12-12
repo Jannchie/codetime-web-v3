@@ -1,3 +1,4 @@
+import type { Translation } from './type'
 import { de } from './de'
 import { en } from './en'
 import { es } from './es'
@@ -10,9 +11,7 @@ import { ru } from './ru'
 import { ua } from './ua'
 import { zhCN } from './zhCN'
 
-export type I18NData = typeof en
-
-const i18NMap = new Map<string, Partial<I18NData>>([
+const i18NMap = new Map<string, Partial<Translation>>([
   ['zh-CN', zhCN],
   ['en', en],
   ['ja', ja],
@@ -45,7 +44,7 @@ function mergeI18N(a: any, b: any): I18NData {
 
 export const locales = [...i18NMap.keys()]
 export function useI18N() {
-  return computed<I18NData>(() => {
+  return computed<Translation>(() => {
     const locale = useLocale()
     const i18N = i18NMap.get(locale.value) ?? zhCN
     return mergeI18N(i18N, en)

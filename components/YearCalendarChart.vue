@@ -51,7 +51,7 @@ const options = computed(() => ({
   color: {
     interpolate: (d: number) => {
       if (d === 0) {
-        return 'var(--r-surface-background-variant-color)'
+        return 'var(--r-surface-background-variant-2-color)'
       }
       return d3.scaleQuantile([0, 0.2, 0.4, 0.6, 0.8, 1], [0, 0.2, 0.4, 0.6, 0.8, 1].map(d3.interpolateRgb('#5AF2', '#2AF')))(d)
     },

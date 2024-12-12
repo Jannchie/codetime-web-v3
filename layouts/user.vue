@@ -85,9 +85,9 @@ useHead({
               class="flex items-center gap-3 text-sm"
             >
               <div
-                class="h-7 w-7 animate-pulse rounded-full bg-surface-variant bg-op50"
+                class="h-7 w-7 animate-pulse rounded-full bg-surface-variant-1 bg-op50"
               />
-              <div class="h-1em w-16 animate-pulse rounded bg-surface-variant bg-op50" />
+              <div class="h-1em w-16 animate-pulse rounded bg-surface-variant-1 bg-op50" />
             </div>
           </div>
           <div class="hidden items-center gap-2 sm:flex">
