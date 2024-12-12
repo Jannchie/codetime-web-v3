@@ -52,7 +52,7 @@ const textCS = useCS({
     @click="() => currentScheme = props.theme ?? 'system'"
   >
     <div
-      class="flex items-center gap-2 border-b p-2 text-sm op75 transition-border-color"
+      class="flex items-center gap-2 border-b p-2 text-sm op75"
       :class="{
         'text-primary-on': isCurrent,
       }"

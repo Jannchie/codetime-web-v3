@@ -70,7 +70,4 @@ marker {
     --color-frontground: #111; --color-background: #fff; --color-primary-1: #0284c7; --color-primary-2: #0284c7; --color-primary-3: #0284c7; --color-bg-1: #ffffff; --color-bg-2: #fefefe; --color-bg-3: #fcfcfc; --color-border-1: #d4d4d4; --color-border-2: #a3a3a3; --color-border-3: #a3a3a3; --color-error-1: #dc2626; --color-error-2: #dc2626; --color-error-container: #dc2626; --color-success-1: #059669; --color-success-2: #059669; --color-secondary-container: #059669; --color-warning-1: #d97706; --color-warning-2: #d97706; --color-warning-3: #d97706; color-scheme: light; background-color: rgb(255, 255, 255); color: rgb(17, 17, 17);
   }
 }
-.bg-surface-low.border.border-transparent.relative.rounded-2xl {
-  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
-}
 </style>
