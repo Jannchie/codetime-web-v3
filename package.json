@@ -2,6 +2,7 @@
   "name": "codetime-web-v3",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -9,9 +10,11 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "npx nuxthub deploy"
+    "deploy": "npx nuxthub deploy",
+    "gen:api": "openapi-ts"
   },
   "dependencies": {
+    "@hey-api/client-fetch": "^0.5.4",
     "@iconify/vue": "^4.2.0",
     "@observablehq/plot": "^0.6.16",
     "@roku-ui/preset": "^0.19.0",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
+    "@hey-api/openapi-ts": "^0.59.2",
     "@iconify/json": "^2.2.282",
     "@jannchie/eslint-config": "^3.4.3",
     "@nuxt/devtools": "^1.6.4",
@@ -40,6 +44,7 @@
     "eslint": "^9.16.0",
     "nuxt": "^3.14.1592",
     "nuxt-gtag": "^3.0.2",
+    "nuxt-og-image": "4.0.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   }
