@@ -147,7 +147,7 @@ const t = useI18N()
           :class="{
             ['!bg-error-container !border-error-container !hover:bg-error-container !hover:border-error-container']: exportFailed,
             ['!bg-secondary-container !border-secondary-container !hover:bg-secondary-container !hover:border-secondary-container']: exportSucceed,
-            ['!bg-primary-container !border-primary-3 !hover:bg-primary-container !hover:border-primary-3']: exporting,
+            ['!bg-primary !border-primary-3 !hover:bg-primary !hover:border-primary-3']: exporting,
           }"
           @click="exportData"
         >

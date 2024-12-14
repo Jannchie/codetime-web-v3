@@ -141,7 +141,7 @@ const height = 26
             </div>
             <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant">
               <div
-                class="bg-primary-container h-full"
+                class="bg-primary h-full"
                 :style="{ width: `${count / maxBranchCount * 100}%` }"
               />
             </div>

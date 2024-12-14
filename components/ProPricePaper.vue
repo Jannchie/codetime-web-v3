@@ -7,7 +7,7 @@ const props = defineProps<{
 const isAnuual = computed(() => props.variant === 'annual')
 const isOneTime = computed(() => props.variant === 'one-time')
 const annualGradientCls = 'bg-gradient-to-rb from-red-6 via-purple-6 to-purple-5 inline-block text-transparent bg-clip-text'
-const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-primary-5 inline-block text-transparent bg-clip-text bg-primary-container'
+const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-primary-5 inline-block text-transparent bg-clip-text bg-primary'
 
 const user = useUser()
 
