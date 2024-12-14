@@ -34,6 +34,6 @@ export default defineNuxtConfig({
         'Share Tech Mono': true,
       },
     },
-  ], '@nuxthub/core'],
+  ], '@nuxthub/core', 'nuxt-og-image'],
   compatibilityDate: '2024-10-13',
 })

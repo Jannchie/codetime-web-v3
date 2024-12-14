@@ -161,6 +161,7 @@ const resp = await fetchLatestStats()
             >
               {{ tab.label }}
             </NuxtLink>
+
             <div class="mt-2 min-h-0.5">
               <div v-if="tab === currentTab">
                 <div

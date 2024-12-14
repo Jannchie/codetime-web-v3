@@ -99,10 +99,9 @@ useHead({
       </div>
     </RHeader>
     <div v-if="pending">
-      <!-- loading -->
       <div class="m-auto h-full op75">
         <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant" />
+          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant-2" />
         </div>
       </div>
     </div>
