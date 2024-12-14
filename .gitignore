@@ -24,4 +24,4 @@ logs
 !.env.example
 *.pem
 
-api/
+/api/
