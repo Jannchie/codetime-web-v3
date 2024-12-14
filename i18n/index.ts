@@ -25,7 +25,7 @@ const i18NMap = new Map<string, Partial<Translation>>([
   ['de', de],
 ])
 
-function mergeI18N(a: any, b: any): I18NData {
+function mergeI18N(a: any, b: any): Translation {
   const result: any = { ...a }
   for (const key in b) {
     if (Object.prototype.hasOwnProperty.call(b, key)) {
@@ -49,4 +49,8 @@ export function useI18N() {
     const i18N = i18NMap.get(locale.value) ?? zhCN
     return mergeI18N(i18N, en)
   })
+}
+
+export function getI18NObject(locale: string) {
+  return i18NMap.get(locale) ?? en
 }
