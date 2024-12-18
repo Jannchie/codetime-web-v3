@@ -1,8 +1,9 @@
 import { client, getStatsLatest } from '@/api/sdk.gen'
-import { getI18NObject } from '~/i18n'
+
+const config = useRuntimeConfig()
 
 client.setConfig({
-  baseUrl: 'https://test.codetime.dev',
+  baseUrl: config.public.apiHost,
 })
 
 export default defineEventHandler(async (event) => {

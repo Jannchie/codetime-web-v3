@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiHost: 'https://test.codetime.dev',
+      apiHost: 'https://api.codetime.dev',
     },
   },
   gtag: {
