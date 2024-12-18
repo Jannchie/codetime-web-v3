@@ -283,11 +283,15 @@ export const fr: Partial<Translation> = {
         description: 'Ces paramètres affecteront définitivement vos données et ne pourront pas être annulés. Veuillez procéder avec prudence.',
         button: {
           removeAllData: 'Supprimer toutes les données',
-          modal: {
+          removeAllDataModal: {
             p1: 'Êtes-vous sûr de vouloir supprimer toutes vos données? Cette opération ne peut pas être annulée.',
             p2: 'Vos données sont très importantes, vous pouvez d\'abord exporter les données, puis supprimer les données.',
             p3: 'Si vous souhaitez supprimer toutes les données, veuillez saisir DELETE ci-dessous, puis cliquez sur Confirmer.',
           },
+        },
+        subTitle: {
+          removeData: 'Supprimer les données',
+          privacy: 'Vie privée',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const fr: Partial<Translation> = {
   button: {
     copy: 'Copier',
     copied: 'Copié',
+    cancel: 'Annuler',
+    confirm: 'Confirmer',
   },
   plot: {
     label: {

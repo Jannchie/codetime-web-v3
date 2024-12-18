@@ -283,11 +283,15 @@ export const it: Partial<Translation> = {
         description: 'Queste impostazioni influenzeranno permanentemente i tuoi dati e non potranno essere annullate. Procedere con cautela.',
         button: {
           removeAllData: 'Rimuovi tutti i dati',
-          modal: {
+          removeAllDataModal: {
             p1: 'Sei sicuro di voler eliminare tutti i tuoi dati? Questa operazione non può essere annullata.',
             p2: 'I tuoi dati sono molto importanti, puoi prima esportare i dati e quindi cancellarli.',
             p3: 'Se vuoi eliminare tutti i dati, inserisci DELETE di seguito e fai clic su Conferma.',
           },
+        },
+        subTitle: {
+          removeData: 'Rimuovi tutti i dati',
+          privacy: 'Privacy',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const it: Partial<Translation> = {
   button: {
     copy: 'Copia',
     copied: 'Copiato',
+    cancel: 'Annulla',
+    confirm: 'Conferma',
   },
   plot: {
     label: {

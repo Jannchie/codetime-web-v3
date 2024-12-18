@@ -283,11 +283,15 @@ export const en: Translation = {
         description: 'These settings will permanently affect your data and cannot be undone. Please proceed with caution.',
         button: {
           removeAllData: 'Remove All Data',
-          modal: {
+          removeAllDataModal: {
             p1: 'Are you sure you want to delete all your data? This operation cannot be undone.',
             p2: 'Your data is very important, you can export the data first, and then delete the data.',
             p3: 'If you want to delete all data, please enter DELETE below, and then click Confirm.',
           },
+        },
+        subTitle: {
+          removeData: 'Remove data',
+          privacy: 'Privacy',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const en: Translation = {
   button: {
     copy: 'Copy',
     copied: 'Copied',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
   },
   plot: {
     label: {

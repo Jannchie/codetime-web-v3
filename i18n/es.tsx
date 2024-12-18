@@ -283,11 +283,15 @@ export const es: Partial<Translation> = {
         description: 'Estos ajustes afectarán permanentemente tus datos y no se pueden deshacer. Por favor, procede con precaución.',
         button: {
           removeAllData: 'Eliminar todos los datos',
-          modal: {
+          removeAllDataModal: {
             p1: '¿Estás seguro de que quieres eliminar todos tus datos? Esta operación no se puede deshacer.',
             p2: 'Tus datos son muy importantes, puedes exportarlos primero y luego eliminarlos.',
             p3: 'Si deseas eliminar todos los datos, ingresa ELIMINAR a continuación y luego haz clic en Confirmar.',
           },
+        },
+        subTitle: {
+          removeData: 'Eliminar datos',
+          privacy: 'Privacidad',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const es: Partial<Translation> = {
   button: {
     copy: 'Copiar',
     copied: 'Copiado',
+    cancel: 'Cancelar',
+    confirm: 'Confirmar',
   },
   plot: {
     label: {

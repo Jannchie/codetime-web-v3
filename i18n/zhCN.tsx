@@ -283,11 +283,15 @@ export const zhCN: Partial<Translation> = {
         description: '这些设置会永久影响你的数据，不可恢复。请谨慎操作。',
         button: {
           removeAllData: '删除所有数据',
-          modal: {
+          removeAllDataModal: {
             p1: '您确定要删除所有数据吗？此操作不可撤销。',
             p2: '您的数据非常重要，您可以先导出数据，再删除数据。',
             p3: '如果您要删除所有数据，请在下方输入 DELETE，然后点击确定。',
           },
+        },
+        subTitle: {
+          removeData: '删除数据',
+          privacy: '隐私',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const zhCN: Partial<Translation> = {
   button: {
     copy: '复制',
     copied: '已复制',
+    cancel: '取消',
+    confirm: '确认',
   },
   plot: {
     label: {

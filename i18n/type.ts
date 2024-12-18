@@ -198,9 +198,13 @@ export interface Translation {
       dangerZone: {
         title: string
         description: string
+        subTitle: {
+          removeData: string
+          privacy: string
+        }
         button: {
           removeAllData: string
-          modal: {
+          removeAllDataModal: {
             p1: string
             p2: string
             p3: string
@@ -241,6 +245,8 @@ export interface Translation {
   button: {
     copy: string
     copied: string
+    cancel: string
+    confirm: string
   }
   plot: {
     label: {

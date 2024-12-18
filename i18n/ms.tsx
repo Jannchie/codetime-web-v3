@@ -285,11 +285,15 @@ export const ms: Partial<Translation> = {
         description: 'Tetapan ini akan mempengaruhi data anda secara kekal dan tidak dapat dibatalkan. Sila berjalan dengan berhati-hati.',
         button: {
           removeAllData: 'Padam Semua Data',
-          modal: {
+          removeAllDataModal: {
             p1: 'Adakah anda pasti ingin memadamkan semua data anda? Tindakan ini tidak dapat dibatalkan.',
             p2: 'Data anda sangat penting, anda boleh eksport data terlebih dahulu, dan kemudian padamkan data tersebut.',
             p3: 'Jika anda ingin memadamkan semua data, sila masukkan PADAM di bawah, dan kemudian klik Sahkan.',
           },
+        },
+        subTitle: {
+          removeData: 'Padam Semua Data',
+          privacy: 'Privasi',
         },
       },
       account: {
@@ -330,6 +334,8 @@ export const ms: Partial<Translation> = {
   button: {
     copy: 'Salin',
     copied: 'Disalin',
+    cancel: 'Batal',
+    confirm: 'Sahkan',
   },
   plot: {
     label: {

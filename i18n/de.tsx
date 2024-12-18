@@ -283,11 +283,15 @@ export const de: Partial<Translation> = {
         description: 'Diese Einstellungen wirken sich dauerhaft auf Ihre Daten aus und können nicht rückgängig gemacht werden. Bitte gehen Sie vorsichtig vor.',
         button: {
           removeAllData: 'Alle Daten entfernen',
-          modal: {
+          removeAllDataModal: {
             p1: 'Sind Sie sicher, dass Sie alle Ihre Daten löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.',
             p2: 'Ihre Daten sind sehr wichtig. Sie können die Daten zuerst exportieren und dann die Daten löschen.',
             p3: 'Wenn Sie alle Daten löschen möchten, geben Sie unten DELETE ein und klicken Sie dann auf Bestätigen.',
           },
+        },
+        subTitle: {
+          removeData: 'Daten entfernen',
+          privacy: 'Datenschutz',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const de: Partial<Translation> = {
   button: {
     copy: 'Kopieren',
     copied: 'Kopiert',
+    cancel: 'Abbrechen',
+    confirm: 'Bestätigen',
   },
   plot: {
     label: {

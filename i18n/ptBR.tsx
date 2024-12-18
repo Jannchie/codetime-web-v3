@@ -283,11 +283,15 @@ export const ptBR: Partial<Translation> = {
         description: 'Essas configurações afetarão permanentemente seus dados e não poderão ser desfeitas. Prossiga com cautela.',
         button: {
           removeAllData: 'Remover todos os dados',
-          modal: {
+          removeAllDataModal: {
             p1: 'Tem certeza de que deseja excluir todos os seus dados? Esta operação não pode ser desfeita.',
             p2: 'Seus dados são muito importantes, você pode exportar os dados primeiro e depois excluí-los.',
             p3: 'Se você deseja excluir todos os dados, digite DELETE abaixo e clique em Confirmar.',
           },
+        },
+        subTitle: {
+          removeData: 'Remover todos os dados',
+          privacy: 'Privacidade',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const ptBR: Partial<Translation> = {
   button: {
     copy: 'Copiar',
     copied: 'Copiado',
+    confirm: 'Confirmar',
+    cancel: 'Cancelar',
   },
   plot: {
     label: {

@@ -279,15 +279,19 @@ export const ja: Partial<Translation> = {
         system: 'システム',
       },
       dangerZone: {
-        title: '危険地帯',
+        title: '危険ゾーン',
         description: 'これらの設定はあなたのデータに永続的な影響を与え、また、回復不可能です。注意して操作してください。',
         button: {
-          removeAllData: 'すべてのデータを削除',
-          modal: {
+          removeAllData: 'すべてのデータを削除する',
+          removeAllDataModal: {
             p1: 'すべてのデータを削除してもよろしいですか？この操作は元に戻すことはできません。',
             p2: 'あなたのデータはとても重要です。データをエクスポートしてから、データを削除してください。',
             p3: 'すべてのデータを削除する場合は、以下に DELETE を入力し、確認をクリックしてください。',
           },
+        },
+        subTitle: {
+          removeData: 'データを削除',
+          privacy: 'プライバシー',
         },
       },
       account: {
@@ -328,6 +332,8 @@ export const ja: Partial<Translation> = {
   button: {
     copy: 'コピー',
     copied: 'コピー済み',
+    cancel: 'キャンセル',
+    confirm: '確認',
   },
   plot: {
     label: {
