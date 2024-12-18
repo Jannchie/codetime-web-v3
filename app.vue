@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const { data: user, pending } = await fetchUser()
+import { client } from '@/api/sdk.gen'
+
+const { data: user, status } = await fetchUser()
 provide('user', user)
-provide('user-pending', pending)
+provide('user-pending', status.value === 'pending')
+const config = useRuntimeConfig()
+client.setConfig({
+  baseUrl: config.public.apiHost,
+})
 </script>
 
 <template>
