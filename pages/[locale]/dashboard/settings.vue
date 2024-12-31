@@ -79,7 +79,6 @@ const t = useI18N()
         <TextField
           v-model="token"
           readonly
-          class="w-full"
           style="letter-spacing: 8px"
           password
         />

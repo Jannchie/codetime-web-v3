@@ -19,9 +19,9 @@ function onClick() {
 <template>
   <Btn
     hover-variant="filled"
-    class="w-18"
     :size="props.size ?? 'md'"
     :color="ok ? 'secondary' : 'primary'"
+    class="child:flex-shrink-0"
     @click="onClick"
   >
     <template #leftSection>
