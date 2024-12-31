@@ -8,6 +8,12 @@ export default defineNuxtConfig({
       apiHost: 'https://api.codetime.dev',
     },
   },
+  site: {
+    url: 'https://codetime.dev',
+    name: 'Code Time',
+  },
+  ogImage: {
+  },
   gtag: {
     id: 'G-36N091FBKT',
   },

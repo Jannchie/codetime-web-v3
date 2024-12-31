@@ -1,28 +1,6 @@
 <script setup lang="ts">
 import { Image } from '@roku-ui/vue'
 
-const t = useI18N()
-// const headerTabs = computed(() => [
-//   { label: t.value.dashboard.pageHeader.title.overview, id: 'overview', path: `/dashboard` },
-//   { label: t.value.dashboard.pageHeader.title.badge, id: 'badges', path: `/dashboard/badges` },
-//   { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
-//   { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
-// ])
-watchEffect(() => {
-  useSeoMeta({
-    title: t.value.meta.title,
-    description: t.value.meta.description,
-    ogTitle: t.value.meta.ogTitle,
-    ogDescription: t.value.meta.ogDescription,
-    twitterTitle: t.value.meta.twitterTitle,
-    twitterDescription: t.value.meta.twitterDescription,
-    ogImage: 'https://codetime.dev/icon.png',
-    ogUrl: 'https://codetime.dev',
-    twitterImage: 'https://codetime.dev/icon.png',
-    twitterCard: 'summary',
-  })
-})
-
 const locale = useLocale()
 // const currentTab = useCurrentTab(headerTabs)
 const user = useUser()
@@ -62,33 +40,35 @@ useHead({
                 class="ml-2 mr-3"
               />
             </NuxtLink>
-            <NuxtLink
-              v-if="user"
-              class="flex items-center gap-3 text-sm"
-              :to="`/${locale}/dashboard`"
-            >
-              <Image
-                :src="user.avatar"
-                class="h-7 w-7 rounded-full"
-                height="28px"
-                width="28px"
-              />
-              <div class="hidden sm:block">
-                {{ user.username }}
-              </div>
-              <PlanTag
-                :plan="user.plan"
-              />
-            </NuxtLink>
-            <div
-              v-else-if="pending "
-              class="flex items-center gap-3 text-sm"
-            >
+            <ClientOnly>
+              <NuxtLink
+                v-if="user"
+                class="flex items-center gap-3 text-sm"
+                :to="`/${locale}/dashboard`"
+              >
+                <Image
+                  :src="user.avatar"
+                  class="h-7 w-7 rounded-full"
+                  height="28px"
+                  width="28px"
+                />
+                <div class="hidden sm:block">
+                  {{ user.username }}
+                </div>
+                <PlanTag
+                  :plan="user.plan"
+                />
+              </NuxtLink>
               <div
-                class="h-7 w-7 animate-pulse rounded-full bg-surface-variant-1 bg-op50"
-              />
-              <div class="h-1em w-16 animate-pulse rounded bg-surface-variant-1 bg-op50" />
-            </div>
+                v-else-if="pending "
+                class="flex items-center gap-3 text-sm"
+              >
+                <div
+                  class="h-7 w-7 animate-pulse rounded-full bg-surface-variant-1 bg-op50"
+                />
+                <div class="h-1em w-16 animate-pulse rounded bg-surface-variant-1 bg-op50" />
+              </div>
+            </ClientOnly>
           </div>
           <div class="hidden items-center gap-2 sm:flex">
             <i class="i-tabler-language-hiragana h-6 w-6" />
@@ -98,14 +78,7 @@ useHead({
         <div class="mt-2 flex gap-2" />
       </div>
     </RHeader>
-    <div v-if="pending">
-      <div class="m-auto h-full op75">
-        <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant-2" />
-        </div>
-      </div>
-    </div>
-    <div v-else>
+    <div>
       <slot />
     </div>
     <CodetimeFooter />

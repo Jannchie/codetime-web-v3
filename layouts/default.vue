@@ -1,5 +1,20 @@
 <script setup lang="ts">
 import { RokuProvider } from '@roku-ui/vue'
+
+const t = useI18N()
+
+watchEffect(() => {
+  useSeoMeta({
+    title: t.value.meta.title,
+    description: t.value.meta.description,
+    ogTitle: t.value.meta.ogTitle,
+    ogDescription: t.value.meta.ogDescription,
+    twitterTitle: t.value.meta.twitterTitle,
+    twitterDescription: t.value.meta.twitterDescription,
+    ogUrl: 'https://codetime.dev',
+    twitterCard: 'summary',
+  })
+})
 </script>
 
 <template>

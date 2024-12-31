@@ -12,20 +12,7 @@ const headerTabs = computed(() => [
   { label: t.value.dashboard.pageHeader.title.leaderboard, id: 'leaderboard', path: `/dashboard/leaderboard` },
   { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
 ])
-watchEffect(() => {
-  useSeoMeta({
-    title: t.value.meta.title,
-    description: t.value.meta.description,
-    ogTitle: t.value.meta.ogTitle,
-    ogDescription: t.value.meta.ogDescription,
-    twitterTitle: t.value.meta.twitterTitle,
-    twitterDescription: t.value.meta.twitterDescription,
-    ogImage: 'https://codetime.dev/icon.png',
-    ogUrl: 'https://codetime.dev',
-    twitterImage: 'https://codetime.dev/icon.png',
-    twitterCard: 'summary',
-  })
-})
+
 
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)

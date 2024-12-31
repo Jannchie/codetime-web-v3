@@ -6,20 +6,12 @@ const props = defineProps<{
 }>()
 
 const chartWrapper = ref<HTMLElement | null>(null)
-const { width } = useElementBounding(chartWrapper)
+const { width, height } = useElementBounding(chartWrapper)
 const op = computed(() => {
-  return props.options
-})
-const basicHeight = op.value.height ?? 400
-watchEffect(() => {
-  if (chartWrapper.value) {
-    op.value.width = width.value
-    if (op.value.width * 0.7 < basicHeight) {
-      op.value.height = op.value.width * 0.7
-    }
-    else {
-      op.value.height = basicHeight
-    }
+  return {
+    width: width.value,
+    height: height.value,
+    ...props.options,
   }
 })
 </script>
@@ -27,10 +19,10 @@ watchEffect(() => {
 <template>
   <div
     ref="chartWrapper"
-    class="flex-col overflow-y-auto"
+    class="h-full w-full flex-col overflow-y-auto"
   >
     <PoltRenderer
-      :options="options"
+      :options="op"
     />
   </div>
 </template>

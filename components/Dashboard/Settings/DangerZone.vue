@@ -42,13 +42,13 @@ function deleteAllData() {
         </div>
         <div class="py-2 text-sm text-surface-dimmed">
           <div class="pb-2">
-            {{ t.dashboard.settings.dangerZone.button.modal.p1 }}
+            {{ t.dashboard.settings.dangerZone.button.removeAllDataModal.p1 }}
           </div>
           <div class="pb-2">
-            {{ t.dashboard.settings.dangerZone.button.modal.p2 }}
+            {{ t.dashboard.settings.dangerZone.button.removeAllDataModal.p2 }}
           </div>
           <div class="pb-2">
-            {{ t.dashboard.settings.dangerZone.button.modal.p3 }}
+            {{ t.dashboard.settings.dangerZone.button.removeAllDataModal.p3 }}
           </div>
         </div>
         <div class="py-2">

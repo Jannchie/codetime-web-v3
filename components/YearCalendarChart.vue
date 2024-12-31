@@ -93,7 +93,7 @@ const options = computed(() => ({
 <template>
   <div
     v-if="yearData.length === 0"
-    class="bg-primary m-2 h-100px w-168 animate-pulse bg-op25"
+    class="m-2 h-100px w-168 animate-pulse bg-primary bg-op25"
   />
   <PoltCalendar
     v-else

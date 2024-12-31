@@ -43,7 +43,7 @@ class Element {
   }
 
   setAttribute(name, value) {
-    this.attributes[name] = String(value)
+    this.attributes[name] = value
   }
 
   setAttributeNS(namespace, name, value) {

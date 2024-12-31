@@ -21,7 +21,9 @@ watch([op], () => {
     ref="calendarWrapper"
     class="overflow-x-auto"
   >
-    <div class="min-w-[700px]">
+    <div
+      class="min-w-[700px]"
+    >
       <PoltRenderer
         class="flex"
         :options="op"

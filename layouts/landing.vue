@@ -1,19 +1,4 @@
 <script setup lang="ts">
-const t = useI18N()
-watchEffect(() => {
-  useSeoMeta({
-    title: t.value.meta.title,
-    description: t.value.meta.description,
-    ogTitle: t.value.meta.ogTitle,
-    ogDescription: t.value.meta.ogDescription,
-    twitterTitle: t.value.meta.twitterTitle,
-    twitterDescription: t.value.meta.twitterDescription,
-    ogImage: '/icon.png',
-    ogUrl: 'https://codetime.dev',
-    twitterImage: '/icon.png',
-    twitterCard: 'summary',
-  })
-})
 const locale = useLocale()
 watchEffect(() => {
   useHead({
