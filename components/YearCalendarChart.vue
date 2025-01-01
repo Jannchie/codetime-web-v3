@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   data: MaybeRef<{
     date: Date
     duration: number
   }[]>
-}>()
+  endDate?: Date
+}>(), {
+  endDate: () => new Date(),
+})
 const data = computed(() => {
   return unref(props.data)
 })
-const yearStartDate = d3.utcDay.offset(new Date(), -365)
-const years = d3.utcDay.range(yearStartDate, new Date())
+const yearStartDate = d3.utcDay.offset(props.endDate, -365)
+const years = d3.utcDay.range(yearStartDate, props.endDate)
 const yearData = computed(() => {
   const d = data.value.filter((d) => {
     return d.date.getTime() >= yearStartDate.getTime()

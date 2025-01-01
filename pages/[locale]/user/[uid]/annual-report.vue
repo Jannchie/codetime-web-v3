@@ -288,6 +288,7 @@ const topLanguage = computed(() => {
           />
           <YearCalendarChart
             :data="yearCalendarData"
+            :end-date="new Date(2024, 11, 31)"
           />
           <div class="w-full flex items-center gap-4">
             <div>
