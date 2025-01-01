@@ -18,7 +18,18 @@ if (!user) {
     statusMessage: t.value.annualReport.userNotFound,
   })
 }
-
+watchEffect(() => {
+  useSeoMeta({
+    title: `${user.username} - ${t.value.annualReport.annualCodeTimeReport('2024')}`,
+    description: t.value.meta.description,
+    ogTitle: t.value.meta.ogTitle,
+    ogDescription: t.value.meta.ogDescription,
+    twitterTitle: t.value.meta.twitterTitle,
+    twitterDescription: t.value.meta.twitterDescription,
+    ogUrl: 'https://codetime.dev',
+    twitterCard: 'summary',
+  })
+})
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 const yearlyData = await getYearlyReportData({
@@ -178,7 +189,11 @@ const monthlyMinutes = computed(() => {
     }
   }).sort((a, b) => a.month - b.month)
 })
-
+const allMonths = computed(() => {
+  return Array.from({ length: 12 }, (_, i) => {
+    return new Date(2024, i, 1).toLocaleString(locale.value, { month: 'long' })
+  })
+})
 const averageMonthlyMinutes = computed(() => {
   if (yearlyData.data) {
     return sumMinutes.value / 12
@@ -302,7 +317,7 @@ const topLanguage = computed(() => {
                 x: {
                   type: 'band',
                   label: t.annualReport.month,
-                  domain: monthlyMinutes.map((d) => d.field),
+                  domain: allMonths,
                 },
                 y: {
                   label: t.annualReport.minutes,
@@ -331,6 +346,7 @@ const topLanguage = computed(() => {
                 x: {
                   type: 'band',
                   label: t.annualReport.hour,
+                  domain: ['06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00', '01', '02', '03', '04', '05'],
                 },
                 y: {
                   label: t.annualReport.minutes,
