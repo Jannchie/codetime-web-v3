@@ -17,7 +17,7 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    class="relative h-full w-full flex items-center justify-center border-2 border-white bg-neutral-900 text-white"
+    class="relative h-full w-full flex items-center justify-center bg-neutral-900 text-white"
     :style="{ backgroundImage: bg }"
   >
     <div
