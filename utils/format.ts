@@ -30,13 +30,13 @@ export const localeMap = new Map<string, any>([
   ['de', de],
 ])
 
-export function getDurationString(ms: number, format: (keyof Duration)[] = ['hours', 'minutes', 'seconds']): string {
+export function getDurationString(ms: number, format: (keyof Duration)[] = ['hours', 'minutes', 'seconds'], locale: string | null = null): string {
   const route = useRoute()
-  const locale = route.params.locale as string
+  const trueLocale = locale ?? route.params.locale as string
   const { hour, minute, second } = getDurationData(ms)
 
   return formatDuration({ hours: hour, minutes: minute, seconds: second }, {
-    locale: localeMap.get(locale) ?? localeMap.get('en'),
+    locale: localeMap.get(trueLocale) ?? localeMap.get('en'),
     format,
   }).replace('hour', 'hr').replace('minute', 'min').replace('second', 'sec')
 }

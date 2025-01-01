@@ -44,7 +44,7 @@ withDefaults(defineProps<{
       <img
         v-if="avatar"
         :src="avatar"
-        class="h-12 w-12 rounded-full"
+        class="h-10 w-10 rounded-full"
       >
       <div
         v-if="username"

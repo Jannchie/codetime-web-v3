@@ -139,9 +139,9 @@ const height = 26
                 {{ getDurationString(count * 60 * 1000) }}
               </div>
             </div>
-            <div class="my-0.5 h-0.5 overflow-hidden rounded-xl bg-surface-variant">
+            <div class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl">
               <div
-                class="bg-primary h-full"
+                class="h-full bg-primary"
                 :style="{ width: `${count / maxBranchCount * 100}%` }"
               />
             </div>

@@ -62,8 +62,9 @@ const sumMinutes = computed(() => {
 })
 
 defineOgImageComponent('AnnualReport', {
-  title: `${getDurationString(sumMinutes.value * 60 * 1000)}`,
-  description: t.value.annualReport.annualCodeTimeReport('2024'),
+  title: `${getDurationString(sumMinutes.value * 60 * 1000, undefined, 'en')}`,
+  description: 'Annual Code Time Report for 2024',
+  // description: t.value.annualReport.annualCodeTimeReport('2024'),
   colorMode: 'dark',
   theme: '#0067cc',
   username: user.username,
