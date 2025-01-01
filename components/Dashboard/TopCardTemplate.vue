@@ -60,14 +60,14 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
         >
           <div class="flex gap-1">
             <div
-              class="h-20px w-20px animate-pulse bg-surface-variant-1"
+              class="bg-surface-variant-1 h-20px w-20px animate-pulse"
             />
             <div
-              class="h-20px w-20 animate-pulse bg-surface-variant-1"
+              class="bg-surface-variant-1 h-20px w-20 animate-pulse"
             />
           </div>
           <div
-            class="h-20px w-30 animate-pulse bg-surface-variant-1"
+            class="bg-surface-variant-1 h-20px w-30 animate-pulse"
           />
         </div>
       </template>

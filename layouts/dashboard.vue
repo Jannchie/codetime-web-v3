@@ -13,7 +13,6 @@ const headerTabs = computed(() => [
   { label: t.value.dashboard.pageHeader.title.settings, id: 'settings', path: `/dashboard/settings` },
 ])
 
-
 const locale = useLocale()
 const currentTab = useCurrentTab(headerTabs)
 const user = useUser()
@@ -117,8 +116,8 @@ const resp = await fetchLatestStats()
                 class="flex items-center gap-2 text-xs"
               >
                 <div class="relative">
-                  <div class="h-3 w-3 animate-ping rounded-full bg-primary" />
-                  <div class="absolute left-0 top-0 h-3 w-3 rounded-full bg-primary" />
+                  <div class="bg-primary h-3 w-3 animate-ping rounded-full" />
+                  <div class="bg-primary absolute left-0 top-0 h-3 w-3 rounded-full" />
                 </div>
                 <VSCodeIcon
                   :language="resp.data.value.language"
@@ -166,7 +165,7 @@ const resp = await fetchLatestStats()
       <div class="m-auto h-full op75">
         <DashboardPageTitle loading />
         <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant-1" />
+          <div class="bg-surface-variant-1 mt-2 h-32 w-full rounded-2xl" />
         </div>
       </div>
     </div>

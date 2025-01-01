@@ -26,11 +26,11 @@ export const ja: Partial<Translation> = {
   },
   meta: {
     title: 'CodeTime - コーディング時間を追跡',
-    description: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
+    description: 'CodeTime は開発者にぴったりのアプリで、コーディングにかけた時間を正確に記録し、深い洞察を得るのに役立ちます。',
     ogTitle: 'CodeTime - コーディング時間を追跡',
-    ogDescription: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
+    ogDescription: 'CodeTime は開発者にぴったりのアプリで、コーディングにかけた時間を正確に記録し、深い洞察を得るのに役立ちます。',
     twitterTitle: 'CodeTime - コーディング時間を追跡',
-    twitterDescription: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
+    twitterDescription: 'CodeTime は開発者にぴったりのアプリで、コーディングにかけた時間を正確に記録し、深い洞察を得るのに役立ちます。',
   },
   general: {
     cancel: 'キャンセル',
@@ -38,7 +38,7 @@ export const ja: Partial<Translation> = {
   },
   landing: {
     login: 'ログイン',
-    description: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
+    description: 'CodeTime は開発者にぴったりのアプリで、コーディングにかけた時間を正確に記録し、深い洞察を得るのに役立ちます。',
     toDashboard: 'ダッシュボードへ',
     alreadyStatistical: '統計済み',
     minutes: '分',
