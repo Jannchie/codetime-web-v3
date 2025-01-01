@@ -64,6 +64,14 @@ async function fetchLatestStats() {
 }
 
 const resp = await fetchLatestStats()
+
+// 如果日期是 12月 20日到 1月 15 日之间，则是年度报告展示周期
+const showAnnualReport = computed(() => {
+  const now = new Date()
+  const month = now.getMonth()
+  const day = now.getDate()
+  return (month === 11 && day >= 20) || (month === 0 && day <= 15)
+})
 </script>
 
 <template>
@@ -108,6 +116,13 @@ const resp = await fetchLatestStats()
                 <div class="h-1em w-16 animate-pulse rounded bg-op50" />
               </div>
 
+              <NuxtLink
+                v-if="user && showAnnualReport"
+                :to="`/${locale}/user/${user.id}/annual-report`"
+              >
+                Annual Report
+              </NuxtLink>
+
               <div v-if="resp.status.value === 'pending'">
                 <div class="h-4 w-20 animate-pulse rounded-full bg-white bg-op50" />
               </div>
@@ -116,8 +131,8 @@ const resp = await fetchLatestStats()
                 class="flex items-center gap-2 text-xs"
               >
                 <div class="relative">
-                  <div class="bg-primary h-3 w-3 animate-ping rounded-full" />
-                  <div class="bg-primary absolute left-0 top-0 h-3 w-3 rounded-full" />
+                  <div class="h-3 w-3 animate-ping rounded-full bg-primary" />
+                  <div class="absolute left-0 top-0 h-3 w-3 rounded-full bg-primary" />
                 </div>
                 <VSCodeIcon
                   :language="resp.data.value.language"
@@ -165,7 +180,7 @@ const resp = await fetchLatestStats()
       <div class="m-auto h-full op75">
         <DashboardPageTitle loading />
         <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="bg-surface-variant-1 mt-2 h-32 w-full rounded-2xl" />
+          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant-1" />
         </div>
       </div>
     </div>

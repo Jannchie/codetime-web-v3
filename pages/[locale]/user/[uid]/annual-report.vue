@@ -1,4 +1,5 @@
 <script setup lang="tsx">
+import { Btn } from '@roku-ui/vue'
 import { getUserByUserId, getYearlyReportData } from '~/api/v3'
 
 const route = useRoute()
@@ -31,6 +32,8 @@ watchEffect(() => {
   })
 })
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+const { share } = useShare()
 
 const yearlyData = await getYearlyReportData({
   query: {
@@ -401,6 +404,10 @@ const topLanguage = computed(() => {
             </div>
           </div>
         </div>
+
+        <Btn @click="() => share()">
+          Share My Report
+        </Btn>
       </div>
     </div>
   </NuxtLayout>
