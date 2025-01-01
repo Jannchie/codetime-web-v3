@@ -1,5 +1,7 @@
 export interface Translation {
   annualReport: {
+    shareMyReport: string
+    reviewAnnualReport: string
     userNotFound: string
     noData: string
     noDataAvailableFor: (year: number | string) => string

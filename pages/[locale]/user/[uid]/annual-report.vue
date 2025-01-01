@@ -34,7 +34,6 @@ watchEffect(() => {
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 const { share } = useShare()
-
 const yearlyData = await getYearlyReportData({
   query: {
     year: '2024',
@@ -404,10 +403,20 @@ const topLanguage = computed(() => {
             </div>
           </div>
         </div>
-
-        <Btn @click="() => share()">
-          Share My Report
-        </Btn>
+        <div class="flex justify-center">
+          <Btn
+            size="lg"
+            @click="() => share({
+              title: `${user.username} - ${t.annualReport.annualCodeTimeReport('2024')}`,
+              url: `https://codetime.dev/${locale}/user/${uid}/annual-report`,
+            })"
+          >
+            <i class="i-tabler-share h-5 w-5" />
+            <span>
+              {{ t.annualReport.shareMyReport }}
+            </span>
+          </Btn>
+        </div>
       </div>
     </div>
   </NuxtLayout>

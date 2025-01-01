@@ -3,6 +3,8 @@ import NuxtLink from './NuxtLink.vue'
 
 export const en: Translation = {
   annualReport: {
+    shareMyReport: 'Share My Report',
+    reviewAnnualReport: 'Review Annual Report',
     userNotFound: 'User not found.',
     noData: 'No data available.',
     noDataAvailableFor: (year: number | string) => `No data available for ${year}.`,

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { localeMap } from '@/utils/format'
-import { Image, useContainerFilledCS, useCS } from '@roku-ui/vue'
-import { formatDistanceToNow } from 'date-fns'
+import { Btn, Image, useContainerFilledCS, useCS } from '@roku-ui/vue'
 import VSCodeIcon from '~/components/VSCodeIcon.vue'
 
 const t = useI18N()
@@ -119,8 +117,15 @@ const showAnnualReport = computed(() => {
               <NuxtLink
                 v-if="user && showAnnualReport"
                 :to="`/${locale}/user/${user.id}/annual-report`"
+                target="_blank"
               >
-                Annual Report
+                <Btn
+                  variant="light"
+                  size="sm"
+                  color="primary"
+                >
+                  {{ t.annualReport.reviewAnnualReport }}
+                </Btn>
               </NuxtLink>
 
               <div v-if="resp.status.value === 'pending'">

@@ -3,6 +3,8 @@ import NuxtLink from './NuxtLink.vue'
 
 export const it: Partial<Translation> = {
   annualReport: {
+    shareMyReport: 'Condividi il mio report',
+    reviewAnnualReport: 'Controlla il report annuale',
     userNotFound: 'Utente non trovato.',
     noData: 'Nessun dato disponibile.',
     noDataAvailableFor: (year: number | string) => `Nessun dato disponibile per ${year}.`,

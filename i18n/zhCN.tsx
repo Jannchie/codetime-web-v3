@@ -3,6 +3,8 @@ import NuxtLink from './NuxtLink.vue'
 
 export const zhCN: Partial<Translation> = {
   annualReport: {
+    shareMyReport: '分享我的报告',
+    reviewAnnualReport: '查看年度报告',
     userNotFound: '用户未找到。',
     noData: '暂无数据。',
     noDataAvailableFor: (year: number | string) => `${year} 年暂无数据。`,

@@ -64,9 +64,9 @@ useHead({
                 class="flex items-center gap-3 text-sm"
               >
                 <div
-                  class="bg-surface-variant-1 h-7 w-7 animate-pulse rounded-full bg-op50"
+                  class="h-7 w-7 animate-pulse rounded-full bg-surface-variant-1 bg-op50"
                 />
-                <div class="bg-surface-variant-1 h-1em w-16 animate-pulse rounded bg-op50" />
+                <div class="h-1em w-16 animate-pulse rounded bg-surface-variant-1 bg-op50" />
               </div>
             </ClientOnly>
           </div>
