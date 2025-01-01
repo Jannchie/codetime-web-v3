@@ -2,6 +2,28 @@ import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
 export const ptBR: Partial<Translation> = {
+  annualReport: {
+    userNotFound: 'Usuário não encontrado.',
+    noData: 'Nenhum dado disponível.',
+    noDataAvailableFor: (year: number | string) => `Nenhum dado disponível para ${year}.`,
+    annualCodeTimeReport: (year: number | string) => `Relatório Anual de Tempo de Código para ${year}`,
+    weekendCodingTimeRatio: 'Proporção de Tempo de Codificação de Fim de Semana',
+    averageDailyCodingTime: 'Tempo Médio de Codificação Diária',
+    busiestDayOfTheYear: 'Dia Mais Ocupado do Ano',
+    busiestMonthOfTheYear: 'Mês Mais Ocupado do Ano',
+    theMostProductiveHourOfTheYear: 'A Hora Mais Produtiva do Ano',
+    month: 'Mês',
+    hour: 'Hora',
+    minutes: 'Minutos',
+    theMostUsedLanguageOfTheYear: 'Linguagem Mais Usada do Ano',
+    totalCodingTimeOfTheYear: 'Tempo Total de Codificação do Ano',
+    priodOfDay: {
+      morning: 'Manhã',
+      afternoon: 'Tarde',
+      evening: 'Noite',
+      midnight: 'Meia-noite',
+    },
+  },
   meta: {
     title: 'CodeTime - Rastreie seu tempo de codificação',
     description: 'CodeTime é um aplicativo projetado para desenvolvedores que ajuda você a rastrear, analisar e melhorar suas habilidades de gerenciamento de tempo de codificação.',

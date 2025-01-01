@@ -2,6 +2,28 @@ import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
 export const ru: Partial<Translation> = {
+  annualReport: {
+    userNotFound: 'Пользователь не найден.',
+    noData: 'Нет доступных данных.',
+    noDataAvailableFor: (year: number | string) => `Нет данных за ${year} год.`,
+    annualCodeTimeReport: (year: number | string) => `Годовой отчет о времени кодирования за ${year} год`,
+    weekendCodingTimeRatio: 'Соотношение времени кодирования в выходные дни',
+    averageDailyCodingTime: 'Среднее ежедневное время кодирования',
+    busiestDayOfTheYear: 'Самый загруженный день года',
+    busiestMonthOfTheYear: 'Самый загруженный месяц года',
+    theMostProductiveHourOfTheYear: 'Самый продуктивный час года',
+    month: 'Месяц',
+    hour: 'Час',
+    minutes: 'Минуты',
+    theMostUsedLanguageOfTheYear: 'Самый используемый язык года',
+    totalCodingTimeOfTheYear: 'Общее время кодирования за год',
+    priodOfDay: {
+      morning: 'Утро',
+      afternoon: 'День',
+      evening: 'Вечер',
+      midnight: 'Полночь',
+    },
+  },
   meta: {
     title: 'CodeTime - Отслеживайте свое время программирования',
     description:

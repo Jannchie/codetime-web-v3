@@ -1,4 +1,26 @@
 export interface Translation {
+  annualReport: {
+    userNotFound: string
+    noData: string
+    noDataAvailableFor: (year: number | string) => string
+    annualCodeTimeReport: (year: number | string) => string
+    weekendCodingTimeRatio: string
+    averageDailyCodingTime: string
+    busiestDayOfTheYear: string
+    busiestMonthOfTheYear: string
+    theMostProductiveHourOfTheYear: string
+    month: string
+    hour: string
+    minutes: string
+    theMostUsedLanguageOfTheYear: string
+    totalCodingTimeOfTheYear: string
+    priodOfDay: {
+      morning: string
+      afternoon: string
+      evening: string
+      midnight: string
+    }
+  }
   meta: {
     title: string
     description: string

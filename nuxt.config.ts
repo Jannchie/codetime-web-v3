@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     name: 'Code Time',
   },
   ogImage: {
+    fonts: [
+      'Noto+Sans+SC:400',
+    ],
   },
   gtag: {
     id: 'G-36N091FBKT',

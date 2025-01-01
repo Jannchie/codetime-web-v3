@@ -2,6 +2,28 @@ import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
 export const zhCN: Partial<Translation> = {
+  annualReport: {
+    userNotFound: '用户未找到。',
+    noData: '暂无数据。',
+    noDataAvailableFor: (year: number | string) => `${year} 年暂无数据。`,
+    annualCodeTimeReport: (year: number | string) => `${year} 年年度代码时间报告`,
+    weekendCodingTimeRatio: '周末编码时间占比',
+    averageDailyCodingTime: '平均每日编码时间',
+    busiestDayOfTheYear: '年度最忙碌的一天',
+    busiestMonthOfTheYear: '年度最忙碌的一个月',
+    theMostProductiveHourOfTheYear: '年度最高效的一小时',
+    month: '月',
+    hour: '小时',
+    minutes: '分钟',
+    theMostUsedLanguageOfTheYear: '年度最常用语言',
+    totalCodingTimeOfTheYear: '年度总编码时间',
+    priodOfDay: {
+      morning: '上午',
+      afternoon: '下午',
+      evening: '傍晚',
+      midnight: '午夜',
+    },
+  },
   meta: {
     title: 'CodeTime - 追迹你的编程时间',
     description: 'CodeTime 是一款专为开发者设计的应用，帮助您追踪、分析和提高您的编程时间管理技能。',

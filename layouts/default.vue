@@ -15,6 +15,14 @@ watchEffect(() => {
     twitterCard: 'summary',
   })
 })
+
+// defineOgImageComponent('NuxtSeo', {
+//   title: t.value.meta.title,
+//   description: t.value.meta.description,
+//   colorMode: 'dark',
+//   theme: '#0067cc',
+//   siteLogo: 'https://codetime.dev/icon.png',
+// })
 </script>
 
 <template>

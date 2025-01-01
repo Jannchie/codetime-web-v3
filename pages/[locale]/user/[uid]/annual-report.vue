@@ -1,38 +1,39 @@
 <script setup lang="tsx">
-import { Paper } from '@roku-ui/vue'
 import { getUserByUserId, getYearlyReportData } from '~/api/v3'
 
-defineOgImageComponent('NuxtSeo', {
-  title: 'Hello OG Image 👋',
-  description: 'Look what at me in dark mode',
+const route = useRoute()
+const uid = computed(() => {
+  return Number(route.params.uid)
 })
-const user = useAsyncData(async () => {
-  const resp = await getUserByUserId({
-    path: {
-      user_id: 2,
-    },
+const t = useI18N()
+const user = (await getUserByUserId({
+  path: {
+    user_id: uid.value,
+  },
+})).data
+
+if (!user) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: t.value.annualReport.userNotFound,
   })
-  return resp.data
-})
+}
 
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-const yearlyData = useAsyncData(async () => {
-  const resp = await getYearlyReportData({
-    query: {
-      year: '2024',
-      timezone: browserTimezone,
-    },
-    path: {
-      user_id: 2,
-    },
-  })
-  return resp.data
+const yearlyData = await getYearlyReportData({
+  query: {
+    year: '2024',
+    timezone: user.timezone ?? browserTimezone,
+  },
+  path: {
+    user_id: uid.value,
+  },
 })
 
 const yearCalendarData = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.dailyDistribution.map((d) => {
+  if (yearlyData.data) {
+    return yearlyData.data.dailyDistribution.map((d) => {
       return {
         date: new Date(d.field),
         duration: d.minutes * 60 * 1000,
@@ -43,27 +44,37 @@ const yearCalendarData = computed(() => {
 })
 
 const sumMinutes = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.dailyDistribution.reduce((acc, cur) => acc + cur.minutes, 0)
+  if (yearlyData.data) {
+    return yearlyData.data.dailyDistribution.reduce((acc, cur) => acc + cur.minutes, 0)
   }
   return 0
+})
+
+defineOgImageComponent('AnnualReport', {
+  title: `${getDurationString(sumMinutes.value * 60 * 1000)}`,
+  description: t.value.annualReport.annualCodeTimeReport('2024'),
+  colorMode: 'dark',
+  theme: '#0067cc',
+  username: user.username,
+  logo: 'https://codetime.dev/icon.png',
+  avatar: user.avatar,
 })
 
 const averageMinutes = computed(() => {
-  if (yearlyData.data.value) {
-    return sumMinutes.value / yearlyData.data.value.dailyDistribution.length
+  if (yearlyData.data) {
+    return sumMinutes.value / yearlyData.data.dailyDistribution.length
   }
   return 0
 })
 
-const mostActiveHour = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.hourlyDistribution.reduce((acc, cur) => {
+const mostProductiveHour = computed(() => {
+  if (yearlyData.data) {
+    return yearlyData.data.hourlyDistribution.reduce((acc, cur) => {
       if (cur.minutes > acc.minutes) {
         return cur
       }
       return acc
-    }, yearlyData.data.value.hourlyDistribution[0])
+    }, yearlyData.data.hourlyDistribution[0])
   }
   return {
     field: 0,
@@ -72,8 +83,8 @@ const mostActiveHour = computed(() => {
 })
 
 const hourlyDistribution = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.hourlyDistribution.map((d) => {
+  if (yearlyData.data) {
+    return yearlyData.data.hourlyDistribution.map((d) => {
       d.field = d.field.toString().padStart(2, '0')
       return {
         field: d.field,
@@ -93,8 +104,8 @@ const hourlyDistribution = computed(() => {
 })
 
 const dayPeriods = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.hourlyDistribution.reduce((acc, cur) => {
+  if (yearlyData.data) {
+    return yearlyData.data.hourlyDistribution.reduce((acc, cur) => {
       if (Number(cur.field) >= 6 && Number(cur.field) < 12) {
         acc.morning += cur.minutes
       }
@@ -123,16 +134,16 @@ const dayPeriods = computed(() => {
   }
 })
 
-const dayPeriodsString = computed(() => {
+const hourString = computed(() => {
   return Object.entries(dayPeriods.value).map(([key, value]) => {
-    return `${key}: ${getDurationString(value * 60 * 1000, ['hours'])} (${(value / sumMinutes.value * 100).toFixed(0)}%)`
+    return `${t.value.annualReport.priodOfDay[key as keyof typeof t.value.annualReport.priodOfDay]}: ${getDurationString(value * 60 * 1000, ['hours'])} (${(value / sumMinutes.value * 100).toFixed(0)}%)`
   }).join(' · ')
 })
 
 // 双休日编程时间占比
 const weekendMinutes = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.dailyDistribution.reduce((acc, cur) => {
+  if (yearlyData.data) {
+    return yearlyData.data.dailyDistribution.reduce((acc, cur) => {
       if (new Date(cur.field).getDay() === 0 || new Date(cur.field).getDay() === 6) {
         return acc + cur.minutes
       }
@@ -142,15 +153,15 @@ const weekendMinutes = computed(() => {
   return 0
 })
 const weekendMinutesRatio = computed(() => {
-  if (yearlyData.data.value) {
+  if (yearlyData.data) {
     return weekendMinutes.value / sumMinutes.value
   }
   return 0
 })
-
+const locale = useLocale()
 const monthlyMinutes = computed(() => {
   const resp: Record<string, number> = {}
-  for (const data of yearlyData.data.value?.dailyDistribution ?? []) {
+  for (const data of yearlyData.data?.dailyDistribution ?? []) {
     const date = new Date(data.field)
     const month = date.getMonth()
     if (!resp[month]) {
@@ -159,7 +170,7 @@ const monthlyMinutes = computed(() => {
     resp[month] += data.minutes
   }
   return Object.keys(resp).map((key) => {
-    const monthStr = new Date(2024, Number(key), 1).toLocaleString('en-US', { month: 'long' })
+    const monthStr = new Date(2024, Number(key), 1).toLocaleString(locale.value, { month: 'long' })
     return {
       month: Number(key),
       field: monthStr,
@@ -169,7 +180,7 @@ const monthlyMinutes = computed(() => {
 })
 
 const averageMonthlyMinutes = computed(() => {
-  if (yearlyData.data.value) {
+  if (yearlyData.data) {
     return sumMinutes.value / 12
   }
   return 0
@@ -200,8 +211,8 @@ function HeaderComponent({ title, value, extra }: { title: string, value?: strin
 }
 
 const topLanguage = computed(() => {
-  if (yearlyData.data.value) {
-    return yearlyData.data.value.topLanguages[0]
+  if (yearlyData.data) {
+    return yearlyData.data.topLanguages[0]
   }
   return null
 })
@@ -209,50 +220,52 @@ const topLanguage = computed(() => {
 
 <template>
   <NuxtLayout name="user">
-    <div class="mx-auto max-w-820px p-2">
+    <div
+      v-if="yearlyData.data?.dailyDistribution.length === 0 || !user"
+      class="m-32 mx-auto max-w-820px"
+    >
+      <div class="flex flex-col items-center gap-4">
+        <div class="text-4xl font-bold">
+          No Data
+        </div>
+        <div class="text-surface-dimmed">
+          No data available for 2024
+        </div>
+      </div>
+    </div>
+    <div
+      v-else
+      class="mx-auto max-w-820px p-2"
+    >
       <div class="mb-6 mt-8 flex items-center justify-center gap-4">
         <h1 class="text-4xl font-bold">
-          2024 Annual Report
+          {{ t.annualReport.annualCodeTimeReport('2024') }}
         </h1>
       </div>
       <div
-        v-if="user.status.value === 'pending'"
-        class="h-32 w-full animate-pulse rounded bg-surface-variant-1"
-      />
-      <div v-else-if="user.error.value">
-        {{ user.error.value }}
-      </div>
-      <div
-        v-else-if="user.data.value"
+        v-if="user"
         class="mb-12 flex justify-center"
       >
         <div class="flex gap-2">
           <img
-            v-if="user.data.value.avatar"
-            :src="user.data.value.avatar"
+            v-if="user.avatar"
+            :src="user.avatar"
             class="h-10 w-10 rounded-full"
           >
           <div>
             <div class="text-sm font-bold">
-              {{ user.data.value.username }}
+              {{ user.username }}
             </div>
             <div class="text-xs text-surface-dimmed">
-              {{ user.data.value.email }}
+              {{ user.email }}
             </div>
           </div>
         </div>
       </div>
-      <div
-        v-if="yearlyData.status.value === 'pending'"
-        class="h-32 w-full animate-pulse rounded bg-surface-variant-1"
-      />
-      <div v-else-if="yearlyData.error.value">
-        {{ yearlyData.error.value }}
-      </div>
-      <div v-else>
+      <div>
         <div class="mb-32 mt-4 flex flex-col items-center">
           <HeaderComponent
-            title="Annual Total Coding Time"
+            :title="t.annualReport.totalCodingTimeOfTheYear"
             :value="getDurationString(sumMinutes * 60 * 1000)"
           />
           <YearCalendarChart
@@ -264,16 +277,15 @@ const topLanguage = computed(() => {
                 {{ (weekendMinutesRatio * 100).toFixed(0) }}%
               </div>
               <div class="text-sm text-surface-dimmed">
-                Weekend Coding Time
+                {{ t.annualReport.weekendCodingTimeRatio }}
               </div>
             </div>
-
             <div>
               <div class="text-3xl text-primary">
                 {{ getDurationString(averageMinutes * 60 * 1000, ["hours", "minutes"]) }}
               </div>
               <div class="text-sm text-surface-dimmed">
-                Average Daily Coding Time
+                {{ t.annualReport.averageDailyCodingTime }}
               </div>
             </div>
           </div>
@@ -281,19 +293,19 @@ const topLanguage = computed(() => {
 
         <div class="mb-32 mt-4 flex flex-col items-center">
           <HeaderComponent
-            title="Annual Busiest Month"
+            :title="t.annualReport.busiestMonthOfTheYear"
             :value="`${Math.max(...monthlyMinutes.map((d) => d.minutes)) ? `${monthlyMinutes.find((d) => d.minutes === Math.max(...monthlyMinutes.map((d) => d.minutes)))?.field}` : ''} (${getDurationString(Math.max(...monthlyMinutes.map((d) => d.minutes)) * 60 * 1000)})`"
           />
           <div class="h-300px max-h-300px max-w-800px w-800px">
             <PoltChart
               :options="{
-                color: { scheme: 'burd' },
                 x: {
                   type: 'band',
-                  label: 'Month',
+                  label: t.annualReport.month,
                   domain: monthlyMinutes.map((d) => d.field),
                 },
                 y: {
+                  label: t.annualReport.minutes,
                   grid: true,
                 },
                 marks: [
@@ -308,18 +320,20 @@ const topLanguage = computed(() => {
 
         <div class="mb-32 mt-4 flex flex-col items-center">
           <HeaderComponent
-            title="Annual Most Active Hour"
-            :value="`${mostActiveHour.field}:00 - ${mostActiveHour.field}:59`"
-            :extra="dayPeriodsString"
+            v-if="mostProductiveHour"
+            :title="t.annualReport.theMostProductiveHourOfTheYear"
+            :value="`${mostProductiveHour.field}:00 - ${mostProductiveHour.field}:59`"
+            :extra="hourString"
           />
           <div class="h-300px max-h-300px max-w-800px w-800px">
             <PoltChart
               :options="{
                 x: {
                   type: 'band',
-                  label: 'Hour',
+                  label: t.annualReport.hour,
                 },
                 y: {
+                  label: t.annualReport.minutes,
                   grid: true,
                 },
                 marks: [
@@ -335,7 +349,7 @@ const topLanguage = computed(() => {
           class="mb-32 mt-4 flex flex-col items-center"
         >
           <HeaderComponent
-            title="Annual Most Used Language"
+            :title="t.annualReport.theMostUsedLanguageOfTheYear"
           />
           <div class="flex items-center gap-2">
             <VSCodeIcon
@@ -353,7 +367,7 @@ const topLanguage = computed(() => {
           </div>
           <div class="mt-4 flex flex-col items-center gap-1">
             <div
-              v-for="lang in yearlyData.data.value?.topLanguages.slice(1)"
+              v-for="lang in yearlyData.data?.topLanguages.slice(1)"
               :key="lang.field"
               class="flex items-center gap-2"
             >

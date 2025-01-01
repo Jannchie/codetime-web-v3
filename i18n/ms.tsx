@@ -2,6 +2,28 @@ import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
 export const ms: Partial<Translation> = {
+  annualReport: {
+    userNotFound: 'Pengguna tidak dijumpai.',
+    noData: 'Tiada data tersedia.',
+    noDataAvailableFor: (year: number | string) => `Tiada data tersedia untuk ${year}.`,
+    annualCodeTimeReport: (year: number | string) => `Laporan Masa Kod Tahunan untuk ${year}`,
+    weekendCodingTimeRatio: 'Nisbah Masa Pengekodan Hujung Minggu',
+    averageDailyCodingTime: 'Purata Masa Pengekodan Harian',
+    busiestDayOfTheYear: 'Hari Paling Sibuk dalam Setahun',
+    busiestMonthOfTheYear: 'Bulan Paling Sibuk dalam Setahun',
+    theMostProductiveHourOfTheYear: 'Jam Paling Produktif dalam Setahun',
+    month: 'Bulan',
+    hour: 'Jam',
+    minutes: 'Minit',
+    theMostUsedLanguageOfTheYear: 'Bahasa Paling Banyak Digunakan dalam Setahun',
+    totalCodingTimeOfTheYear: 'Jumlah Masa Pengekodan dalam Setahun',
+    priodOfDay: {
+      morning: 'Pagi',
+      afternoon: 'Petang',
+      evening: 'Malam',
+      midnight: 'Tengah malam',
+    },
+  },
   meta: {
     title: 'CodeTime - Lacak masa kod anda',
     description: 'CodeTime adalah aplikasi yang direka untuk pembangun bagi membantu anda menjejaki, menganalisis, dan meningkatkan kemahiran pengurusan masa kod anda.',

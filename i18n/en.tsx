@@ -2,6 +2,28 @@ import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
 export const en: Translation = {
+  annualReport: {
+    userNotFound: 'User not found.',
+    noData: 'No data available.',
+    noDataAvailableFor: (year: number | string) => `No data available for ${year}.`,
+    annualCodeTimeReport: (year: number | string) => `Annual Code Time Report for ${year}`,
+    weekendCodingTimeRatio: 'Weekend Coding Time Ratio',
+    averageDailyCodingTime: 'Average Daily Coding Time',
+    busiestDayOfTheYear: 'Busiest Day of the Year',
+    busiestMonthOfTheYear: 'Busiest Month of the Year',
+    theMostProductiveHourOfTheYear: 'The Most Productive Hour of the Year',
+    month: 'Month',
+    hour: 'Hour',
+    minutes: 'Minutes',
+    theMostUsedLanguageOfTheYear: 'The Most Used Language of the Year',
+    totalCodingTimeOfTheYear: 'Total Coding Time of the Year',
+    priodOfDay: {
+      morning: 'Morning',
+      afternoon: 'Afternoon',
+      evening: 'Evening',
+      midnight: 'Midnight',
+    },
+  },
   meta: {
     title: 'CodeTime - Track your coding time automatically',
     description: 'CodeTime is an application designed for developers to help you track, analyze and improve your coding time management skills.',

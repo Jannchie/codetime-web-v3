@@ -2,6 +2,28 @@ import type { Translation } from './type'
 import NuxtLink from './NuxtLink.vue'
 
 export const ja: Partial<Translation> = {
+  annualReport: {
+    userNotFound: 'ユーザーが見つかりません。',
+    noData: 'データがありません。',
+    noDataAvailableFor: (year: number | string) => `${year} 年のデータはありません。`,
+    annualCodeTimeReport: (year: number | string) => `${year} 年の年間コーディング時間レポート`,
+    weekendCodingTimeRatio: '週末のコーディング時間比率',
+    averageDailyCodingTime: '1日あたりの平均コーディング時間',
+    busiestDayOfTheYear: '年間で最も忙しい日',
+    busiestMonthOfTheYear: '年間で最も忙しい月',
+    theMostProductiveHourOfTheYear: '年間で最も生産性の高い時間',
+    month: '月',
+    hour: '時間',
+    minutes: '分',
+    theMostUsedLanguageOfTheYear: '年間で最も使用された言語',
+    totalCodingTimeOfTheYear: '年間の合計コーディング時間',
+    priodOfDay: {
+      morning: '午前',
+      afternoon: '午後',
+      evening: '夕方',
+      midnight: '深夜',
+    },
+  },
   meta: {
     title: 'CodeTime - コーディング時間を追跡',
     description: 'CodeTime は、開発者向けに洗練されたアプリで、あなたのコーディング時間を精密に追跡し、詳細な分析を提供します。',
