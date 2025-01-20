@@ -1,4 +1,4 @@
-const locales = ['en', 'zh-CN', 'ja', 'pt-BR', 'it', 'ms', 'ru', 'ua', 'es', 'fr', 'de']
+const locales = ['en', 'zh-CN', 'zh-TW', 'ja', 'pt-BR', 'it', 'ms', 'ru', 'ua', 'es', 'fr', 'de']
 
 export default defineNuxtRouteMiddleware((to) => {
   try {
@@ -23,7 +23,7 @@ export default defineNuxtRouteMiddleware((to) => {
     }
     for (const preferredLanguage of preferredLanguages) {
       let trueLanguage = preferredLanguage
-      if (trueLanguage === 'zh-TW' || trueLanguage === 'zh-HK' || trueLanguage === 'zh') {
+      if (trueLanguage === 'zh-HK' || trueLanguage === 'zh') {
         trueLanguage = 'zh-CN'
       }
       else if (trueLanguage === 'ja-JP' || trueLanguage === 'ja') {
