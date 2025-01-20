@@ -61,6 +61,8 @@ const discountText = computed(() => {
       return 'Используйте код скидки "CODETIME2024" для получения 50% скидки на все наши продукты.'
     case 'ua':
       return 'Використовуйте код знижки "CODETIME2024" для отримання 50% знижки на всі наші продукти.'
+    case 'zh-TW':
+      return '使用折扣碼 "CODETIME2024" 享受所有產品 5 折優惠。'
     default:
       return 'Apply discount code "CODETIME2024" for 50% Off on all our products.'
   }

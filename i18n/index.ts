@@ -10,9 +10,11 @@ import { ptBR } from './ptBR'
 import { ru } from './ru'
 import { ua } from './ua'
 import { zhCN } from './zhCN'
+import { zhTW } from './zhTW'
 
 const i18NMap = new Map<string, Partial<Translation>>([
   ['zh-CN', zhCN],
+  ['zh-TW', zhTW],
   ['en', en],
   ['ja', ja],
   ['pt-BR', ptBR],
