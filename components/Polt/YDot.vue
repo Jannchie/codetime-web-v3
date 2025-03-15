@@ -31,7 +31,7 @@ const maxR = computed(() => {
 })
 
 const options = computed<Plot.PlotOptions>(() => {
-  return {
+  const o: Plot.PlotOptions = {
     className: 'y-dot-plot',
     color: {
       scheme: 'Warm',
@@ -41,8 +41,10 @@ const options = computed<Plot.PlotOptions>(() => {
       grid: true,
       ariaLabel: props.yLabel,
       label: props.yLabel,
+      axis: false,
     },
     x: {
+      tickSize: 4,
       insetRight: maxR.value,
       insetLeft: maxR.value,
       label: t.value.plot.label.date,
@@ -103,9 +105,11 @@ const options = computed<Plot.PlotOptions>(() => {
         ariaLabel: t.value.plot.label.language,
         tickFormat: (d: string) => getLanguageName(d),
         tickPadding: -8,
+        tickSize: 4,
       }),
     ],
   }
+  return o
 })
 </script>
 

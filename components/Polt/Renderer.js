@@ -1,9 +1,13 @@
+/* eslint-disable accessor-pairs */
 import * as Plot from '@observablehq/plot'
 import { h, withDirectives } from 'vue'
+
+class Event { }
 
 class Document {
   constructor() {
     this.documentElement = new Element(this, 'html')
+    this.defaultView = { Event }
   }
 
   createElementNS(namespace, tagName) {
@@ -43,7 +47,7 @@ class Element {
   }
 
   setAttribute(name, value) {
-    this.attributes[name] = value
+    this.attributes[name] = String(value)
   }
 
   setAttributeNS(namespace, name, value) {
@@ -113,16 +117,21 @@ class Element {
     return child
   }
 
+  cloneNode(deep) {
+    const clone = new Element(this.ownerDocument, this.tagName)
+    clone.attributes = { ...this.attributes }
+    if (deep) {
+      clone.children = this.children.map(child => child.cloneNode(deep))
+    }
+    return clone
+  }
+
   querySelector() {
     return null
   }
 
   querySelectorAll() {
     return []
-  }
-
-  get textContent() {
-    return this.children.map(c => c.textContent).join('')
   }
 
   set textContent(value) {
@@ -141,14 +150,11 @@ class Element {
     return h(
       this.tagName,
       this.attributes,
-      this.children.sort((d) => {
-        return d.tagName === 'style' ? -1 : 1
-      }).map((c) => {
-        return c.toHyperScript()
-      }),
+      this.children.map(c => c.toHyperScript()),
     )
   }
 }
+
 class TextNode {
   constructor(ownerDocument, nodeValue) {
     this.ownerDocument = ownerDocument
@@ -174,7 +180,7 @@ function toHyperScript(node) {
 
 export default {
   props: {
-    options: Object, /** @type {} */
+    options: Object,
     mark: Object,
     defer: Boolean,
     method: { type: String, default: 'plot' },
@@ -184,28 +190,27 @@ export default {
     const options = {
       ...(method === 'plot' && {
         marks: this.mark == null ? [] : [this.mark],
-        width: 1110, // better default for Codetime
+        width: 688, // better default for VitePress
       }),
       ...this.options,
-      className: this.options.className && 'plot',
+      className: 'plot',
     }
+    const disconnect = () => {
+      if (this._observer !== undefined) {
+        this._observer.disconnect()
+        this._observer = undefined
+      }
+      if (this._idling !== undefined) {
+        cancelIdleCallback(this._idling)
+        this._idling = undefined
+      }
+    }
+    const unmounted = (el) => {
+      while (el.lastChild) el.lastChild.remove()
+      disconnect()
+    }
+
     if (this.defer) {
-      const disconnect = () => {
-        if (this._observer !== undefined) {
-          this._observer.disconnect()
-          this._observer = undefined
-        }
-        if (this._idling !== undefined) {
-          cancelIdleCallback(this._idling)
-          this._idling = undefined
-        }
-      }
-
-      const unmounted = (el) => {
-        while (el.lastChild) el.lastChild.remove()
-        disconnect()
-      }
-
       const mounted = (el) => {
         disconnect() // remove old listeners
         function observed() {
@@ -231,7 +236,8 @@ export default {
           }
         }
       }
-      const { height = 300 } = this.options
+
+      const { height = 400 } = this.options
       return withDirectives(
         h(
           'span',
@@ -240,7 +246,7 @@ export default {
                 h('div', {
                   style: {
                     maxWidth: '100%',
-                    width: `1110px`,
+                    width: `688px`,
                     aspectRatio: `688 / ${height}`,
                   },
                 }),
@@ -260,16 +266,6 @@ export default {
     }
     if (typeof document !== 'undefined') {
       const plot = Plot[method](options)
-      plot.addEventListener('input', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.$emit('input', e, plot.value)
-      })
-      plot.addEventListener('pointerup', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.$emit('pointerup', e, plot.value)
-      })
       const replace = (el) => {
         while (el.lastChild) el.lastChild.remove()
         el.append(plot)
