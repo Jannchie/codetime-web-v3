@@ -1,4 +1,5 @@
-import { client, getStatsLatest } from '@/api/sdk.gen'
+import { client } from '@/api/v3/client.gen'
+import { getRecentLogsByUserId } from '~/api/v3'
 
 const config = useRuntimeConfig()
 
@@ -10,14 +11,14 @@ export default defineEventHandler(async (event) => {
   // make a svg response
   const query = getQuery(event)
 
-  const resp = await getStatsLatest({
-    query: {
-      uid: query.uid as number,
+  const resp = await getRecentLogsByUserId({
+    path: {
+      user_id: query.uid as number,
     },
   })
 
   const { data } = resp
-  if (!data) {
+  if (!data || data.length === 0) {
     return new Response(
       `<svg xmlns="http://www.w3.org/2000/svg" style="width: auto; height: 28px;">
   <g transform="translate(4, 4)">
@@ -46,7 +47,7 @@ export default defineEventHandler(async (event) => {
       </circle>
     </g>
     <image href="/_ipx/_/vscode-icons/vscode-icons_file-type-go.svg" x="25" y="0" width="20" height="20" />
-    <text x="50" y="15" font-size="12">Working on ${data.project}</text>
+    <text x="50" y="15" font-size="12">Working on ${data[0].project}</text>
   </g>
 </svg>`
     , {

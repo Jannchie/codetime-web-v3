@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { client } from '@/api/v3/sdk.gen'
+import { client } from '@/api/v3/client.gen'
 
 const { data: user, status } = await fetchUser()
 provide('user', user)
