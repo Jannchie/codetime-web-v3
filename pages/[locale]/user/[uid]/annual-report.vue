@@ -16,7 +16,7 @@ const user = (await getUserByUserId({
 if (!user) {
   throw createError({
     statusCode: 404,
-    statusMessage: t.value.annualReport.userNotFound,
+    message: t.value.annualReport.userNotFound,
   })
 }
 watchEffect(() => {
