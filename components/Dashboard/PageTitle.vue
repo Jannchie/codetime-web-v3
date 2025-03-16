@@ -29,7 +29,7 @@ const cs = useMergedCS(borderCS, containerCS)
     <div class="mx-auto my-8 max-w-6xl w-6xl px-7">
       <div
         v-if="loading"
-        class="bg-surface-variant-1 mb-4 h-36px w-40 animate-pulse bg-op50 text-3xl"
+        class="mb-4 h-36px w-40 animate-pulse bg-surface-variant-1 bg-op50 text-3xl"
       />
       <div
         v-else
@@ -39,7 +39,7 @@ const cs = useMergedCS(borderCS, containerCS)
       </div>
       <div
         v-if="loading"
-        class="bg-surface-variant-1 h-20px w-60 animate-pulse bg-op50 text-sm"
+        class="h-20px w-60 animate-pulse bg-surface-variant-1 bg-op50 text-sm"
       />
       <div
         v-else

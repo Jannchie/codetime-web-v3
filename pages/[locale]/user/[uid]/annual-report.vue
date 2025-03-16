@@ -63,15 +63,15 @@ const sumMinutes = computed(() => {
   return 0
 })
 
-defineOgImageComponent('AnnualReport', {
-  title: `${getDurationString(sumMinutes.value * 60 * 1000)}`,
-  description: t.value.annualReport.annualCodeTimeReport('2024'),
-  colorMode: 'dark',
-  theme: '#0067cc',
-  username: user.username,
-  logo: 'https://codetime.dev/icon.png',
-  avatar: user.avatar,
-})
+// defineOgImageComponent('AnnualReport', {
+//   title: `${getDurationString(sumMinutes.value * 60 * 1000)}`,
+//   description: t.value.annualReport.annualCodeTimeReport('2024'),
+//   colorMode: 'dark',
+//   theme: '#0067cc',
+//   username: user.username,
+//   logo: 'https://codetime.dev/icon.png',
+//   avatar: user.avatar,
+// })
 
 const averageMinutes = computed(() => {
   if (yearlyData.data) {

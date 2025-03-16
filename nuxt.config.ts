@@ -12,11 +12,11 @@ export default defineNuxtConfig({
     url: 'https://codetime.dev',
     name: 'Code Time',
   },
-  ogImage: {
-    fonts: [
-      'Noto+Sans+SC:400', // Too big for workers
-    ],
-  },
+  // ogImage: {
+  //   fonts: [
+  //     'Noto+Sans+SC:400', // Too big for workers
+  //   ],
+  // },
   gtag: {
     id: 'G-36N091FBKT',
   },
