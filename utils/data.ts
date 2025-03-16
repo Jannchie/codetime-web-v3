@@ -56,7 +56,7 @@ export function useTodayMinutes(data: MaybeRef<{
   })
 }
 
-export function useTotalMinutes(data: MaybeRef< {
+export function useTotalMinutes(data: MaybeRef<{
   duration: number
   time: string
 }[]

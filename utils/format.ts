@@ -1,4 +1,5 @@
-import { type Duration, formatDuration } from 'date-fns'
+import type { Duration } from 'date-fns'
+import { formatDuration } from 'date-fns'
 import { de, enUS, es, fr, it, ja, ms, ptBR, ru, uk, zhCN, zhTW } from 'date-fns/locale'
 import languageIdentifiers from './LanguageIdentifiers.json'
 
