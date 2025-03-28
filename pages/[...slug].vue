@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['i18n','log'],
+  middleware: ['i18n'],
 })
 </script>
 

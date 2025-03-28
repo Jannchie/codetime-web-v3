@@ -1,17 +1,19 @@
-const locales = ['en', 'zh-CN', 'zh-TW', 'ja', 'pt-BR', 'it', 'ms', 'ru', 'ua', 'es', 'fr', 'de']
-
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware((to, from) => {
   try {
-    const { locale } = to.params as { locale: string }
+    const locale = to.path.split('/')[1]
     if (locales.includes(locale)) {
       return
     }
-    // get preferred language from browser
-    const headers = useRequestHeaders()
-    const cookie = useCookie('locale')
-    if (cookie.value) {
-      return navigateTo(`/${cookie.value}${to.path}`)
+    if (from.path !== to.path) {
+      return
     }
+
+    const cookie = useCookie('locale')
+    if (cookie.value && locales.includes(cookie.value)) {
+      return navigateTo(`/${cookie.value}${to.path}`, { redirectCode: 302 })
+    }
+
+    const headers = useRequestHeaders()
     let preferredLanguages = ['en']
     try {
       if (headers['accept-language']) {
@@ -21,6 +23,7 @@ export default defineNuxtRouteMiddleware((to) => {
     catch (e) {
       console.error(e)
     }
+
     for (const preferredLanguage of preferredLanguages) {
       let trueLanguage = preferredLanguage
       if (trueLanguage === 'zh-HK' || trueLanguage === 'zh') {
@@ -29,13 +32,15 @@ export default defineNuxtRouteMiddleware((to) => {
       else if (trueLanguage === 'ja-JP' || trueLanguage === 'ja') {
         trueLanguage = 'ja'
       }
+
       if (trueLanguage !== 'en' && locales.includes(trueLanguage)) {
-        return navigateTo(`/${trueLanguage}${to.path}`)
+        return navigateTo(`/${trueLanguage}${to.path}`, { redirectCode: 302 })
       }
     }
+    return navigateTo(`/en${to.path}`, { redirectCode: 302 })
   }
   catch (e) {
     console.error(e)
+    return navigateTo(`/en${to.path}`, { redirectCode: 302 })
   }
-  return navigateTo(`/en${to.path}`)
 })
