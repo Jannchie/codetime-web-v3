@@ -32,13 +32,13 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
       {{ fromDate.toISOString().slice(0, 10) }} ~ {{ new Date().toISOString().slice(0, 10) }}
     </div>
   </div>
-  <template v-if="resp.status.value === 'pending'" />
-  <template v-else-if="resp.error.value" />
-  <template v-else-if="resp.data.value">
-    <Paper
-      with-border
-      class="w-full flex flex-col gap-6 rounded-2xl"
-    >
+
+  <Paper
+    class="h-full w-full flex flex-col gap-6 rounded-2xl"
+  >
+    <template v-if="resp.status.value === 'pending'" />
+    <template v-else-if="resp.error.value" />
+    <template v-else-if="resp.data.value">
       <div
         v-for="item, i in resp.data.value"
         :key="item.username"
@@ -90,6 +90,6 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
           </div>
         </div>
       </div>
-    </Paper>
-  </template>
+    </template>
+  </Paper>
 </template>
