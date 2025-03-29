@@ -6,7 +6,7 @@ const t = useI18N()
 </script>
 
 <template>
-  <div class="flex gap-2 children:min-w-24 children:cursor-pointer children:gap-2 children:rounded-xl children:px-4 children:py-1 children:text-center children:duration-100 children:ease-in-out">
+  <div class="flex gap-2 !children:min-w-24 !children:cursor-pointer !children:gap-2 !children:rounded-xl !children:px-4 !children:py-1 !children:text-center !children:duration-100 !children:ease-in-out">
     <Btn
       :variant="variant === 'monthly' ? 'filled' : 'default'"
       class="!h-14"
