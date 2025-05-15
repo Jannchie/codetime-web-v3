@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { v3GetTotalMinutes } from '~/api/v3'
 import { locales } from '~/i18n'
 
 const locale = useLocale()
-const data = await fetchSumMinutes()
+const { data } = await useAsyncData(async () => {
+  const resp = await v3GetTotalMinutes()
+  return resp.data
+})
 const minutes = computed(() => {
-  return data.value?.minutes ?? 0
+  return data.value?.totalMinutes ?? 0
 })
 const fomater = computed(() => {
   const finalLocale = locales.includes(locale.value) ? locale.value : 'en'
@@ -13,6 +17,7 @@ const fomater = computed(() => {
     minimumFractionDigits: 0,
   })
 })
+
 const t = useI18N()
 </script>
 

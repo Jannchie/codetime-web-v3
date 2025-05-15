@@ -11,10 +11,12 @@ const props = withDefaults(defineProps<{
 
 const transform = computed(() => {
   switch (props.type) {
-    case 'language':
+    case 'language': {
       return transformTopLanguageData
-    case 'platform':
+    }
+    case 'platform': {
       return transformTopPlatformData
+    }
   }
   return ''
 })
@@ -32,11 +34,11 @@ function onClickItem(field: string, type: 'language' | 'project' | 'platform') {
       value: field,
       key: type,
     }
-    if (!filters.find(f => f.key === type && f.value === field)) {
-      filters.push(filter)
+    if (filters.some(f => f.key === type && f.value === field)) {
+      filters.splice(filters.findIndex(f => f.key === type && f.value === field), 1)
     }
     else {
-      filters.splice(filters.findIndex(f => f.key === type && f.value === field), 1)
+      filters.push(filter)
     }
   }
 }

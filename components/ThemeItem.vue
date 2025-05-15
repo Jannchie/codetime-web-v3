@@ -7,12 +7,12 @@ const props = defineProps<{
 
 const t = useI18N()
 const currentScheme = computed({ get() {
-  if (typeof window !== 'undefined') {
+  if (globalThis.window !== undefined) {
     return document.documentElement.dataset.scheme ?? 'light'
   }
   return 'light'
 }, set(value: string) {
-  if (typeof window !== 'undefined') {
+  if (globalThis.window !== undefined) {
     document.documentElement.dataset.scheme = value
   }
 } })
@@ -22,12 +22,15 @@ const isCurrent = computed(() => {
 })
 const title = computed(() => {
   switch (props.theme) {
-    case 'dark':
+    case 'dark': {
       return t.value.dashboard.settings.theme.dark
-    case 'light':
+    }
+    case 'light': {
       return t.value.dashboard.settings.theme.light
-    case 'system':
+    }
+    case 'system': {
       return t.value.dashboard.settings.theme.system
+    }
   }
   return ''
 })
@@ -42,8 +45,7 @@ const textCS = useCS({
 <template>
   <CardBase
 
-    with-border
-    no-padding
+    no-padding with-border
     class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
     :class="{
       'border-primary-container': isCurrent,

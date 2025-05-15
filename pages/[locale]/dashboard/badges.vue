@@ -20,10 +20,27 @@ const project = ref<{
   id: string
 } | null>(null)
 const days = ref<string>('')
-
+const config = useRuntimeConfig()
+const apiHost = config.public.apiHost
 const link = computed(() => {
-  // 使用 URLSearchParams 代替
-  const res = `https://img.shields.io/endpoint?style=${styleObj.value.id}&color=${color.value}&url=https%3A%2F%2Fapi.codetime.dev%2Fshield%3Fid%3D${user.value?.id}%26project%3D${project.value?.id ?? ''}%26in=${String(Number(days.value) * 86400 * 1000)}`
+  const params = {
+    uid: user.value?.id,
+    project: project.value?.id,
+    minutes: String(Number(days.value) * 24 * 60),
+    color: color.value,
+    style: styleObj.value.id,
+  }
+
+  // Remove null or undefined values from params and convert all values to strings
+  const filteredParams = Object.fromEntries(
+    Object.entries(params)
+      .filter(([_, value]) => value !== null && value !== undefined)
+      .map(([key, value]) => [key, String(value)]),
+  )
+  const queryString = new URLSearchParams(filteredParams).toString()
+  const url = `${apiHost}/v3/users/shield?${queryString}`
+  const safeUrl = encodeURIComponent(url)
+  const res = `https://img.shields.io/endpoint?style=${styleObj.value.id}&color=${color.value}&url=${safeUrl}`
   return res
 })
 </script>

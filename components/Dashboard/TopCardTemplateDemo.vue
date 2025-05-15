@@ -2,27 +2,27 @@
 const data = [
   {
     field: 'python',
-    minutes: 68763,
+    minutes: 68_763,
     icon: 'i-vscode-icons-file-type-python',
   },
   {
     field: 'vue',
-    minutes: 40113,
+    minutes: 40_113,
     icon: 'i-vscode-icons-file-type-vue',
   },
   {
     field: 'typescript',
-    minutes: 38538,
+    minutes: 38_538,
     icon: 'i-vscode-icons-file-type-typescript',
   },
   {
     field: 'typescriptreact',
-    minutes: 29848,
+    minutes: 29_848,
     icon: 'i-vscode-icons-file-type-reactts',
   },
   {
     field: 'go',
-    minutes: 21171,
+    minutes: 21_171,
     icon: 'i-vscode-icons-file-type-go',
   },
 ]

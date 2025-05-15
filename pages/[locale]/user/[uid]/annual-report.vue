@@ -1,17 +1,17 @@
 <script setup lang="tsx">
 import { Btn } from '@roku-ui/vue'
-import { getUserByUserId, getYearlyReportData } from '~/api/v3'
+import { v3GetUserByUserId, v3GetYearlyReportData } from '~/api/v3'
 
 const route = useRoute()
 const uid = computed(() => {
   return Number(route.params.uid)
 })
 const t = useI18N()
-const user = (await getUserByUserId({
+const { data: user } = (await v3GetUserByUserId({
   path: {
     user_id: uid.value,
   },
-})).data
+}))
 
 if (!user) {
   throw createError({
@@ -34,13 +34,11 @@ watchEffect(() => {
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 const { share } = useShare()
-const yearlyData = await getYearlyReportData({
+const yearlyData = await v3GetYearlyReportData({
   query: {
+    user_id: uid.value,
     year: '2024',
     timezone: user.timezone ?? browserTimezone,
-  },
-  path: {
-    user_id: uid.value,
   },
 })
 
@@ -82,12 +80,13 @@ const averageMinutes = computed(() => {
 
 const mostProductiveHour = computed(() => {
   if (yearlyData.data) {
-    return yearlyData.data.hourlyDistribution.reduce((acc, cur) => {
-      if (cur.minutes > acc.minutes) {
-        return cur
+    let maxHour = yearlyData.data.hourlyDistribution[0]
+    for (const hourData of yearlyData.data.hourlyDistribution) {
+      if (hourData.minutes > maxHour.minutes) {
+        maxHour = hourData
       }
-      return acc
-    }, yearlyData.data.hourlyDistribution[0])
+    }
+    return maxHour
   }
   return {
     field: 0,
@@ -117,34 +116,31 @@ const hourlyDistribution = computed(() => {
 })
 
 const dayPeriods = computed(() => {
-  if (yearlyData.data) {
-    return yearlyData.data.hourlyDistribution.reduce((acc, cur) => {
-      if (Number(cur.field) >= 6 && Number(cur.field) < 12) {
-        acc.morning += cur.minutes
-      }
-      else if (Number(cur.field) >= 12 && Number(cur.field) < 18) {
-        acc.afternoon += cur.minutes
-      }
-      else if (Number(cur.field) >= 18 && Number(cur.field) < 24) {
-        acc.evening += cur.minutes
-      }
-      else {
-        acc.midnight += cur.minutes
-      }
-      return acc
-    }, {
-      morning: 0,
-      afternoon: 0,
-      evening: 0,
-      midnight: 0,
-    })
-  }
-  return {
+  const result = {
     morning: 0,
     afternoon: 0,
     evening: 0,
     midnight: 0,
   }
+
+  if (yearlyData.data) {
+    for (const cur of yearlyData.data.hourlyDistribution) {
+      if (Number(cur.field) >= 6 && Number(cur.field) < 12) {
+        result.morning += cur.minutes
+      }
+      else if (Number(cur.field) >= 12 && Number(cur.field) < 18) {
+        result.afternoon += cur.minutes
+      }
+      else if (Number(cur.field) >= 18 && Number(cur.field) < 24) {
+        result.evening += cur.minutes
+      }
+      else {
+        result.midnight += cur.minutes
+      }
+    }
+  }
+
+  return result
 })
 
 const hourString = computed(() => {
@@ -156,12 +152,14 @@ const hourString = computed(() => {
 // 双休日编程时间占比
 const weekendMinutes = computed(() => {
   if (yearlyData.data) {
-    return yearlyData.data.dailyDistribution.reduce((acc, cur) => {
-      if (new Date(cur.field).getDay() === 0 || new Date(cur.field).getDay() === 6) {
-        return acc + cur.minutes
+    let sum = 0
+    for (const cur of yearlyData.data.dailyDistribution) {
+      const day = new Date(cur.field).getDay()
+      if (day === 0 || day === 6) {
+        sum += cur.minutes
       }
-      return acc
-    }, 0)
+    }
+    return sum
   }
   return 0
 })

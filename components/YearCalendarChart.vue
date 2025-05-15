@@ -36,7 +36,7 @@ const yearData = computed(() => {
 })
 
 const latestWeekDate = computed(() => {
-  return yearData.value[yearData.value.length - 1].date
+  return yearData.value.length > 0 ? yearData.value.at(-1)?.date || new Date() : new Date()
 })
 
 const t = useI18N()

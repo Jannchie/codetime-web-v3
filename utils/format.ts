@@ -6,8 +6,8 @@ import languageIdentifiers from './LanguageIdentifiers.json'
 const m = ms
 
 export function getDurationData(ms: number): { hour: number, minute: number, second: number } {
-  const MS_OF_HOUR = 3600000
-  const MS_OF_MINUTE = 60000
+  const MS_OF_HOUR = 3_600_000
+  const MS_OF_MINUTE = 60_000
   const MS_OF_SECOND = 1000
   const hour = Math.floor(ms / MS_OF_HOUR)
   ms %= MS_OF_HOUR
@@ -78,11 +78,14 @@ const languageIdentifiersMap = new Map(entries)
 export function getLanguageName(languageIdentifier: string): string {
   const res = languageIdentifiersMap.get(languageIdentifier) ?? languageIdentifier
   switch (res) {
-    case '':
+    case '': {
       return 'Unknown'
-    case 'plain_text':
+    }
+    case 'plain_text': {
       return 'Plain Text'
-    default:
+    }
+    default: {
       return res
+    }
   }
 }

@@ -86,22 +86,30 @@ export const ms: Partial<Translation> = {
     },
     status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
       switch (str) {
-        case 'active':
+        case 'active': {
           return 'Aktif'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'Dibatalkan'
-        case 'expired':
+        }
+        case 'expired': {
           return 'Luput'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'Ujian'
-        case 'paused':
+        }
+        case 'paused': {
           return 'Dijeda'
-        case 'past-due':
+        }
+        case 'past-due': {
           return 'Lewat'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return 'Belum Dibayar'
-        default:
+        }
+        default: {
           return str
+        }
       }
     },
     basic: {

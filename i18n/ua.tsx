@@ -103,20 +103,27 @@ export const ua: Partial<Translation> = {
         | 'unpaid',
     ): string {
       switch (str) {
-        case 'active':
+        case 'active': {
           return 'Активний'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'Скасовано'
-        case 'expired':
+        }
+        case 'expired': {
           return 'Термін дії закінчився'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'Пробний період'
-        case 'paused':
+        }
+        case 'paused': {
           return 'Призупинено'
-        case 'past-due':
+        }
+        case 'past-due': {
           return 'Закінчився термін дії'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return 'Неоплачений'
+        }
       }
     },
     basic: {

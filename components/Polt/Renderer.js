@@ -2,7 +2,7 @@
 import * as Plot from '@observablehq/plot'
 import { h, withDirectives } from 'vue'
 
-class Event { }
+class Event {}
 
 class Document {
   constructor() {
@@ -33,8 +33,8 @@ class Document {
 
 class Style {
   static empty = new Style()
-  setProperty() { }
-  removeProperty() { }
+  setProperty() {}
+  removeProperty() {}
 }
 
 class Element {
@@ -92,7 +92,7 @@ class Element {
 
   append(...children) {
     for (const child of children) {
-      this.appendChild(child?.ownerDocument ? child : this.ownerDocument.createTextNode(child))
+      this.append(child?.ownerDocument ? child : this.ownerDocument.createTextNode(child))
     }
   }
 
@@ -108,7 +108,7 @@ class Element {
     }
     else {
       const i = this.children.indexOf(after)
-      if (i < 0) {
+      if (i === -1) {
         throw new Error('insertBefore reference node not found')
       }
       this.children.splice(i, 0, child)

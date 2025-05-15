@@ -15,11 +15,13 @@ const props = withDefaults(defineProps<{
 const relativeFileCountList = computed(() => {
   // count by relativeFile
   const countMap = new Map<string, number>()
-  props.data?.forEach((item) => {
-    const count = countMap.get(item.relativeFile) ?? 0
-    countMap.set(item.relativeFile, count + 1)
-  })
-  return Array.from(countMap.entries()).sort((a, b) => b[1] - a[1])
+  if (props.data) {
+    for (const item of props.data) {
+      const count = countMap.get(item.relativeFile) ?? 0
+      countMap.set(item.relativeFile, count + 1)
+    }
+  }
+  return [...countMap.entries()].sort((a, b) => b[1] - a[1])
 })
 const t = useI18N()
 type PathValue = [string, number]
@@ -115,7 +117,7 @@ const flameNodes = computed(() => {
   if (!selected) {
     return basicFlameNodes.value
   }
-  const nodes: FlameNode[] = JSON.parse(JSON.stringify(basicFlameNodes.value))
+  const nodes: FlameNode[] = structuredClone(basicFlameNodes.value)
   const result: FlameNode[] = []
   for (const node of nodes) {
     if (isParentOf(selected, node)) {
@@ -132,15 +134,10 @@ const flameNodes = computed(() => {
   return result
 })
 function onClickNode(flareNode: FlameNode) {
-  if (selectedFlareNode.value?.path !== flareNode.path) {
-    selectedFlareNode.value = flareNode
-  }
-  else {
-    selectedFlareNode.value = basicFlameNodes.value[0]
-  }
+  selectedFlareNode.value = selectedFlareNode.value?.path === flareNode.path ? basicFlameNodes.value[0] : flareNode
 }
 function getAscii(str: string) {
-  return str.replace(/[\u4E00-\u9FA5]/g, '##').length
+  return str.replaceAll(/[\u4E00-\u9FA5]/g, '##').length
 }
 </script>
 

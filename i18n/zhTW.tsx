@@ -86,20 +86,27 @@ export const zhTW: Partial<Translation> = {
     },
     status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
       switch (str) {
-        case 'active':
+        case 'active': {
           return '有效'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return '已取消'
-        case 'expired':
+        }
+        case 'expired': {
           return '已過期'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return '試用中'
-        case 'paused':
+        }
+        case 'paused': {
           return '已暫停'
-        case 'past-due':
+        }
+        case 'past-due': {
           return '已逾期'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return '未付款'
+        }
       }
     },
     basic: {

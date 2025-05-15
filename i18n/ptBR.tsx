@@ -86,20 +86,27 @@ export const ptBR: Partial<Translation> = {
     },
     status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
       switch (str) {
-        case 'active':
+        case 'active': {
           return 'Ativo'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'Cancelado'
-        case 'expired':
+        }
+        case 'expired': {
           return 'Expirado'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'Em teste'
-        case 'paused':
+        }
+        case 'paused': {
           return 'Pausado'
-        case 'past-due':
+        }
+        case 'past-due': {
           return 'Vencido'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return 'Não pago'
+        }
       }
     },
     basic: {

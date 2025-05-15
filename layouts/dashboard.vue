@@ -58,7 +58,7 @@ interface EventLog {
 }
 
 async function fetchLatestStats() {
-  return await useAPIFetch<EventLog | null>(`/stats/latest`, { })
+  return await useAPIFetch<EventLog | null>(`/stats/latest`, {})
 }
 
 const resp = await fetchLatestStats()

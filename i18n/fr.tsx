@@ -86,20 +86,27 @@ export const fr: Partial<Translation> = {
     },
     status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid'): string {
       switch (str) {
-        case 'active':
+        case 'active': {
           return 'Actif'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'Annulé'
-        case 'expired':
+        }
+        case 'expired': {
           return 'Expiré'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'En cours'
-        case 'paused':
+        }
+        case 'paused': {
           return 'En pause'
-        case 'past-due':
+        }
+        case 'past-due': {
           return 'En souffrance'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return 'Non payé'
+        }
       }
     },
     basic: {

@@ -13,18 +13,23 @@ const props = withDefaults(defineProps<{
 })
 const t = useI18N()
 
-const data = computed<DataPoint[]>(() => {
-  function aggregateData(data: DataPoint[], interval = 15): DataPoint[] {
-    const aggregatedData: DataPoint[] = []
+function aggregateData(data: DataPoint[], interval = 15): DataPoint[] {
+  const aggregatedData: DataPoint[] = []
 
-    for (let i = 0; i < data.length; i += interval) {
-      const chunk = data.slice(i, i + interval)
-      const maxRatio = chunk.reduce((max, item) => item.ratio > max ? item.ratio : max, 0)
-      aggregatedData.push({ time: data[i].time, ratio: maxRatio })
+  for (let i = 0; i < data.length; i += interval) {
+    const chunk = data.slice(i, i + interval)
+    let maxRatio = 0
+    for (const item of chunk) {
+      if (item.ratio > maxRatio) {
+        maxRatio = item.ratio
+      }
     }
-
-    return aggregatedData
+    aggregatedData.push({ time: data[i].time, ratio: maxRatio })
   }
+
+  return aggregatedData
+}
+const data = computed<DataPoint[]>(() => {
   if (!props.data) {
     return []
   }

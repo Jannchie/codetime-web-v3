@@ -57,18 +57,20 @@ const { data, pending } = await useAPIFetch<{
 
 const gitBranchCountMap = computed(() => {
   const map = new Map<string, number>()
-  data.value?.forEach((d) => {
-    if (d.gitBranch === '') {
-      d.gitBranch = 'Unknown'
+  if (data.value) {
+    for (const d of data.value) {
+      if (d.gitBranch === '') {
+        d.gitBranch = 'Unknown'
+      }
+      if (map.has(d.gitBranch)) {
+        map.set(d.gitBranch, map.get(d.gitBranch)! + 1)
+      }
+      else {
+        map.set(d.gitBranch, 1)
+      }
     }
-    if (map.has(d.gitBranch)) {
-      map.set(d.gitBranch, map.get(d.gitBranch)! + 1)
-    }
-    else {
-      map.set(d.gitBranch, 1)
-    }
-  })
-  const arr = Array.from(map)
+  }
+  const arr = [...map]
   return arr.sort((a, b) => b[1] - a[1])
 })
 const maxBranchCount = computed(() => {

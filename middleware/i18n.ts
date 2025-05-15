@@ -20,8 +20,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
         preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
       }
     }
-    catch (e) {
-      console.error(e)
+    catch (error) {
+      console.error(error)
     }
 
     for (const preferredLanguage of preferredLanguages) {
@@ -39,8 +39,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
     return navigateTo(`/en${to.path}`, { redirectCode: 302 })
   }
-  catch (e) {
-    console.error(e)
+  catch (error) {
+    console.error(error)
     return navigateTo(`/en${to.path}`, { redirectCode: 302 })
   }
 })

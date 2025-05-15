@@ -86,20 +86,27 @@ export const en: Translation = {
     },
     status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid'): string {
       switch (str) {
-        case 'active':
+        case 'active': {
           return 'Active'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'Cancelled'
-        case 'expired':
+        }
+        case 'expired': {
           return 'Expired'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'On Trial'
-        case 'paused':
+        }
+        case 'paused': {
           return 'Paused'
-        case 'past-due':
+        }
+        case 'past-due': {
           return 'Past Due'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return 'Unpaid'
+        }
       }
     },
     basic: {

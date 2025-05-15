@@ -13,10 +13,10 @@ const t = useI18N()
 const differentLabel = computed(() => {
   const differentLanguages = new Set<string>()
   const differentDates = new Set<string>()
-  props.data.forEach((d) => {
+  for (const d of props.data) {
     differentLanguages.add(d.by)
     differentDates.add(d.date.toISOString().slice(0, 10))
-  })
+  }
   return { differentDates, differentLanguages }
 })
 const chart = ref()

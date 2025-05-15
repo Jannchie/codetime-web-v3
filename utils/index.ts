@@ -1,7 +1,3 @@
-import * as Plot from '@observablehq/plot'
-
-export { Plot }
-
 export interface User {
   CreatedAt: string
   UpdatedAt: string
@@ -50,12 +46,6 @@ export async function fetchUser() {
   })
 }
 
-export async function fetchSumMinutes() {
-  const { apiHost } = useRuntimeConfig().public
-  const { data } = await useFetch<{ minutes: number }>(`${apiHost}/sum-minutes`)
-  return data
-}
-
 export function useUser() {
   return inject<Ref<User | null>>('user', ref(null))
 }
@@ -72,10 +62,13 @@ export async function fetchTop(field: string, minutes: ComputedRef<number>, limi
       field,
       minutes: minutes.value,
       limit,
-      ...unref(filters).reduce((acc, cur) => {
-        acc[cur.key] = cur.value
-        return acc
-      }, {} as Record<string, string>),
+      ...(() => {
+        const obj: Record<string, string> = {}
+        for (const cur of unref(filters)) {
+          obj[cur.key] = cur.value
+        }
+        return obj
+      })(),
     }
   })
   return await useAPIFetch<TopData[]>(`/top`, {
@@ -89,3 +82,5 @@ export interface FilterItem {
   key: string
   value: string
 }
+
+export * as Plot from '@observablehq/plot'

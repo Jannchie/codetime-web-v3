@@ -9,9 +9,8 @@ export function useMaxStreak(data: MaybeRef<{
     const dataVal = unref(data)
     let streak = 0
     let maxStreak = 0
-    const sortedData = dataVal.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
-    for (let i = 0; i < sortedData.length; i++) {
-      const d = sortedData[i]
+    const sortedData = [...dataVal].sort((a, b) => b.date.getTime() - a.date.getTime())
+    for (const d of sortedData) {
       if (d.duration === 0) {
         maxStreak = Math.max(maxStreak, streak)
         streak = 0
@@ -30,9 +29,8 @@ export function useCurrentStreak(data: MaybeRef<{
   return computed(() => {
     const dataVal = unref(data)
     let streak = 0
-    const sortedData = dataVal.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
-    for (let i = 0; i < sortedData.length; i++) {
-      const d = sortedData[i]
+    const sortedData = [...dataVal].sort((a, b) => b.date.getTime() - a.date.getTime())
+    for (const d of sortedData) {
       if (d.duration === 0) {
         break
       }
@@ -97,7 +95,7 @@ export function transformTopLanguageData(data: TopData[]) {
 export function useMergedFilters(filters: FilterItem[]) {
   return computed(() => {
     const map = new Map<string, string>()
-    filters.forEach((f) => {
+    for (const f of filters) {
       if (map.has(f.key)) {
         const value = map.get(f.key)
         if (value) {
@@ -107,11 +105,11 @@ export function useMergedFilters(filters: FilterItem[]) {
       else {
         map.set(f.key, f.value)
       }
-    })
+    }
     const res: FilterItem[] = []
-    map.forEach((value, key) => {
+    for (const [key, value] of map.entries()) {
       res.push({ key, value })
-    })
+    }
     return res
   })
 }
@@ -126,19 +124,19 @@ export function useProcessedData(data: MaybeRef<{
   return computed(() => {
     const differentBy = new Set<string>()
     const dataVal = unref(data)
-    dataVal.forEach((d) => {
+    for (const d of dataVal) {
       differentBy.add(d.by ?? t.value.plot.label.unknown)
-    })
+    }
 
     // get sum duration for each by
     const sumDurationBy = new Map<string, number>()
-    dataVal.forEach((d) => {
+    for (const d of dataVal) {
       const duration = sumDurationBy.get(d.by ?? t.value.plot.label.unknown) ?? 0
       sumDurationBy.set(d.by ?? t.value.plot.label.unknown, duration + d.duration)
-    })
+    }
 
     // get top by
-    const sortedBy = Array.from(sumDurationBy.entries()).sort((a, b) => b[1] - a[1])
+    const sortedBy = [...sumDurationBy.entries()].sort((a, b) => b[1] - a[1])
     const topBy = sortedBy.slice(0, 5).map(d => d[0])
     const dataWithOther = dataVal.map((d) => {
       d = { ...d }
@@ -151,18 +149,18 @@ export function useProcessedData(data: MaybeRef<{
     const minDateDate = minDateString ? new Date(minDateString) : new Date()
     const dateRange = d3.utcDay.range(minDateDate, new Date())
     const dataMap = new Map<string, number>()
-    dateRange.forEach((d) => {
-      topBy.forEach((by) => {
+    for (const d of dateRange) {
+      for (const by of topBy) {
         const key: string = [d.toISOString().slice(0, 10), by].join(',')
         dataMap.set(key, 0)
-      })
-    })
-    dataWithOther.forEach((d) => {
+      }
+    }
+    for (const d of dataWithOther) {
       const date = new Date(d.time)
       const key = [date.toISOString().slice(0, 10), d.by ?? t.value.plot.label.unknown].join(',')
       dataMap.set(key, d.duration)
-    })
-    return Array.from(dataMap.entries()).map(([keyRaw, data]) => {
+    }
+    return [...dataMap.entries()].map(([keyRaw, data]) => {
       const key = keyRaw.split(',')
       return { date: new Date(key[0]), duration: data, by: key[1] }
     }).sort((a, b) => a.by.localeCompare(b.by)).sort((a, b) => a.date.getTime() - b.date.getTime())

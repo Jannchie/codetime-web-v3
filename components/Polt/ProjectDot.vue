@@ -11,10 +11,10 @@ const props = defineProps<{
 const t = useI18N()
 const differentLanguages = new Set<string>()
 const differentDates = new Set<string>()
-props.data.forEach((d) => {
+for (const d of props.data) {
   differentLanguages.add(d.by)
   differentDates.add(d.date.toISOString().slice(0, 10))
-})
+}
 const chart = ref()
 const { width, height } = useElementBounding(chart)
 

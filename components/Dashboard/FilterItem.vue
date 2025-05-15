@@ -15,24 +15,28 @@ function onClickFilterItem(key: string, value: string) {
       value,
       key,
     }
-    if (!filters.find(f => f.key === key && f.value === value)) {
-      filters.push(filter)
+    if (filters.some(f => f.key === key && f.value === value)) {
+      filters.splice(filters.findIndex(f => f.key === key && f.value === value), 1)
     }
     else {
-      filters.splice(filters.findIndex(f => f.key === key && f.value === value), 1)
+      filters.push(filter)
     }
   }
 }
 const k = computed(() => {
   switch (props.filter.key) {
-    case 'language':
+    case 'language': {
       return t.value.dashboard.overview.top.language
-    case 'project':
+    }
+    case 'project': {
       return t.value.dashboard.overview.top.project
-    case 'platform':
+    }
+    case 'platform': {
       return t.value.dashboard.overview.top.platform
-    default:
+    }
+    default: {
       return props.filter.key
+    }
   }
 })
 

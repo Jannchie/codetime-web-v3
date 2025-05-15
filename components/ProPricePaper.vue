@@ -14,7 +14,7 @@ const user = useUser()
 const t = useI18N()
 
 function onLogin() {
-  if (typeof window === 'undefined') {
+  if (globalThis.window === undefined) {
     return
   }
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -30,41 +30,55 @@ watchEffect(() => {
       const body = document.querySelector('body')
       body?.insertBefore(dom, body.firstChild)
     }
-    catch (e) {
-      console.error(e)
+    catch (error) {
+      console.error(error)
     }
   }
 })
 const discountText = computed(() => {
   switch (locale.value) {
-    case 'en':
+    case 'en': {
       return 'Apply discount code "CODETIME2024" for 50% Off.'
-    case 'zh-CN':
+    }
+    case 'zh-CN': {
       return '使用折扣码 "CODETIME2024" 享受所有产品 5 折优惠。'
-    case 'de':
+    }
+    case 'de': {
       return 'Verwenden Sie den Rabattcode "CODETIME2024", um 50% Rabatt auf alle unsere Produkte zu erhalten.'
-    case 'es':
+    }
+    case 'es': {
       return 'Utilice el código de descuento "CODETIME2024" para obtener un 50% de descuento en todos nuestros productos.'
-    case 'fr':
+    }
+    case 'fr': {
       return 'Utilisez le code de réduction "CODETIME2024" pour obtenir 50% de réduction sur tous nos produits.'
-    case 'it':
+    }
+    case 'it': {
       return 'Utilizza il codice sconto "CODETIME2024" per ottenere il 50% di sconto su tutti i nostri prodotti.'
-    case 'ja':
+    }
+    case 'ja': {
       return 'すべての製品が 50% オフの割引コード "CODETIME2024" を適用してください。'
-    case 'ms':
+    }
+    case 'ms': {
       return 'Gunakan kod diskaun "CODETIME2024" untuk mendapatkan 50% diskaun pada semua produk kami.'
-    case 'ko':
+    }
+    case 'ko': {
       return '모든 제품에 대해 50% 할인 코드 "CODETIME2024" 를 적용하십시오.'
-    case 'pt-BR':
+    }
+    case 'pt-BR': {
       return 'Use o código de desconto "CODETIME2024" para obter 50% de desconto em todos os nossos produtos.'
-    case 'ru':
+    }
+    case 'ru': {
       return 'Используйте код скидки "CODETIME2024" для получения 50% скидки на все наши продукты.'
-    case 'ua':
+    }
+    case 'ua': {
       return 'Використовуйте код знижки "CODETIME2024" для отримання 50% знижки на всі наші продукти.'
-    case 'zh-TW':
+    }
+    case 'zh-TW': {
       return '使用折扣碼 "CODETIME2024" 享受所有產品 5 折優惠。'
-    default:
+    }
+    default: {
       return 'Apply discount code "CODETIME2024" for 50% Off on all our products.'
+    }
   }
 })
 const filledContainerCS = useContainerFilledCS('primary')

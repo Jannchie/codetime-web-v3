@@ -104,20 +104,27 @@ export const ru: Partial<Translation> = {
         | 'unpaid',
     ): string {
       switch (str) {
-        case 'active':
+        case 'active': {
           return 'Активный'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'Отменен'
-        case 'expired':
+        }
+        case 'expired': {
           return 'Просроченный'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'Пробный период'
-        case 'paused':
+        }
+        case 'paused': {
           return 'Приостановленный'
-        case 'past-due':
+        }
+        case 'past-due': {
           return 'Просроченный'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return 'Неоплаченный'
+        }
       }
     },
     basic: {

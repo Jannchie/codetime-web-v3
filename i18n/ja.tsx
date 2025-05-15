@@ -86,20 +86,27 @@ export const ja: Partial<Translation> = {
     },
     status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
       switch (str) {
-        case 'active':
+        case 'active': {
           return '有効'
-        case 'cancelled':
+        }
+        case 'cancelled': {
           return 'キャンセル済み'
-        case 'expired':
+        }
+        case 'expired': {
           return '期限切れ'
-        case 'on-trial':
+        }
+        case 'on-trial': {
           return 'トライアル中'
-        case 'paused':
+        }
+        case 'paused': {
           return '一時停止'
-        case 'past-due':
+        }
+        case 'past-due': {
           return '期限切れ'
-        case 'unpaid':
+        }
+        case 'unpaid': {
           return '未払い'
+        }
       }
     },
     basic: {

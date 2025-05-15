@@ -33,7 +33,7 @@ async function exportData() {
     exportFailed.value = false
     // resp is a csv string, download it.
     const blob = new Blob([resp], { type: 'text/csv' })
-    const url = window.URL.createObjectURL(blob)
+    const url = globalThis.URL.createObjectURL(blob)
     exportURL.value = url
     // auto download
     const link = document.createElement('a')
@@ -55,7 +55,7 @@ async function logout() {
     credentials: 'include',
   })
   // clean
-  window.location.href = '/'
+  globalThis.location.href = '/'
 }
 
 const t = useI18N()
