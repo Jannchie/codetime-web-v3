@@ -28,7 +28,7 @@
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
     "@hey-api/openapi-ts": "^0.67.4",
-    "@iconify/json": "^2.2.338",
+    "@iconify/json": "^2.2.339",
     "@jannchie/eslint-config": "^3.6.1",
     "@nuxt/devtools": "^2.4.1",
     "@nuxt/image": "^1.10.0",
@@ -41,7 +41,7 @@
     "@unocss/reset": "66.1.2",
     "@vueuse/nuxt": "^13.2.0",
     "d3": "^7.9.0",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "nuxt": "^3.17.3",
     "nuxt-gtag": "^3.0.2",
     "nuxt-og-image": "5.1.3",
