@@ -1,171 +1,124 @@
 <script lang="ts" setup>
 const t = useI18N()
-const data = [
-  { date: new Date('2024-09-22T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-22T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-22T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-22T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-22T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-22T00:00:00.000Z'), duration: 1_080_000, by: 'Other' },
-  { date: new Date('2024-09-23T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-23T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-23T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-23T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-23T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-23T00:00:00.000Z'), duration: 1_140_000, by: 'Other' },
-  { date: new Date('2024-09-24T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-24T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-24T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-24T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-24T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-25T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-25T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-25T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-25T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-25T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-26T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-26T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-26T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-26T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-26T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-26T00:00:00.000Z'), duration: 120_000, by: 'Other' },
-  { date: new Date('2024-09-27T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-27T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-27T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-27T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-27T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-28T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-28T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-28T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-28T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-28T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-28T00:00:00.000Z'), duration: 60_000, by: 'Other' },
-  { date: new Date('2024-09-29T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-29T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-29T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-29T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-29T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-09-30T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-09-30T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-09-30T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-09-30T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-09-30T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-01T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-01T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-01T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-01T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-01T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-02T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-02T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-02T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-02T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-02T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-03T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-03T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-03T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-03T00:00:00.000Z'), duration: 0, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-03T00:00:00.000Z'), duration: 2_220_000, by: 'tgit' },
-  { date: new Date('2024-10-03T00:00:00.000Z'), duration: 60_000, by: 'Other' },
-  { date: new Date('2024-10-04T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-04T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-04T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-04T00:00:00.000Z'), duration: 240_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-04T00:00:00.000Z'), duration: 4_380_000, by: 'tgit' },
-  { date: new Date('2024-10-04T00:00:00.000Z'), duration: 3_300_000, by: 'Other' },
-  { date: new Date('2024-10-05T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-05T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-05T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-05T00:00:00.000Z'), duration: 240_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-05T00:00:00.000Z'), duration: 4_260_000, by: 'tgit' },
-  { date: new Date('2024-10-05T00:00:00.000Z'), duration: 60_000, by: 'Other' },
-  { date: new Date('2024-10-06T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-06T00:00:00.000Z'), duration: 180_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-06T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-06T00:00:00.000Z'), duration: 120_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-06T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-06T00:00:00.000Z'), duration: 300_000, by: 'Other' },
-  { date: new Date('2024-10-07T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-07T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-07T00:00:00.000Z'), duration: 19_620_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-07T00:00:00.000Z'), duration: 600_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-07T00:00:00.000Z'), duration: 1_620_000, by: 'tgit' },
-  { date: new Date('2024-10-07T00:00:00.000Z'), duration: 300_000, by: 'Other' },
-  { date: new Date('2024-10-08T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-08T00:00:00.000Z'), duration: 6_840_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-08T00:00:00.000Z'), duration: 1_980_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-08T00:00:00.000Z'), duration: 8_340_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-08T00:00:00.000Z'), duration: 540_000, by: 'tgit' },
-  { date: new Date('2024-10-08T00:00:00.000Z'), duration: 300_000, by: 'Other' },
-  { date: new Date('2024-10-09T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-09T00:00:00.000Z'), duration: 1_080_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-09T00:00:00.000Z'), duration: 24_300_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-09T00:00:00.000Z'), duration: 9_480_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-09T00:00:00.000Z'), duration: 300_000, by: 'tgit' },
-  { date: new Date('2024-10-10T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-10T00:00:00.000Z'), duration: 780_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-10T00:00:00.000Z'), duration: 18_000_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-10T00:00:00.000Z'), duration: 9_420_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-10T00:00:00.000Z'), duration: 720_000, by: 'tgit' },
-  { date: new Date('2024-10-10T00:00:00.000Z'), duration: 180_000, by: 'Other' },
-  { date: new Date('2024-10-11T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-11T00:00:00.000Z'), duration: 3_240_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-11T00:00:00.000Z'), duration: 13_500_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-11T00:00:00.000Z'), duration: 8_580_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-11T00:00:00.000Z'), duration: 180_000, by: 'tgit' },
-  { date: new Date('2024-10-11T00:00:00.000Z'), duration: 120_000, by: 'Other' },
-  { date: new Date('2024-10-12T00:00:00.000Z'), duration: 0, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-12T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-12T00:00:00.000Z'), duration: 60_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-12T00:00:00.000Z'), duration: 10_140_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-12T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-13T00:00:00.000Z'), duration: 2_580_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-13T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-13T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-13T00:00:00.000Z'), duration: 3_420_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-13T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-13T00:00:00.000Z'), duration: 120_000, by: 'Other' },
-  { date: new Date('2024-10-14T00:00:00.000Z'), duration: 2_040_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-14T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-14T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-14T00:00:00.000Z'), duration: 60_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-14T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-14T00:00:00.000Z'), duration: 180_000, by: 'Other' },
-  { date: new Date('2024-10-15T00:00:00.000Z'), duration: 2_520_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-15T00:00:00.000Z'), duration: 720_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-15T00:00:00.000Z'), duration: 7_020_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-15T00:00:00.000Z'), duration: 5_580_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-15T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-15T00:00:00.000Z'), duration: 480_000, by: 'Other' },
-  { date: new Date('2024-10-16T00:00:00.000Z'), duration: 600_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-16T00:00:00.000Z'), duration: 3_120_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-16T00:00:00.000Z'), duration: 12_720_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-16T00:00:00.000Z'), duration: 300_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-16T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-16T00:00:00.000Z'), duration: 240_000, by: 'Other' },
-  { date: new Date('2024-10-17T00:00:00.000Z'), duration: 540_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-17T00:00:00.000Z'), duration: 720_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-17T00:00:00.000Z'), duration: 300_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-17T00:00:00.000Z'), duration: 5_880_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-17T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-17T00:00:00.000Z'), duration: 9_360_000, by: 'Other' },
-  { date: new Date('2024-10-18T00:00:00.000Z'), duration: 3_480_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-18T00:00:00.000Z'), duration: 3_060_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-18T00:00:00.000Z'), duration: 20_220_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-18T00:00:00.000Z'), duration: 4_140_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-18T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-18T00:00:00.000Z'), duration: 120_000, by: 'Other' },
-  { date: new Date('2024-10-19T00:00:00.000Z'), duration: 180_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-19T00:00:00.000Z'), duration: 420_000, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-19T00:00:00.000Z'), duration: 240_000, by: 'another-awosome-project' },
-  { date: new Date('2024-10-19T00:00:00.000Z'), duration: 5_160_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-19T00:00:00.000Z'), duration: 0, by: 'tgit' },
-  { date: new Date('2024-10-19T00:00:00.000Z'), duration: 420_000, by: 'Other' },
-  { date: new Date('2024-10-20T00:00:00.000Z'), duration: 4_500_000, by: 'codetime-web-v3' },
-  { date: new Date('2024-10-20T00:00:00.000Z'), duration: 0, by: 'Secret-Project-1' },
-  { date: new Date('2024-10-20T00:00:00.000Z'), duration: 0, by: 'another-awosome-project' },
-  { date: new Date('2024-10-20T00:00:00.000Z'), duration: 2_700_000, by: 'roku-ui-vue' },
-  { date: new Date('2024-10-20T00:00:00.000Z'), duration: 1_980_000, by: 'tgit' },
+/**
+ * 自动生成覆盖近 365 天的项目工时数据，节假日算法与 CalendarCardDemo.vue 保持一致
+ */
+function isWesternHoliday(date: Date): boolean {
+  const y = date.getUTCFullYear()
+  const m = date.getUTCMonth() + 1 // 1-12
+  const d = date.getUTCDate()
+
+  // 固定日期节日
+  if (
+    (m === 1 && d === 1) // 元旦
+    || (m === 2 && d === 14) // 情人节
+    || (m === 7 && d === 4) // 独立日
+    || (m === 10 && d === 31) // 万圣节
+    || (m === 12 && d === 25) // 圣诞节
+  ) {
+    return true
+  }
+
+  // 感恩节：11月第4个星期四
+  if (m === 11) {
+    const firstDay = new Date(Date.UTC(y, 10, 1)).getUTCDay()
+    const offset = (11 - firstDay) % 7 // 第一个星期四的日期
+    const thanksgiving = 1 + offset + 7 * 3 // 第4个星期四
+    if (d === thanksgiving) {
+      return true
+    }
+  }
+
+  // 复活节（西方）：Meeus/Jones/Butcher算法
+  {
+    const a = y % 19
+    const b = Math.floor(y / 100)
+    const c = y % 100
+    const d1 = Math.floor(b / 4)
+    const e = b % 4
+    const f = Math.floor((b + 8) / 25)
+    const g = Math.floor((b - f + 1) / 3)
+    const h = (19 * a + b - d1 - g + 15) % 30
+    const i = Math.floor(c / 4)
+    const k = c % 4
+    const l = (32 + 2 * e + 2 * i - h - k) % 7
+    const m1 = Math.floor((a + 11 * h + 22 * l) / 451)
+    const month = Math.floor((h + l - 7 * m1 + 114) / 31)
+    const day = ((h + l - 7 * m1 + 114) % 31) + 1
+    if ((m === month) && (d === day)) {
+      return true
+    }
+  }
+
+  // 劳动节：9月第1个星期一
+  if (m === 9) {
+    const firstDay = new Date(Date.UTC(y, 8, 1)).getUTCDay()
+    const laborDay = 1 + ((8 - firstDay) % 7)
+    if (d === laborDay) {
+      return true
+    }
+  }
+
+  return false
+}
+
+const projectNames = [
+  'Manhattan Project',
+  'Red Queen',
+  'The Matrix',
+  'PASIV',
+  'HAL 9000',
+  'J.A.R.V.I.S.',
+  'MOSS',
 ]
+
+// 生成过去 365 天，每个项目名每天一条数据，共 365×7 条
+const data = Array.from({ length: 30 }, (_, i) => {
+  const date = new Date()
+  date.setUTCHours(0, 0, 0, 0)
+  date.setUTCDate(date.getUTCDate() - i)
+  return projectNames.map((by) => {
+    let duration = 0
+    if (isWesternHoliday(date)) {
+      duration = 0
+    }
+    else {
+      const day = date.getUTCDay()
+      duration = (day === 0 || day === 6)
+        ? Math.floor(Math.random() * (120 - 6 + 1)) + 6 // 6~120
+        : Math.floor(Math.random() * (600 - 0 + 1)) + 0 // 240~600
+    }
+    if (projectNames.indexOf(by) === 0) {
+      duration = Math.floor(Math.random() * (200 - 0 + 1)) + 0 // 0~200
+    }
+    if (projectNames.indexOf(by) === 1) {
+      duration = Math.floor(Math.random() * (300 - 0 + 1)) + 0 // 0~200
+      if (i < 20) {
+        duration = 0
+      }
+    }
+
+    if (projectNames.indexOf(by) === 5 && i > 20) {
+      duration = 0
+    }
+
+    if (projectNames.indexOf(by) === 4 && i < 5) {
+      duration = 0
+    }
+
+    if (Math.random() < 0.25) {
+      duration /= 3
+    }
+    if (Math.random() < 0.5) {
+      duration /= 3
+    }
+    if (Math.random() < 0.25) {
+      duration = 0
+    }
+    duration *= 2000 * 10
+    return { date: new Date(date), duration, by }
+  })
+}).flat()
 </script>
 
 <template>

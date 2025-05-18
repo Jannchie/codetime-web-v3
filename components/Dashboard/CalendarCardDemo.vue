@@ -1,330 +1,97 @@
 <script setup lang="ts">
-const data = [
-  { duration: 8_100_000, time: '2024-10-20T00:00:00Z', by: '' },
-  { duration: 9_900_000, time: '2024-10-19T00:00:00Z', by: '' },
-  { duration: 31_920_000, time: '2024-10-18T00:00:00Z', by: '' },
-  { duration: 29_880_000, time: '2024-10-17T00:00:00Z', by: '' },
-  { duration: 22_320_000, time: '2024-10-16T00:00:00Z', by: '' },
-  { duration: 16_380_000, time: '2024-10-15T00:00:00Z', by: '' },
-  { duration: 2_280_000, time: '2024-10-14T00:00:00Z', by: '' },
-  { duration: 8_400_000, time: '2024-10-13T00:00:00Z', by: '' },
-  { duration: 10_200_000, time: '2024-10-12T00:00:00Z', by: '' },
-  { duration: 25_620_000, time: '2024-10-11T00:00:00Z', by: '' },
-  { duration: 29_100_000, time: '2024-10-10T00:00:00Z', by: '' },
-  { duration: 35_160_000, time: '2024-10-09T00:00:00Z', by: '' },
-  { duration: 18_180_000, time: '2024-10-08T00:00:00Z', by: '' },
-  { duration: 22_560_000, time: '2024-10-07T00:00:00Z', by: '' },
-  { duration: 2_640_000, time: '2024-10-06T00:00:00Z', by: '' },
-  { duration: 12_840_000, time: '2024-10-05T00:00:00Z', by: '' },
-  { duration: 7_920_000, time: '2024-10-04T00:00:00Z', by: '' },
-  { duration: 3_360_000, time: '2024-10-03T00:00:00Z', by: '' },
-  { duration: 120_000, time: '2024-09-28T00:00:00Z', by: '' },
-  { duration: 120_000, time: '2024-09-26T00:00:00Z', by: '' },
-  { duration: 2_880_000, time: '2024-09-23T00:00:00Z', by: '' },
-  { duration: 7_080_000, time: '2024-09-22T00:00:00Z', by: '' },
-  { duration: 240_000, time: '2024-09-21T00:00:00Z', by: '' },
-  { duration: 5_460_000, time: '2024-09-20T00:00:00Z', by: '' },
-  { duration: 19_740_000, time: '2024-09-19T00:00:00Z', by: '' },
-  { duration: 21_960_000, time: '2024-09-18T00:00:00Z', by: '' },
-  { duration: 3_480_000, time: '2024-09-17T00:00:00Z', by: '' },
-  { duration: 8_580_000, time: '2024-09-16T00:00:00Z', by: '' },
-  { duration: 11_880_000, time: '2024-09-15T00:00:00Z', by: '' },
-  { duration: 12_420_000, time: '2024-09-14T00:00:00Z', by: '' },
-  { duration: 16_740_000, time: '2024-09-13T00:00:00Z', by: '' },
-  { duration: 23_040_000, time: '2024-09-12T00:00:00Z', by: '' },
-  { duration: 15_180_000, time: '2024-09-11T00:00:00Z', by: '' },
-  { duration: 27_540_000, time: '2024-09-10T00:00:00Z', by: '' },
-  { duration: 35_160_000, time: '2024-09-09T00:00:00Z', by: '' },
-  { duration: 20_580_000, time: '2024-09-08T00:00:00Z', by: '' },
-  { duration: 36_300_000, time: '2024-09-07T00:00:00Z', by: '' },
-  { duration: 27_960_000, time: '2024-09-06T00:00:00Z', by: '' },
-  { duration: 26_460_000, time: '2024-09-05T00:00:00Z', by: '' },
-  { duration: 35_640_000, time: '2024-09-04T00:00:00Z', by: '' },
-  { duration: 22_800_000, time: '2024-09-03T00:00:00Z', by: '' },
-  { duration: 28_320_000, time: '2024-09-02T00:00:00Z', by: '' },
-  { duration: 16_080_000, time: '2024-09-01T00:00:00Z', by: '' },
-  { duration: 28_080_000, time: '2024-08-31T00:00:00Z', by: '' },
-  { duration: 37_380_000, time: '2024-08-30T00:00:00Z', by: '' },
-  { duration: 19_860_000, time: '2024-08-29T00:00:00Z', by: '' },
-  { duration: 9_000_000, time: '2024-08-28T00:00:00Z', by: '' },
-  { duration: 10_620_000, time: '2024-08-27T00:00:00Z', by: '' },
-  { duration: 5_700_000, time: '2024-08-26T00:00:00Z', by: '' },
-  { duration: 1_080_000, time: '2024-08-25T00:00:00Z', by: '' },
-  { duration: 420_000, time: '2024-08-24T00:00:00Z', by: '' },
-  { duration: 10_020_000, time: '2024-08-23T00:00:00Z', by: '' },
-  { duration: 5_220_000, time: '2024-08-22T00:00:00Z', by: '' },
-  { duration: 18_000_000, time: '2024-08-21T00:00:00Z', by: '' },
-  { duration: 8_040_000, time: '2024-08-20T00:00:00Z', by: '' },
-  { duration: 24_900_000, time: '2024-08-19T00:00:00Z', by: '' },
-  { duration: 11_280_000, time: '2024-08-18T00:00:00Z', by: '' },
-  { duration: 13_680_000, time: '2024-08-17T00:00:00Z', by: '' },
-  { duration: 28_200_000, time: '2024-08-16T00:00:00Z', by: '' },
-  { duration: 26_280_000, time: '2024-08-15T00:00:00Z', by: '' },
-  { duration: 28_380_000, time: '2024-08-14T00:00:00Z', by: '' },
-  { duration: 35_100_000, time: '2024-08-13T00:00:00Z', by: '' },
-  { duration: 14_280_000, time: '2024-08-12T00:00:00Z', by: '' },
-  { duration: 23_100_000, time: '2024-08-11T00:00:00Z', by: '' },
-  { duration: 25_800_000, time: '2024-08-10T00:00:00Z', by: '' },
-  { duration: 25_320_000, time: '2024-08-09T00:00:00Z', by: '' },
-  { duration: 19_260_000, time: '2024-08-08T00:00:00Z', by: '' },
-  { duration: 27_180_000, time: '2024-08-07T00:00:00Z', by: '' },
-  { duration: 23_340_000, time: '2024-08-06T00:00:00Z', by: '' },
-  { duration: 3_780_000, time: '2024-08-05T00:00:00Z', by: '' },
-  { duration: 23_100_000, time: '2024-08-04T00:00:00Z', by: '' },
-  { duration: 38_760_000, time: '2024-08-03T00:00:00Z', by: '' },
-  { duration: 30_960_000, time: '2024-08-02T00:00:00Z', by: '' },
-  { duration: 31_260_000, time: '2024-08-01T00:00:00Z', by: '' },
-  { duration: 40_500_000, time: '2024-07-31T00:00:00Z', by: '' },
-  { duration: 15_240_000, time: '2024-07-30T00:00:00Z', by: '' },
-  { duration: 24_420_000, time: '2024-07-29T00:00:00Z', by: '' },
-  { duration: 13_020_000, time: '2024-07-28T00:00:00Z', by: '' },
-  { duration: 16_260_000, time: '2024-07-27T00:00:00Z', by: '' },
-  { duration: 11_520_000, time: '2024-07-26T00:00:00Z', by: '' },
-  { duration: 960_000, time: '2024-07-25T00:00:00Z', by: '' },
-  { duration: 18_840_000, time: '2024-07-24T00:00:00Z', by: '' },
-  { duration: 21_120_000, time: '2024-07-23T00:00:00Z', by: '' },
-  { duration: 6_420_000, time: '2024-07-22T00:00:00Z', by: '' },
-  { duration: 7_080_000, time: '2024-07-21T00:00:00Z', by: '' },
-  { duration: 13_020_000, time: '2024-07-20T00:00:00Z', by: '' },
-  { duration: 14_640_000, time: '2024-07-19T00:00:00Z', by: '' },
-  { duration: 13_020_000, time: '2024-07-18T00:00:00Z', by: '' },
-  { duration: 11_640_000, time: '2024-07-17T00:00:00Z', by: '' },
-  { duration: 15_900_000, time: '2024-07-16T00:00:00Z', by: '' },
-  { duration: 13_740_000, time: '2024-07-15T00:00:00Z', by: '' },
-  { duration: 12_600_000, time: '2024-07-14T00:00:00Z', by: '' },
-  { duration: 10_740_000, time: '2024-07-13T00:00:00Z', by: '' },
-  { duration: 31_620_000, time: '2024-07-12T00:00:00Z', by: '' },
-  { duration: 16_380_000, time: '2024-07-11T00:00:00Z', by: '' },
-  { duration: 26_700_000, time: '2024-07-10T00:00:00Z', by: '' },
-  { duration: 13_980_000, time: '2024-07-09T00:00:00Z', by: '' },
-  { duration: 6_480_000, time: '2024-07-08T00:00:00Z', by: '' },
-  { duration: 5_220_000, time: '2024-07-07T00:00:00Z', by: '' },
-  { duration: 6_660_000, time: '2024-07-06T00:00:00Z', by: '' },
-  { duration: 16_800_000, time: '2024-07-05T00:00:00Z', by: '' },
-  { duration: 1_860_000, time: '2024-07-04T00:00:00Z', by: '' },
-  { duration: 2_160_000, time: '2024-07-03T00:00:00Z', by: '' },
-  { duration: 5_160_000, time: '2024-07-02T00:00:00Z', by: '' },
-  { duration: 21_960_000, time: '2024-07-01T00:00:00Z', by: '' },
-  { duration: 20_160_000, time: '2024-06-30T00:00:00Z', by: '' },
-  { duration: 18_360_000, time: '2024-06-29T00:00:00Z', by: '' },
-  { duration: 15_060_000, time: '2024-06-28T00:00:00Z', by: '' },
-  { duration: 6_840_000, time: '2024-06-27T00:00:00Z', by: '' },
-  { duration: 15_420_000, time: '2024-06-26T00:00:00Z', by: '' },
-  { duration: 17_880_000, time: '2024-06-25T00:00:00Z', by: '' },
-  { duration: 14_880_000, time: '2024-06-24T00:00:00Z', by: '' },
-  { duration: 9_360_000, time: '2024-06-23T00:00:00Z', by: '' },
-  { duration: 14_700_000, time: '2024-06-22T00:00:00Z', by: '' },
-  { duration: 14_220_000, time: '2024-06-21T00:00:00Z', by: '' },
-  { duration: 13_860_000, time: '2024-06-20T00:00:00Z', by: '' },
-  { duration: 29_820_000, time: '2024-06-19T00:00:00Z', by: '' },
-  { duration: 6_060_000, time: '2024-06-18T00:00:00Z', by: '' },
-  { duration: 19_440_000, time: '2024-06-17T00:00:00Z', by: '' },
-  { duration: 5_460_000, time: '2024-06-16T00:00:00Z', by: '' },
-  { duration: 12_420_000, time: '2024-06-15T00:00:00Z', by: '' },
-  { duration: 6_000_000, time: '2024-06-14T00:00:00Z', by: '' },
-  { duration: 8_040_000, time: '2024-06-13T00:00:00Z', by: '' },
-  { duration: 13_080_000, time: '2024-06-12T00:00:00Z', by: '' },
-  { duration: 20_100_000, time: '2024-06-11T00:00:00Z', by: '' },
-  { duration: 34_980_000, time: '2024-06-10T00:00:00Z', by: '' },
-  { duration: 25_140_000, time: '2024-06-09T00:00:00Z', by: '' },
-  { duration: 28_320_000, time: '2024-06-08T00:00:00Z', by: '' },
-  { duration: 12_780_000, time: '2024-06-07T00:00:00Z', by: '' },
-  { duration: 15_840_000, time: '2024-06-06T00:00:00Z', by: '' },
-  { duration: 4_500_000, time: '2024-06-05T00:00:00Z', by: '' },
-  { duration: 13_740_000, time: '2024-06-04T00:00:00Z', by: '' },
-  { duration: 20_700_000, time: '2024-06-03T00:00:00Z', by: '' },
-  { duration: 4_980_000, time: '2024-05-31T00:00:00Z', by: '' },
-  { duration: 8_460_000, time: '2024-05-30T00:00:00Z', by: '' },
-  { duration: 9_180_000, time: '2024-05-29T00:00:00Z', by: '' },
-  { duration: 7_020_000, time: '2024-05-28T00:00:00Z', by: '' },
-  { duration: 5_040_000, time: '2024-05-27T00:00:00Z', by: '' },
-  { duration: 15_540_000, time: '2024-05-24T00:00:00Z', by: '' },
-  { duration: 3_240_000, time: '2024-05-23T00:00:00Z', by: '' },
-  { duration: 5_520_000, time: '2024-05-22T00:00:00Z', by: '' },
-  { duration: 10_860_000, time: '2024-05-21T00:00:00Z', by: '' },
-  { duration: 6_960_000, time: '2024-05-20T00:00:00Z', by: '' },
-  { duration: 540_000, time: '2024-05-19T00:00:00Z', by: '' },
-  { duration: 780_000, time: '2024-05-18T00:00:00Z', by: '' },
-  { duration: 18_420_000, time: '2024-05-17T00:00:00Z', by: '' },
-  { duration: 32_400_000, time: '2024-05-16T00:00:00Z', by: '' },
-  { duration: 20_760_000, time: '2024-05-15T00:00:00Z', by: '' },
-  { duration: 9_060_000, time: '2024-05-14T00:00:00Z', by: '' },
-  { duration: 26_040_000, time: '2024-05-13T00:00:00Z', by: '' },
-  { duration: 5_400_000, time: '2024-05-12T00:00:00Z', by: '' },
-  { duration: 22_800_000, time: '2024-05-11T00:00:00Z', by: '' },
-  { duration: 15_360_000, time: '2024-05-10T00:00:00Z', by: '' },
-  { duration: 13_080_000, time: '2024-05-09T00:00:00Z', by: '' },
-  { duration: 19_500_000, time: '2024-05-08T00:00:00Z', by: '' },
-  { duration: 1_260_000, time: '2024-05-07T00:00:00Z', by: '' },
-  { duration: 4_860_000, time: '2024-05-03T00:00:00Z', by: '' },
-  { duration: 2_520_000, time: '2024-05-02T00:00:00Z', by: '' },
-  { duration: 12_240_000, time: '2024-05-01T00:00:00Z', by: '' },
-  { duration: 7_740_000, time: '2024-04-30T00:00:00Z', by: '' },
-  { duration: 6_540_000, time: '2024-04-29T00:00:00Z', by: '' },
-  { duration: 7_980_000, time: '2024-04-28T00:00:00Z', by: '' },
-  { duration: 5_880_000, time: '2024-04-27T00:00:00Z', by: '' },
-  { duration: 4_980_000, time: '2024-04-26T00:00:00Z', by: '' },
-  { duration: 9_780_000, time: '2024-04-25T00:00:00Z', by: '' },
-  { duration: 15_660_000, time: '2024-04-24T00:00:00Z', by: '' },
-  { duration: 16_800_000, time: '2024-04-23T00:00:00Z', by: '' },
-  { duration: 18_060_000, time: '2024-04-22T00:00:00Z', by: '' },
-  { duration: 25_860_000, time: '2024-04-21T00:00:00Z', by: '' },
-  { duration: 27_120_000, time: '2024-04-20T00:00:00Z', by: '' },
-  { duration: 10_860_000, time: '2024-04-19T00:00:00Z', by: '' },
-  { duration: 23_940_000, time: '2024-04-18T00:00:00Z', by: '' },
-  { duration: 20_940_000, time: '2024-04-17T00:00:00Z', by: '' },
-  { duration: 36_720_000, time: '2024-04-16T00:00:00Z', by: '' },
-  { duration: 13_860_000, time: '2024-04-15T00:00:00Z', by: '' },
-  { duration: 720_000, time: '2024-04-14T00:00:00Z', by: '' },
-  { duration: 420_000, time: '2024-04-13T00:00:00Z', by: '' },
-  { duration: 8_280_000, time: '2024-04-11T00:00:00Z', by: '' },
-  { duration: 780_000, time: '2024-04-10T00:00:00Z', by: '' },
-  { duration: 5_460_000, time: '2024-04-09T00:00:00Z', by: '' },
-  { duration: 1_140_000, time: '2024-04-08T00:00:00Z', by: '' },
-  { duration: 3_540_000, time: '2024-04-06T00:00:00Z', by: '' },
-  { duration: 360_000, time: '2024-04-05T00:00:00Z', by: '' },
-  { duration: 3_120_000, time: '2024-04-01T00:00:00Z', by: '' },
-  { duration: 22_200_000, time: '2024-03-31T00:00:00Z', by: '' },
-  { duration: 39_240_000, time: '2024-03-30T00:00:00Z', by: '' },
-  { duration: 22_920_000, time: '2024-03-29T00:00:00Z', by: '' },
-  { duration: 20_760_000, time: '2024-03-28T00:00:00Z', by: '' },
-  { duration: 37_380_000, time: '2024-03-27T00:00:00Z', by: '' },
-  { duration: 23_880_000, time: '2024-03-26T00:00:00Z', by: '' },
-  { duration: 31_920_000, time: '2024-03-25T00:00:00Z', by: '' },
-  { duration: 25_920_000, time: '2024-03-24T00:00:00Z', by: '' },
-  { duration: 17_280_000, time: '2024-03-23T00:00:00Z', by: '' },
-  { duration: 22_140_000, time: '2024-03-22T00:00:00Z', by: '' },
-  { duration: 39_720_000, time: '2024-03-21T00:00:00Z', by: '' },
-  { duration: 37_740_000, time: '2024-03-20T00:00:00Z', by: '' },
-  { duration: 35_760_000, time: '2024-03-19T00:00:00Z', by: '' },
-  { duration: 25_800_000, time: '2024-03-18T00:00:00Z', by: '' },
-  { duration: 660_000, time: '2024-03-17T00:00:00Z', by: '' },
-  { duration: 23_400_000, time: '2024-03-16T00:00:00Z', by: '' },
-  { duration: 24_420_000, time: '2024-03-15T00:00:00Z', by: '' },
-  { duration: 18_360_000, time: '2024-03-14T00:00:00Z', by: '' },
-  { duration: 9_840_000, time: '2024-03-13T00:00:00Z', by: '' },
-  { duration: 22_560_000, time: '2024-03-12T00:00:00Z', by: '' },
-  { duration: 30_780_000, time: '2024-03-11T00:00:00Z', by: '' },
-  { duration: 20_040_000, time: '2024-03-10T00:00:00Z', by: '' },
-  { duration: 14_100_000, time: '2024-03-09T00:00:00Z', by: '' },
-  { duration: 23_220_000, time: '2024-03-08T00:00:00Z', by: '' },
-  { duration: 34_620_000, time: '2024-03-07T00:00:00Z', by: '' },
-  { duration: 37_680_000, time: '2024-03-06T00:00:00Z', by: '' },
-  { duration: 29_460_000, time: '2024-03-05T00:00:00Z', by: '' },
-  { duration: 30_900_000, time: '2024-03-04T00:00:00Z', by: '' },
-  { duration: 21_660_000, time: '2024-03-03T00:00:00Z', by: '' },
-  { duration: 15_960_000, time: '2024-03-02T00:00:00Z', by: '' },
-  { duration: 22_800_000, time: '2024-03-01T00:00:00Z', by: '' },
-  { duration: 16_440_000, time: '2024-02-29T00:00:00Z', by: '' },
-  { duration: 28_740_000, time: '2024-02-28T00:00:00Z', by: '' },
-  { duration: 11_280_000, time: '2024-02-27T00:00:00Z', by: '' },
-  { duration: 13_800_000, time: '2024-02-26T00:00:00Z', by: '' },
-  { duration: 24_060_000, time: '2024-02-25T00:00:00Z', by: '' },
-  { duration: 10_980_000, time: '2024-02-24T00:00:00Z', by: '' },
-  { duration: 120_000, time: '2024-02-23T00:00:00Z', by: '' },
-  { duration: 9_840_000, time: '2024-02-22T00:00:00Z', by: '' },
-  { duration: 6_060_000, time: '2024-02-21T00:00:00Z', by: '' },
-  { duration: 13_620_000, time: '2024-02-20T00:00:00Z', by: '' },
-  { duration: 50_640_000, time: '2024-02-19T00:00:00Z', by: '' },
-  { duration: 45_720_000, time: '2024-02-18T00:00:00Z', by: '' },
-  { duration: 37_860_000, time: '2024-02-17T00:00:00Z', by: '' },
-  { duration: 28_980_000, time: '2024-02-16T00:00:00Z', by: '' },
-  { duration: 15_000_000, time: '2024-02-15T00:00:00Z', by: '' },
-  { duration: 6_240_000, time: '2024-02-14T00:00:00Z', by: '' },
-  { duration: 26_280_000, time: '2024-02-13T00:00:00Z', by: '' },
-  { duration: 14_520_000, time: '2024-02-12T00:00:00Z', by: '' },
-  { duration: 42_360_000, time: '2024-02-11T00:00:00Z', by: '' },
-  { duration: 40_320_000, time: '2024-02-10T00:00:00Z', by: '' },
-  { duration: 21_420_000, time: '2024-02-09T00:00:00Z', by: '' },
-  { duration: 6_180_000, time: '2024-02-08T00:00:00Z', by: '' },
-  { duration: 16_740_000, time: '2024-02-07T00:00:00Z', by: '' },
-  { duration: 960_000, time: '2024-02-06T00:00:00Z', by: '' },
-  { duration: 1_800_000, time: '2024-02-05T00:00:00Z', by: '' },
-  { duration: 14_580_000, time: '2024-02-03T00:00:00Z', by: '' },
-  { duration: 11_820_000, time: '2024-02-02T00:00:00Z', by: '' },
-  { duration: 1_920_000, time: '2024-02-01T00:00:00Z', by: '' },
-  { duration: 180_000, time: '2024-01-31T00:00:00Z', by: '' },
-  { duration: 180_000, time: '2024-01-30T00:00:00Z', by: '' },
-  { duration: 15_420_000, time: '2024-01-29T00:00:00Z', by: '' },
-  { duration: 60_000, time: '2024-01-28T00:00:00Z', by: '' },
-  { duration: 2_280_000, time: '2024-01-27T00:00:00Z', by: '' },
-  { duration: 8_040_000, time: '2024-01-26T00:00:00Z', by: '' },
-  { duration: 33_660_000, time: '2024-01-25T00:00:00Z', by: '' },
-  { duration: 19_200_000, time: '2024-01-24T00:00:00Z', by: '' },
-  { duration: 18_000_000, time: '2024-01-23T00:00:00Z', by: '' },
-  { duration: 38_400_000, time: '2024-01-22T00:00:00Z', by: '' },
-  { duration: 36_360_000, time: '2024-01-21T00:00:00Z', by: '' },
-  { duration: 12_240_000, time: '2024-01-20T00:00:00Z', by: '' },
-  { duration: 21_480_000, time: '2024-01-19T00:00:00Z', by: '' },
-  { duration: 11_940_000, time: '2024-01-18T00:00:00Z', by: '' },
-  { duration: 26_100_000, time: '2024-01-17T00:00:00Z', by: '' },
-  { duration: 15_420_000, time: '2024-01-16T00:00:00Z', by: '' },
-  { duration: 24_300_000, time: '2024-01-15T00:00:00Z', by: '' },
-  { duration: 13_380_000, time: '2024-01-14T00:00:00Z', by: '' },
-  { duration: 16_080_000, time: '2024-01-13T00:00:00Z', by: '' },
-  { duration: 25_380_000, time: '2024-01-12T00:00:00Z', by: '' },
-  { duration: 26_880_000, time: '2024-01-11T00:00:00Z', by: '' },
-  { duration: 31_620_000, time: '2024-01-10T00:00:00Z', by: '' },
-  { duration: 20_580_000, time: '2024-01-09T00:00:00Z', by: '' },
-  { duration: 4_140_000, time: '2024-01-08T00:00:00Z', by: '' },
-  { duration: 4_680_000, time: '2024-01-05T00:00:00Z', by: '' },
-  { duration: 60_000, time: '2024-01-04T00:00:00Z', by: '' },
-  { duration: 360_000, time: '2024-01-03T00:00:00Z', by: '' },
-  { duration: 23_280_000, time: '2024-01-02T00:00:00Z', by: '' },
-  { duration: 20_520_000, time: '2024-01-01T00:00:00Z', by: '' },
-  { duration: 10_500_000, time: '2023-12-31T00:00:00Z', by: '' },
-  { duration: 27_840_000, time: '2023-12-30T00:00:00Z', by: '' },
-  { duration: 15_180_000, time: '2023-12-29T00:00:00Z', by: '' },
-  { duration: 22_380_000, time: '2023-12-28T00:00:00Z', by: '' },
-  { duration: 24_480_000, time: '2023-12-27T00:00:00Z', by: '' },
-  { duration: 28_140_000, time: '2023-12-26T00:00:00Z', by: '' },
-  { duration: 31_380_000, time: '2023-12-25T00:00:00Z', by: '' },
-  { duration: 6_060_000, time: '2023-12-24T00:00:00Z', by: '' },
-  { duration: 11_520_000, time: '2023-12-23T00:00:00Z', by: '' },
-  { duration: 13_860_000, time: '2023-12-22T00:00:00Z', by: '' },
-  { duration: 10_680_000, time: '2023-12-21T00:00:00Z', by: '' },
-  { duration: 17_400_000, time: '2023-12-20T00:00:00Z', by: '' },
-  { duration: 7_020_000, time: '2023-12-19T00:00:00Z', by: '' },
-  { duration: 20_820_000, time: '2023-12-18T00:00:00Z', by: '' },
-  { duration: 20_820_000, time: '2023-12-17T00:00:00Z', by: '' },
-  { duration: 840_000, time: '2023-12-16T00:00:00Z', by: '' },
-  { duration: 3_300_000, time: '2023-12-14T00:00:00Z', by: '' },
-  { duration: 60_000, time: '2023-12-13T00:00:00Z', by: '' },
-  { duration: 300_000, time: '2023-12-12T00:00:00Z', by: '' },
-  { duration: 420_000, time: '2023-12-06T00:00:00Z', by: '' },
-  { duration: 780_000, time: '2023-12-05T00:00:00Z', by: '' },
-  { duration: 180_000, time: '2023-12-04T00:00:00Z', by: '' },
-  { duration: 4_320_000, time: '2023-12-03T00:00:00Z', by: '' },
-  { duration: 3_360_000, time: '2023-11-25T00:00:00Z', by: '' },
-  { duration: 3_540_000, time: '2023-11-24T00:00:00Z', by: '' },
-  { duration: 300_000, time: '2023-11-23T00:00:00Z', by: '' },
-  { duration: 5_880_000, time: '2023-11-22T00:00:00Z', by: '' },
-  { duration: 10_620_000, time: '2023-11-21T00:00:00Z', by: '' },
-  { duration: 24_240_000, time: '2023-11-20T00:00:00Z', by: '' },
-  { duration: 9_360_000, time: '2023-11-19T00:00:00Z', by: '' },
-  { duration: 4_500_000, time: '2023-11-18T00:00:00Z', by: '' },
-  { duration: 36_600_000, time: '2023-11-17T00:00:00Z', by: '' },
-  { duration: 19_200_000, time: '2023-11-16T00:00:00Z', by: '' },
-  { duration: 32_100_000, time: '2023-11-15T00:00:00Z', by: '' },
-  { duration: 17_700_000, time: '2023-11-14T00:00:00Z', by: '' },
-  { duration: 27_300_000, time: '2023-11-13T00:00:00Z', by: '' },
-  { duration: 11_580_000, time: '2023-11-12T00:00:00Z', by: '' },
-  { duration: 32_700_000, time: '2023-11-11T00:00:00Z', by: '' },
-  { duration: 15_840_000, time: '2023-11-10T00:00:00Z', by: '' },
-  { duration: 19_740_000, time: '2023-11-09T00:00:00Z', by: '' },
-  { duration: 2_520_000, time: '2023-11-08T00:00:00Z', by: '' },
-  { duration: 4_620_000, time: '2023-11-07T00:00:00Z', by: '' },
-  { duration: 16_140_000, time: '2023-11-06T00:00:00Z', by: '' },
-  { duration: 960_000, time: '2023-11-02T00:00:00Z', by: '' },
-  { duration: 5_280_000, time: '2023-11-01T00:00:00Z', by: '' },
-  { duration: 6_300_000, time: '2023-10-31T00:00:00Z', by: '' },
-  { duration: 22_020_000, time: '2023-10-30T00:00:00Z', by: '' },
-  { duration: 540_000, time: '2023-10-27T00:00:00Z', by: '' },
-  { duration: 3_900_000, time: '2023-10-26T00:00:00Z', by: '' },
-  { duration: 1_740_000, time: '2023-10-25T00:00:00Z', by: '' },
-  { duration: 6_900_000, time: '2023-10-24T00:00:00Z', by: '' },
-  { duration: 17_640_000, time: '2023-10-23T00:00:00Z', by: '' },
-]
+/**
+ * 近一年西方常用节假日判断（含固定日期与动态计算节日）
+ * 节日包括但不限于：元旦(1/1)、圣诞节(12/25)、感恩节(11月第4个星期四)、
+ * 复活节(动态计算)、万圣节(10/31)、独立日(7/4)、劳动节(9月第1个星期一)、情人节(2/14)等。
+ * 浮动节日算法见 isWesternHoliday 函数。
+ */
+function isWesternHoliday(date: Date): boolean {
+  const y = date.getUTCFullYear()
+  const m = date.getUTCMonth() + 1 // 1-12
+  const d = date.getUTCDate()
+
+  // 固定日期节日
+  if (
+    (m === 1 && d === 1) // 元旦
+    || (m === 2 && d === 14) // 情人节
+    || (m === 7 && d === 4) // 独立日
+    || (m === 10 && d === 31) // 万圣节
+    || (m === 12 && d === 25) // 圣诞节
+  ) {
+    return true
+  }
+
+  // 感恩节：11月第4个星期四
+  if (m === 11) {
+    const firstDay = new Date(Date.UTC(y, 10, 1)).getUTCDay()
+    const offset = (11 - firstDay) % 7 // 第一个星期四的日期
+    const thanksgiving = 1 + offset + 7 * 3 // 第4个星期四
+    if (d === thanksgiving) {
+      return true
+    }
+  }
+
+  // 复活节（西方）：匿名公式（Meeus/Jones/Butcher算法）
+  {
+    const a = y % 19
+    const b = Math.floor(y / 100)
+    const c = y % 100
+    const d1 = Math.floor(b / 4)
+    const e = b % 4
+    const f = Math.floor((b + 8) / 25)
+    const g = Math.floor((b - f + 1) / 3)
+    const h = (19 * a + b - d1 - g + 15) % 30
+    const i = Math.floor(c / 4)
+    const k = c % 4
+    const l = (32 + 2 * e + 2 * i - h - k) % 7
+    const m1 = Math.floor((a + 11 * h + 22 * l) / 451)
+    const month = Math.floor((h + l - 7 * m1 + 114) / 31) // 3=3月, 4=4月
+    const day = ((h + l - 7 * m1 + 114) % 31) + 1
+    if (m === month && d === day) {
+      return true
+    }
+  }
+
+  // 劳动节：9月第1个星期一
+  if (m === 9) {
+    const firstDay = new Date(Date.UTC(y, 8, 1)).getUTCDay()
+    const laborDay = 1 + ((8 - firstDay) % 7)
+    if (d === laborDay) {
+      return true
+    }
+  }
+
+  return false
+}
+
+const data = Array.from({ length: 365 }, (_, i) => {
+  // 以组件加载时的系统时间为基准，生成前365天的UTC零点
+  const date = new Date()
+  date.setUTCHours(0, 0, 0, 0)
+  date.setUTCDate(date.getUTCDate() - i)
+
+  let duration = 0
+  if (isWesternHoliday(date)) {
+    duration = 0
+  }
+  else {
+    const day = date.getUTCDay() // 0:周日, 1:周一, ..., 6:周六
+    duration = (day === 0 || day === 6)
+      ? Math.floor(Math.random() * (120 - 6 + 1)) // 6~120分钟
+      : Math.floor(Math.random() * (600 - 240 + 1)) + 240 // 240~600分钟
+  }
+  duration *= 1000 * 60
+
+  if (Math.random() < 0.25) {
+    duration /= 3
+  }
+
+  return {
+    duration,
+    time: date.toISOString(),
+    by: '',
+  }
+})
 </script>
 
 <template>
