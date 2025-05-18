@@ -116,6 +116,7 @@ export function v3GetUserSelf<ThrowOnError extends boolean = false>(options?: Op
  * uid: The user ID.
  * minutes: Optional time range in minutes to filter by.
  * project: Optional project name to filter by.
+ * language: Optional language to filter by. If provided, only statistics for this language will be counted.
  *
  * Returns:
  * A ShieldResponse object with badge data.

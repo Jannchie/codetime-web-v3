@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import seedrandom from 'seedrandom'
+
+const rng = seedrandom('pancake')
 /**
  * 近一年西方常用节假日判断（含固定日期与动态计算节日）
  * 节日包括但不限于：元旦(1/1)、圣诞节(12/25)、感恩节(11月第4个星期四)、
@@ -77,12 +80,12 @@ const data = Array.from({ length: 365 }, (_, i) => {
   else {
     const day = date.getUTCDay() // 0:周日, 1:周一, ..., 6:周六
     duration = (day === 0 || day === 6)
-      ? Math.floor(Math.random() * (120 - 6 + 1)) // 6~120分钟
-      : Math.floor(Math.random() * (600 - 240 + 1)) + 240 // 240~600分钟
+      ? Math.floor(rng() * (120 - 6 + 1)) // 6~120分钟
+      : Math.floor(rng() * (600 - 240 + 1)) + 240 // 240~600分钟
   }
   duration *= 1000 * 60
 
-  if (Math.random() < 0.25) {
+  if (rng() < 0.25) {
     duration /= 3
   }
 

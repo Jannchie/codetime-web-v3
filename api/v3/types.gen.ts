@@ -249,6 +249,7 @@ export interface V3GetUserShieldData {
     uid: number
     minutes?: number
     project?: string | null
+    language?: string | null
   }
   url: '/v3/users/shield'
 }

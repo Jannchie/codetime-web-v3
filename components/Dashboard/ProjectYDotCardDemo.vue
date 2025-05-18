@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import seedrandom from 'seedrandom'
+
+const rng = seedrandom('pancake')
 const t = useI18N()
 /**
  * 自动生成覆盖近 365 天的项目工时数据，节假日算法与 CalendarCardDemo.vue 保持一致
@@ -85,14 +88,14 @@ const data = Array.from({ length: 30 }, (_, i) => {
     else {
       const day = date.getUTCDay()
       duration = (day === 0 || day === 6)
-        ? Math.floor(Math.random() * (120 - 6 + 1)) + 6 // 6~120
-        : Math.floor(Math.random() * (600 - 0 + 1)) + 0 // 240~600
+        ? Math.floor(rng() * (120 - 6 + 1)) + 6 // 6~120
+        : Math.floor(rng() * (600 - 0 + 1)) + 0 // 240~600
     }
     if (projectNames.indexOf(by) === 0) {
-      duration = Math.floor(Math.random() * (200 - 0 + 1)) + 0 // 0~200
+      duration = Math.floor(rng() * (200 - 0 + 1)) + 0 // 0~200
     }
     if (projectNames.indexOf(by) === 1) {
-      duration = Math.floor(Math.random() * (300 - 0 + 1)) + 0 // 0~200
+      duration = Math.floor(rng() * (300 - 0 + 1)) + 0 // 0~200
       if (i < 20) {
         duration = 0
       }
@@ -106,13 +109,13 @@ const data = Array.from({ length: 30 }, (_, i) => {
       duration = 0
     }
 
-    if (Math.random() < 0.25) {
+    if (rng() < 0.25) {
       duration /= 3
     }
-    if (Math.random() < 0.5) {
+    if (rng() < 0.5) {
       duration /= 3
     }
-    if (Math.random() < 0.25) {
+    if (rng() < 0.25) {
       duration = 0
     }
     duration *= 2000 * 10

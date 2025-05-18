@@ -19,17 +19,26 @@ const project = ref<{
   label: string
   id: string
 } | null>(null)
+const language = ref<string>('')
 const days = ref<string>('')
-const config = useRuntimeConfig()
-const apiHost = config.public.apiHost
+const apiHost = 'https://api.codetime.dev'
+
+// 收集 link 依赖的 params
+const rawParams = computed(() => ({
+  uid: user.value?.id,
+  project: project.value?.id,
+  minutes: String(Number(days.value) * 24 * 60),
+  color: color.value,
+  style: styleObj.value.id,
+  language: language.value,
+}))
+
+// 对 params 做防抖
+const debouncedParams = refDebounced(rawParams, 300)
+
+// link 只依赖防抖后的 params
 const link = computed(() => {
-  const params = {
-    uid: user.value?.id,
-    project: project.value?.id,
-    minutes: String(Number(days.value) * 24 * 60),
-    color: color.value,
-    style: styleObj.value.id,
-  }
+  const params = debouncedParams.value
 
   // Remove null or undefined values from params and convert all values to strings
   const filteredParams = Object.fromEntries(
@@ -40,7 +49,7 @@ const link = computed(() => {
   const queryString = new URLSearchParams(filteredParams).toString()
   const url = `${apiHost}/v3/users/shield?${queryString}`
   const safeUrl = encodeURIComponent(url)
-  const res = `https://img.shields.io/endpoint?style=${styleObj.value.id}&color=${color.value}&url=${safeUrl}`
+  const res = `https://img.shields.io/endpoint?style=${params.style}&color=${params.color}&url=${safeUrl}`
   return res
 })
 </script>
@@ -63,10 +72,10 @@ const link = computed(() => {
         v-model="color"
         :placeholder="t.dashboard.badge.placeholder.color"
       />
-      <!-- <TextField
-        v-model="project"
-        :placeholder="t.dashboard.badge.placeholder.project"
-      /> -->
+      <TextField
+        v-model="language"
+        :placeholder="t.dashboard.badge.placeholder.language"
+      />
       <ProjectSelect
         v-model="project"
       />
