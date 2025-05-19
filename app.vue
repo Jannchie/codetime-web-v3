@@ -7,6 +7,7 @@ provide('user-pending', status.value === 'pending')
 const config = useRuntimeConfig()
 client.setConfig({
   baseUrl: config.public.apiHost,
+  credentials: 'include',
 })
 </script>
 

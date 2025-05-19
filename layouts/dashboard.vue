@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Btn, Image, useContainerFilledCS, useCS } from '@roku-ui/vue'
+import { v3ListSelfLatestLogs } from '~/api/v3'
 import VSCodeIcon from '~/components/VSCodeIcon.vue'
 
 const t = useI18N()
@@ -42,26 +43,14 @@ const hoverCS = useCS({
 })
 const fillCS = useContainerFilledCS('primary')
 
-interface EventLog {
-  id: number
-  uid: number
-  eventTime: number
-  language: string
-  project: string
-  relativeFile: string
-  absoluteFile: string
-  editor: string
-  platform: string
-  gitOrigin: string
-  gitBranch: string
-  DeletedAt: string | null
-}
-
-async function fetchLatestStats() {
-  return await useAPIFetch<EventLog | null>(`/stats/latest`, {})
-}
-
-const resp = await fetchLatestStats()
+const resp = await useAsyncData(async () => {
+  const resp = await v3ListSelfLatestLogs({
+    query: {
+      limit: 1,
+    },
+  })
+  return resp.data?.[0]
+})
 
 // 如果日期是 12月 20日到 1月 15 日之间，则是年度报告展示周期
 const showAnnualReport = computed(() => {

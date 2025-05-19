@@ -15,6 +15,18 @@ export interface AuthResponse {
   plan: string
 }
 
+export interface EventLogPublic {
+  eventTime: number
+  language: string
+  project: string
+  relativeFile: string
+  editor: string
+  platform: string
+  absoluteFile: string
+  gitOrigin: string
+  gitBranch: string
+}
+
 export interface MinuteLogPublic {
   eventTime: number
   language: string
@@ -247,7 +259,7 @@ export interface V3GetUserShieldData {
   path?: never
   query: {
     uid: number
-    minutes?: number
+    minutes?: number | string
     project?: string | null
     language?: string | null
   }
@@ -275,6 +287,37 @@ export interface V3GetUserShieldResponses {
 }
 
 export type V3GetUserShieldResponse = V3GetUserShieldResponses[keyof V3GetUserShieldResponses]
+
+export interface V3ListSelfLatestLogsData {
+  body?: never
+  path?: never
+  query?: {
+    limit?: number
+  }
+  url: '/v3/users/self/latest-logs'
+}
+
+export interface V3ListSelfLatestLogsErrors {
+  /**
+   * Validation Exception
+   */
+  400: {
+    status_code: number
+    detail: string
+    extra?: null | Array<unknown> | Array<unknown>
+  }
+}
+
+export type V3ListSelfLatestLogsError = V3ListSelfLatestLogsErrors[keyof V3ListSelfLatestLogsErrors]
+
+export interface V3ListSelfLatestLogsResponses {
+  /**
+   * Request fulfilled, document follows
+   */
+  200: Array<EventLogPublic>
+}
+
+export type V3ListSelfLatestLogsResponse = V3ListSelfLatestLogsResponses[keyof V3ListSelfLatestLogsResponses]
 
 export interface V3ListSelfMinutesData {
   body?: never

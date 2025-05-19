@@ -43,7 +43,7 @@ const link = computed(() => {
   // Remove null or undefined values from params and convert all values to strings
   const filteredParams = Object.fromEntries(
     Object.entries(params)
-      .filter(([_, value]) => value !== null && value !== undefined)
+      .filter(([key, value]) => value !== null && value !== undefined && value !== '' && key !== 'style' && key !== 'color' && value !== '0')
       .map(([key, value]) => [key, String(value)]),
   )
   const queryString = new URLSearchParams(filteredParams).toString()
