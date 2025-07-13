@@ -161,6 +161,7 @@ export type Translation = {
         language: string
         project: string
         platform: string
+        workspace: string
       }
       noData: {
         notice: {

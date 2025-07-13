@@ -192,6 +192,7 @@ export const fr: Partial<Translation> = {
         language: 'Langage',
         project: 'Projet',
         platform: 'Plateforme',
+        workspace: 'Espace de travail',
       },
       noData: {
         notice: {

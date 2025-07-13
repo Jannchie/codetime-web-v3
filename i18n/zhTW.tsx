@@ -192,6 +192,7 @@ export const zhTW: Partial<Translation> = {
         language: '語言',
         project: '專案',
         platform: '平台',
+        workspace: '工作區',
       },
       noData: {
         notice: {

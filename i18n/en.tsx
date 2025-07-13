@@ -192,6 +192,7 @@ export const en: Translation = {
         language: 'Language',
         project: 'Project',
         platform: 'Platform',
+        workspace: 'Workspace',
       },
       noData: {
         notice: {

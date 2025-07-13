@@ -192,6 +192,7 @@ export const ja: Partial<Translation> = {
         language: '言語',
         project: 'プロジェクト',
         platform: 'プラットフォーム',
+        workspace: 'ワークスペース',
       },
       noData: {
         notice: {

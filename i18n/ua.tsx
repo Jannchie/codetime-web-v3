@@ -212,6 +212,7 @@ export const ua: Partial<Translation> = {
         language: 'Мова',
         project: 'Проект',
         platform: 'Платформа',
+        workspace: 'Робочий простір',
       },
       noData: {
         notice: {

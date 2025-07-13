@@ -192,6 +192,7 @@ export const ptBR: Partial<Translation> = {
         language: 'Linguagem',
         project: 'Projeto',
         platform: 'Plataforma',
+        workspace: 'Espaço de trabalho',
       },
       noData: {
         notice: {

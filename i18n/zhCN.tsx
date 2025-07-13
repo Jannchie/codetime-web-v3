@@ -192,6 +192,7 @@ export const zhCN: Partial<Translation> = {
         language: '语言',
         project: '项目',
         platform: '平台',
+        workspace: '工作区',
       },
       noData: {
         notice: {

@@ -195,6 +195,7 @@ export const ms: Partial<Translation> = {
         language: 'Bahasa',
         project: 'Projek',
         platform: 'Platform',
+        workspace: 'Ruang kerja',
       },
       noData: {
         notice: {
