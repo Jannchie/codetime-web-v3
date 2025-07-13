@@ -330,14 +330,19 @@ export type V3CheckLoginResponses = {
 
 export type V3CheckLoginResponse = V3CheckLoginResponses[keyof V3CheckLoginResponses];
 
-export type V3GithubAuthData = {
-    body: OAuthRequest;
+export type V3GithubCallbackData = {
+    body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * Authorization code from GitHub
+         */
+        code: string;
+    };
     url: '/v3/auth/github';
 };
 
-export type V3GithubAuthErrors = {
+export type V3GithubCallbackErrors = {
     /**
      * Validation Exception
      */
@@ -348,16 +353,14 @@ export type V3GithubAuthErrors = {
     };
 };
 
-export type V3GithubAuthError = V3GithubAuthErrors[keyof V3GithubAuthErrors];
+export type V3GithubCallbackError = V3GithubCallbackErrors[keyof V3GithubCallbackErrors];
 
-export type V3GithubAuthResponses = {
+export type V3GithubCallbackResponses = {
     /**
-     * Document created, URL follows
+     * Redirect Response
      */
-    201: AuthResponse;
+    200: unknown;
 };
-
-export type V3GithubAuthResponse = V3GithubAuthResponses[keyof V3GithubAuthResponses];
 
 export type V3GoogleAuthData = {
     body: OAuthRequest;
@@ -1057,9 +1060,9 @@ export type V3GetLeaderboardData = {
          */
         limit?: number;
         /**
-         * Time period: 'week', 'month', 'year', 'all'
+         * Number of days to look back, null for all time
          */
-        period?: string;
+        days?: number | null;
     };
     url: '/v3/v3/public/leaderboard';
 };

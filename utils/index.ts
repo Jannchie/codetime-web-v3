@@ -92,7 +92,7 @@ export type TopData = {
 }
 
 export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
-  return await useAsyncData(async () => {
+  return await useAsyncData(`top-${field}-${minutes.value}-${limit}`, async () => {
     const resp = await v3ListSelfTop({
       query: {
         field: field as any,

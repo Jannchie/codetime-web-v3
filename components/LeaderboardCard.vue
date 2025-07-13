@@ -8,10 +8,10 @@ const props = defineProps<{
 }>()
 const days = computed(() => props.days)
 const t = useI18N()
-const resp = await useAsyncData(async () => {
+const resp = await useAsyncData(`leaderboard-${days.value}`, async () => {
   const result = await v3GetLeaderboard({
     query: {
-      period: days.value <= 7 ? 'week' : (days.value <= 30 ? 'month' : 'year'),
+      days: days.value,
     },
   })
   return result.data?.entries?.map(entry => ({

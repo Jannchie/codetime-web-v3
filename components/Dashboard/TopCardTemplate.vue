@@ -8,12 +8,12 @@ const props = withDefaults(defineProps<{
   icon: string
   title: string
   filters?: FilterItem[]
-  type: 'language' | 'project' | 'platform'
+  type: 'language' | 'workspace' | 'platform'
 }>(), {
   filters: () => [],
 })
 defineEmits<{
-  clickItem: [field: string, type: 'language' | 'project' | 'platform']
+  clickItem: [field: string, type: 'language' | 'workspace' | 'platform']
 }>()
 const ani = ref()
 onMounted(() => {

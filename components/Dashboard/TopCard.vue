@@ -2,7 +2,7 @@
 const props = withDefaults(defineProps<{
   icon: string
   title: string
-  type: 'language' | 'project' | 'platform'
+  type: 'language' | 'workspace' | 'platform'
   filters?: FilterItem[]
   days: number
 }>(), {
@@ -28,7 +28,7 @@ const isLoading = computed(() => unref(status) === 'pending')
 const data = computed(() => unref(rawData))
 const filters = inject<FilterItem[]>('filters')
 
-function onClickItem(field: string, type: 'language' | 'project' | 'platform') {
+function onClickItem(field: string, type: 'language' | 'workspace' | 'platform') {
   if (filters) {
     const filter = {
       value: field,

@@ -92,7 +92,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       />
       <DashboardTopCard
         icon="i-tabler-app-window"
-        type="project"
+        type="workspace"
         :days="days"
         :filters="filters"
         :title="t.dashboard.overview.top.project"
