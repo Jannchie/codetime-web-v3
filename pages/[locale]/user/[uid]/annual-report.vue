@@ -7,13 +7,16 @@ const uid = computed(() => {
   return Number(route.params.uid)
 })
 const t = useI18N()
-const { data: user } = (await v3GetUserByUserId({
+const { data: userResp } = (await v3GetUserByUserId({
   path: {
     user_id: uid.value,
   },
 }))
+const user = computed(() => {
+  return userResp?.[200]
+})
 
-if (!user) {
+if (!user.value) {
   throw createError({
     statusCode: 404,
     message: t.value.annualReport.userNotFound,
@@ -21,7 +24,7 @@ if (!user) {
 }
 watchEffect(() => {
   useSeoMeta({
-    title: `${user.username} - ${t.value.annualReport.annualCodeTimeReport('2024')}`,
+    title: `${user.value?.username} - ${t.value.annualReport.annualCodeTimeReport('2024')}`,
     description: t.value.meta.description,
     ogTitle: t.value.meta.ogTitle,
     ogDescription: t.value.meta.ogDescription,
@@ -34,17 +37,20 @@ watchEffect(() => {
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 const { share } = useShare()
-const yearlyData = await v3GetYearlyReportData({
+const yearlyDataResp = await v3GetYearlyReportData({
   query: {
     user_id: uid.value,
     year: '2024',
-    timezone: user.timezone ?? browserTimezone,
+    timezone: user.value.timezone ?? browserTimezone,
   },
+})
+const yearlyData = computed(() => {
+  return yearlyDataResp.data?.[200]
 })
 
 const yearCalendarData = computed(() => {
-  if (yearlyData.data) {
-    return yearlyData.data.dailyDistribution.map((d) => {
+  if (yearlyData.value) {
+    return yearlyData.value.dailyDistribution.map((d) => {
       return {
         date: new Date(d.field),
         duration: d.minutes * 60 * 1000,
@@ -55,8 +61,8 @@ const yearCalendarData = computed(() => {
 })
 
 const sumMinutes = computed(() => {
-  if (yearlyData.data) {
-    return yearlyData.data.dailyDistribution.reduce((acc, cur) => acc + cur.minutes, 0)
+  if (yearlyData.value) {
+    return yearlyData.value.dailyDistribution.reduce((acc, cur) => acc + cur.minutes, 0)
   }
   return 0
 })
@@ -72,16 +78,16 @@ const sumMinutes = computed(() => {
 // })
 
 const averageMinutes = computed(() => {
-  if (yearlyData.data) {
-    return sumMinutes.value / yearlyData.data.dailyDistribution.length
+  if (yearlyData.value) {
+    return sumMinutes.value / yearlyData.value.dailyDistribution.length
   }
   return 0
 })
 
 const mostProductiveHour = computed(() => {
-  if (yearlyData.data) {
-    let maxHour = yearlyData.data.hourlyDistribution[0]
-    for (const hourData of yearlyData.data.hourlyDistribution) {
+  if (yearlyData.value) {
+    let maxHour = yearlyData.value.hourlyDistribution[0]
+    for (const hourData of yearlyData.value.hourlyDistribution) {
       if (hourData.minutes > maxHour.minutes) {
         maxHour = hourData
       }
@@ -95,8 +101,8 @@ const mostProductiveHour = computed(() => {
 })
 
 const hourlyDistribution = computed(() => {
-  if (yearlyData.data) {
-    return yearlyData.data.hourlyDistribution.map((d) => {
+  if (yearlyData.value) {
+    return yearlyData.value.hourlyDistribution.map((d) => {
       d.field = d.field.toString().padStart(2, '0')
       return {
         field: d.field,
@@ -123,8 +129,8 @@ const dayPeriods = computed(() => {
     midnight: 0,
   }
 
-  if (yearlyData.data) {
-    for (const cur of yearlyData.data.hourlyDistribution) {
+  if (yearlyData.value) {
+    for (const cur of yearlyData.value.hourlyDistribution) {
       if (Number(cur.field) >= 6 && Number(cur.field) < 12) {
         result.morning += cur.minutes
       }
@@ -151,9 +157,9 @@ const hourString = computed(() => {
 
 // 双休日编程时间占比
 const weekendMinutes = computed(() => {
-  if (yearlyData.data) {
+  if (yearlyData.value) {
     let sum = 0
-    for (const cur of yearlyData.data.dailyDistribution) {
+    for (const cur of yearlyData.value.dailyDistribution) {
       const day = new Date(cur.field).getDay()
       if (day === 0 || day === 6) {
         sum += cur.minutes
@@ -164,7 +170,7 @@ const weekendMinutes = computed(() => {
   return 0
 })
 const weekendMinutesRatio = computed(() => {
-  if (yearlyData.data) {
+  if (yearlyData.value) {
     return weekendMinutes.value / sumMinutes.value
   }
   return 0
@@ -172,7 +178,7 @@ const weekendMinutesRatio = computed(() => {
 const locale = useLocale()
 const monthlyMinutes = computed(() => {
   const resp: Record<string, number> = {}
-  for (const data of yearlyData.data?.dailyDistribution ?? []) {
+  for (const data of yearlyData.value?.dailyDistribution ?? []) {
     const date = new Date(data.field)
     const month = date.getMonth()
     if (!resp[month]) {
@@ -195,7 +201,7 @@ const allMonths = computed(() => {
   })
 })
 const averageMonthlyMinutes = computed(() => {
-  if (yearlyData.data) {
+  if (yearlyData.value) {
     return sumMinutes.value / 12
   }
   return 0
@@ -226,8 +232,8 @@ function HeaderComponent({ title, value, extra }: { title: string, value?: strin
 }
 
 const topLanguage = computed(() => {
-  if (yearlyData.data) {
-    return yearlyData.data.topLanguages[0]
+  if (yearlyData.value) {
+    return yearlyData.value.topLanguages[0]
   }
   return null
 })
@@ -236,7 +242,7 @@ const topLanguage = computed(() => {
 <template>
   <NuxtLayout name="user">
     <div
-      v-if="yearlyData.data?.dailyDistribution.length === 0 || !user"
+      v-if=" yearlyData?.dailyDistribution.length === 0 || !user"
       class="m-32 mx-auto max-w-820px"
     >
       <div class="flex flex-col items-center gap-4">
@@ -384,7 +390,7 @@ const topLanguage = computed(() => {
           </div>
           <div class="mt-4 flex flex-col items-center gap-1">
             <div
-              v-for="lang in yearlyData.data?.topLanguages.slice(1)"
+              v-for="lang in yearlyData?.topLanguages.slice(1)"
               :key="lang.field"
               class="flex items-center gap-2"
             >
@@ -405,7 +411,7 @@ const topLanguage = computed(() => {
           <Btn
             size="lg"
             @click="() => share({
-              title: `${user.username} - ${t.annualReport.annualCodeTimeReport('2024')}`,
+              title: `${user?.username} - ${t.annualReport.annualCodeTimeReport('2024')}`,
               url: `https://codetime.dev/${locale}/user/${uid}/annual-report`,
             })"
           >

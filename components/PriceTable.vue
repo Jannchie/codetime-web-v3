@@ -28,7 +28,7 @@ const t = useI18N()
     <div class="m-auto mb-18 flex justify-center">
       <LandingPriceTab v-model="variant" />
     </div>
-    <div class="m-auto flex flex-col justify-center gap-4 container md:flex-row">
+    <div class="container m-auto flex flex-col justify-center gap-4 md:flex-row">
       <Paper class="flex flex-col justify-between md:min-w-72">
         <div class="h-full flex flex-col">
           <div class="text-base font-light">

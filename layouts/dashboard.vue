@@ -49,7 +49,7 @@ const resp = await useAsyncData(async () => {
       limit: 1,
     },
   })
-  return resp.data?.[0]
+  return resp.data?.[200]?.[0]
 })
 
 // 如果日期是 12月 20日到 1月 15 日之间，则是年度报告展示周期
