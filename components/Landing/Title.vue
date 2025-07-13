@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-24 flex gap-5 text-7xl font-bold md:text-8xl">
-    <span class="gradient-text title-code">Code</span>
-    <span class="gradient-text title-time">Time</span>
+  <div class="lg:text-10xl flex gap-6 text-7xl font-bold md:text-9xl">
+    <span class="gradient-text title-code transition-transform duration-300 hover:scale-105">Code</span>
+    <span class="gradient-text title-time transition-transform duration-300 hover:scale-105">Time</span>
   </div>
 </template>
 
@@ -24,7 +24,7 @@
 }
 
 @keyframes spin {
-0% {
+  0% {
     background-position: 100% 50%;
   }
   50% {

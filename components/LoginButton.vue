@@ -8,6 +8,9 @@ const t = useI18N()
 
 const userPending = inject('user-pending')
 const notLogin = computed(() => user.value === null || !userPending)
+
+const isGitHubLoading = ref(false)
+
 watchEffect(() => {
   if (notLogin.value && globalThis.window !== undefined) {
     const script = document.createElement('script')
@@ -18,6 +21,32 @@ watchEffect(() => {
     }, 1000)
   }
 })
+
+// Handle GitHub OAuth
+async function handleGitHubLogin() {
+  isGitHubLoading.value = true
+
+  try {
+    const clientId = 'ace5a9368bb676886187' // GitHub App Client ID
+    const scope = 'user:email'
+    const state = Math.random().toString(36).slice(2, 15)
+
+    // Store state for verification
+    sessionStorage.setItem('github_oauth_state', state)
+    sessionStorage.setItem('github_oauth_redirect', globalThis.location.href)
+
+    const authUrl = `https://github.com/login/oauth/authorize?`
+      + `client_id=${clientId}&`
+      + `scope=${encodeURIComponent(scope)}&`
+      + `state=${state}`
+
+    globalThis.location.href = authUrl
+  }
+  catch (error) {
+    console.error('GitHub OAuth initiation failed:', error)
+    isGitHubLoading.value = false
+  }
+}
 </script>
 
 <template>
@@ -72,14 +101,22 @@ watchEffect(() => {
                 data-size="medium"
                 data-locale="en-US"
               />
-              <NuxtLink
-                key="main"
+              <button
+                key="github"
                 aria-label="github"
-                :to="`${$config.public.apiHost}/auth/github`"
-                class="h-32px w-32px flex items-center justify-center border border-[#dadce0] rounded-full bg-white"
+                :disabled="isGitHubLoading"
+                class="h-32px w-32px flex items-center justify-center border border-[#dadce0] rounded-full bg-white transition-colors disabled:cursor-not-allowed hover:bg-gray-50 disabled:opacity-50"
+                @click="handleGitHubLogin"
               >
-                <i class="i-eva-github-fill h-5 w-5 bg-black" />
-              </NuxtLink>
+                <i
+                  v-if="!isGitHubLoading"
+                  class="i-eva-github-fill h-5 w-5 bg-black"
+                />
+                <i
+                  v-else
+                  class="i-eva-loader-outline h-5 w-5 animate-spin bg-black"
+                />
+              </button>
             </div>
           </div>
         </div>
