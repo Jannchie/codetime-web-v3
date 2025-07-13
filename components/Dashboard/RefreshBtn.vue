@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Modal, Paper } from '@roku-ui/vue'
+import { v3RefreshToken } from '~/api/v3'
 
 const user = useUser()
 const t = useI18N()
@@ -7,17 +8,20 @@ const modal = ref(false)
 const status = autoResetRef<string>('idle', 3000)
 async function refreshToken() {
   modal.value = false
-  const resp = await useAPIFetch<User>('/user/token/refresh', {
-    method: 'POST',
-  })
-  watchEffect(() => {
-    if (resp.data.value && user.value) {
-      user.value.upload_token = resp.data.value.upload_token ?? ''
+  status.value = 'pending'
+  try {
+    const resp = await v3RefreshToken()
+    if (resp.data && user.value) {
+      user.value.upload_token = resp.data.token ?? ''
+      status.value = 'success'
     }
-  })
-  watchEffect(() => {
-    status.value = resp.status.value
-  })
+    else {
+      status.value = 'error'
+    }
+  }
+  catch {
+    status.value = 'error'
+  }
 }
 </script>
 

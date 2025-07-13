@@ -3,1156 +3,1160 @@
 /**
  * AggregatedLogPublic
  */
-export interface AggregatedLogPublic {
-  time: string
-  field: string
-  count: number
-}
+export type AggregatedLogPublic = {
+    time: string;
+    field: string;
+    count: number;
+};
 
 /**
  * AuthResponse
  */
-export interface AuthResponse {
-  id: number
-  username: string
-  email?: string | null
-  avatar?: string | null
-  token: string
-  plan: string
-}
+export type AuthResponse = {
+    id: number;
+    username: string;
+    email?: string | null;
+    avatar?: string | null;
+    token: string;
+    plan: string;
+};
 
 /**
  * CheckLoginResponse
  */
-export interface CheckLoginResponse {
-  loggedIn: boolean
-  user?: DtoUserPublic | null
-}
+export type CheckLoginResponse = {
+    loggedIn: boolean;
+    user?: DtoUserPublic | null;
+};
 
 /**
  * CheckoutResponse
  */
-export interface CheckoutResponse {
-  checkoutUrl: string
-  expiresAt: string
-}
+export type CheckoutResponse = {
+    checkoutUrl: string;
+    expiresAt: Date;
+};
 
 /**
  * DataExportResponse
  */
-export interface DataExportResponse {
-  downloadUrl: string
-  expiresAt: string
-}
+export type DataExportResponse = {
+    downloadUrl: string;
+    expiresAt: Date;
+};
 
 /**
  * EventLogPublic
  */
-export interface EventLogPublic {
-  eventTime: number
-  language: string
-  project: string
-  relativeFile: string
-  editor: string
-  platform: string
-  absoluteFile: string
-  gitOrigin: string
-  gitBranch: string
-}
+export type EventLogPublic = {
+    eventTime: number;
+    language: string;
+    project: string;
+    relativeFile: string;
+    editor: string;
+    platform: string;
+    absoluteFile: string;
+    gitOrigin: string;
+    gitBranch: string;
+};
 
 /**
  * LeaderboardEntry
  */
-export interface LeaderboardEntry {
-  user: SrcDtoUserPublic
-  totalMinutes: number
-  rank: number
-}
+export type LeaderboardEntry = {
+    user: SrcDtoUserPublic;
+    totalMinutes: number;
+    rank: number;
+};
 
 /**
  * LeaderboardResponse
  */
-export interface LeaderboardResponse {
-  entries: Array<LeaderboardEntry>
-  totalUsers: number
-  updatedAt: string
-}
+export type LeaderboardResponse = {
+    entries: Array<LeaderboardEntry>;
+    totalUsers: number;
+    updatedAt: Date;
+};
 
 /**
  * MinuteLogPublic
  */
-export interface MinuteLogPublic {
-  eventTime: number
-  language: string
-  project: string
-  relativeFile: string
-  editor: string
-  platform: string
-  absoluteFile?: string | null
-  gitOrigin?: string | null
-  gitBranch?: string | null
-}
+export type MinuteLogPublic = {
+    eventTime: number;
+    language: string;
+    project: string;
+    relativeFile: string;
+    editor: string;
+    platform: string;
+    absoluteFile?: string | null;
+    gitOrigin?: string | null;
+    gitBranch?: string | null;
+};
 
 /**
  * OAuthRequest
  */
-export interface OAuthRequest {
-  code: string
-  redirectUri?: string | null
-}
+export type OAuthRequest = {
+    code: string;
+    redirectUri?: string | null;
+};
 
 /**
  * PrivacySettingsRequest
  */
-export interface PrivacySettingsRequest {
-  privacyLevel: string
-  showEmail?: boolean
-  showGithub?: boolean
-}
+export type PrivacySettingsRequest = {
+    privacyLevel: string;
+    showEmail?: boolean;
+    showGithub?: boolean;
+};
 
 /**
  * PrivacySettingsResponse
  */
-export interface PrivacySettingsResponse {
-  privacyLevel: string
-  showEmail: boolean
-  showGithub: boolean
-}
+export type PrivacySettingsResponse = {
+    privacyLevel: string;
+    showEmail: boolean;
+    showGithub: boolean;
+};
 
 /**
  * ProductPublic
  */
-export interface ProductPublic {
-  id: string
-  name: string
-  description: string
-  price: number
-  currency: string
-  interval?: string | null
-}
+export type ProductPublic = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    currency: string;
+    interval?: string | null;
+};
 
 /**
  * RootResponse
  */
-export interface RootResponse {
-  message: string
-  documentUrl: string
-}
+export type RootResponse = {
+    message: string;
+    documentUrl: string;
+};
 
 /**
  * ShieldResponse
  */
-export interface ShieldResponse {
-  schemaVersion?: number
-  logoSvg?: string | null
-  label: string
-  message: string
-  color: string
-}
+export type ShieldResponse = {
+    schemaVersion?: number;
+    logoSvg?: string | null;
+    label: string;
+    message: string;
+    color: string;
+};
 
 /**
  * StatsData
  */
-export interface StatsData {
-  duration: number
-  time: string
-  by: string
-}
+export type StatsData = {
+    duration: number;
+    time: string;
+    by: string;
+};
 
 /**
  * StatsResponse
  */
-export interface StatsResponse {
-  data: Array<StatsData>
-}
+export type StatsResponse = {
+    data: Array<StatsData>;
+};
 
 /**
  * StatsTimeData
  */
-export interface StatsTimeData {
-  duration: number
-  time: string
-}
+export type StatsTimeData = {
+    duration: number;
+    time: string;
+};
 
 /**
  * StatsTimeResponse
  */
-export interface StatsTimeResponse {
-  data: Array<StatsTimeData>
-}
+export type StatsTimeResponse = {
+    data: Array<StatsTimeData>;
+};
 
 /**
  * TokenRefreshResponse
  */
-export interface TokenRefreshResponse {
-  token: string
-  tokenV1: string
-}
+export type TokenRefreshResponse = {
+    token: string;
+    tokenV1: string;
+};
 
 /**
  * TopPublic
  */
-export interface TopPublic {
-  field: string
-  minutes: number
-}
+export type TopPublic = {
+    field: string;
+    minutes: number;
+};
 
 /**
  * TotalMinutesResponse
  */
-export interface TotalMinutesResponse {
-  totalMinutes: number
-}
+export type TotalMinutesResponse = {
+    totalMinutes: number;
+};
 
 /**
  * UserDeleteResponse
  */
-export interface UserDeleteResponse {
-  success: boolean
-  message: string
-}
+export type UserDeleteResponse = {
+    success: boolean;
+    message: string;
+};
 
 /**
  * WebhookResponse
  */
-export interface WebhookResponse {
-  success: boolean
-  message: string
-}
+export type WebhookResponse = {
+    success: boolean;
+    message: string;
+};
 
 /**
  * WorkspaceSearchResponse
  */
-export interface WorkspaceSearchResponse {
-  results: Array<WorkspaceSearchResult>
-  totalResults: number
-}
+export type WorkspaceSearchResponse = {
+    results: Array<WorkspaceSearchResult>;
+    totalResults: number;
+};
 
 /**
  * WorkspaceSearchResult
  */
-export interface WorkspaceSearchResult {
-  workspaceName: string
-  language: string
-  totalMinutes: number
-  userCount: number
-  recentActivity?: string | null
-}
+export type WorkspaceSearchResult = {
+    workspaceName: string;
+    language: string;
+    totalMinutes: number;
+    userCount: number;
+    recentActivity?: Date | null;
+};
 
 /**
  * YearlyReportDataPublic
  */
-export interface YearlyReportDataPublic {
-  topLanguages: Array<TopPublic>
-  hourlyDistribution: Array<TopPublic>
-  dailyDistribution: Array<TopPublic>
-}
+export type YearlyReportDataPublic = {
+    topLanguages: Array<TopPublic>;
+    hourlyDistribution: Array<TopPublic>;
+    dailyDistribution: Array<TopPublic>;
+};
 
 /**
  * UserPublic
  */
-export interface DtoUserPublic {
-  id: number
-  email?: string | null
-  username: string
-  avatar?: string | null
-  githubId?: number | null
-  bio?: string | null
-  googleId?: string | null
-  plan: string
-  timezone?: string | null
-  createdAt: string
-  updatedAt: string
-}
+export type DtoUserPublic = {
+    id: number;
+    email?: string | null;
+    username: string;
+    avatar?: string | null;
+    githubId?: number | null;
+    bio?: string | null;
+    googleId?: string | null;
+    plan: string;
+    timezone?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+};
 
 /**
  * UserPublic
  */
-export interface SrcDtoUserPublic {
-  id: number
-  email?: string | null
-  username: string
-  avatar?: string | null
-  githubId?: number | null
-  bio?: string | null
-  googleId?: string | null
-  plan: string
-  timezone?: string | null
-  createdAt: string
-  updatedAt: string
-}
-
-export interface V3GetRootData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3'
-}
-
-export interface V3GetRootResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: RootResponse
-}
-
-export type V3GetRootResponse = V3GetRootResponses[keyof V3GetRootResponses]
-
-export interface V3GetTotalMinutesData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/total-minutes'
-}
-
-export interface V3GetTotalMinutesResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: TotalMinutesResponse
-}
-
-export type V3GetTotalMinutesResponse = V3GetTotalMinutesResponses[keyof V3GetTotalMinutesResponses]
-
-export interface V3CheckLoginData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/auth/check'
-}
-
-export interface V3CheckLoginResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: CheckLoginResponse
-}
-
-export type V3CheckLoginResponse = V3CheckLoginResponses[keyof V3CheckLoginResponses]
-
-export interface V3GithubAuthData {
-  body: OAuthRequest
-  path?: never
-  query?: never
-  url: '/v3/auth/github'
-}
-
-export interface V3GithubAuthErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3GithubAuthError = V3GithubAuthErrors[keyof V3GithubAuthErrors]
-
-export interface V3GithubAuthResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: AuthResponse
-}
-
-export type V3GithubAuthResponse = V3GithubAuthResponses[keyof V3GithubAuthResponses]
-
-export interface V3GoogleAuthData {
-  body: OAuthRequest
-  path?: never
-  query?: never
-  url: '/v3/auth/google'
-}
-
-export interface V3GoogleAuthErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3GoogleAuthError = V3GoogleAuthErrors[keyof V3GoogleAuthErrors]
-
-export interface V3GoogleAuthResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: AuthResponse
-}
-
-export type V3GoogleAuthResponse = V3GoogleAuthResponses[keyof V3GoogleAuthResponses]
-
-export interface V3RefreshTokenData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/auth/refresh-token'
-}
-
-export interface V3RefreshTokenResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: TokenRefreshResponse
-}
-
-export type V3RefreshTokenResponse = V3RefreshTokenResponses[keyof V3RefreshTokenResponses]
-
-export interface V3CountUserMinutesData {
-  body?: never
-  path?: never
-  query?: {
-    minutes?: number | null
-  }
-  url: '/v3/users/self/workspaces'
-}
-
-export interface V3CountUserMinutesErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3CountUserMinutesError = V3CountUserMinutesErrors[keyof V3CountUserMinutesErrors]
-
-export interface V3CountUserMinutesResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: number
-}
-
-export type V3CountUserMinutesResponse = V3CountUserMinutesResponses[keyof V3CountUserMinutesResponses]
-
-export interface V3DeleteUserAccountData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/users/self'
-}
-
-export interface V3DeleteUserAccountResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: UserDeleteResponse
-}
-
-export type V3DeleteUserAccountResponse = V3DeleteUserAccountResponses[keyof V3DeleteUserAccountResponses]
-
-export interface V3GetUserSelfData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/users/self'
-}
-
-export interface V3GetUserSelfResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: DtoUserPublic
-}
-
-export type V3GetUserSelfResponse = V3GetUserSelfResponses[keyof V3GetUserSelfResponses]
-
-export interface V3DeleteUserDataData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/users/self/data'
-}
-
-export interface V3DeleteUserDataResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: UserDeleteResponse
-}
-
-export type V3DeleteUserDataResponse = V3DeleteUserDataResponses[keyof V3DeleteUserDataResponses]
-
-export interface V3ExportUserDataData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/users/self/export'
-}
-
-export interface V3ExportUserDataResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: DataExportResponse
-}
-
-export type V3ExportUserDataResponse = V3ExportUserDataResponses[keyof V3ExportUserDataResponses]
-
-export interface V3GetPrivacySettingsData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/users/self/privacy'
-}
-
-export interface V3GetPrivacySettingsResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: PrivacySettingsResponse
-}
-
-export type V3GetPrivacySettingsResponse = V3GetPrivacySettingsResponses[keyof V3GetPrivacySettingsResponses]
-
-export interface V3UpdatePrivacySettingsData {
-  body: PrivacySettingsRequest
-  path?: never
-  query?: never
-  url: '/v3/users/self/privacy'
-}
-
-export interface V3UpdatePrivacySettingsErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3UpdatePrivacySettingsError = V3UpdatePrivacySettingsErrors[keyof V3UpdatePrivacySettingsErrors]
-
-export interface V3UpdatePrivacySettingsResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: PrivacySettingsResponse
-}
-
-export type V3UpdatePrivacySettingsResponse = V3UpdatePrivacySettingsResponses[keyof V3UpdatePrivacySettingsResponses]
-
-export interface V3GetUserByUserIdData {
-  body?: never
-  path: {
-    user_id: number
-  }
-  query?: never
-  url: '/v3/users/{user_id}'
-}
-
-export interface V3GetUserByUserIdErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3GetUserByUserIdError = V3GetUserByUserIdErrors[keyof V3GetUserByUserIdErrors]
-
-export interface V3GetUserByUserIdResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: DtoUserPublic
-}
-
-export type V3GetUserByUserIdResponse = V3GetUserByUserIdResponses[keyof V3GetUserByUserIdResponses]
-
-export interface V3GetUserShieldData {
-  body?: never
-  path?: never
-  query: {
-    uid: number
-    minutes?: number | string | null
-    project?: string | null
-    language?: string | null
-    only_hours?: boolean
-  }
-  url: '/v3/users/shield'
-}
-
-export interface V3GetUserShieldErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3GetUserShieldError = V3GetUserShieldErrors[keyof V3GetUserShieldErrors]
-
-export interface V3GetUserShieldResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: ShieldResponse
-}
-
-export type V3GetUserShieldResponse = V3GetUserShieldResponses[keyof V3GetUserShieldResponses]
-
-export interface V3ListSelfLatestLogsData {
-  body?: never
-  path?: never
-  query?: {
-    limit?: number
-  }
-  url: '/v3/users/self/latest-logs'
-}
-
-export interface V3ListSelfLatestLogsErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3ListSelfLatestLogsError = V3ListSelfLatestLogsErrors[keyof V3ListSelfLatestLogsErrors]
-
-export interface V3ListSelfLatestLogsResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<EventLogPublic>
-}
-
-export type V3ListSelfLatestLogsResponse = V3ListSelfLatestLogsResponses[keyof V3ListSelfLatestLogsResponses]
-
-export interface V3ListSelfMinutesData {
-  body?: never
-  path?: never
-  query?: {
-    days?: number | null
-    tz?: string | null
-  }
-  url: '/v3/users/self/minutes'
-}
-
-export interface V3ListSelfMinutesErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3ListSelfMinutesError = V3ListSelfMinutesErrors[keyof V3ListSelfMinutesErrors]
-
-export interface V3ListSelfMinutesResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<TopPublic>
-}
-
-export type V3ListSelfMinutesResponse = V3ListSelfMinutesResponses[keyof V3ListSelfMinutesResponses]
-
-export interface V3ListSelfStatsData {
-  body?: never
-  path?: never
-  query: {
-    by: 'language' | 'workspace' | 'editor' | 'platform'
-    unit?: 'days' | 'hours' | 'minutes'
-    tz?: string | null
-    limit?: number
-    platform?: string | null
-    project?: string | null
-    language?: string | null
-  }
-  url: '/v3/users/self/stats'
-}
-
-export interface V3ListSelfStatsErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3ListSelfStatsError = V3ListSelfStatsErrors[keyof V3ListSelfStatsErrors]
-
-export interface V3ListSelfStatsResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: StatsResponse
-}
-
-export type V3ListSelfStatsResponse = V3ListSelfStatsResponses[keyof V3ListSelfStatsResponses]
-
-export interface V3ListSelfStatsTimeData {
-  body?: never
-  path?: never
-  query?: {
-    unit?: 'days' | 'hours' | 'minutes'
-    tz?: string | null
-    limit?: number
-    platform?: string | null
-    project?: string | null
-    language?: string | null
-  }
-  url: '/v3/users/self/stats_time'
-}
-
-export interface V3ListSelfStatsTimeErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3ListSelfStatsTimeError = V3ListSelfStatsTimeErrors[keyof V3ListSelfStatsTimeErrors]
-
-export interface V3ListSelfStatsTimeResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: StatsTimeResponse
-}
-
-export type V3ListSelfStatsTimeResponse = V3ListSelfStatsTimeResponses[keyof V3ListSelfStatsTimeResponses]
-
-export interface V3ListSelfTopData {
-  body?: never
-  path?: never
-  query: {
-    field: 'language' | 'workspace' | 'editor' | 'platform'
-    limit?: number | null
-    minutes?: number | null
-  }
-  url: '/v3/users/self/top'
-}
-
-export interface V3ListSelfTopErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3ListSelfTopError = V3ListSelfTopErrors[keyof V3ListSelfTopErrors]
-
-export interface V3ListSelfTopResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<TopPublic>
-}
-
-export type V3ListSelfTopResponse = V3ListSelfTopResponses[keyof V3ListSelfTopResponses]
-
-export interface V3GetYearlyReportDataData {
-  body?: never
-  path?: never
-  query: {
-    user_id: number
+export type SrcDtoUserPublic = {
+    id: number;
+    email?: string | null;
+    username: string;
+    avatar?: string | null;
+    githubId?: number | null;
+    bio?: string | null;
+    googleId?: string | null;
+    plan: string;
+    timezone?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+export type V3GetRootData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3';
+};
+
+export type V3GetRootResponses = {
     /**
-     * Year to get report for
+     * Request fulfilled, document follows
      */
-    year?: '2024'
+    200: RootResponse;
+};
+
+export type V3GetRootResponse = V3GetRootResponses[keyof V3GetRootResponses];
+
+export type V3GetTotalMinutesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/total-minutes';
+};
+
+export type V3GetTotalMinutesResponses = {
     /**
-     * Timezone for the report
+     * Request fulfilled, document follows
      */
-    timezone?: string
-  }
-  url: '/v3/logs/yearly-report-data'
-}
+    200: TotalMinutesResponse;
+};
 
-export interface V3GetYearlyReportDataErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3GetTotalMinutesResponse = V3GetTotalMinutesResponses[keyof V3GetTotalMinutesResponses];
 
-export type V3GetYearlyReportDataError = V3GetYearlyReportDataErrors[keyof V3GetYearlyReportDataErrors]
+export type V3CheckLoginData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/auth/check';
+};
 
-export interface V3GetYearlyReportDataResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: YearlyReportDataPublic
-}
-
-export type V3GetYearlyReportDataResponse = V3GetYearlyReportDataResponses[keyof V3GetYearlyReportDataResponses]
-
-export interface V3ListAggregatedLogData {
-  body?: never
-  path?: never
-  query: {
-    uid: number
-  }
-  url: '/v3/logs/aggregated-logs'
-}
-
-export interface V3ListAggregatedLogErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3ListAggregatedLogError = V3ListAggregatedLogErrors[keyof V3ListAggregatedLogErrors]
-
-export interface V3ListAggregatedLogResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<AggregatedLogPublic>
-}
-
-export type V3ListAggregatedLogResponse = V3ListAggregatedLogResponses[keyof V3ListAggregatedLogResponses]
-
-export interface V3ListRealtimeLogsData {
-  body?: never
-  path?: never
-  query: {
-    uid: number
+export type V3CheckLoginResponses = {
     /**
-     * Number of logs to fetch
+     * Request fulfilled, document follows
      */
-    limit?: number | null
-  }
-  url: '/v3/logs/realtime-logs'
-}
+    200: CheckLoginResponse;
+};
 
-export interface V3ListRealtimeLogsErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3CheckLoginResponse = V3CheckLoginResponses[keyof V3CheckLoginResponses];
 
-export type V3ListRealtimeLogsError = V3ListRealtimeLogsErrors[keyof V3ListRealtimeLogsErrors]
+export type V3GithubAuthData = {
+    body: OAuthRequest;
+    path?: never;
+    query?: never;
+    url: '/v3/auth/github';
+};
 
-export interface V3ListRealtimeLogsResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<MinuteLogPublic>
-}
-
-export type V3ListRealtimeLogsResponse = V3ListRealtimeLogsResponses[keyof V3ListRealtimeLogsResponses]
-
-export interface V3ListTopLanguagesData {
-  body?: never
-  path?: never
-  query: {
-    user_id: number
+export type V3GithubAuthErrors = {
     /**
-     * Number of days to fetch
+     * Validation Exception
      */
-    days?: number
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GithubAuthError = V3GithubAuthErrors[keyof V3GithubAuthErrors];
+
+export type V3GithubAuthResponses = {
     /**
-     * Number of results to return
+     * Document created, URL follows
      */
-    limit?: number
-  }
-  url: '/v3/logs/top-languages'
-}
+    201: AuthResponse;
+};
 
-export interface V3ListTopLanguagesErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3GithubAuthResponse = V3GithubAuthResponses[keyof V3GithubAuthResponses];
 
-export type V3ListTopLanguagesError = V3ListTopLanguagesErrors[keyof V3ListTopLanguagesErrors]
+export type V3GoogleAuthData = {
+    body: OAuthRequest;
+    path?: never;
+    query?: never;
+    url: '/v3/auth/google';
+};
 
-export interface V3ListTopLanguagesResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<TopPublic>
-}
-
-export type V3ListTopLanguagesResponse = V3ListTopLanguagesResponses[keyof V3ListTopLanguagesResponses]
-
-export interface V3ListTopWorkspacesData {
-  body?: never
-  path?: never
-  query: {
-    user_id: number
+export type V3GoogleAuthErrors = {
     /**
-     * Number of days to fetch
+     * Validation Exception
      */
-    days?: number
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GoogleAuthError = V3GoogleAuthErrors[keyof V3GoogleAuthErrors];
+
+export type V3GoogleAuthResponses = {
     /**
-     * Number of results to return
+     * Document created, URL follows
      */
-    limit?: number
-  }
-  url: '/v3/logs/top-workspaces'
-}
+    201: AuthResponse;
+};
 
-export interface V3ListTopWorkspacesErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3GoogleAuthResponse = V3GoogleAuthResponses[keyof V3GoogleAuthResponses];
 
-export type V3ListTopWorkspacesError = V3ListTopWorkspacesErrors[keyof V3ListTopWorkspacesErrors]
+export type V3RefreshTokenData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/auth/refresh-token';
+};
 
-export interface V3ListTopWorkspacesResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<TopPublic>
-}
-
-export type V3ListTopWorkspacesResponse = V3ListTopWorkspacesResponses[keyof V3ListTopWorkspacesResponses]
-
-export interface V3CreateCheckoutData {
-  /**
-   * Checkout data including product_id
-   */
-  body: {
-    [key: string]: unknown
-  }
-  path?: never
-  query?: never
-  url: '/v3/v3/payments/checkout'
-}
-
-export interface V3CreateCheckoutErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
-
-export type V3CreateCheckoutError = V3CreateCheckoutErrors[keyof V3CreateCheckoutErrors]
-
-export interface V3CreateCheckoutResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: CheckoutResponse
-}
-
-export type V3CreateCheckoutResponse = V3CreateCheckoutResponses[keyof V3CreateCheckoutResponses]
-
-export interface V3GetProductsData {
-  body?: never
-  path?: never
-  query?: never
-  url: '/v3/v3/payments/products'
-}
-
-export interface V3GetProductsResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: Array<ProductPublic>
-}
-
-export type V3GetProductsResponse = V3GetProductsResponses[keyof V3GetProductsResponses]
-
-export interface V3HandleLemonsqueezyWebhookData {
-  body?: never
-  path?: never
-  query: {
+export type V3RefreshTokenResponses = {
     /**
-     * Webhook payload from LemonSqueezy
+     * Document created, URL follows
      */
-    request_data: {
-      [key: string]: unknown
-    }
-  }
-  url: '/v3/v3/payments/webhooks/lemonsqueezy'
-}
+    201: TokenRefreshResponse;
+};
 
-export interface V3HandleLemonsqueezyWebhookErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3RefreshTokenResponse = V3RefreshTokenResponses[keyof V3RefreshTokenResponses];
 
-export type V3HandleLemonsqueezyWebhookError = V3HandleLemonsqueezyWebhookErrors[keyof V3HandleLemonsqueezyWebhookErrors]
+export type V3CountUserMinutesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        minutes?: number | null;
+    };
+    url: '/v3/users/self/workspaces';
+};
 
-export interface V3HandleLemonsqueezyWebhookResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: WebhookResponse
-}
-
-export type V3HandleLemonsqueezyWebhookResponse = V3HandleLemonsqueezyWebhookResponses[keyof V3HandleLemonsqueezyWebhookResponses]
-
-export interface V3GetLeaderboardData {
-  body?: never
-  path?: never
-  query?: {
+export type V3CountUserMinutesErrors = {
     /**
-     * Number of entries to return
+     * Validation Exception
      */
-    limit?: number
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3CountUserMinutesError = V3CountUserMinutesErrors[keyof V3CountUserMinutesErrors];
+
+export type V3CountUserMinutesResponses = {
     /**
-     * Time period: 'week', 'month', 'year', 'all'
+     * Request fulfilled, document follows
      */
-    period?: string
-  }
-  url: '/v3/v3/public/leaderboard'
-}
+    200: number;
+};
 
-export interface V3GetLeaderboardErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3CountUserMinutesResponse = V3CountUserMinutesResponses[keyof V3CountUserMinutesResponses];
 
-export type V3GetLeaderboardError = V3GetLeaderboardErrors[keyof V3GetLeaderboardErrors]
+export type V3DeleteUserAccountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/users/self';
+};
 
-export interface V3GetLeaderboardResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: LeaderboardResponse
-}
-
-export type V3GetLeaderboardResponse = V3GetLeaderboardResponses[keyof V3GetLeaderboardResponses]
-
-export interface V3SearchWorkspacesData {
-  body?: never
-  path?: never
-  query?: {
+export type V3DeleteUserAccountResponses = {
     /**
-     * Filter by programming language
+     * Request fulfilled, document follows
      */
-    language?: string | null
+    200: UserDeleteResponse;
+};
+
+export type V3DeleteUserAccountResponse = V3DeleteUserAccountResponses[keyof V3DeleteUserAccountResponses];
+
+export type V3GetUserSelfData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/users/self';
+};
+
+export type V3GetUserSelfResponses = {
     /**
-     * Number of results to return
+     * Request fulfilled, document follows
      */
-    limit?: number
-  }
-  url: '/v3/v3/public/workspace/search'
-}
+    200: DtoUserPublic;
+};
 
-export interface V3SearchWorkspacesErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3GetUserSelfResponse = V3GetUserSelfResponses[keyof V3GetUserSelfResponses];
 
-export type V3SearchWorkspacesError = V3SearchWorkspacesErrors[keyof V3SearchWorkspacesErrors]
+export type V3DeleteUserDataData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/users/self/data';
+};
 
-export interface V3SearchWorkspacesResponses {
-  /**
-   * Request fulfilled, document follows
-   */
-  200: WorkspaceSearchResponse
-}
+export type V3DeleteUserDataResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: UserDeleteResponse;
+};
 
-export type V3SearchWorkspacesResponse = V3SearchWorkspacesResponses[keyof V3SearchWorkspacesResponses]
+export type V3DeleteUserDataResponse = V3DeleteUserDataResponses[keyof V3DeleteUserDataResponses];
 
-export interface V3BeAnyUserData {
-  body?: never
-  path?: never
-  query: {
-    uid: number
-  }
-  url: '/v3/dev/be'
-}
+export type V3ExportUserDataData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/users/self/export';
+};
 
-export interface V3BeAnyUserErrors {
-  /**
-   * Validation Exception
-   */
-  400: {
-    status_code: number
-    detail: string
-    extra?: null | Array<unknown> | Array<unknown>
-  }
-}
+export type V3ExportUserDataResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: DataExportResponse;
+};
 
-export type V3BeAnyUserError = V3BeAnyUserErrors[keyof V3BeAnyUserErrors]
+export type V3ExportUserDataResponse = V3ExportUserDataResponses[keyof V3ExportUserDataResponses];
 
-export interface V3BeAnyUserResponses {
-  /**
-   * Document created, URL follows
-   */
-  201: unknown
-}
+export type V3GetPrivacySettingsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/users/self/privacy';
+};
 
-export interface ClientOptions {
-  baseUrl: `${string}://${string}` | (string & {})
-}
+export type V3GetPrivacySettingsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: PrivacySettingsResponse;
+};
+
+export type V3GetPrivacySettingsResponse = V3GetPrivacySettingsResponses[keyof V3GetPrivacySettingsResponses];
+
+export type V3UpdatePrivacySettingsData = {
+    body: PrivacySettingsRequest;
+    path?: never;
+    query?: never;
+    url: '/v3/users/self/privacy';
+};
+
+export type V3UpdatePrivacySettingsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3UpdatePrivacySettingsError = V3UpdatePrivacySettingsErrors[keyof V3UpdatePrivacySettingsErrors];
+
+export type V3UpdatePrivacySettingsResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: PrivacySettingsResponse;
+};
+
+export type V3UpdatePrivacySettingsResponse = V3UpdatePrivacySettingsResponses[keyof V3UpdatePrivacySettingsResponses];
+
+export type V3GetUserByUserIdData = {
+    body?: never;
+    path: {
+        user_id: number;
+    };
+    query?: never;
+    url: '/v3/users/{user_id}';
+};
+
+export type V3GetUserByUserIdErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetUserByUserIdError = V3GetUserByUserIdErrors[keyof V3GetUserByUserIdErrors];
+
+export type V3GetUserByUserIdResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: DtoUserPublic;
+};
+
+export type V3GetUserByUserIdResponse = V3GetUserByUserIdResponses[keyof V3GetUserByUserIdResponses];
+
+export type V3GetUserShieldData = {
+    body?: never;
+    path?: never;
+    query: {
+        uid: number;
+        minutes?: number | string | null;
+        project?: string | null;
+        language?: string | null;
+        only_hours?: boolean;
+    };
+    url: '/v3/users/shield';
+};
+
+export type V3GetUserShieldErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetUserShieldError = V3GetUserShieldErrors[keyof V3GetUserShieldErrors];
+
+export type V3GetUserShieldResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: ShieldResponse;
+};
+
+export type V3GetUserShieldResponse = V3GetUserShieldResponses[keyof V3GetUserShieldResponses];
+
+export type V3ListSelfLatestLogsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        limit?: number;
+    };
+    url: '/v3/users/self/latest-logs';
+};
+
+export type V3ListSelfLatestLogsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListSelfLatestLogsError = V3ListSelfLatestLogsErrors[keyof V3ListSelfLatestLogsErrors];
+
+export type V3ListSelfLatestLogsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<EventLogPublic>;
+};
+
+export type V3ListSelfLatestLogsResponse = V3ListSelfLatestLogsResponses[keyof V3ListSelfLatestLogsResponses];
+
+export type V3ListSelfMinutesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        days?: number | null;
+        tz?: string | null;
+    };
+    url: '/v3/users/self/minutes';
+};
+
+export type V3ListSelfMinutesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListSelfMinutesError = V3ListSelfMinutesErrors[keyof V3ListSelfMinutesErrors];
+
+export type V3ListSelfMinutesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<TopPublic>;
+};
+
+export type V3ListSelfMinutesResponse = V3ListSelfMinutesResponses[keyof V3ListSelfMinutesResponses];
+
+export type V3ListSelfStatsData = {
+    body?: never;
+    path?: never;
+    query: {
+        by: 'language' | 'workspace' | 'editor' | 'platform';
+        unit?: 'days' | 'hours' | 'minutes';
+        tz?: string | null;
+        limit?: number;
+        platform?: string | null;
+        project?: string | null;
+        language?: string | null;
+    };
+    url: '/v3/users/self/stats';
+};
+
+export type V3ListSelfStatsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListSelfStatsError = V3ListSelfStatsErrors[keyof V3ListSelfStatsErrors];
+
+export type V3ListSelfStatsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: StatsResponse;
+};
+
+export type V3ListSelfStatsResponse = V3ListSelfStatsResponses[keyof V3ListSelfStatsResponses];
+
+export type V3ListSelfStatsTimeData = {
+    body?: never;
+    path?: never;
+    query?: {
+        unit?: 'days' | 'hours' | 'minutes';
+        tz?: string | null;
+        limit?: number;
+        platform?: string | null;
+        project?: string | null;
+        language?: string | null;
+    };
+    url: '/v3/users/self/stats_time';
+};
+
+export type V3ListSelfStatsTimeErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListSelfStatsTimeError = V3ListSelfStatsTimeErrors[keyof V3ListSelfStatsTimeErrors];
+
+export type V3ListSelfStatsTimeResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: StatsTimeResponse;
+};
+
+export type V3ListSelfStatsTimeResponse = V3ListSelfStatsTimeResponses[keyof V3ListSelfStatsTimeResponses];
+
+export type V3ListSelfTopData = {
+    body?: never;
+    path?: never;
+    query: {
+        field: 'language' | 'workspace' | 'editor' | 'platform';
+        limit?: number | null;
+        minutes?: number | null;
+    };
+    url: '/v3/users/self/top';
+};
+
+export type V3ListSelfTopErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListSelfTopError = V3ListSelfTopErrors[keyof V3ListSelfTopErrors];
+
+export type V3ListSelfTopResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<TopPublic>;
+};
+
+export type V3ListSelfTopResponse = V3ListSelfTopResponses[keyof V3ListSelfTopResponses];
+
+export type V3GetYearlyReportDataData = {
+    body?: never;
+    path?: never;
+    query: {
+        user_id: number;
+        /**
+         * Year to get report for
+         */
+        year?: '2024';
+        /**
+         * Timezone for the report
+         */
+        timezone?: string;
+    };
+    url: '/v3/logs/yearly-report-data';
+};
+
+export type V3GetYearlyReportDataErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetYearlyReportDataError = V3GetYearlyReportDataErrors[keyof V3GetYearlyReportDataErrors];
+
+export type V3GetYearlyReportDataResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: YearlyReportDataPublic;
+};
+
+export type V3GetYearlyReportDataResponse = V3GetYearlyReportDataResponses[keyof V3GetYearlyReportDataResponses];
+
+export type V3ListAggregatedLogData = {
+    body?: never;
+    path?: never;
+    query: {
+        uid: number;
+    };
+    url: '/v3/logs/aggregated-logs';
+};
+
+export type V3ListAggregatedLogErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListAggregatedLogError = V3ListAggregatedLogErrors[keyof V3ListAggregatedLogErrors];
+
+export type V3ListAggregatedLogResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<AggregatedLogPublic>;
+};
+
+export type V3ListAggregatedLogResponse = V3ListAggregatedLogResponses[keyof V3ListAggregatedLogResponses];
+
+export type V3ListRealtimeLogsData = {
+    body?: never;
+    path?: never;
+    query: {
+        uid: number;
+        /**
+         * Number of logs to fetch
+         */
+        limit?: number | null;
+    };
+    url: '/v3/logs/realtime-logs';
+};
+
+export type V3ListRealtimeLogsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListRealtimeLogsError = V3ListRealtimeLogsErrors[keyof V3ListRealtimeLogsErrors];
+
+export type V3ListRealtimeLogsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<MinuteLogPublic>;
+};
+
+export type V3ListRealtimeLogsResponse = V3ListRealtimeLogsResponses[keyof V3ListRealtimeLogsResponses];
+
+export type V3ListTopLanguagesData = {
+    body?: never;
+    path?: never;
+    query: {
+        user_id: number;
+        /**
+         * Number of days to fetch
+         */
+        days?: number;
+        /**
+         * Number of results to return
+         */
+        limit?: number;
+    };
+    url: '/v3/logs/top-languages';
+};
+
+export type V3ListTopLanguagesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListTopLanguagesError = V3ListTopLanguagesErrors[keyof V3ListTopLanguagesErrors];
+
+export type V3ListTopLanguagesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<TopPublic>;
+};
+
+export type V3ListTopLanguagesResponse = V3ListTopLanguagesResponses[keyof V3ListTopLanguagesResponses];
+
+export type V3ListTopWorkspacesData = {
+    body?: never;
+    path?: never;
+    query: {
+        user_id: number;
+        /**
+         * Number of days to fetch
+         */
+        days?: number;
+        /**
+         * Number of results to return
+         */
+        limit?: number;
+    };
+    url: '/v3/logs/top-workspaces';
+};
+
+export type V3ListTopWorkspacesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3ListTopWorkspacesError = V3ListTopWorkspacesErrors[keyof V3ListTopWorkspacesErrors];
+
+export type V3ListTopWorkspacesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<TopPublic>;
+};
+
+export type V3ListTopWorkspacesResponse = V3ListTopWorkspacesResponses[keyof V3ListTopWorkspacesResponses];
+
+export type V3CreateCheckoutData = {
+    /**
+     * Checkout data including product_id
+     */
+    body: {
+        [key: string]: unknown;
+    };
+    path?: never;
+    query?: never;
+    url: '/v3/v3/payments/checkout';
+};
+
+export type V3CreateCheckoutErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3CreateCheckoutError = V3CreateCheckoutErrors[keyof V3CreateCheckoutErrors];
+
+export type V3CreateCheckoutResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: CheckoutResponse;
+};
+
+export type V3CreateCheckoutResponse = V3CreateCheckoutResponses[keyof V3CreateCheckoutResponses];
+
+export type V3GetProductsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/v3/payments/products';
+};
+
+export type V3GetProductsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<ProductPublic>;
+};
+
+export type V3GetProductsResponse = V3GetProductsResponses[keyof V3GetProductsResponses];
+
+export type V3HandleLemonsqueezyWebhookData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Webhook payload from LemonSqueezy
+         */
+        request_data: {
+            [key: string]: unknown;
+        };
+    };
+    url: '/v3/v3/payments/webhooks/lemonsqueezy';
+};
+
+export type V3HandleLemonsqueezyWebhookErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3HandleLemonsqueezyWebhookError = V3HandleLemonsqueezyWebhookErrors[keyof V3HandleLemonsqueezyWebhookErrors];
+
+export type V3HandleLemonsqueezyWebhookResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: WebhookResponse;
+};
+
+export type V3HandleLemonsqueezyWebhookResponse = V3HandleLemonsqueezyWebhookResponses[keyof V3HandleLemonsqueezyWebhookResponses];
+
+export type V3GetLeaderboardData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Number of entries to return
+         */
+        limit?: number;
+        /**
+         * Time period: 'week', 'month', 'year', 'all'
+         */
+        period?: string;
+    };
+    url: '/v3/v3/public/leaderboard';
+};
+
+export type V3GetLeaderboardErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetLeaderboardError = V3GetLeaderboardErrors[keyof V3GetLeaderboardErrors];
+
+export type V3GetLeaderboardResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: LeaderboardResponse;
+};
+
+export type V3GetLeaderboardResponse = V3GetLeaderboardResponses[keyof V3GetLeaderboardResponses];
+
+export type V3SearchWorkspacesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search query for workspace names
+         */
+        q?: string;
+        /**
+         * Filter by programming language
+         */
+        language?: string | null;
+        /**
+         * Number of results to return
+         */
+        limit?: number;
+    };
+    url: '/v3/v3/public/workspace/search';
+};
+
+export type V3SearchWorkspacesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3SearchWorkspacesError = V3SearchWorkspacesErrors[keyof V3SearchWorkspacesErrors];
+
+export type V3SearchWorkspacesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: WorkspaceSearchResponse;
+};
+
+export type V3SearchWorkspacesResponse = V3SearchWorkspacesResponses[keyof V3SearchWorkspacesResponses];
+
+export type V3BeAnyUserData = {
+    body?: never;
+    path?: never;
+    query: {
+        uid: number;
+    };
+    url: '/v3/dev/be';
+};
+
+export type V3BeAnyUserErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3BeAnyUserError = V3BeAnyUserErrors[keyof V3BeAnyUserErrors];
+
+export type V3BeAnyUserResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: unknown;
+};
+
+export type ClientOptions = {
+    baseUrl: `${string}://${string}` | (string & {});
+};

@@ -1,4 +1,6 @@
-export interface User {
+import { v3GetUserSelf, v3ListSelfStats, v3ListSelfStatsTime, v3ListSelfTop } from '~/api/v3'
+
+export type User = {
   CreatedAt: string
   UpdatedAt: string
   DeletedAt?: string
@@ -16,17 +18,48 @@ export interface User {
 }
 
 export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 'minutes' | 'days' | 'hours' = 'minutes') {
-  // get timezone, eg. -09:00
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-  return await useAPIFetch<{ data: { duration: number, time: string, by?: string }[] }>(`/stats`, {
-    params: {
-      by,
-      tz,
-      limit,
-      unit,
-    },
-    watch: [limit],
-  })
+
+  return await (by === 'time'
+    ? useAsyncData(async () => {
+        const resp = await v3ListSelfStatsTime({
+          query: {
+            unit,
+            tz,
+            limit: limit.value,
+          },
+        })
+        return {
+          data: resp.data?.data.map(item => ({
+            duration: item.duration,
+            time: item.time,
+            by: undefined,
+          })) ?? [],
+        }
+      }, {
+        server: false,
+        watch: [limit],
+      })
+    : useAsyncData(async () => {
+        const resp = await v3ListSelfStats({
+          query: {
+            by: by as any,
+            unit,
+            tz,
+            limit: limit.value,
+          },
+        })
+        return {
+          data: resp.data?.data.map(item => ({
+            duration: item.duration,
+            time: item.time,
+            by: item.by,
+          })) ?? [],
+        }
+      }, {
+        server: false,
+        watch: [limit],
+      }))
 }
 
 export async function useAPIFetch<T>(path: string, options: any, needLogin = true) {
@@ -40,9 +73,11 @@ export async function useAPIFetch<T>(path: string, options: any, needLogin = tru
 }
 
 export async function fetchUser() {
-  return await useAPIFetch<User>('/user', {
-    credentials: 'include',
-    lazy: false,
+  return await useAsyncData(async () => {
+    const resp = await v3GetUserSelf()
+    return resp.data
+  }, {
+    server: false,
   })
 }
 
@@ -50,35 +85,34 @@ export function useUser() {
   return inject<Ref<User | null>>('user', ref(null))
 }
 
-export interface TopData {
+export type TopData = {
   field: string
   minutes: number
   icon?: string
 }
 
 export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
-  const params = computed(() => {
-    return {
-      field,
-      minutes: minutes.value,
-      limit,
-      ...(() => {
-        const obj: Record<string, string> = {}
-        for (const cur of unref(filters)) {
-          obj[cur.key] = cur.value
-        }
-        return obj
-      })(),
-    }
-  })
-  return await useAPIFetch<TopData[]>(`/top`, {
+  return await useAsyncData(async () => {
+    const resp = await v3ListSelfTop({
+      query: {
+        field: field as any,
+        minutes: minutes.value,
+        limit,
+      },
+    })
+    return resp.data?.map(item => ({
+      field: item.field,
+      minutes: item.minutes,
+      icon: undefined,
+    })) ?? []
+  }, {
+    server: false,
+    watch: [minutes],
     ...options,
-    credentials: 'include',
-    params,
   })
 }
 
-export interface FilterItem {
+export type FilterItem = {
   key: string
   value: string
 }

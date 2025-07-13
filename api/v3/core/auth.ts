@@ -1,4 +1,4 @@
-export type AuthToken = string | undefined
+export type AuthToken = string | undefined;
 
 export interface Auth {
   /**
@@ -6,32 +6,35 @@ export interface Auth {
    *
    * @default 'header'
    */
-  in?: 'header' | 'query' | 'cookie'
+  in?: 'header' | 'query' | 'cookie';
   /**
    * Header or query parameter name.
    *
    * @default 'Authorization'
    */
-  name?: string
-  scheme?: 'basic' | 'bearer'
-  type: 'apiKey' | 'http'
+  name?: string;
+  scheme?: 'basic' | 'bearer';
+  type: 'apiKey' | 'http';
 }
 
-export async function getAuthToken(auth: Auth, callback: ((auth: Auth) => Promise<AuthToken> | AuthToken) | AuthToken): Promise<string | undefined> {
-  const token
-    = typeof callback === 'function' ? await callback(auth) : callback
+export const getAuthToken = async (
+  auth: Auth,
+  callback: ((auth: Auth) => Promise<AuthToken> | AuthToken) | AuthToken,
+): Promise<string | undefined> => {
+  const token =
+    typeof callback === 'function' ? await callback(auth) : callback;
 
   if (!token) {
-    return
+    return;
   }
 
   if (auth.scheme === 'bearer') {
-    return `Bearer ${token}`
+    return `Bearer ${token}`;
   }
 
   if (auth.scheme === 'basic') {
-    return `Basic ${btoa(token)}`
+    return `Basic ${btoa(token)}`;
   }
 
-  return token
-}
+  return token;
+};

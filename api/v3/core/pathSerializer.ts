@@ -1,148 +1,132 @@
 interface SerializeOptions<T>
   extends SerializePrimitiveOptions,
-  SerializerOptions<T> {}
+    SerializerOptions<T> {}
 
 interface SerializePrimitiveOptions {
-  allowReserved?: boolean
-  name: string
+  allowReserved?: boolean;
+  name: string;
 }
 
 export interface SerializerOptions<T> {
   /**
    * @default true
    */
-  explode: boolean
-  style: T
+  explode: boolean;
+  style: T;
 }
 
-export type ArrayStyle = 'form' | 'spaceDelimited' | 'pipeDelimited'
-export type ArraySeparatorStyle = ArrayStyle | MatrixStyle
-type MatrixStyle = 'label' | 'matrix' | 'simple'
-export type ObjectStyle = 'form' | 'deepObject'
-type ObjectSeparatorStyle = ObjectStyle | MatrixStyle
+export type ArrayStyle = 'form' | 'spaceDelimited' | 'pipeDelimited';
+export type ArraySeparatorStyle = ArrayStyle | MatrixStyle;
+type MatrixStyle = 'label' | 'matrix' | 'simple';
+export type ObjectStyle = 'form' | 'deepObject';
+type ObjectSeparatorStyle = ObjectStyle | MatrixStyle;
 
 interface SerializePrimitiveParam extends SerializePrimitiveOptions {
-  value: string
+  value: string;
 }
 
-export function separatorArrayExplode(style: ArraySeparatorStyle) {
+export const separatorArrayExplode = (style: ArraySeparatorStyle) => {
   switch (style) {
-    case 'label': {
-      return '.'
-    }
-    case 'matrix': {
-      return ';'
-    }
-    case 'simple': {
-      return ','
-    }
-    default: {
-      return '&'
-    }
+    case 'label':
+      return '.';
+    case 'matrix':
+      return ';';
+    case 'simple':
+      return ',';
+    default:
+      return '&';
   }
-}
+};
 
-export function separatorArrayNoExplode(style: ArraySeparatorStyle) {
+export const separatorArrayNoExplode = (style: ArraySeparatorStyle) => {
   switch (style) {
-    case 'form': {
-      return ','
-    }
-    case 'pipeDelimited': {
-      return '|'
-    }
-    case 'spaceDelimited': {
-      return '%20'
-    }
-    default: {
-      return ','
-    }
+    case 'form':
+      return ',';
+    case 'pipeDelimited':
+      return '|';
+    case 'spaceDelimited':
+      return '%20';
+    default:
+      return ',';
   }
-}
+};
 
-export function separatorObjectExplode(style: ObjectSeparatorStyle) {
+export const separatorObjectExplode = (style: ObjectSeparatorStyle) => {
   switch (style) {
-    case 'label': {
-      return '.'
-    }
-    case 'matrix': {
-      return ';'
-    }
-    case 'simple': {
-      return ','
-    }
-    default: {
-      return '&'
-    }
+    case 'label':
+      return '.';
+    case 'matrix':
+      return ';';
+    case 'simple':
+      return ',';
+    default:
+      return '&';
   }
-}
+};
 
-export function serializeArrayParam({
+export const serializeArrayParam = ({
   allowReserved,
   explode,
   name,
   style,
   value,
 }: SerializeOptions<ArraySeparatorStyle> & {
-  value: unknown[]
-}) {
+  value: unknown[];
+}) => {
   if (!explode) {
     const joinedValues = (
-      allowReserved ? value : value.map(v => encodeURIComponent(v as string))
-    ).join(separatorArrayNoExplode(style))
+      allowReserved ? value : value.map((v) => encodeURIComponent(v as string))
+    ).join(separatorArrayNoExplode(style));
     switch (style) {
-      case 'label': {
-        return `.${joinedValues}`
-      }
-      case 'matrix': {
-        return `;${name}=${joinedValues}`
-      }
-      case 'simple': {
-        return joinedValues
-      }
-      default: {
-        return `${name}=${joinedValues}`
-      }
+      case 'label':
+        return `.${joinedValues}`;
+      case 'matrix':
+        return `;${name}=${joinedValues}`;
+      case 'simple':
+        return joinedValues;
+      default:
+        return `${name}=${joinedValues}`;
     }
   }
 
-  const separator = separatorArrayExplode(style)
+  const separator = separatorArrayExplode(style);
   const joinedValues = value
     .map((v) => {
       if (style === 'label' || style === 'simple') {
-        return allowReserved ? v : encodeURIComponent(v as string)
+        return allowReserved ? v : encodeURIComponent(v as string);
       }
 
       return serializePrimitiveParam({
         allowReserved,
         name,
         value: v as string,
-      })
+      });
     })
-    .join(separator)
+    .join(separator);
   return style === 'label' || style === 'matrix'
     ? separator + joinedValues
-    : joinedValues
-}
+    : joinedValues;
+};
 
-export function serializePrimitiveParam({
+export const serializePrimitiveParam = ({
   allowReserved,
   name,
   value,
-}: SerializePrimitiveParam) {
+}: SerializePrimitiveParam) => {
   if (value === undefined || value === null) {
-    return ''
+    return '';
   }
 
   if (typeof value === 'object') {
-    throw new TypeError(
+    throw new Error(
       'Deeply-nested arrays/objects aren’t supported. Provide your own `querySerializer()` to handle these.',
-    )
+    );
   }
 
-  return `${name}=${allowReserved ? value : encodeURIComponent(value)}`
-}
+  return `${name}=${allowReserved ? value : encodeURIComponent(value)}`;
+};
 
-export function serializeObjectParam({
+export const serializeObjectParam = ({
   allowReserved,
   explode,
   name,
@@ -150,40 +134,36 @@ export function serializeObjectParam({
   value,
   valueOnly,
 }: SerializeOptions<ObjectSeparatorStyle> & {
-  value: Record<string, unknown> | Date
-  valueOnly?: boolean
-}) {
+  value: Record<string, unknown> | Date;
+  valueOnly?: boolean;
+}) => {
   if (value instanceof Date) {
-    return valueOnly ? value.toISOString() : `${name}=${value.toISOString()}`
+    return valueOnly ? value.toISOString() : `${name}=${value.toISOString()}`;
   }
 
   if (style !== 'deepObject' && !explode) {
-    let values: string[] = []
-    for (const [key, v] of Object.entries(value)) {
+    let values: string[] = [];
+    Object.entries(value).forEach(([key, v]) => {
       values = [
         ...values,
         key,
         allowReserved ? (v as string) : encodeURIComponent(v as string),
-      ]
-    }
-    const joinedValues = values.join(',')
+      ];
+    });
+    const joinedValues = values.join(',');
     switch (style) {
-      case 'form': {
-        return `${name}=${joinedValues}`
-      }
-      case 'label': {
-        return `.${joinedValues}`
-      }
-      case 'matrix': {
-        return `;${name}=${joinedValues}`
-      }
-      default: {
-        return joinedValues
-      }
+      case 'form':
+        return `${name}=${joinedValues}`;
+      case 'label':
+        return `.${joinedValues}`;
+      case 'matrix':
+        return `;${name}=${joinedValues}`;
+      default:
+        return joinedValues;
     }
   }
 
-  const separator = separatorObjectExplode(style)
+  const separator = separatorObjectExplode(style);
   const joinedValues = Object.entries(value)
     .map(([key, v]) =>
       serializePrimitiveParam({
@@ -192,8 +172,8 @@ export function serializeObjectParam({
         value: v as string,
       }),
     )
-    .join(separator)
+    .join(separator);
   return style === 'label' || style === 'matrix'
     ? separator + joinedValues
-    : joinedValues
-}
+    : joinedValues;
+};

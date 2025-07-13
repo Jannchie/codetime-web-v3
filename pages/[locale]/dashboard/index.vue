@@ -38,7 +38,7 @@ const filtedData = computed(() => {
   return res
 })
 
-interface DailyDistribution {
+type DailyDistribution = {
   minute: number
   hour: number
   count: number

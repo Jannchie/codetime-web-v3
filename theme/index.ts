@@ -1,9 +1,9 @@
-interface ColorVariants {
+type ColorVariants = {
   1: string
   2: string
   3: string
 }
-export interface ThemeData {
+export type ThemeData = {
   dark: boolean
   frontground: string
   background: string

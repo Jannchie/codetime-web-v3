@@ -25,7 +25,7 @@ const relativeFileCountList = computed(() => {
 })
 const t = useI18N()
 type PathValue = [string, number]
-interface TreeNode {
+type TreeNode = {
   path: string
   value: number
   children: TreeNode[]
@@ -61,7 +61,7 @@ function calculateNodeValues(node: TreeNode) {
   }
 }
 
-interface FlameNode {
+type FlameNode = {
   name: string
   start: number
   end: number

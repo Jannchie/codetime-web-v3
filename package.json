@@ -11,7 +11,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "deploy": "pnpm gen:api && pnpm build && pm2 start ecosystem.config.cjs",
-    "openapi": "openapi-ts && pnpm lint"
+    "openapi": "openapi-ts"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
-    "@hey-api/openapi-ts": "^0.78.3",
+    "@hey-api/openapi-ts": "0.78.0",
     "@iconify/json": "^2.2.357",
     "@jannchie/eslint-config": "^3.6.1",
     "@nuxt/devtools": "^2.6.2",
@@ -47,6 +47,7 @@
     "nuxt-gtag": "^3.0.3",
     "nuxt-og-image": "5.1.9",
     "pm2": "^6.0.8",
+    "typescript": "^5.8.3",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1"
   }

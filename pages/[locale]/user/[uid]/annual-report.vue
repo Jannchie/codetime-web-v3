@@ -7,16 +7,13 @@ const uid = computed(() => {
   return Number(route.params.uid)
 })
 const t = useI18N()
-const { data: userResp } = (await v3GetUserByUserId({
+const { data: user } = (await v3GetUserByUserId({
   path: {
     user_id: uid.value,
   },
 }))
-const user = computed(() => {
-  return userResp?.[200]
-})
 
-if (!user.value) {
+if (!user) {
   throw createError({
     statusCode: 404,
     message: t.value.annualReport.userNotFound,
@@ -24,7 +21,7 @@ if (!user.value) {
 }
 watchEffect(() => {
   useSeoMeta({
-    title: `${user.value?.username} - ${t.value.annualReport.annualCodeTimeReport('2024')}`,
+    title: `${user?.username} - ${t.value.annualReport.annualCodeTimeReport('2024')}`,
     description: t.value.meta.description,
     ogTitle: t.value.meta.ogTitle,
     ogDescription: t.value.meta.ogDescription,
@@ -41,11 +38,11 @@ const yearlyDataResp = await v3GetYearlyReportData({
   query: {
     user_id: uid.value,
     year: '2024',
-    timezone: user.value.timezone ?? browserTimezone,
+    timezone: user.timezone ?? browserTimezone,
   },
 })
 const yearlyData = computed(() => {
-  return yearlyDataResp.data?.[200]
+  return yearlyDataResp.data
 })
 
 const yearCalendarData = computed(() => {

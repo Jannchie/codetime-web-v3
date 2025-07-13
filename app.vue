@@ -8,6 +8,7 @@ const config = useRuntimeConfig()
 client.setConfig({
   baseUrl: config.public.apiHost,
   credentials: 'include',
+  throwOnError: true,
 })
 </script>
 

@@ -1,9 +1,9 @@
-import type { Auth, AuthToken } from './auth'
+import type { Auth, AuthToken } from './auth';
 import type {
   BodySerializer,
   QuerySerializer,
   QuerySerializerOptions,
-} from './bodySerializer'
+} from './bodySerializer';
 
 export interface Client<
   RequestFn = never,
@@ -14,19 +14,19 @@ export interface Client<
   /**
    * Returns the final request URL.
    */
-  buildUrl: BuildUrlFn
-  connect: MethodFn
-  delete: MethodFn
-  get: MethodFn
-  getConfig: () => Config
-  head: MethodFn
-  options: MethodFn
-  patch: MethodFn
-  post: MethodFn
-  put: MethodFn
-  request: RequestFn
-  setConfig: (config: Config) => Config
-  trace: MethodFn
+  buildUrl: BuildUrlFn;
+  connect: MethodFn;
+  delete: MethodFn;
+  get: MethodFn;
+  getConfig: () => Config;
+  head: MethodFn;
+  options: MethodFn;
+  patch: MethodFn;
+  post: MethodFn;
+  put: MethodFn;
+  request: RequestFn;
+  setConfig: (config: Config) => Config;
+  trace: MethodFn;
 }
 
 export interface Config {
@@ -34,12 +34,12 @@ export interface Config {
    * Auth token or a function returning auth token. The resolved value will be
    * added to the request payload as defined by its `security` array.
    */
-  auth?: ((auth: Auth) => Promise<AuthToken> | AuthToken) | AuthToken
+  auth?: ((auth: Auth) => Promise<AuthToken> | AuthToken) | AuthToken;
   /**
    * A function for serializing request body parameter. By default,
    * {@link JSON.stringify()} will be used.
    */
-  bodySerializer?: BodySerializer | null
+  bodySerializer?: BodySerializer | null;
   /**
    * An object containing any HTTP headers that you want to pre-populate your
    * `Headers` object with.
@@ -57,7 +57,7 @@ export interface Config {
         | null
         | undefined
         | unknown
-      >
+      >;
   /**
    * The request method.
    *
@@ -72,7 +72,7 @@ export interface Config {
     | 'PATCH'
     | 'POST'
     | 'PUT'
-    | 'TRACE'
+    | 'TRACE';
   /**
    * A function for serializing request query parameters. By default, arrays
    * will be exploded in form style, objects will be exploded in deepObject
@@ -83,22 +83,22 @@ export interface Config {
    *
    * {@link https://swagger.io/docs/specification/serialization/#query View examples}
    */
-  querySerializer?: QuerySerializer | QuerySerializerOptions
+  querySerializer?: QuerySerializer | QuerySerializerOptions;
   /**
    * A function validating request data. This is useful if you want to ensure
    * the request conforms to the desired shape, so it can be safely sent to
    * the server.
    */
-  requestValidator?: (data: unknown) => Promise<unknown>
+  requestValidator?: (data: unknown) => Promise<unknown>;
   /**
    * A function transforming response data before it's returned. This is useful
    * for post-processing data, e.g. converting ISO strings into Date objects.
    */
-  responseTransformer?: (data: unknown) => Promise<unknown>
+  responseTransformer?: (data: unknown) => Promise<unknown>;
   /**
    * A function validating response data. This is useful if you want to ensure
    * the response conforms to the desired shape, so it can be safely passed to
    * the transformers and returned to the user.
    */
-  responseValidator?: (data: unknown) => Promise<unknown>
+  responseValidator?: (data: unknown) => Promise<unknown>;
 }

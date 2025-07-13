@@ -1,4 +1,4 @@
-export interface Translation {
+export type Translation = {
   annualReport: {
     shareMyReport: string
     reviewAnnualReport: string

@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import { Select } from '@roku-ui/vue'
+import { v3SearchWorkspaces } from '~/api/v3'
 
 const tempRef = ref('')
 const searchText = refDebounced(tempRef, 300)
-const { data } = await useAPIFetch<{
-  project: string
-  latestEventTime: number
-}[]>('/search/workspace', {
-  method: 'GET',
-  params: {
-    limit: 10,
-    word: searchText,
-  },
-  immediate: false,
+const { data } = await useAsyncData(async () => {
+  if (!searchText.value) {
+    return null
+  }
+  const resp = await v3SearchWorkspaces({
+    query: {
+      limit: 10,
+      q: searchText.value,
+    },
+  })
+  return resp.data
+}, {
+  server: false,
+  watch: [searchText],
 })
 
 const options = computed(() => {
-  return data.value?.map((item) => {
+  return data.value?.results.map((item) => {
     return {
-      label: item.project,
-      id: item.project,
+      label: item.workspaceName,
+      id: item.workspaceName,
     }
   }) ?? []
 })

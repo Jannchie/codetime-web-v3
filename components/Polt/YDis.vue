@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as Plot from '@observablehq/plot'
 
-interface DataPoint {
+type DataPoint = {
   time: number
   ratio: number
 }

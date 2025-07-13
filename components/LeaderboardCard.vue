@@ -1,23 +1,27 @@
 <script setup lang="ts">
 import { Avatar, Paper } from '@roku-ui/vue'
 import * as d3 from 'd3'
+import { v3GetLeaderboard } from '~/api/v3'
 
 const props = defineProps<{
   days: number
 }>()
 const days = computed(() => props.days)
-interface LeaderboardItem {
-  username: string
-  avatar: string
-  minutes: number
-}
 const t = useI18N()
-const resp = await useAPIFetch<LeaderboardItem[]>('/leaderboard', {
-  method: 'GET',
-  query: {
-    days,
-  },
-  credentials: 'include',
+const resp = await useAsyncData(async () => {
+  const result = await v3GetLeaderboard({
+    query: {
+      period: days.value <= 7 ? 'week' : (days.value <= 30 ? 'month' : 'year'),
+    },
+  })
+  return result.data?.entries?.map(entry => ({
+    username: entry.user.username,
+    avatar: entry.user.avatar,
+    minutes: entry.totalMinutes,
+  })) ?? []
+}, {
+  server: false,
+  watch: [days],
 })
 
 const fromDate = d3.utcDay.offset(new Date(), -days.value)
@@ -69,7 +73,7 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
             </div>
           </div>
           <Avatar
-            :src="item.avatar"
+            :src="item.avatar ?? ''"
             :size="2.25"
             :name="item.username"
             class="h-40px w-40px rounded-full"

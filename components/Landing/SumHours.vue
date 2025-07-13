@@ -4,8 +4,8 @@ import { locales } from '~/i18n'
 
 const locale = useLocale()
 const { data } = await useAsyncData(async () => {
-  const resp = await v3GetTotalMinutes()
-  return resp.data?.[200]
+  const { data } = await v3GetTotalMinutes()
+  return data
 })
 const minutes = computed(() => {
   return data.value?.totalMinutes ?? 0
