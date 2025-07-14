@@ -258,6 +258,12 @@ export const OAuthRequestSchema = {
     title: 'OAuthRequest'
 } as const;
 
+export const PlanStatusSchema = {
+    type: 'string',
+    enum: ['active', 'cancelled', 'expired', 'on-trial', 'paused', 'past-due', 'unpaid'],
+    title: 'PlanStatus'
+} as const;
+
 export const PrivacySettingsRequestSchema = {
     properties: {
         privacyLevel: {
@@ -431,6 +437,37 @@ export const StatsTimeResponseSchema = {
     title: 'StatsTimeResponse'
 } as const;
 
+export const TimeDistributionDataSchema = {
+    properties: {
+        hour: {
+            type: 'integer'
+        },
+        minute: {
+            type: 'integer'
+        },
+        count: {
+            type: 'integer'
+        }
+    },
+    type: 'object',
+    required: ['count', 'hour', 'minute'],
+    title: 'TimeDistributionData'
+} as const;
+
+export const TimeDistributionResponseSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TimeDistributionData'
+            },
+            type: 'array'
+        }
+    },
+    type: 'object',
+    required: ['data'],
+    title: 'TimeDistributionResponse'
+} as const;
+
 export const TokenRefreshResponseSchema = {
     properties: {
         token: {
@@ -572,7 +609,7 @@ export const UserSelfPublicSchema = {
         planStatus: {
             oneOf: [
                 {
-                    type: 'string'
+                    '$ref': '#/components/schemas/PlanStatus'
                 },
                 {
                     type: 'null'

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Btn } from '@roku-ui/vue'
+import type { UserSelfPublic } from '~/api/v3'
 import NuxtLink from '~/i18n/NuxtLink.vue'
 
 const locale = useRoute().params.locale as string
-const user = inject<Ref<User | null>>('user', ref(null))
+const user = inject<Ref<UserSelfPublic | null>>('user', ref(null))
 const t = useI18N()
 
 const userPending = inject('user-pending')

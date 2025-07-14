@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
-import { v3ListSelfMinutes } from '~/api/v3'
+import { v3GetTimeDistribution } from '~/api/v3'
 
 const filters = reactive<FilterItem[]>([])
 provide('filters', filters)
@@ -39,32 +39,33 @@ const filtedData = computed(() => {
   return res
 })
 
-// GetDailyDistribution
+// GetTimeDistribution
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-const minutesResp = await useAsyncData(async () => {
-  const resp = await v3ListSelfMinutes({
+const timeDistributionResp = await useAsyncData(async () => {
+  const resp = await v3GetTimeDistribution({
     query: {
       tz,
       days: days.value,
     },
   })
-  return resp.data ?? []
+  return resp.data?.data ?? []
 }, {
   server: false,
   watch: [days],
 })
 
 const dailyDistribution = computed(() => {
-  if (!minutesResp.data.value) {
+  if (!timeDistributionResp.data.value) {
     return []
   }
-  const maxMinutes = d3.max(minutesResp.data.value.map(d => d.minutes) ?? []) ?? 1
-  return minutesResp.data.value.map((d, index) => {
-    const ratio = d.minutes / maxMinutes
+  const maxCount = d3.max(timeDistributionResp.data.value.map(d => d.count) ?? []) ?? 1
+  return timeDistributionResp.data.value.map((d) => {
+    const ratio = d.count / maxCount
+    const timeInMinutes = d.hour * 60 + d.minute
     return {
-      time: index, // Use index as time for now
+      time: timeInMinutes,
       ratio,
-      count: d.minutes,
+      count: d.count,
     }
   })
 })
@@ -144,7 +145,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         :y-label="t.plot.label.project"
       />
     </CardBase>
-    <CardBase :loading="minutesResp.status.value === 'pending'">
+    <CardBase :loading="timeDistributionResp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />

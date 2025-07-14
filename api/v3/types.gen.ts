@@ -102,6 +102,11 @@ export type OAuthRequest = {
 };
 
 /**
+ * PlanStatus
+ */
+export type PlanStatus = 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid';
+
+/**
  * PrivacySettingsRequest
  */
 export type PrivacySettingsRequest = {
@@ -182,6 +187,22 @@ export type StatsTimeResponse = {
 };
 
 /**
+ * TimeDistributionData
+ */
+export type TimeDistributionData = {
+    hour: number;
+    minute: number;
+    count: number;
+};
+
+/**
+ * TimeDistributionResponse
+ */
+export type TimeDistributionResponse = {
+    data: Array<TimeDistributionData>;
+};
+
+/**
  * TokenRefreshResponse
  */
 export type TokenRefreshResponse = {
@@ -227,7 +248,7 @@ export type UserSelfPublic = {
     timezone?: string | null;
     uploadToken: string;
     planExpiresAt?: Date | null;
-    planStatus?: string | null;
+    planStatus?: PlanStatus | null;
     createdAt: Date;
     updatedAt: Date;
 };
@@ -572,6 +593,41 @@ export type V3UpdatePrivacySettingsResponses = {
 };
 
 export type V3UpdatePrivacySettingsResponse = V3UpdatePrivacySettingsResponses[keyof V3UpdatePrivacySettingsResponses];
+
+export type V3GetTimeDistributionData = {
+    body?: never;
+    path?: never;
+    query?: {
+        days?: number;
+        tz?: string | null;
+        platform?: string | null;
+        project?: string | null;
+        language?: string | null;
+    };
+    url: '/v3/users/self/time-distribution';
+};
+
+export type V3GetTimeDistributionErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetTimeDistributionError = V3GetTimeDistributionErrors[keyof V3GetTimeDistributionErrors];
+
+export type V3GetTimeDistributionResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TimeDistributionResponse;
+};
+
+export type V3GetTimeDistributionResponse = V3GetTimeDistributionResponses[keyof V3GetTimeDistributionResponses];
 
 export type V3GetUserByUserIdData = {
     body?: never;

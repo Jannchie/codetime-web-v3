@@ -1,5 +1,5 @@
 import type { UserSelfPublic } from '~/api/v3/types.gen'
-import { v3GetUserSelf, v3ListSelfStats, v3ListSelfStatsTime, v3ListSelfTop } from '~/api/v3'
+import { v3GetUserSelf, v3ListSelfStats, v3ListSelfStatsTime } from '~/api/v3'
 
 export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 'minutes' | 'days' | 'hours' = 'minutes') {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -66,22 +66,34 @@ export type TopData = {
 }
 
 export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
-  return await useAsyncData(`top-${field}-${minutes.value}-${limit}`, async () => {
-    const resp = await v3ListSelfTop({
+  const filterArray = unref(filters)
+  const filterKey = JSON.stringify(filterArray)
+  
+  return await useAsyncData(`top-${field}-${minutes.value}-${limit}-${filterKey}`, async () => {
+    const activeFilters = unref(filters)
+    const platformFilter = activeFilters.find(f => f.key === 'platform')?.value
+    const projectFilter = activeFilters.find(f => f.key === 'workspace')?.value
+    const languageFilter = activeFilters.find(f => f.key === 'language')?.value
+    
+    const resp = await v3ListSelfStats({
       query: {
-        field: field as any,
-        minutes: minutes.value,
+        by: field as any,
+        unit: 'days',
+        tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
         limit,
+        platform: platformFilter || null,
+        project: projectFilter || null,
+        language: languageFilter || null,
       },
     })
-    return resp.data?.map(item => ({
-      field: item.field,
-      minutes: item.minutes,
+    return resp.data?.data.map(item => ({
+      field: item.by,
+      minutes: item.duration,
       icon: undefined,
     })) ?? []
   }, {
     server: false,
-    watch: [minutes],
+    watch: [minutes, filterArray],
     ...options,
   })
 }
