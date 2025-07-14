@@ -16,8 +16,8 @@ const checkoutLink = await useCheckoutLink(ref(false), ref(true))
     <div class="mb-4 text-sm op75">
       {{ t.dashboard.settings.account.description }}
     </div>
-    <div class="mb-2 flex items-center gap-4">
-      <Avatar :src="user?.avatar" />
+    <div v-if="user" class="mb-2 flex items-center gap-4">
+      <Avatar v-if="user.avatar" :src="user?.avatar" />
       <div
         v-if="user"
         class="flex-grow"
@@ -29,16 +29,16 @@ const checkoutLink = await useCheckoutLink(ref(false), ref(true))
             :plan="user?.plan ?? 'free'"
           />
           <StatusTag
-            v-if="user.plan !== 'free' && user.plan_status"
+            v-if="user.plan !== 'free' && user.planStatus"
             class="inline"
-            :status="t.plan.status(user.plan_status)"
+            :status="t.plan.status(user.planStatus ?? 'paused')"
           />
           <div
-            v-if="(user?.plan ?? 'free') !== 'free' && user?.plan_status !== 'active'"
+            v-if="(user?.plan ?? 'free') !== 'free' && user?.planStatus !== 'active'"
             class="text-surface-dimmed/80 text-xs"
           >
             {{ t.dashboard.settings.account.expiresIn }}
-            {{ new Date(user?.plan_expires_at ?? '').toLocaleDateString() }}
+            {{ new Date(user?.planExpiresAt ?? '').toLocaleDateString() }}
           </div>
         </div>
         <div class="text-xs text-surface-dimmed">

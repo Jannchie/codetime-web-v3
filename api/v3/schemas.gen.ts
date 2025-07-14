@@ -65,7 +65,7 @@ export const CheckLoginResponseSchema = {
         user: {
             oneOf: [
                 {
-                    '$ref': '#/components/schemas/dto_UserPublic'
+                    '$ref': '#/components/schemas/UserSelfPublic'
                 },
                 {
                     type: 'null'
@@ -484,6 +484,115 @@ export const UserDeleteResponseSchema = {
     title: 'UserDeleteResponse'
 } as const;
 
+export const UserSelfPublicSchema = {
+    properties: {
+        id: {
+            type: 'integer'
+        },
+        email: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        username: {
+            type: 'string'
+        },
+        avatar: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        githubId: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        bio: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        googleId: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        plan: {
+            type: 'string'
+        },
+        timezone: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uploadToken: {
+            type: 'string'
+        },
+        planExpiresAt: {
+            oneOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        planStatus: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['createdAt', 'id', 'plan', 'updatedAt', 'uploadToken', 'username'],
+    title: 'UserSelfPublic'
+} as const;
+
 export const WebhookResponseSchema = {
     properties: {
         success: {
@@ -496,6 +605,27 @@ export const WebhookResponseSchema = {
     type: 'object',
     required: ['message', 'success'],
     title: 'WebhookResponse'
+} as const;
+
+export const WorkspaceFileActivitySchema = {
+    properties: {
+        language: {
+            type: 'string'
+        },
+        relativeFile: {
+            type: 'string'
+        },
+        gitBranch: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['createdAt', 'gitBranch', 'language', 'relativeFile'],
+    title: 'WorkspaceFileActivity'
 } as const;
 
 export const WorkspaceSearchResponseSchema = {
@@ -519,30 +649,10 @@ export const WorkspaceSearchResultSchema = {
     properties: {
         workspaceName: {
             type: 'string'
-        },
-        language: {
-            type: 'string'
-        },
-        totalMinutes: {
-            type: 'integer'
-        },
-        userCount: {
-            type: 'integer'
-        },
-        recentActivity: {
-            oneOf: [
-                {
-                    type: 'string',
-                    format: 'date-time'
-                },
-                {
-                    type: 'null'
-                }
-            ]
         }
     },
     type: 'object',
-    required: ['language', 'totalMinutes', 'userCount', 'workspaceName'],
+    required: ['workspaceName'],
     title: 'WorkspaceSearchResult'
 } as const;
 

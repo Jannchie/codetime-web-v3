@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Btn } from '@roku-ui/vue'
+import { v3GetWorkspaceFiles } from '~/api/v3'
 
 definePageMeta({
   layout: 'dashboard',
@@ -41,32 +42,32 @@ const user = useUser()
 
 const days = ref(user.value?.plan === 'pro' ? 365 * 100 : 28)
 
-const { data, pending } = await useAPIFetch<{
-  language: string
-  relativeFile: string
-  gitBranch: string
-  createdAt: string
-}[]>('/workspace', {
-  method: 'GET',
-  params: {
-    project: projectName,
-    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    days,
-  },
+const { data, pending } = await useAsyncData(async () => {
+  if (!projectName.value) {
+    return null
+  }
+  const resp = await v3GetWorkspaceFiles({
+    query: {
+      project: projectName.value,
+      days: days.value,
+    },
+  })
+  return resp.data ?? []
+}, {
+  server: false,
+  watch: [projectName, days],
 })
 
 const gitBranchCountMap = computed(() => {
   const map = new Map<string, number>()
   if (data.value) {
     for (const d of data.value) {
-      if (d.gitBranch === '') {
-        d.gitBranch = 'Unknown'
-      }
-      if (map.has(d.gitBranch)) {
-        map.set(d.gitBranch, map.get(d.gitBranch)! + 1)
+      const branch = d.gitBranch || 'Unknown'
+      if (map.has(branch)) {
+        map.set(branch, map.get(branch)! + 1)
       }
       else {
-        map.set(d.gitBranch, 1)
+        map.set(branch, 1)
       }
     }
   }

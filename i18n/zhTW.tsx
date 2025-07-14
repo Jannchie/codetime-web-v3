@@ -84,7 +84,7 @@ export const zhTW: Partial<Translation> = {
       p2: '您可以選擇升級到 Pro 訂閱以解鎖更多功能。',
       p3: '如果您在支付過程中遇到任何問題，請通過電子郵件與我們聯繫。',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+    status(str:string) {
       switch (str) {
         case 'active': {
           return '有效'
@@ -106,6 +106,9 @@ export const zhTW: Partial<Translation> = {
         }
         case 'unpaid': {
           return '未付款'
+        }
+        default: {
+          return '未知'
         }
       }
     },

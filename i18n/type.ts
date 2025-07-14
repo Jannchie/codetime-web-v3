@@ -81,7 +81,7 @@ export type Translation = {
       p2: string
       p3: string
     }
-    status: (str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') => string
+    status: (str: string) => string
     basic: {
       title: string
       forever: string

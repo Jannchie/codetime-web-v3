@@ -47,6 +47,7 @@ useHead({
                 :to="`/${locale}/dashboard`"
               >
                 <Image
+                  v-if="user.avatar"
                   :src="user.avatar"
                   class="h-7 w-7 rounded-full"
                   height="28px"

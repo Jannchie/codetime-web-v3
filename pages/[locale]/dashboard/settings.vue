@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { TextField } from '@roku-ui/vue'
+import { Btn, TextField } from '@roku-ui/vue'
 
 definePageMeta({
   layout: 'dashboard',
 })
 const user = useUser()
-const token = computed(() => user.value?.upload_token ?? '')
+const token = computed(() => user.value?.uploadToken ?? '')
 const router = useRouter()
 router.push({
   params: { locale: 'zh-CN' },
@@ -84,7 +84,6 @@ const t = useI18N()
         />
         <RCopyBtn
           :value="token"
-          class="min-w-24"
         />
       </div>
       <div class="mb-4 text-xs text-surface-dimmed">
@@ -141,7 +140,7 @@ const t = useI18N()
         {{ t.dashboard.settings.export.description }}
       </div>
       <div class="mb-2 flex items-center gap-2">
-        <RBtn
+        <Btn
           class="flex items-center gap-2"
           :class="{
             ['!bg-error-container !border-error-container !hover:bg-error-container !hover:border-error-container']: exportFailed,
@@ -150,32 +149,38 @@ const t = useI18N()
           }"
           @click="exportData"
         >
+          <template #leftSection>
+            <i
+              :class="{
+                'i-tabler-loader animate-spin': exporting,
+                'i-tabler-check': exportSucceed,
+                'i-tabler-alert-triangle': exportFailed,
+                'i-tabler-file-export': !exporting && !exportSucceed && !exportFailed,
+              }"
+            />
+          </template>
           <template v-if="exporting">
-            <i class="i-tabler-loader animate-spin" />
             <span>
               {{ t.dashboard.settings.export.buttonExporting }}
             </span>
           </template>
           <template v-else-if="exportFailed">
-            <i class="i-tabler-alert-triangle" />
             <span>
               {{ t.dashboard.settings.export.buttonFailed }}
             </span>
           </template>
           <template v-else-if="exportSucceed">
-            <i class="i-tabler-check" />
             <span>
 
               {{ t.dashboard.settings.export.buttonSucceed }}
             </span>
           </template>
           <template v-else>
-            <i class="i-tabler-download" />
             <span>
               {{ t.dashboard.settings.export.button }}
             </span>
           </template>
-        </RBtn>
+        </Btn>
         <div v-if="exportURL">
           <a
             :href="exportURL"
@@ -197,13 +202,13 @@ const t = useI18N()
         {{ t.dashboard.settings.other.description }}
       </div>
       <div class="mb-2">
-        <RBtn
+        <Btn
           class="flex items-center gap-2"
           @click="logout"
         >
           <i class="i-tabler-logout" />
           {{ t.dashboard.settings.other.logout }}
-        </RBtn>
+        </Btn>
       </div>
     </CardBase>
     <DashboardSettingsDangerZone />

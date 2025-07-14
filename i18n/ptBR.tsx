@@ -84,7 +84,7 @@ export const ptBR: Partial<Translation> = {
       p2: 'Você pode optar por atualizar para uma assinatura Pro para desbloquear mais recursos.',
       p3: 'Se você encontrar algum problema durante o processo de pagamento, entre em contato conosco por e-mail.',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+    status(str:string) {
       switch (str) {
         case 'active': {
           return 'Ativo'
@@ -106,6 +106,9 @@ export const ptBR: Partial<Translation> = {
         }
         case 'unpaid': {
           return 'Não pago'
+        }
+        default: {
+          return 'Desconhecido'
         }
       }
     },

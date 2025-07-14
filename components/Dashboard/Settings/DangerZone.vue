@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { Btn, Modal, Paper, TextField } from '@roku-ui/vue'
+import { v3DeleteUserData } from '~/api/v3'
 
 const t = useI18N()
 const modal = ref(false)
 const deletePrompt = ref('')
-function deleteAllData() {
+async function deleteAllData() {
   if (deletePrompt.value !== 'DELETE') {
     return
   }
   modal.value = false
-  useAPIFetch('/user/records', {
-    method: 'DELETE',
-  })
+  await v3DeleteUserData()
 }
 </script>
 

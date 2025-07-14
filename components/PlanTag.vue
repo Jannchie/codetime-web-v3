@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  plan: 'free' | 'pro'
+  plan: string
 }>()
 </script>
 

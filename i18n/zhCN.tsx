@@ -84,7 +84,7 @@ export const zhCN: Partial<Translation> = {
       p2: '您可以选择升级到 Pro 订阅以解锁更多功能。',
       p3: '如果您在支付过程中遇到任何问题，请通过电子邮件与我们联系。',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+    status(str:string) {
       switch (str) {
         case 'active': {
           return '有效'
@@ -106,6 +106,9 @@ export const zhCN: Partial<Translation> = {
         }
         case 'unpaid': {
           return '未支付'
+        }
+        default: {
+          return '未知'
         }
       }
     },

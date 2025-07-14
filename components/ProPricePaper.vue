@@ -151,11 +151,12 @@ const filledContainerCS = useContainerFilledCS('primary')
             class="w-full"
             variant="transparent"
             disabled
+            v-if="user.planStatus"
           >
             <template #leftSection>
               <i class="i-tabler-check" />
             </template>
-            {{ t.plan.status(user.plan_status) }}
+            {{ t.plan.status(user.planStatus) }}
           </Btn>
         </div>
         <div v-else-if="user && user.plan === 'free'">

@@ -19,9 +19,7 @@ function onClick() {
 <template>
   <Btn
     hover-variant="filled"
-    :size="props.size ?? 'md'"
     :color="ok ? 'secondary' : 'primary'"
-    class="child:flex-shrink-0"
     @click="onClick"
   >
     <template #leftSection>
@@ -37,7 +35,6 @@ function onClick() {
 
     <div
       v-if="ok"
-      class="w-full flex items-center justify-around gap-2"
     >
       <div>
         {{ t.button.copy }}
@@ -45,7 +42,6 @@ function onClick() {
     </div>
     <div
       v-else
-      class="w-full flex items-center justify-around gap-2"
     >
       <div>
         {{ t.button.copy }}

@@ -1,12 +1,9 @@
 <script setup lang="ts">
+import type { WorkspaceFileActivity } from '~/api/v3'
 import { max } from 'd3'
 
 const props = withDefaults(defineProps<{
-  data: {
-    language: string
-    relativeFile: string
-    createdAt: string
-  }[] | null
+  data: WorkspaceFileActivity[] | null
   lineHeight?: number
 }>(), {
   lineHeight: 32,

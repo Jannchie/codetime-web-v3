@@ -84,7 +84,7 @@ export const en: Translation = {
       p2: 'You can choose to upgrade to a Pro subscription to unlock more features.',
       p3: 'If you encounter any problems during the payment process, please contact us by email.',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid'): string {
+    status(str:string): string {
       switch (str) {
         case 'active': {
           return 'Active'
@@ -106,6 +106,9 @@ export const en: Translation = {
         }
         case 'unpaid': {
           return 'Unpaid'
+        }
+        default: {
+          return 'Unknown'
         }
       }
     },

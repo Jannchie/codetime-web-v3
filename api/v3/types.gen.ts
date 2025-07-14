@@ -26,7 +26,7 @@ export type AuthResponse = {
  */
 export type CheckLoginResponse = {
     loggedIn: boolean;
-    user?: DtoUserPublic | null;
+    user?: UserSelfPublic | null;
 };
 
 /**
@@ -213,11 +213,41 @@ export type UserDeleteResponse = {
 };
 
 /**
+ * UserSelfPublic
+ */
+export type UserSelfPublic = {
+    id: number;
+    email?: string | null;
+    username: string;
+    avatar?: string | null;
+    githubId?: number | null;
+    bio?: string | null;
+    googleId?: string | null;
+    plan: string;
+    timezone?: string | null;
+    uploadToken: string;
+    planExpiresAt?: Date | null;
+    planStatus?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+/**
  * WebhookResponse
  */
 export type WebhookResponse = {
     success: boolean;
     message: string;
+};
+
+/**
+ * WorkspaceFileActivity
+ */
+export type WorkspaceFileActivity = {
+    language: string;
+    relativeFile: string;
+    gitBranch: string;
+    createdAt: Date;
 };
 
 /**
@@ -233,10 +263,6 @@ export type WorkspaceSearchResponse = {
  */
 export type WorkspaceSearchResult = {
     workspaceName: string;
-    language: string;
-    totalMinutes: number;
-    userCount: number;
-    recentActivity?: Date | null;
 };
 
 /**
@@ -465,7 +491,7 @@ export type V3GetUserSelfResponses = {
     /**
      * Request fulfilled, document follows
      */
-    200: DtoUserPublic;
+    200: UserSelfPublic;
 };
 
 export type V3GetUserSelfResponse = V3GetUserSelfResponses[keyof V3GetUserSelfResponses];
@@ -612,6 +638,44 @@ export type V3GetUserShieldResponses = {
 };
 
 export type V3GetUserShieldResponse = V3GetUserShieldResponses[keyof V3GetUserShieldResponses];
+
+export type V3GetWorkspaceFilesData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Project/workspace name to filter by
+         */
+        project: string;
+        /**
+         * Number of days to look back
+         */
+        days?: number | null;
+    };
+    url: '/v3/users/self/workspace';
+};
+
+export type V3GetWorkspaceFilesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetWorkspaceFilesError = V3GetWorkspaceFilesErrors[keyof V3GetWorkspaceFilesErrors];
+
+export type V3GetWorkspaceFilesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<WorkspaceFileActivity>;
+};
+
+export type V3GetWorkspaceFilesResponse = V3GetWorkspaceFilesResponses[keyof V3GetWorkspaceFilesResponses];
 
 export type V3ListSelfLatestLogsData = {
     body?: never;
@@ -781,6 +845,44 @@ export type V3ListSelfTopResponses = {
 };
 
 export type V3ListSelfTopResponse = V3ListSelfTopResponses[keyof V3ListSelfTopResponses];
+
+export type V3SearchWorkspacesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search query for workspace names
+         */
+        q?: string;
+        /**
+         * Number of results to return
+         */
+        limit?: number;
+    };
+    url: '/v3/users/self/workspaces/search';
+};
+
+export type V3SearchWorkspacesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3SearchWorkspacesError = V3SearchWorkspacesErrors[keyof V3SearchWorkspacesErrors];
+
+export type V3SearchWorkspacesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: WorkspaceSearchResponse;
+};
+
+export type V3SearchWorkspacesResponse = V3SearchWorkspacesResponses[keyof V3SearchWorkspacesResponses];
 
 export type V3GetYearlyReportDataData = {
     body?: never;
@@ -1064,7 +1166,7 @@ export type V3GetLeaderboardData = {
          */
         days?: number | null;
     };
-    url: '/v3/v3/public/leaderboard';
+    url: '/v3/public/leaderboard';
 };
 
 export type V3GetLeaderboardErrors = {
@@ -1088,48 +1190,6 @@ export type V3GetLeaderboardResponses = {
 };
 
 export type V3GetLeaderboardResponse = V3GetLeaderboardResponses[keyof V3GetLeaderboardResponses];
-
-export type V3SearchWorkspacesData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * Search query for workspace names
-         */
-        q?: string;
-        /**
-         * Filter by programming language
-         */
-        language?: string | null;
-        /**
-         * Number of results to return
-         */
-        limit?: number;
-    };
-    url: '/v3/v3/public/workspace/search';
-};
-
-export type V3SearchWorkspacesErrors = {
-    /**
-     * Validation Exception
-     */
-    400: {
-        status_code: number;
-        detail: string;
-        extra?: null | Array<unknown> | Array<unknown>;
-    };
-};
-
-export type V3SearchWorkspacesError = V3SearchWorkspacesErrors[keyof V3SearchWorkspacesErrors];
-
-export type V3SearchWorkspacesResponses = {
-    /**
-     * Request fulfilled, document follows
-     */
-    200: WorkspaceSearchResponse;
-};
-
-export type V3SearchWorkspacesResponse = V3SearchWorkspacesResponses[keyof V3SearchWorkspacesResponses];
 
 export type V3BeAnyUserData = {
     body?: never;

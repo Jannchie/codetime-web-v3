@@ -84,7 +84,7 @@ export const ja: Partial<Translation> = {
       p2: 'あなたは Pro サブスクリプションにアップグレードして、より多くの機能をアンロックすることができます。',
       p3: '支払いプロセスで問題が発生した場合は、メールでお問い合わせください。',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+    status(str:string) {
       switch (str) {
         case 'active': {
           return '有効'
@@ -106,6 +106,9 @@ export const ja: Partial<Translation> = {
         }
         case 'unpaid': {
           return '未払い'
+        }
+        default: {
+          return '不明'
         }
       }
     },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Modal, Paper } from '@roku-ui/vue'
+import { Btn, Modal, Paper } from '@roku-ui/vue'
 import { v3RefreshToken } from '~/api/v3'
 
 const user = useUser()
@@ -12,7 +12,7 @@ async function refreshToken() {
   try {
     const resp = await v3RefreshToken()
     if (resp.data && user.value) {
-      user.value.upload_token = resp.data.token ?? ''
+      user.value.uploadToken = resp.data.token ?? ''
       status.value = 'success'
     }
     else {
@@ -26,9 +26,8 @@ async function refreshToken() {
 </script>
 
 <template>
-  <RBtn
+  <Btn
     class="mb-2"
-    color="error"
     @click="modal = true"
   >
     <i
@@ -40,7 +39,7 @@ async function refreshToken() {
       }]"
     />
     {{ t.dashboard.settings.token.refresh }}
-  </RBtn>
+  </Btn>
   <Modal v-model="modal">
     <Paper class="max-w-md">
       <div>
@@ -50,17 +49,17 @@ async function refreshToken() {
         {{ t.dashboard.settings.token.confirmRefresh }}
       </div>
       <div class="flex justify-end">
-        <RBtn
+        <Btn
           class="mr-2"
           @click="modal = false"
         >
           {{ t.general.cancel }}
-        </RBtn>
-        <RBtn
+        </Btn>
+        <Btn
           @click="refreshToken"
         >
           {{ t.general.confirm }}
-        </RBtn>
+        </Btn>
       </div>
     </Paper>
   </Modal>

@@ -84,7 +84,7 @@ export const ms: Partial<Translation> = {
       p2: 'Anda boleh memilih untuk menaik taraf kepada langganan Pro untuk membuka lebih banyak ciri.',
       p3: 'Jika anda menghadapi sebarang masalah semasa proses pembayaran, sila hubungi kami melalui e-mel.',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid') {
+    status(str:string) {
       switch (str) {
         case 'active': {
           return 'Aktif'

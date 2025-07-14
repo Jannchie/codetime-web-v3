@@ -84,7 +84,7 @@ export const de: Partial<Translation> = {
       p2: 'Sie können ein Upgrade auf ein Pro-Abonnement durchführen, um weitere Funktionen freizuschalten.',
       p3: 'Wenn Sie während des Zahlungsvorgangs Probleme haben, kontaktieren Sie uns bitte per E-Mail.',
     },
-    status(str: 'active' | 'cancelled' | 'expired' | 'on-trial' | 'paused' | 'past-due' | 'unpaid'): string {
+    status(str:string): string {
       switch (str) {
         case 'active': {
           return 'Aktiv'
@@ -106,6 +106,9 @@ export const de: Partial<Translation> = {
         }
         case 'unpaid': {
           return 'Unbezahlt'
+        }
+        default: {
+          return 'Unbekannt'
         }
       }
     },

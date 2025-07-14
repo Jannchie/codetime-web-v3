@@ -94,15 +94,7 @@ export const ru: Partial<Translation> = {
       p3: 'Если у вас возникли проблемы во время оплаты, свяжитесь с нами по электронной почте.',
     },
     status(
-      str:
-        | 'active'
-        | 'cancelled'
-        | 'expired'
-        | 'on-trial'
-        | 'paused'
-        | 'past-due'
-        | 'unpaid',
-    ): string {
+      str: string): string {
       switch (str) {
         case 'active': {
           return 'Активный'
@@ -124,6 +116,9 @@ export const ru: Partial<Translation> = {
         }
         case 'unpaid': {
           return 'Неоплаченный'
+        }
+        default: {
+          return 'Неизвестный'
         }
       }
     },
