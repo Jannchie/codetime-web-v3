@@ -1,5 +1,5 @@
 import type { UserSelfPublic } from '~/api/v3/types.gen'
-import { v3GetUserSelf, v3ListSelfStats, v3ListSelfStatsTime } from '~/api/v3'
+import { v3GetUserSelf, v3ListSelfStats, v3ListSelfStatsTime, v3ListSelfTop } from '~/api/v3'
 
 export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 'minutes' | 'days' | 'hours' = 'minutes') {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -71,24 +71,27 @@ export async function fetchTop(field: string, minutes: ComputedRef<number>, limi
   
   return await useAsyncData(`top-${field}-${minutes.value}-${limit}-${filterKey}`, async () => {
     const activeFilters = unref(filters)
-    const platformFilter = activeFilters.find(f => f.key === 'platform')?.value
-    const projectFilter = activeFilters.find(f => f.key === 'workspace')?.value
-    const languageFilter = activeFilters.find(f => f.key === 'language')?.value
     
-    const resp = await v3ListSelfStats({
+    // Convert filters to arrays for the API
+    const platformFilters = activeFilters.filter(f => f.key === 'platform').map(f => f.value)
+    const workspaceFilters = activeFilters.filter(f => f.key === 'workspace').map(f => f.value)
+    const languageFilters = activeFilters.filter(f => f.key === 'language').map(f => f.value)
+    const editorFilters = activeFilters.filter(f => f.key === 'editor').map(f => f.value)
+    
+    const resp = await v3ListSelfTop({
       query: {
-        by: field as any,
-        unit: 'days',
-        tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        field: field as any,
+        minutes: minutes.value,
         limit,
-        platform: platformFilter || null,
-        project: projectFilter || null,
-        language: languageFilter || null,
+        platforms: platformFilters.length > 0 ? platformFilters : null,
+        workspaces: workspaceFilters.length > 0 ? workspaceFilters : null,
+        languages: languageFilters.length > 0 ? languageFilters : null,
+        editors: editorFilters.length > 0 ? editorFilters : null,
       },
     })
-    return resp.data?.data.map(item => ({
-      field: item.by,
-      minutes: item.duration,
+    return resp.data?.map(item => ({
+      field: item.field,
+      minutes: item.minutes,
       icon: undefined,
     })) ?? []
   }, {

@@ -876,6 +876,10 @@ export type V3ListSelfTopData = {
         field: 'language' | 'workspace' | 'editor' | 'platform';
         limit?: number | null;
         minutes?: number | null;
+        languages?: Array<string> | null;
+        workspaces?: Array<string> | null;
+        platforms?: Array<string> | null;
+        editors?: Array<string> | null;
     };
     url: '/v3/users/self/top';
 };

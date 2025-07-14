@@ -265,7 +265,7 @@ export const v3ListSelfMinutes = <ThrowOnError extends boolean = false>(options?
 
 /**
  * Get user statistics by field and time
- * Get user stats by a specific field (not time).
+ * Get user stats by field aggregated over time periods.
  */
 export const v3ListSelfStats = <ThrowOnError extends boolean = false>(options: Options<V3ListSelfStatsData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<V3ListSelfStatsResponses, V3ListSelfStatsErrors, ThrowOnError>({
@@ -287,7 +287,7 @@ export const v3ListSelfStatsTime = <ThrowOnError extends boolean = false>(option
 
 /**
  * Get user top statistics by field
- * Get top N items for the given field.
+ * Get top N items for the given field with optional filtering by multiple criteria.
  */
 export const v3ListSelfTop = <ThrowOnError extends boolean = false>(options: Options<V3ListSelfTopData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<V3ListSelfTopResponses, V3ListSelfTopErrors, ThrowOnError>({
