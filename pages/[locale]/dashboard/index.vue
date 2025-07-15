@@ -11,9 +11,27 @@ definePageMeta({
 
 const user = useUser()
 const days = useLocalStorage('days', ref(user.value?.plan === 'pro' ? 365 : 28))
-const allDataResp = await fetchStats(days, 'time', 'days')
-const allLanguageDataResp = await fetchStats(days, 'language', 'days')
-const allProjectDataResp = await fetchStats(days, 'workspace', 'days')
+
+// 并行发起所有主要请求
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+const [allDataResp, allLanguageDataResp, allProjectDataResp, timeDistributionResp] = await Promise.all([
+  fetchStats(days, 'time', 'days'),
+  fetchStats(days, 'language', 'days'),
+  fetchStats(days, 'workspace', 'days'),
+  useAsyncData(async () => {
+    const resp = await v3GetTimeDistribution({
+      query: {
+        tz,
+        days: days.value,
+      },
+    })
+    return resp.data?.data ?? []
+  }, {
+    server: false,
+    watch: [days],
+  })
+])
+
 const allLanguageData = computed(() => allLanguageDataResp.data.value?.data ?? [])
 const allProjectData = computed(() => allProjectDataResp.data.value?.data ?? [])
 const hasData = computed(() => {
@@ -37,21 +55,6 @@ const filtedData = computed(() => {
     return d.date.getTime() >= d3.utcDay.offset(new Date(), -days.value).getTime()
   })
   return res
-})
-
-// GetTimeDistribution
-const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-const timeDistributionResp = await useAsyncData(async () => {
-  const resp = await v3GetTimeDistribution({
-    query: {
-      tz,
-      days: days.value,
-    },
-  })
-  return resp.data?.data ?? []
-}, {
-  server: false,
-  watch: [days],
 })
 
 const dailyDistribution = computed(() => {
@@ -78,16 +81,31 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     :title="t.dashboard.pageHeader.title.overview"
     :description="t.dashboard.pageHeader.description.overview"
   />
-  <DashboardPageContent v-if="allDataResp.status.value !== 'success' && !allDataResp.data.value">
-    <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
-  </DashboardPageContent>
-  <DashboardPageContent v-else-if="hasData">
+  <DashboardPageContent>
     <DashboardDataRange v-model:days="days" />
+    
     <DashboardCalendarCard
-      :loading="allDataResp.status.value === 'pending'"
+      v-if="allDataResp.status.value === 'success' && hasData"
+      :loading="false"
       :data="allData"
     />
+    <CardBase v-else-if="allDataResp.status.value === 'pending'">
+      <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+    </CardBase>
+    <CardBase v-else-if="!hasData" class="flex gap-2 p-6">
+      <div class="leading-0">
+        <i class="text-primary-on i-mdi:alert-circle-outline h-6 w-6" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="text-primary-on font-black">
+          {{ t.dashboard.overview.noData.notice.title }}
+        </div>
+        <NoDataBody />
+      </div>
+    </CardBase>
+    
     <DashboardFilterWrapper />
+    
     <div
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
     >
@@ -113,10 +131,16 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         :title="t.dashboard.overview.top.platform"
       />
     </div>
+    
     <CumulativeLineChart
-      :loading="allDataResp.status.value === 'pending'"
+      v-if="allDataResp.status.value === 'success'"
+      :loading="false"
       :data="filtedData"
     />
+    <CardBase v-else>
+      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+    </CardBase>
+    
     <CardBase :loading="allLanguageDataResp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
@@ -127,10 +151,12 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         </div>
       </div>
       <PoltYDot
+        v-if="allLanguageDataResp.status.value === 'success'"
         :data="pAllLangData"
         :y-label="t.plot.label.language"
       />
     </CardBase>
+    
     <CardBase :loading="allProjectDataResp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
@@ -141,10 +167,12 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         </div>
       </div>
       <PoltYDot
+        v-if="allProjectDataResp.status.value === 'success'"
         :data="pAllProjectData"
         :y-label="t.plot.label.project"
       />
     </CardBase>
+    
     <CardBase :loading="timeDistributionResp.status.value === 'pending'">
       <div>
         <div class="flex items-center gap-2 text-lg">
@@ -155,24 +183,9 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         </div>
       </div>
       <PoltYDis
-        v-if="(dailyDistribution && (d3.max(dailyDistribution.map((d => d.count))) ?? 0) > 0)"
+        v-if="timeDistributionResp.status.value === 'success' && (dailyDistribution && (d3.max(dailyDistribution.map((d => d.count))) ?? 0) > 0)"
         :data="dailyDistribution"
       />
-    </CardBase>
-  </DashboardPageContent>
-  <DashboardPageContent v-else>
-    <CardBase class="flex gap-2 p-6">
-      <div class="leading-0">
-        <i
-          class="text-primary-on i-mdi:alert-circle-outline h-6 w-6"
-        />
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="text-primary-on font-black">
-          {{ t.dashboard.overview.noData.notice.title }}
-        </div>
-        <NoDataBody />
-      </div>
     </CardBase>
   </DashboardPageContent>
 </template>
