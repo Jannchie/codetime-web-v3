@@ -41,7 +41,7 @@ async function refreshToken() {
     {{ t.dashboard.settings.token.refresh }}
   </Btn>
   <Modal v-model="modal">
-    <Paper class="max-w-md">
+    <Paper class="max-w-md" with-border>
       <div>
         {{ t.dashboard.settings.token.refresh }}
       </div>
