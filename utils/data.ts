@@ -61,7 +61,7 @@ export function useTotalMinutes(data: MaybeRef<{
 >) {
   return computed(() => {
     const dataVal = unref(data)
-    return dataVal.reduce((acc, cur) => acc + cur.duration, 0) ?? 0
+    return dataVal.reduce((acc, cur) => acc + cur.duration, 0) ?? 0 
   })
 }
 

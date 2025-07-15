@@ -31,11 +31,11 @@ const t = useI18N()
       >
         <DashboardDataBody
           :title="t.dashboard.overview.statistic.timeTotal"
-          :value="getDurationString(totalMinutes)"
+          :value="getDurationString(totalMinutes * 60 * 1000)"
         />
         <DashboardDataBody
           :title="t.dashboard.overview.statistic.timeToday"
-          :value="getDurationString(todayMinutes)"
+          :value="getDurationString(todayMinutes * 60 * 1000)"
         />
         <DashboardDataBody
           :title="t.dashboard.overview.statistic.currentStreak"

@@ -5,7 +5,7 @@ export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return await (by === 'time'
-    ? useAsyncData(async () => {
+    ? useAsyncData(`stats-time-${unit}-${tz}-${limit.value}`, async () => {
         const resp = await v3ListSelfStatsTime({
           query: {
             unit,
@@ -24,7 +24,7 @@ export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 
         server: false,
         watch: [limit],
       })
-    : useAsyncData(async () => {
+    : useAsyncData(`stats-${by}-${unit}-${tz}-${limit.value}`, async () => {
         const resp = await v3ListSelfStats({
           query: {
             by: by as any,
@@ -47,7 +47,7 @@ export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 
 }
 
 export async function fetchUser() {
-  return await useAsyncData(async () => {
+  return await useAsyncData('user-self', async () => {
     const resp = await v3GetUserSelf()
     return resp.data
   }, {

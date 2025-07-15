@@ -13,7 +13,7 @@ const user = useUser()
 const days = useLocalStorage('days', ref(user.value?.plan === 'pro' ? 365 : 28))
 const allDataResp = await fetchStats(days, 'time', 'days')
 const allLanguageDataResp = await fetchStats(days, 'language', 'days')
-const allProjectDataResp = await fetchStats(days, 'project', 'days')
+const allProjectDataResp = await fetchStats(days, 'workspace', 'days')
 const allLanguageData = computed(() => allLanguageDataResp.data.value?.data ?? [])
 const allProjectData = computed(() => allProjectDataResp.data.value?.data ?? [])
 const hasData = computed(() => {

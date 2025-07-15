@@ -19,6 +19,32 @@ const differentLabel = computed(() => {
   }
   return { differentDates, differentLanguages }
 })
+
+const completeData = computed(() => {
+  const dataMap = new Map<string, number>()
+
+  // Fill existing data
+  for (const d of props.data) {
+    const key = `${d.date.toISOString().slice(0, 10)}_${d.by}`
+    dataMap.set(key, d.duration)
+  }
+
+  // Generate complete data with 0 values for missing combinations
+  const result: { date: Date, duration: number, by: string }[] = []
+  for (const dateStr of differentLabel.value.differentDates) {
+    for (const by of differentLabel.value.differentLanguages) {
+      const key = `${dateStr}_${by}`
+      const duration = dataMap.get(key) || 0
+      result.push({
+        date: new Date(dateStr),
+        duration,
+        by,
+      })
+    }
+  }
+
+  return result
+})
 const chart = ref()
 const { width, height } = useElementBounding(chart)
 const maxR = computed(() => {
@@ -34,7 +60,8 @@ const options = computed<Plot.PlotOptions>(() => {
   const o: Plot.PlotOptions = {
     className: 'y-dot-plot',
     color: {
-      scheme: 'Warm',
+      range: ['#5AF2', '#2AF'],
+      interpolate: 'hcl',
     },
     marginRight: 24,
     y: {
@@ -48,19 +75,20 @@ const options = computed<Plot.PlotOptions>(() => {
       insetRight: maxR.value,
       insetLeft: maxR.value,
       label: t.value.plot.label.date,
+      ticks: Math.max(3, Math.min(10, Math.floor(width.value / 120))),
+      interval: 'day',
     },
     width: 1110,
     height: 300,
     r: { range: [0, maxR.value] },
     marks: [
-      Plot.dot(
-        props.data,
-        Plot.pointer({
+      Plot.rect(
+        completeData.value,
+        {
           x: 'date',
           y: 'by',
-          r: 'duration',
           fill: 'duration',
-          fillOpacity: 0.25,
+          r: 999,
           tip: {
             stroke: '#404040',
             channels: {
@@ -70,7 +98,7 @@ const options = computed<Plot.PlotOptions>(() => {
               },
               duration: {
                 label: t.value.plot.label.duration,
-                value: d => getDurationString(d.duration),
+                value: d => getDurationString(d.duration * 60 * 1000),
               },
               date: {
                 label: t.value.plot.label.date,
@@ -84,18 +112,8 @@ const options = computed<Plot.PlotOptions>(() => {
               y: false,
             },
           },
-        }),
-      ),
-      Plot.dot(
-        props.data,
-        {
-          x: 'date',
-          y: 'by',
-          r: 'duration',
-          fill: 'duration',
-          fillOpacity: 0.25,
-          stroke: 'duration',
         },
+
       ),
       Plot.axisY({
         anchor: 'right',

@@ -74,7 +74,7 @@ const options = computed(() => ({
           },
           duration: {
             label: t.value.plot.label.duration,
-            value: d => getDurationString(d.duration),
+            value: d => getDurationString(d.duration * 60 * 1000),
           },
         },
         format: {

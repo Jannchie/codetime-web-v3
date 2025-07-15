@@ -87,7 +87,7 @@ const options = computed<PlotOptions>(() => ({
     nice: true,
     axis: 'right',
     label: t.value.plot.label.timeHour,
-    tickFormat: (d: number) => d3.format(',d')(d / 60 / 60 / 1000),
+    tickFormat: (d: number) => d3.format(',d')(d / 60),
   },
   marks: [
     Plot.dotY(data.value, { x: 'date', y: 'duration', fill: 'var(--color-fg-2)', fillOpacity: 0.25 }),
