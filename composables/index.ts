@@ -1,14 +1,14 @@
 import { v3CreateCheckout } from '~/api/v3'
 
-export async function useCheckoutLink(isAnuual: Ref<boolean>, isOneTime: Ref<boolean>) {
+export function useCheckoutLink(isAnuual: Ref<boolean>, isOneTime: Ref<boolean>) {
   const user = useUser()
 
-  return asyncComputed(async () => {
+  const getCheckoutLink = async () => {
     if (!user.value) {
-      return ''
+      return null
     }
     if (user.value.plan === 'pro') {
-      return ''
+      return null
     }
 
     const resp = await v3CreateCheckout({
@@ -18,6 +18,14 @@ export async function useCheckoutLink(isAnuual: Ref<boolean>, isOneTime: Ref<boo
       },
     })
 
-    return resp.data?.checkoutUrl ?? ''
-  })
+    const checkoutUrl = resp.data?.checkoutUrl
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl
+    }
+    return checkoutUrl
+  }
+
+  return {
+    getCheckoutLink,
+  }
 }

@@ -20,7 +20,7 @@ function onLogin() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const checkoutLink = await useCheckoutLink(isAnuual, isOneTime)
+const { getCheckoutLink } = useCheckoutLink(isAnuual, isOneTime)
 const locale = useLocale()
 const discountRef = ref()
 watchEffect(() => {
@@ -161,11 +161,10 @@ const filledContainerCS = useContainerFilledCS('primary')
         </div>
         <div v-else-if="user && user.plan === 'free'">
           <Btn
-            is="a"
             variant="filled"
-            :href="checkoutLink"
             class="lemonsqueezy-button w-full"
             color="primary"
+            @click="getCheckoutLink"
           >
             <template #leftSection>
               <i class="i-tabler-credit-card" />
@@ -182,28 +181,9 @@ const filledContainerCS = useContainerFilledCS('primary')
                 class="i-entypo-social-paypal"
               />
             </template>
-            <div class="w-full text-center">
+            <div class="text-center">
               {{ t.plan.pro.button }}
             </div>
-            <template
-              #rightSection
-            >
-              <i
-                class="i-tabler-credit-card op0"
-              />
-              <i
-                v-if="isOneTime"
-                class="i-ant-design-alipay-circle-outlined op0"
-              />
-              <i
-                v-if="isOneTime"
-                class="i-ant-design-wechat-filled op0"
-              />
-              <i
-                v-if="isOneTime"
-                class="i-entypo-social-paypal op0"
-              />
-            </template>
           </Btn>
         </div>
         <div
