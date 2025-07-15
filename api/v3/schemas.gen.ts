@@ -67,21 +67,6 @@ export const CheckoutResponseSchema = {
     title: 'CheckoutResponse'
 } as const;
 
-export const DataExportResponseSchema = {
-    properties: {
-        downloadUrl: {
-            type: 'string'
-        },
-        expiresAt: {
-            type: 'string',
-            format: 'date-time'
-        }
-    },
-    type: 'object',
-    required: ['downloadUrl', 'expiresAt'],
-    title: 'DataExportResponse'
-} as const;
-
 export const EventLogPublicSchema = {
     properties: {
         eventTime: {

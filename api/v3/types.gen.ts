@@ -34,14 +34,6 @@ export type CheckoutResponse = {
 };
 
 /**
- * DataExportResponse
- */
-export type DataExportResponse = {
-    downloadUrl: string;
-    expiresAt: Date;
-};
-
-/**
  * EventLogPublic
  */
 export type EventLogPublic = {
@@ -544,9 +536,9 @@ export type V3ExportUserDataData = {
 
 export type V3ExportUserDataResponses = {
     /**
-     * Document created, URL follows
+     * Request fulfilled, document follows
      */
-    201: DataExportResponse;
+    200: string;
 };
 
 export type V3ExportUserDataResponse = V3ExportUserDataResponses[keyof V3ExportUserDataResponses];

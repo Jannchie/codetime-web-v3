@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Btn, TextField } from '@roku-ui/vue'
-import { v3Logout } from '@/api/v3/sdk.gen'
+import { v3Logout, v3ExportUserData } from '@/api/v3/sdk.gen'
 
 definePageMeta({
   layout: 'dashboard',
@@ -12,7 +12,6 @@ router.push({
   params: { locale: 'zh-CN' },
 })
 
-const apiHost = useRuntimeConfig().public.apiHost
 const exporting = ref(false)
 const exportSucceed = autoResetRef(false, 3000)
 const exportFailed = autoResetRef(false, 3000)
@@ -24,16 +23,14 @@ async function exportData() {
   }
   try {
     exporting.value = true
-    const resp = await $fetch<string>('/user/records/export', {
-      method: 'POST',
-      baseURL: apiHost,
-      credentials: 'include',
+    const resp = await v3ExportUserData({
+      throwOnError: true,
     })
     exporting.value = false
     exportSucceed.value = true
     exportFailed.value = false
-    // resp is a csv string, download it.
-    const blob = new Blob([resp], { type: 'text/csv' })
+    // resp.data is a csv string, download it.
+    const blob = new Blob([resp.data], { type: 'text/csv' })
     const url = globalThis.URL.createObjectURL(blob)
     exportURL.value = url
     // auto download

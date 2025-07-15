@@ -3,7 +3,7 @@
 import { type Options as ClientOptions, type TDataShape, type Client, urlSearchParamsBodySerializer } from './client';
 import type { V3GetRootData, V3GetRootResponses, V3GetTotalMinutesData, V3GetTotalMinutesResponses, V3CheckLoginData, V3CheckLoginResponses, V3GithubCallbackData, V3GithubCallbackResponses, V3GithubCallbackErrors, V3GoogleAuthData, V3GoogleAuthResponses, V3GoogleAuthErrors, V3LogoutData, V3LogoutResponses, V3RefreshTokenData, V3RefreshTokenResponses, V3CountUserMinutesData, V3CountUserMinutesResponses, V3CountUserMinutesErrors, V3DeleteUserAccountData, V3DeleteUserAccountResponses, V3GetUserSelfData, V3GetUserSelfResponses, V3DeleteUserDataData, V3DeleteUserDataResponses, V3ExportUserDataData, V3ExportUserDataResponses, V3GetPrivacySettingsData, V3GetPrivacySettingsResponses, V3UpdatePrivacySettingsData, V3UpdatePrivacySettingsResponses, V3UpdatePrivacySettingsErrors, V3GetTimeDistributionData, V3GetTimeDistributionResponses, V3GetTimeDistributionErrors, V3GetUserByUserIdData, V3GetUserByUserIdResponses, V3GetUserByUserIdErrors, V3GetUserShieldData, V3GetUserShieldResponses, V3GetUserShieldErrors, V3GetWorkspaceFilesData, V3GetWorkspaceFilesResponses, V3GetWorkspaceFilesErrors, V3ListSelfLatestLogsData, V3ListSelfLatestLogsResponses, V3ListSelfLatestLogsErrors, V3ListSelfMinutesData, V3ListSelfMinutesResponses, V3ListSelfMinutesErrors, V3ListSelfStatsData, V3ListSelfStatsResponses, V3ListSelfStatsErrors, V3ListSelfStatsTimeData, V3ListSelfStatsTimeResponses, V3ListSelfStatsTimeErrors, V3ListSelfTopData, V3ListSelfTopResponses, V3ListSelfTopErrors, V3SearchWorkspacesData, V3SearchWorkspacesResponses, V3SearchWorkspacesErrors, V3GetYearlyReportDataData, V3GetYearlyReportDataResponses, V3GetYearlyReportDataErrors, V3ListAggregatedLogData, V3ListAggregatedLogResponses, V3ListAggregatedLogErrors, V3ListRealtimeLogsData, V3ListRealtimeLogsResponses, V3ListRealtimeLogsErrors, V3ListTopLanguagesData, V3ListTopLanguagesResponses, V3ListTopLanguagesErrors, V3ListTopWorkspacesData, V3ListTopWorkspacesResponses, V3ListTopWorkspacesErrors, V3CreateCheckoutData, V3CreateCheckoutResponses, V3CreateCheckoutErrors, V3GetProductsData, V3GetProductsResponses, V3HandleLemonsqueezyWebhookData, V3HandleLemonsqueezyWebhookResponses, V3HandleLemonsqueezyWebhookErrors, V3GetLeaderboardData, V3GetLeaderboardResponses, V3GetLeaderboardErrors, V3BeAnyUserData, V3BeAnyUserResponses, V3BeAnyUserErrors } from './types.gen';
 import { client as _heyApiClient } from './client.gen';
-import { v3CheckLoginResponseTransformer, v3GetUserSelfResponseTransformer, v3ExportUserDataResponseTransformer, v3GetUserByUserIdResponseTransformer, v3GetWorkspaceFilesResponseTransformer, v3CreateCheckoutResponseTransformer, v3GetLeaderboardResponseTransformer } from './transformers.gen';
+import { v3CheckLoginResponseTransformer, v3GetUserSelfResponseTransformer, v3GetUserByUserIdResponseTransformer, v3GetWorkspaceFilesResponseTransformer, v3CreateCheckoutResponseTransformer, v3GetLeaderboardResponseTransformer } from './transformers.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = ClientOptions<TData, ThrowOnError> & {
     /**
@@ -159,12 +159,11 @@ export const v3DeleteUserData = <ThrowOnError extends boolean = false>(options?:
 };
 
 /**
- * Export user data
- * Export user data in CSV format.
+ * Export user data as CSV
+ * Export user data directly as CSV file.
  */
 export const v3ExportUserData = <ThrowOnError extends boolean = false>(options?: Options<V3ExportUserDataData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).post<V3ExportUserDataResponses, unknown, ThrowOnError>({
-        responseTransformer: v3ExportUserDataResponseTransformer,
+    return (options?.client ?? _heyApiClient).get<V3ExportUserDataResponses, unknown, ThrowOnError>({
         url: '/v3/users/self/export',
         ...options
     });
