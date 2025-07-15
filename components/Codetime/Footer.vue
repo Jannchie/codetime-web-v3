@@ -50,6 +50,14 @@
       >
         <i class="i-devicon-plain-jetbrains h-5 w-5 text-surface-dimmed hover:op75" />
       </NuxtLink>
+      <NuxtLink
+        aria-label="discord"
+        class="text-surface-dimmed hover:op75"
+        to="https://discord.gg/CvHzcWTj"
+        target="_blank"
+      >
+        <i class="i-tabler-brand-discord h-6 w-6" />
+      </NuxtLink>
     </div>
   </footer>
 </template>
