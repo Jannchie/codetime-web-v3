@@ -83,7 +83,6 @@ const data = Array.from({ length: 365 }, (_, i) => {
       ? Math.floor(rng() * (120 - 6 + 1)) // 6~120分钟
       : Math.floor(rng() * (600 - 240 + 1)) + 240 // 240~600分钟
   }
-  duration *= 1000 * 60
 
   if (rng() < 0.25) {
     duration /= 3

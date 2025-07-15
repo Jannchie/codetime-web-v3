@@ -118,7 +118,6 @@ const data = Array.from({ length: 30 }, (_, i) => {
     if (rng() < 0.25) {
       duration = 0
     }
-    duration *= 2000 * 10
     return { date: new Date(date), duration, by }
   })
 }).flat()
