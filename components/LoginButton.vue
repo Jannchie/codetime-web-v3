@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Btn } from '@roku-ui/vue'
 import type { UserSelfPublic } from '~/api/v3'
+import { Btn } from '@roku-ui/vue'
 import NuxtLink from '~/i18n/NuxtLink.vue'
 
 const locale = useRoute().params.locale as string
@@ -90,7 +90,7 @@ async function handleGitHubLogin() {
                 class="hidden"
                 data-itp_support="true"
                 data-client_id="1020029657488-f66ubcmj6qqg4h4ptjk505ljmkv55jkv.apps.googleusercontent.com"
-                :data-login_uri="`${$config.public.apiHost}/auth/google`"
+                :data-login_uri="`${$config.public.apiHost}/v3/auth/google`"
                 data-nonce=""
               />
               <div

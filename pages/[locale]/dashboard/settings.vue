@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Btn, TextField } from '@roku-ui/vue'
+import { v3Logout } from '@/api/v3/sdk.gen'
 
 definePageMeta({
   layout: 'dashboard',
@@ -49,10 +50,8 @@ async function exportData() {
 }
 
 async function logout() {
-  await $fetch('/auth/logout', {
-    method: 'POST',
-    baseURL: apiHost,
-    credentials: 'include',
+  await v3Logout({
+    throwOnError: false,
   })
   // clean
   globalThis.location.href = '/'

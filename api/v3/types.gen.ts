@@ -438,6 +438,20 @@ export type V3GoogleAuthResponses = {
 
 export type V3GoogleAuthResponse = V3GoogleAuthResponses[keyof V3GoogleAuthResponses];
 
+export type V3LogoutData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/auth/logout';
+};
+
+export type V3LogoutResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: unknown;
+};
+
 export type V3RefreshTokenData = {
     body?: never;
     path?: never;
