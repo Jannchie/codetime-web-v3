@@ -18,7 +18,7 @@
     "@observablehq/plot": "^0.6.17",
     "@roku-ui/preset": "^0.22.0",
     "@roku-ui/vue": "^0.22.0",
-    "auxlines": "^0.4.0",
+    "auxlines": "^0.4.4",
     "d3-flame-graph": "^4.1.3",
     "date-fns": "^4.1.0",
     "jsdom": "^26.1.0",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
     "@hey-api/openapi-ts": "0.78.3",
-    "@iconify/json": "^2.2.358",
+    "@iconify/json": "^2.2.359",
     "@jannchie/eslint-config": "^3.6.1",
     "@nuxt/devtools": "^2.6.2",
     "@nuxt/image": "^1.10.0",

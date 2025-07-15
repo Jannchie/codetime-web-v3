@@ -17,46 +17,6 @@ export const AggregatedLogPublicSchema = {
     title: 'AggregatedLogPublic'
 } as const;
 
-export const AuthResponseSchema = {
-    properties: {
-        id: {
-            type: 'integer'
-        },
-        username: {
-            type: 'string'
-        },
-        email: {
-            oneOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        avatar: {
-            oneOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        token: {
-            type: 'string'
-        },
-        plan: {
-            type: 'string'
-        }
-    },
-    type: 'object',
-    required: ['id', 'plan', 'token', 'username'],
-    title: 'AuthResponse'
-} as const;
-
 export const CheckLoginResponseSchema = {
     properties: {
         loggedIn: {
@@ -76,6 +36,20 @@ export const CheckLoginResponseSchema = {
     type: 'object',
     required: ['loggedIn'],
     title: 'CheckLoginResponse'
+} as const;
+
+export const CheckoutRequestSchema = {
+    properties: {
+        type: {
+            type: 'string'
+        },
+        product: {
+            type: 'string'
+        }
+    },
+    type: 'object',
+    required: ['product', 'type'],
+    title: 'CheckoutRequest'
 } as const;
 
 export const CheckoutResponseSchema = {
@@ -235,27 +209,6 @@ export const MinuteLogPublicSchema = {
     type: 'object',
     required: ['editor', 'eventTime', 'language', 'platform', 'project', 'relativeFile'],
     title: 'MinuteLogPublic'
-} as const;
-
-export const OAuthRequestSchema = {
-    properties: {
-        code: {
-            type: 'string'
-        },
-        redirectUri: {
-            oneOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        }
-    },
-    type: 'object',
-    required: ['code'],
-    title: 'OAuthRequest'
 } as const;
 
 export const PlanStatusSchema = {

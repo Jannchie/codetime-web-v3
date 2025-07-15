@@ -10,23 +10,19 @@ export type AggregatedLogPublic = {
 };
 
 /**
- * AuthResponse
- */
-export type AuthResponse = {
-    id: number;
-    username: string;
-    email?: string | null;
-    avatar?: string | null;
-    token: string;
-    plan: string;
-};
-
-/**
  * CheckLoginResponse
  */
 export type CheckLoginResponse = {
     loggedIn: boolean;
     user?: UserSelfPublic | null;
+};
+
+/**
+ * CheckoutRequest
+ */
+export type CheckoutRequest = {
+    type: string;
+    product: string;
 };
 
 /**
@@ -91,14 +87,6 @@ export type MinuteLogPublic = {
     absoluteFile?: string | null;
     gitOrigin?: string | null;
     gitBranch?: string | null;
-};
-
-/**
- * OAuthRequest
- */
-export type OAuthRequest = {
-    code: string;
-    redirectUri?: string | null;
 };
 
 /**
@@ -410,7 +398,9 @@ export type V3GithubCallbackResponses = {
 };
 
 export type V3GoogleAuthData = {
-    body: OAuthRequest;
+    body: {
+        [key: string]: unknown;
+    };
     path?: never;
     query?: never;
     url: '/v3/auth/google';
@@ -431,12 +421,10 @@ export type V3GoogleAuthError = V3GoogleAuthErrors[keyof V3GoogleAuthErrors];
 
 export type V3GoogleAuthResponses = {
     /**
-     * Document created, URL follows
+     * Redirect Response
      */
-    201: AuthResponse;
+    201: unknown;
 };
-
-export type V3GoogleAuthResponse = V3GoogleAuthResponses[keyof V3GoogleAuthResponses];
 
 export type V3LogoutData = {
     body?: never;
@@ -1142,15 +1130,10 @@ export type V3ListTopWorkspacesResponses = {
 export type V3ListTopWorkspacesResponse = V3ListTopWorkspacesResponses[keyof V3ListTopWorkspacesResponses];
 
 export type V3CreateCheckoutData = {
-    /**
-     * Checkout data including product_id
-     */
-    body: {
-        [key: string]: unknown;
-    };
+    body: CheckoutRequest;
     path?: never;
     query?: never;
-    url: '/v3/v3/payments/checkout';
+    url: '/v3/payments/checkout';
 };
 
 export type V3CreateCheckoutErrors = {
@@ -1179,7 +1162,7 @@ export type V3GetProductsData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/v3/v3/payments/products';
+    url: '/v3/payments/products';
 };
 
 export type V3GetProductsResponses = {
@@ -1202,7 +1185,7 @@ export type V3HandleLemonsqueezyWebhookData = {
             [key: string]: unknown;
         };
     };
-    url: '/v3/v3/payments/webhooks/lemonsqueezy';
+    url: '/v3/payments/webhooks/lemonsqueezy';
 };
 
 export type V3HandleLemonsqueezyWebhookErrors = {
