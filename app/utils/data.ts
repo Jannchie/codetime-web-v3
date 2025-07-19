@@ -1,4 +1,4 @@
-import type { TopData } from '.'
+import type { TopData } from '../../utils'
 import * as d3 from 'd3'
 
 export function useMaxStreak(data: MaybeRef<{
