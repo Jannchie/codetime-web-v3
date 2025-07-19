@@ -133,15 +133,18 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     </div>
     
     <CumulativeLineChart
-      v-if="allDataResp.status.value === 'success'"
+      v-if="allDataResp.status.value === 'success' && hasData"
       :loading="false"
       :data="filtedData"
     />
-    <CardBase v-else>
+    <CardBase v-else-if="allDataResp.status.value === 'pending'">
       <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
     </CardBase>
     
-    <CardBase :loading="allLanguageDataResp.status.value === 'pending'">
+    <CardBase 
+      v-if="allLanguageDataResp.status.value === 'success' && pAllLangData.length > 0"
+      :loading="false"
+    >
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
@@ -151,13 +154,18 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         </div>
       </div>
       <PoltYDot
-        v-if="allLanguageDataResp.status.value === 'success'"
         :data="pAllLangData"
         :y-label="t.plot.label.language"
       />
     </CardBase>
+    <CardBase v-else-if="allLanguageDataResp.status.value === 'pending'" :loading="true">
+      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+    </CardBase>
     
-    <CardBase :loading="allProjectDataResp.status.value === 'pending'">
+    <CardBase 
+      v-if="allProjectDataResp.status.value === 'success' && pAllProjectData.length > 0"
+      :loading="false"
+    >
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
@@ -167,13 +175,18 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         </div>
       </div>
       <PoltYDot
-        v-if="allProjectDataResp.status.value === 'success'"
         :data="pAllProjectData"
         :y-label="t.plot.label.project"
       />
     </CardBase>
+    <CardBase v-else-if="allProjectDataResp.status.value === 'pending'" :loading="true">
+      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+    </CardBase>
     
-    <CardBase :loading="timeDistributionResp.status.value === 'pending'">
+    <CardBase 
+      v-if="timeDistributionResp.status.value === 'success' && dailyDistribution && (d3.max(dailyDistribution.map((d => d.count))) ?? 0) > 0"
+      :loading="false"
+    >
       <div>
         <div class="flex items-center gap-2 text-lg">
           <i class="i-carbon-chart-line-data" />
@@ -183,9 +196,11 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         </div>
       </div>
       <PoltYDis
-        v-if="timeDistributionResp.status.value === 'success' && (dailyDistribution && (d3.max(dailyDistribution.map((d => d.count))) ?? 0) > 0)"
         :data="dailyDistribution"
       />
+    </CardBase>
+    <CardBase v-else-if="timeDistributionResp.status.value === 'pending'" :loading="true">
+      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
     </CardBase>
   </DashboardPageContent>
 </template>

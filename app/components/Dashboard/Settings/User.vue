@@ -3,7 +3,8 @@ import { Avatar, Btn } from '@roku-ui/vue'
 
 const user = useUser()
 const t = useI18N()
-const checkoutLink = await useCheckoutLink(ref(false), ref(true))
+const { getCheckoutLink } = await useCheckoutLink(ref(false), ref(true))
+const checkoutLink = await getCheckoutLink()
 </script>
 
 <template>

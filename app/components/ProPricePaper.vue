@@ -82,6 +82,15 @@ const discountText = computed(() => {
   }
 })
 const filledContainerCS = useContainerFilledCS('primary')
+function toCheckoutLink() {
+  if (globalThis.window === undefined) {
+    return
+  }
+  const checkoutLink = getCheckoutLink()
+  if (checkoutLink) {
+    globalThis.location.href = checkoutLink
+  }
+}
 </script>
 
 <template>
@@ -148,10 +157,10 @@ const filledContainerCS = useContainerFilledCS('primary')
           class="flex gap-2"
         >
           <Btn
+            v-if="user.planStatus"
             class="w-full"
             variant="transparent"
             disabled
-            v-if="user.planStatus"
           >
             <template #leftSection>
               <i class="i-tabler-check" />
@@ -164,7 +173,7 @@ const filledContainerCS = useContainerFilledCS('primary')
             variant="filled"
             class="lemonsqueezy-button w-full"
             color="primary"
-            @click="getCheckoutLink"
+            @click="toCheckoutLink"
           >
             <template #leftSection>
               <i class="i-tabler-credit-card" />

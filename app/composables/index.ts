@@ -19,9 +19,6 @@ export function useCheckoutLink(isAnuual: Ref<boolean>, isOneTime: Ref<boolean>)
     })
 
     const checkoutUrl = resp.data?.checkoutUrl
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl
-    }
     return checkoutUrl
   }
 
