@@ -43,13 +43,15 @@ const hoverCS = useCS({
 })
 const fillCS = useContainerFilledCS('primary')
 
-const resp = await useAsyncData(async () => {
+const resp = await useAsyncData('user-latest-logs', async () => {
   const resp = await v3ListSelfLatestLogs({
     query: {
       limit: 1,
     },
   })
   return resp.data?.[0]
+}, {
+  server: false,
 })
 
 // 如果日期是 12月 20日到 1月 15 日之间，则是年度报告展示周期

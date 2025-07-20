@@ -12,13 +12,8 @@ async function refreshToken() {
   try {
     const resp = await v3RefreshToken()
     if (resp.data && user.value) {
+      // Update the token immediately to ensure reactivity
       user.value.uploadToken = resp.data.token ?? ''
-
-      // Refresh user info to get the latest token
-      const { data: updatedUser } = await fetchUser()
-      if (updatedUser.value) {
-        Object.assign(user.value, updatedUser.value)
-      }
 
       status.value = 'success'
     }

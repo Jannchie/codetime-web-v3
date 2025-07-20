@@ -28,7 +28,8 @@ async function handleGitHubLogin() {
   isGitHubLoading.value = true
 
   try {
-    const clientId = 'ace5a9368bb676886187' // GitHub App Client ID
+    const config = useRuntimeConfig()
+    const clientId = config.public.githubClientId
     const scope = 'user:email'
     const state = Math.random().toString(36).slice(2, 15)
 
@@ -89,7 +90,7 @@ async function handleGitHubLogin() {
                 id="g_id_onload"
                 class="hidden"
                 data-itp_support="true"
-                data-client_id="1020029657488-f66ubcmj6qqg4h4ptjk505ljmkv55jkv.apps.googleusercontent.com"
+                :data-client_id="$config.public.googleClientId"
                 :data-login_uri="`${$config.public.apiHost}/v3/auth/google`"
                 data-nonce=""
               />

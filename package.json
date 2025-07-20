@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.11.0",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --dotenv .env.dev -p 3001",
+    "dev": "nuxt dev --dotenv .env.dev --port 3001",
     "lint": "eslint . --fix",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
     "@hey-api/openapi-ts": "0.78.3",
-    "@iconify/json": "^2.2.359",
+    "@iconify/json": "^2.2.360",
     "@jannchie/eslint-config": "^3.6.1",
     "@nuxt/devtools": "^2.6.2",
     "@nuxt/image": "^1.10.0",
