@@ -2,7 +2,7 @@ import jannchie from '@jannchie/eslint-config'
 
 export default jannchie({
   unocss: true,
-  ignores: ['api/v3/**'],
+  ignores: ['app/api/v3/**'],
 }, {
   rules: {
     'style/indent-binary-ops': 'off',
