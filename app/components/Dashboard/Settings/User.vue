@@ -27,7 +27,7 @@ const checkoutLink = await getCheckoutLink()
           {{ user.username }}
           <PlanTag
             class="inline"
-            :plan="user?.plan ?? 'free'"
+            :plan="user.plan ?? 'free'"
           />
           <StatusTag
             v-if="user.plan !== 'free' && user.planStatus"
@@ -35,11 +35,11 @@ const checkoutLink = await getCheckoutLink()
             :status="t.plan.status(user.planStatus ?? 'paused')"
           />
           <div
-            v-if="(user?.plan ?? 'free') !== 'free' && user?.planStatus !== 'active'"
+            v-if="(user.plan ?? 'free') !== 'free' && user.planStatus === 'active'"
             class="text-surface-dimmed/80 text-xs"
           >
             {{ t.dashboard.settings.account.expiresIn }}
-            {{ new Date(user?.planExpiresAt ?? '').toLocaleDateString() }}
+            {{ new Date(user.planExpiresAt ?? '').toLocaleDateString() }}
           </div>
         </div>
         <div class="text-xs text-surface-dimmed">

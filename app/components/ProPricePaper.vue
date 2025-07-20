@@ -82,11 +82,11 @@ const discountText = computed(() => {
   }
 })
 const filledContainerCS = useContainerFilledCS('primary')
-function toCheckoutLink() {
+async function toCheckoutLink() {
   if (globalThis.window === undefined) {
     return
   }
-  const checkoutLink = getCheckoutLink()
+  const checkoutLink = await getCheckoutLink()
   if (checkoutLink) {
     globalThis.location.href = checkoutLink
   }

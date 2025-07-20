@@ -5,13 +5,13 @@ const props = defineProps<{
   data: {
     date: Date
     duration: number
-    by: string
+    by?: string
   }[]
   yLabel: string
 }>()
 const t = useI18N()
 const differentLabel = computed(() => {
-  const differentLanguages = new Set<string>()
+  const differentLanguages = new Set<string | undefined>()
   const differentDates = new Set<string>()
   for (const d of props.data) {
     differentLanguages.add(d.by)
@@ -30,7 +30,7 @@ const completeData = computed(() => {
   }
 
   // Generate complete data with 0 values for missing combinations
-  const result: { date: Date, duration: number, by: string }[] = []
+  const result: { date: Date, duration: number, by?: string }[] = []
   for (const dateStr of differentLabel.value.differentDates) {
     for (const by of differentLabel.value.differentLanguages) {
       const key = `${dateStr}_${by}`

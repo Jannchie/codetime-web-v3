@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   try {
-    const locale = to.path.split('/')[1]
+    const locale = to.path.split('/')[1] || ''
     if (locales.includes(locale)) {
       return
     }
@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
 
     const cookie = useCookie('locale')
-    if (cookie.value && locales.includes(cookie.value)) {
+    if (cookie.value && locales.includes(locale)) {
       return navigateTo(`/${cookie.value}${to.path}`, { redirectCode: 302 })
     }
 
@@ -17,7 +17,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     let preferredLanguages = ['en']
     try {
       if (headers['accept-language']) {
-        preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0])
+        preferredLanguages = headers['accept-language'].split(',').map(d => d.split(';')[0] || '')
       }
     }
     catch (error) {

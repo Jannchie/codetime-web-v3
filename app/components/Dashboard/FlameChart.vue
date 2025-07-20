@@ -131,7 +131,9 @@ const flameNodes = computed(() => {
   return result
 })
 function onClickNode(flareNode: FlameNode) {
-  selectedFlareNode.value = selectedFlareNode.value?.path === flareNode.path ? basicFlameNodes.value[0] : flareNode
+  selectedFlareNode.value = selectedFlareNode.value?.path === flareNode.path
+    ? (basicFlameNodes.value[0] ?? null)
+    : flareNode
 }
 function getAscii(str: string) {
   return str.replaceAll(/[\u4E00-\u9FA5]/g, '##').length

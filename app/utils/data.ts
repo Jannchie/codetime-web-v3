@@ -1,4 +1,4 @@
-import type { TopData } from '../../utils'
+import type { TopData } from '@/utils'
 import * as d3 from 'd3'
 
 export function useMaxStreak(data: MaybeRef<{
@@ -61,7 +61,7 @@ export function useTotalMinutes(data: MaybeRef<{
 >) {
   return computed(() => {
     const dataVal = unref(data)
-    return dataVal.reduce((acc, cur) => acc + cur.duration, 0) ?? 0 
+    return dataVal.reduce((acc, cur) => acc + cur.duration, 0) ?? 0
   })
 }
 

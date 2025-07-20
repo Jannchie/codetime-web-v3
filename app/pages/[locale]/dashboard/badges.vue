@@ -29,7 +29,7 @@ const rawParams = computed(() => ({
   project: project.value?.id,
   minutes: String(Number(days.value) * 24 * 60),
   color: color.value,
-  style: styleObj.value.id,
+  style: styleObj.value?.id ?? '',
   language: language.value,
 }))
 
@@ -68,7 +68,7 @@ const link = computed(() => {
         :placeholder="t.dashboard.badge.placeholder.style"
       />
       <TextField
-        v-if="styleObj.id !== 'social'"
+        v-if="styleObj?.id !== 'social'"
         v-model="color"
         :placeholder="t.dashboard.badge.placeholder.color"
       />

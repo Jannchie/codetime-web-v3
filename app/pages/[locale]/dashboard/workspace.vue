@@ -96,7 +96,7 @@ const height = 26
           v-for="name in historyWorkspaceNameList"
           :key="name"
           rounded="full"
-          @click="project = { label: name, id: name }"
+          @click="project = { label: name ?? '', id: name ?? '' }"
         >
           {{ name }}
         </Btn>
@@ -111,6 +111,7 @@ const height = 26
         {{ t.dashboard.workspace.flameGraph.title }}
       </div>
       <DashboardFlameChart
+        v-if="data && data.length > 0"
         :line-height="height"
         :data="data"
       />

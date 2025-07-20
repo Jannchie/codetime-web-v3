@@ -107,6 +107,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <DashboardFilterWrapper />
     
     <div
+      v-if="hasData"
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
     >
       <DashboardTopCard

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Btn, TextField } from '@roku-ui/vue'
-import { v3Logout, v3ExportUserData } from '@/api/v3/sdk.gen'
+import { v3ExportUserData, v3Logout } from '@/api/v3/sdk.gen'
 
 definePageMeta({
   layout: 'dashboard',

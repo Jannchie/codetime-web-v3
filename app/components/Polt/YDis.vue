@@ -24,7 +24,10 @@ function aggregateData(data: DataPoint[], interval = 15): DataPoint[] {
         maxRatio = item.ratio
       }
     }
-    aggregatedData.push({ time: data[i].time, ratio: maxRatio })
+    const datum = data[i]
+    if (datum) {
+      aggregatedData.push({ time: datum.time, ratio: maxRatio })
+    }
   }
 
   return aggregatedData
