@@ -10,7 +10,7 @@ class Document {
     this.defaultView = { Event }
   }
 
-  createElementNS(namespace, tagName) {
+  createElementNS(_, tagName) {
     return new Element(this, tagName)
   }
 
@@ -50,7 +50,7 @@ class Element {
     this.attributes[name] = String(value)
   }
 
-  setAttributeNS(namespace, name, value) {
+  setAttributeNS(_, name, value) {
     this.setAttribute(name, value)
   }
 
@@ -74,7 +74,7 @@ class Element {
     delete this.attributes[name]
   }
 
-  removeAttributeNS(namespace, name) {
+  removeAttributeNS(_, name) {
     this.removeAttribute(name)
   }
 

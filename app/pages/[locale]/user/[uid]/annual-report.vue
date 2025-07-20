@@ -82,8 +82,8 @@ const averageMinutes = computed(() => {
 })
 
 const mostProductiveHour = computed(() => {
-  if (yearlyData.value) {
-    let maxHour = yearlyData.value.hourlyDistribution[0]
+  if (yearlyData.value && yearlyData.value.hourlyDistribution.length > 0) {
+    let maxHour = yearlyData.value.hourlyDistribution[0]!
     for (const hourData of yearlyData.value.hourlyDistribution) {
       if (hourData.minutes > maxHour.minutes) {
         maxHour = hourData
@@ -313,7 +313,7 @@ const topLanguage = computed(() => {
         <div class="mb-32 mt-4 flex flex-col items-center">
           <HeaderComponent
             :title="t.annualReport.busiestMonthOfTheYear"
-            :value="`${Math.max(...monthlyMinutes.map((d) => d.minutes)) ? `${monthlyMinutes.find((d) => d.minutes === Math.max(...monthlyMinutes.map((d) => d.minutes)))?.field}` : ''} (${getDurationString(Math.max(...monthlyMinutes.map((d) => d.minutes)) * 60 * 1000)})`"
+            :value="(() => { if (monthlyMinutes.length === 0) return ''; const maxMinutes = Math.max(...monthlyMinutes.map((d) => d.minutes || 0)); const busiestMonth = monthlyMinutes.find((d) => (d.minutes || 0) === maxMinutes); return busiestMonth ? `${busiestMonth.field} (${getDurationString((busiestMonth.minutes || 0) * 60 * 1000)})` : ''; })()"
           />
           <div class="h-300px max-h-300px max-w-800px w-800px">
             <PoltChart

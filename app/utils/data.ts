@@ -162,7 +162,7 @@ export function useProcessedData(data: MaybeRef<{
     }
     return [...dataMap.entries()].map(([keyRaw, data]) => {
       const key = keyRaw.split(',')
-      return { date: new Date(key[0]), duration: data, by: key[1] }
+      return { date: new Date(key[0] || ''), duration: data, by: key[1] || '' }
     }).sort((a, b) => a.by.localeCompare(b.by)).sort((a, b) => a.date.getTime() - b.date.getTime())
   })
 }
