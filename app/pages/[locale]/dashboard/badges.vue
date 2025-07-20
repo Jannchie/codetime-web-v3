@@ -49,7 +49,7 @@ const link = computed(() => {
   const queryString = new URLSearchParams(filteredParams).toString()
   const url = `${apiHost}/v3/users/shield?${queryString}`
   const safeUrl = encodeURIComponent(url)
-  const res = `https://img.shields.io/endpoint?style=${params.style}&color=${params.color}&url=${safeUrl}`
+  const res = `https://shields.jannchie.com/endpoint?style=${params.style}&color=${params.color}&url=${safeUrl}`
   return res
 })
 </script>
