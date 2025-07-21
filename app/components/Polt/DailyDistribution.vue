@@ -38,6 +38,19 @@ const data = computed<DataPoint[]>(() => {
   }
   return aggregateData(props.data ?? [], props.interval)
 })
+
+const currentTime = computed(() => {
+  const now = new Date()
+  return now.getHours() * 60 + now.getMinutes()
+})
+
+const currentTimeLabel = computed(() => {
+  const now = new Date()
+  const hour = now.getHours()
+  const minute = now.getMinutes()
+  return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+})
+
 const chart = ref()
 const { width, height } = useElementBounding(chart)
 const options = computed<Plot.PlotOptions>(() => {
@@ -71,6 +84,20 @@ const options = computed<Plot.PlotOptions>(() => {
         opacity: 0.1,
       }),
       Plot.lineY(data.value, Plot.windowY(60 / props.interval, { x: 'time', y: 'ratio', stroke: 'var(--color-primary-1)' })),
+      Plot.ruleX([currentTime.value], {
+        stroke: 'var(--color-error-1)',
+        strokeWidth: 2,
+        opacity: 0.8,
+      }),
+      Plot.text([{ x: currentTime.value, y: 0.95, label: `Current Time (${currentTimeLabel.value})` }], {
+        x: 'x',
+        y: 'y',
+        text: 'label',
+        fill: 'var(--color-error-1)',
+        fontSize: 12,
+        dx: currentTime.value < 600 ? 5 : -5,
+        textAnchor: currentTime.value < 600 ? 'start' : 'end',
+      }),
     ],
   }
 })

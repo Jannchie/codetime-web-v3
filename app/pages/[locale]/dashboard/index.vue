@@ -196,7 +196,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
           </div>
         </div>
       </div>
-      <PoltYDis
+      <PoltDailyDistribution
         :data="dailyDistribution"
       />
     </CardBase>
