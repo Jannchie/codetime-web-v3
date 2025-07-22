@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
   title?: string
 }>(), {
   interval: 10,
-  segments: 3,
+  segments: 5,
   title: 'Daily Coding Distribution',
 })
 const t = useI18N()

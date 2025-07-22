@@ -65,29 +65,250 @@ const t = useI18N()
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-2">
-    <span class="inline-block text-surface-dimmed">
-      {{ t.landing.alreadyStatistical }}
-    </span>
-    <div v-if="status === 'success'" class="flex items-end gap-2 text-6xl op75">
-      <span
-        key="b"
-        class="font-bold font-mono"
-      >
-        {{ fomater.format(minutes) }}
-      </span>
-      <span class="text-xl">
-        {{ t.landing.minutes }}
-      </span>
+  <div class="stats-card relative flex flex-col items-center gap-4 overflow-hidden px-8 py-12 shadow-xl backdrop-blur-sm">
+    <div class="absolute inset-0 opacity-20">
+      <div class="floating-circles">
+        <div class="floating-circle" />
+        <div class="floating-circle" />
+        <div class="floating-circle" />
+      </div>
     </div>
-    <div v-else class="flex items-end gap-2 text-6xl op75">
-      <div
-        key="a"
-        class="h-60px min-w-72 animate-pulse rounded bg-neutral-5 font-bold font-mono"
-      />
-      <span class="text-xl">
-        {{ t.landing.minutes }}
+
+    <div class="relative z-10 flex flex-col items-center gap-4">
+      <span class="stats-subtitle inline-block text-sm font-medium tracking-wide">
+        {{ t.landing.alreadyStatistical }} ({{ t.landing.minutes }})
       </span>
+
+      <div v-if="status === 'success'" class="flex items-end gap-3 text-6xl">
+        <span
+          key="b"
+          class="stats-number animate-pulse-glow font-bold font-mono"
+        >
+          {{ fomater.format(minutes) }}
+        </span>
+      </div>
+
+      <div v-else class="flex items-end gap-3 text-6xl">
+        <div
+          key="a"
+          class="shimmer h-15 min-w-84 animate-pulse rounded-lg font-bold font-mono"
+        />
+      </div>
+
+      <div class="mt-2 max-w-xs w-full">
+        <div class="progress-bg h-1 overflow-hidden rounded-full">
+          <div class="progress-bar animate-progress h-full rounded-full" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Stats card with theme support */
+.stats-card {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode styles */
+[data-scheme="dark"] .stats-card {
+  background: linear-gradient(135deg,
+    rgba(30, 30, 30, 0.9) 0%,
+    rgba(20, 20, 20, 0.8) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Text colors */
+.stats-subtitle {
+  color: rgba(100, 100, 100, 0.8);
+}
+
+[data-scheme="dark"] .stats-subtitle {
+  color: rgba(200, 200, 200, 0.7);
+}
+
+.stats-number {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+[data-scheme="dark"] .stats-number {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.stats-unit {
+  color: rgba(100, 100, 100, 0.6);
+}
+
+[data-scheme="dark"] .stats-unit {
+  color: rgba(200, 200, 200, 0.6);
+}
+
+/* Progress bar */
+.progress-bg {
+  background: rgba(200, 200, 200, 0.3);
+}
+
+[data-scheme="dark"] .progress-bg {
+  background: rgba(100, 100, 100, 0.3);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
+}
+
+[data-scheme="dark"] .progress-bar {
+  background: linear-gradient(90deg, #38bdf8 0%, #0ea5e9 100%);
+}
+
+/* Floating circles background effect */
+.floating-circles {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg,
+    rgba(2, 132, 199, 0.1) 0%,
+    rgba(2, 132, 199, 0.05) 100%
+  );
+  animation: float 8s ease-in-out infinite;
+}
+
+[data-scheme="dark"] .floating-circle {
+  background: linear-gradient(135deg,
+    rgba(56, 189, 248, 0.15) 0%,
+    rgba(56, 189, 248, 0.08) 100%
+  );
+}
+
+.floating-circle:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  left: 10%;
+  top: 20%;
+  animation-delay: 0s;
+}
+
+.floating-circle:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  right: 15%;
+  top: 50%;
+  animation-delay: 2s;
+}
+
+.floating-circle:nth-child(3) {
+  width: 80px;
+  height: 80px;
+  left: 60%;
+  bottom: 20%;
+  animation-delay: 4s;
+}
+
+/* Pulse glow animation for the number */
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Shimmer effect for loading state */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.6) 0%,
+    rgba(220, 220, 220, 0.8) 50%,
+    rgba(200, 200, 200, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+[data-scheme="dark"] .shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(40, 40, 40, 0.6) 0%,
+    rgba(60, 60, 60, 0.8) 50%,
+    rgba(40, 40, 40, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Progress bar animation */
+.animate-progress {
+  width: 0%;
+  animation: progress 2s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-2deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(2, 132, 199, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(2, 132, 199, 0.5));
+  }
+}
+
+[data-scheme="dark"] .animate-pulse-glow {
+  animation: pulseGlowDark 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlowDark {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.6));
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+    opacity: 0.3;
+  }
+  50% {
+    width: 70%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0.6;
+  }
+}
+</style>

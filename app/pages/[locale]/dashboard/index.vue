@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
-import { v3GetTimeDistribution } from '~/api/v3'
 
 const filters = reactive<FilterItem[]>([])
 provide('filters', filters)
@@ -11,25 +10,20 @@ definePageMeta({
 
 const user = useUser()
 const days = useLocalStorage('days', ref(user.value?.plan === 'pro' ? 365 : 28))
+const segments = ref(5)
+
+const endTime = computed(() => new Date())
+const startTime = computed(() => {
+  const start = new Date()
+  start.setDate(start.getDate() - days.value)
+  return start
+})
 
 // 并行发起所有主要请求
-const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-const [allDataResp, allLanguageDataResp, allProjectDataResp, timeDistributionResp] = await Promise.all([
+const [allDataResp,allLanguageDataResp,allProjectDataResp] = await Promise.all([
   fetchStats(days, 'time', 'days'),
   fetchStats(days, 'language', 'days'),
   fetchStats(days, 'workspace', 'days'),
-  useAsyncData(async () => {
-    const resp = await v3GetTimeDistribution({
-      query: {
-        tz,
-        days: days.value,
-      },
-    })
-    return resp.data?.data ?? []
-  }, {
-    server: false,
-    watch: [days],
-  })
 ])
 
 const allLanguageData = computed(() => allLanguageDataResp.data.value?.data ?? [])
@@ -57,21 +51,6 @@ const filtedData = computed(() => {
   return res
 })
 
-const dailyDistribution = computed(() => {
-  if (!timeDistributionResp.data.value) {
-    return []
-  }
-  const maxCount = d3.max(timeDistributionResp.data.value.map(d => d.count) ?? []) ?? 1
-  return timeDistributionResp.data.value.map((d) => {
-    const ratio = d.count / maxCount
-    const timeInMinutes = d.hour * 60 + d.minute
-    return {
-      time: timeInMinutes,
-      ratio,
-      count: d.count,
-    }
-  })
-})
 const t = useI18N()
 const NoDataBody = t.value.dashboard.overview.noData.notice.body
 </script>
@@ -83,7 +62,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
   />
   <DashboardPageContent>
     <DashboardDataRange v-model:days="days" />
-    
+
     <DashboardCalendarCard
       v-if="allDataResp.status.value === 'success' && hasData"
       :loading="false"
@@ -103,9 +82,9 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         <NoDataBody />
       </div>
     </CardBase>
-    
+
     <DashboardFilterWrapper />
-    
+
     <div
       v-if="hasData"
       class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
@@ -132,7 +111,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
         :title="t.dashboard.overview.top.platform"
       />
     </div>
-    
+
     <CumulativeLineChart
       v-if="allDataResp.status.value === 'success' && hasData"
       :loading="false"
@@ -141,8 +120,8 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase v-else-if="allDataResp.status.value === 'pending'">
       <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
     </CardBase>
-    
-    <CardBase 
+
+    <CardBase
       v-if="allLanguageDataResp.status.value === 'success' && pAllLangData.length > 0"
       :loading="false"
     >
@@ -162,8 +141,8 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase v-else-if="allLanguageDataResp.status.value === 'pending'" :loading="true">
       <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
     </CardBase>
-    
-    <CardBase 
+
+    <CardBase
       v-if="allProjectDataResp.status.value === 'success' && pAllProjectData.length > 0"
       :loading="false"
     >
@@ -183,25 +162,13 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <CardBase v-else-if="allProjectDataResp.status.value === 'pending'" :loading="true">
       <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
     </CardBase>
-    
-    <CardBase 
-      v-if="timeDistributionResp.status.value === 'success' && dailyDistribution && (d3.max(dailyDistribution.map((d => d.count))) ?? 0) > 0"
-      :loading="false"
-    >
-      <div>
-        <div class="flex items-center gap-2 text-lg">
-          <i class="i-carbon-chart-line-data" />
-          <div>
-            {{ t.dashboard.overview.dailyCodingDistributionTitle }}
-          </div>
-        </div>
-      </div>
-      <PoltDailyDistribution
-        :data="dailyDistribution"
-      />
-    </CardBase>
-    <CardBase v-else-if="timeDistributionResp.status.value === 'pending'" :loading="true">
-      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
-    </CardBase>
+
+    <PoltDailyDistribution
+      v-if="hasData"
+      :start-time="startTime"
+      :end-time="endTime"
+      :segments="segments"
+      :title="t.dashboard.overview.dailyCodingDistributionTitle"
+    />
   </DashboardPageContent>
 </template>
