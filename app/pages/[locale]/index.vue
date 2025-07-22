@@ -50,6 +50,7 @@ const t = useI18N()
           />
         </div>
         <DashboardProjectYDotCardDemo />
+        <PoltDailyDistributionTemplateDemo />
       </div>
     </div>
 

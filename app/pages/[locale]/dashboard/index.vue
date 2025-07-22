@@ -168,7 +168,6 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       :start-time="startTime"
       :end-time="endTime"
       :segments="segments"
-      :title="t.dashboard.overview.dailyCodingDistributionTitle"
     />
   </DashboardPageContent>
 </template>
