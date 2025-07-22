@@ -64,6 +64,62 @@ export const EventLogPublicSchema = {
     title: 'EventLogPublic'
 } as const;
 
+export const EventLogRequestSchema = {
+    properties: {
+        eventTime: {
+            type: 'integer'
+        },
+        language: {
+            type: 'string'
+        },
+        project: {
+            type: 'string'
+        },
+        relativeFile: {
+            type: 'string'
+        },
+        editor: {
+            type: 'string'
+        },
+        platform: {
+            type: 'string'
+        },
+        absoluteFile: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        gitOrigin: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        gitBranch: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    type: 'object',
+    required: ['editor', 'eventTime', 'language', 'platform', 'project', 'relativeFile'],
+    title: 'EventLogRequest'
+} as const;
+
 export const LeaderboardEntrySchema = {
     properties: {
         user: {
@@ -220,6 +276,17 @@ export const ShieldResponseSchema = {
     type: 'object',
     required: ['color', 'label', 'message'],
     title: 'ShieldResponse'
+} as const;
+
+export const SimpleMinutesSchema = {
+    properties: {
+        minutes: {
+            type: 'integer'
+        }
+    },
+    type: 'object',
+    required: ['minutes'],
+    title: 'SimpleMinutes'
 } as const;
 
 export const StatsDataSchema = {

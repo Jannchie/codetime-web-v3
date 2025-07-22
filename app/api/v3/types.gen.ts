@@ -32,6 +32,21 @@ export type EventLogPublic = {
 };
 
 /**
+ * EventLogRequest
+ */
+export type EventLogRequest = {
+    eventTime: number;
+    language: string;
+    project: string;
+    relativeFile: string;
+    editor: string;
+    platform: string;
+    absoluteFile?: string | null;
+    gitOrigin?: string | null;
+    gitBranch?: string | null;
+};
+
+/**
  * LeaderboardEntry
  */
 export type LeaderboardEntry = {
@@ -101,6 +116,13 @@ export type ShieldResponse = {
     label: string;
     message: string;
     color: string;
+};
+
+/**
+ * SimpleMinutes
+ */
+export type SimpleMinutes = {
+    minutes: number;
 };
 
 /**
@@ -509,11 +531,43 @@ export type V3UpdatePrivacySettingsResponses = {
 
 export type V3UpdatePrivacySettingsResponse = V3UpdatePrivacySettingsResponses[keyof V3UpdatePrivacySettingsResponses];
 
+export type V3GetSelfMinutesData = {
+    body?: never;
+    path?: never;
+    query: {
+        minutes: number;
+    };
+    url: '/v3/users/self/minutes';
+};
+
+export type V3GetSelfMinutesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetSelfMinutesError = V3GetSelfMinutesErrors[keyof V3GetSelfMinutesErrors];
+
+export type V3GetSelfMinutesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: SimpleMinutes;
+};
+
+export type V3GetSelfMinutesResponse = V3GetSelfMinutesResponses[keyof V3GetSelfMinutesResponses];
+
 export type V3GetTimeDistributionData = {
     body?: never;
     path?: never;
-    query?: {
-        days?: number;
+    query: {
+        start_time: Date;
+        end_time: Date;
         tz?: string | null;
         platform?: string | null;
         project?: string | null;
@@ -788,6 +842,33 @@ export type V3ListSelfTopResponses = {
 };
 
 export type V3ListSelfTopResponse = V3ListSelfTopResponses[keyof V3ListSelfTopResponses];
+
+export type V3PostEventLogData = {
+    body: EventLogRequest;
+    path?: never;
+    query?: never;
+    url: '/v3/users/event-log';
+};
+
+export type V3PostEventLogErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3PostEventLogError = V3PostEventLogErrors[keyof V3PostEventLogErrors];
+
+export type V3PostEventLogResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: unknown;
+};
 
 export type V3SearchWorkspacesData = {
     body?: never;
