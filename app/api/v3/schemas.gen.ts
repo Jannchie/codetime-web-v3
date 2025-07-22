@@ -411,10 +411,17 @@ export const TotalMinutesResponseSchema = {
     properties: {
         totalMinutes: {
             type: 'integer'
+        },
+        last24HMinutes: {
+            type: 'integer'
+        },
+        cacheTimestamp: {
+            type: 'string',
+            format: 'date-time'
         }
     },
     type: 'object',
-    required: ['totalMinutes'],
+    required: ['cacheTimestamp', 'last24HMinutes', 'totalMinutes'],
     title: 'TotalMinutesResponse'
 } as const;
 

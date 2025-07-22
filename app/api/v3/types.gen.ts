@@ -193,6 +193,8 @@ export type TopPublic = {
  */
 export type TotalMinutesResponse = {
     totalMinutes: number;
+    last24HMinutes: number;
+    cacheTimestamp: Date;
 };
 
 /**
@@ -534,8 +536,10 @@ export type V3UpdatePrivacySettingsResponse = V3UpdatePrivacySettingsResponses[k
 export type V3GetSelfMinutesData = {
     body?: never;
     path?: never;
-    query: {
-        minutes: number;
+    query?: {
+        minutes?: number | null;
+        start_time?: Date | null;
+        end_time?: Date | null;
     };
     url: '/v3/users/self/minutes';
 };
@@ -565,9 +569,10 @@ export type V3GetSelfMinutesResponse = V3GetSelfMinutesResponses[keyof V3GetSelf
 export type V3GetTimeDistributionData = {
     body?: never;
     path?: never;
-    query: {
-        start_time: Date;
-        end_time: Date;
+    query?: {
+        start_time?: Date | null;
+        end_time?: Date | null;
+        days?: number | null;
         tz?: string | null;
         platform?: string | null;
         project?: string | null;
@@ -676,6 +681,14 @@ export type V3GetWorkspaceFilesData = {
          * Number of days to look back
          */
         days?: number | null;
+        /**
+         * Start time for filtering (UTC)
+         */
+        start_time?: Date | null;
+        /**
+         * End time for filtering (UTC)
+         */
+        end_time?: Date | null;
     };
     url: '/v3/users/self/workspace';
 };
@@ -741,6 +754,8 @@ export type V3ListSelfStatsData = {
         unit?: 'days' | 'hours' | 'minutes';
         tz?: string | null;
         limit?: number;
+        start_time?: Date | null;
+        end_time?: Date | null;
         platform?: string | null;
         project?: string | null;
         language?: string | null;
@@ -777,6 +792,8 @@ export type V3ListSelfStatsTimeData = {
         unit?: 'days' | 'hours' | 'minutes';
         tz?: string | null;
         limit?: number;
+        start_time?: Date | null;
+        end_time?: Date | null;
         platform?: string | null;
         project?: string | null;
         language?: string | null;
@@ -813,6 +830,8 @@ export type V3ListSelfTopData = {
         field: 'language' | 'workspace' | 'editor' | 'platform';
         limit?: number | null;
         minutes?: number | null;
+        start_time?: Date | null;
+        end_time?: Date | null;
         languages?: Array<string> | null;
         workspaces?: Array<string> | null;
         platforms?: Array<string> | null;

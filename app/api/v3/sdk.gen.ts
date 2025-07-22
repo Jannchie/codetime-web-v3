@@ -3,7 +3,7 @@
 import { type Options as ClientOptions, type TDataShape, type Client, urlSearchParamsBodySerializer } from './client';
 import type { V3GetRootData, V3GetRootResponses, V3GetTotalMinutesData, V3GetTotalMinutesResponses, V3GithubCallbackData, V3GithubCallbackResponses, V3GithubCallbackErrors, V3GoogleAuthData, V3GoogleAuthResponses, V3GoogleAuthErrors, V3LogoutData, V3LogoutResponses, V3RefreshTokenData, V3RefreshTokenResponses, V3DeleteUserAccountData, V3DeleteUserAccountResponses, V3GetUserSelfData, V3GetUserSelfResponses, V3DeleteUserDataData, V3DeleteUserDataResponses, V3ExportUserDataData, V3ExportUserDataResponses, V3GetPrivacySettingsData, V3GetPrivacySettingsResponses, V3UpdatePrivacySettingsData, V3UpdatePrivacySettingsResponses, V3UpdatePrivacySettingsErrors, V3GetSelfMinutesData, V3GetSelfMinutesResponses, V3GetSelfMinutesErrors, V3GetTimeDistributionData, V3GetTimeDistributionResponses, V3GetTimeDistributionErrors, V3GetUserByUserIdData, V3GetUserByUserIdResponses, V3GetUserByUserIdErrors, V3GetUserShieldData, V3GetUserShieldResponses, V3GetUserShieldErrors, V3GetWorkspaceFilesData, V3GetWorkspaceFilesResponses, V3GetWorkspaceFilesErrors, V3ListSelfLatestLogsData, V3ListSelfLatestLogsResponses, V3ListSelfLatestLogsErrors, V3ListSelfStatsData, V3ListSelfStatsResponses, V3ListSelfStatsErrors, V3ListSelfStatsTimeData, V3ListSelfStatsTimeResponses, V3ListSelfStatsTimeErrors, V3ListSelfTopData, V3ListSelfTopResponses, V3ListSelfTopErrors, V3PostEventLogData, V3PostEventLogResponses, V3PostEventLogErrors, V3SearchWorkspacesData, V3SearchWorkspacesResponses, V3SearchWorkspacesErrors, V3GetYearlyReportDataData, V3GetYearlyReportDataResponses, V3GetYearlyReportDataErrors, V3CreateCheckoutData, V3CreateCheckoutResponses, V3CreateCheckoutErrors, V3GetProductsData, V3GetProductsResponses, V3HandleLemonsqueezyWebhookData, V3HandleLemonsqueezyWebhookResponses, V3GetLeaderboardData, V3GetLeaderboardResponses, V3GetLeaderboardErrors } from './types.gen';
 import { client as _heyApiClient } from './client.gen';
-import { v3GetUserSelfResponseTransformer, v3GetUserByUserIdResponseTransformer, v3GetWorkspaceFilesResponseTransformer, v3CreateCheckoutResponseTransformer, v3GetLeaderboardResponseTransformer } from './transformers.gen';
+import { v3GetTotalMinutesResponseTransformer, v3GetUserSelfResponseTransformer, v3GetUserByUserIdResponseTransformer, v3GetWorkspaceFilesResponseTransformer, v3CreateCheckoutResponseTransformer, v3GetLeaderboardResponseTransformer } from './transformers.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = ClientOptions<TData, ThrowOnError> & {
     /**
@@ -32,10 +32,11 @@ export const v3GetRoot = <ThrowOnError extends boolean = false>(options?: Option
 
 /**
  * GetTotalMinutes
- * Total minutes endpoint handler.
+ * Total minutes endpoint handler with background cache refresh.
  */
 export const v3GetTotalMinutes = <ThrowOnError extends boolean = false>(options?: Options<V3GetTotalMinutesData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<V3GetTotalMinutesResponses, unknown, ThrowOnError>({
+        responseTransformer: v3GetTotalMinutesResponseTransformer,
         url: '/v3/total-minutes',
         ...options
     });
@@ -208,10 +209,10 @@ export const v3UpdatePrivacySettings = <ThrowOnError extends boolean = false>(op
 
 /**
  * GetSelfMinutes
- * Get user daily coding minutes for the last N minutes.
+ * Get user daily coding minutes for the specified time range.
  */
-export const v3GetSelfMinutes = <ThrowOnError extends boolean = false>(options: Options<V3GetSelfMinutesData, ThrowOnError>) => {
-    return (options.client ?? _heyApiClient).get<V3GetSelfMinutesResponses, V3GetSelfMinutesErrors, ThrowOnError>({
+export const v3GetSelfMinutes = <ThrowOnError extends boolean = false>(options?: Options<V3GetSelfMinutesData, ThrowOnError>) => {
+    return (options?.client ?? _heyApiClient).get<V3GetSelfMinutesResponses, V3GetSelfMinutesErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'bearer',
@@ -227,8 +228,8 @@ export const v3GetSelfMinutes = <ThrowOnError extends boolean = false>(options: 
  * GetTimeDistribution
  * Get user coding time distribution by hour and minute.
  */
-export const v3GetTimeDistribution = <ThrowOnError extends boolean = false>(options: Options<V3GetTimeDistributionData, ThrowOnError>) => {
-    return (options.client ?? _heyApiClient).get<V3GetTimeDistributionResponses, V3GetTimeDistributionErrors, ThrowOnError>({
+export const v3GetTimeDistribution = <ThrowOnError extends boolean = false>(options?: Options<V3GetTimeDistributionData, ThrowOnError>) => {
+    return (options?.client ?? _heyApiClient).get<V3GetTimeDistributionResponses, V3GetTimeDistributionErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'bearer',
