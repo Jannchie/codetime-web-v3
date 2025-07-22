@@ -19,7 +19,7 @@ const t = useI18N()
 
 <template>
   <CardBase
-    class="min-h-210px"
+    class="min-h-250px"
     :loading="loading"
   >
     <div class="flex flex-col p-2">

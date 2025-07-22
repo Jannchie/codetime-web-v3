@@ -43,7 +43,7 @@ const hoverCS = useCS({
 })
 const fillCS = useContainerFilledCS('primary')
 
-const resp = await useAsyncData('user-latest-logs', async () => {
+const resp = useAsyncData('user-latest-logs', async () => {
   const resp = await v3ListSelfLatestLogs({
     query: {
       limit: 1,

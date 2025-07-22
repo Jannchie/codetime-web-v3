@@ -62,7 +62,7 @@ function aggregateData(data: DataPoint[], interval = 15): DataPoint[] {
 
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-const { data: timeDistributionData, pending: segmentsPending } = await useAsyncData('time-distribution-segments', async () => {
+const { data: timeDistributionData, pending: segmentsPending } = useAsyncData('time-distribution-segments', async () => {
   const totalMs = props.endTime.getTime() - props.startTime.getTime()
   const segmentMs = Math.floor(totalMs / props.segments)
   const promises = []
@@ -94,7 +94,7 @@ const { data: timeDistributionData, pending: segmentsPending } = await useAsyncD
   watch: [() => props.startTime, () => props.endTime, () => props.segments],
 })
 
-const { data: summaryData, pending: summaryPending } = await useAsyncData('time-distribution-summary', async () => {
+const { data: summaryData, pending: summaryPending } = useAsyncData('time-distribution-summary', async () => {
   const resp = await v3GetTimeDistribution({
     query: {
       start_time: props.startTime,

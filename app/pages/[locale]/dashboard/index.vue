@@ -19,12 +19,10 @@ const startTime = computed(() => {
   return start
 })
 
-// 并行发起所有主要请求
-const [allDataResp,allLanguageDataResp,allProjectDataResp] = await Promise.all([
-  fetchStats(days, 'time', 'days'),
-  fetchStats(days, 'language', 'days'),
-  fetchStats(days, 'workspace', 'days'),
-])
+// 并行发起所有主要请求，但不等待完成
+const allDataResp = fetchStats(days, 'time', 'days')
+const allLanguageDataResp = fetchStats(days, 'language', 'days')
+const allProjectDataResp = fetchStats(days, 'workspace', 'days')
 
 const allLanguageData = computed(() => allLanguageDataResp.data.value?.data ?? [])
 const allProjectData = computed(() => allProjectDataResp.data.value?.data ?? [])
@@ -64,24 +62,9 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
     <DashboardDataRange v-model:days="days" />
 
     <DashboardCalendarCard
-      v-if="allDataResp.status.value === 'success' && hasData"
-      :loading="false"
+      :loading="allDataResp.status.value !== 'success'"
       :data="allData"
     />
-    <CardBase v-else-if="allDataResp.status.value === 'pending'">
-      <div class="h-32 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
-    </CardBase>
-    <CardBase v-else-if="!hasData" class="flex gap-2 p-6">
-      <div class="leading-0">
-        <i class="text-primary-on i-mdi:alert-circle-outline h-6 w-6" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="text-primary-on font-black">
-          {{ t.dashboard.overview.noData.notice.title }}
-        </div>
-        <NoDataBody />
-      </div>
-    </CardBase>
 
     <DashboardFilterWrapper />
 

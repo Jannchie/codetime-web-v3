@@ -1,10 +1,10 @@
 import type { UserSelfPublic } from '~/api/v3/types.gen'
 import { v3GetUserSelf, v3ListSelfStats, v3ListSelfStatsTime, v3ListSelfTop } from '~/api/v3'
 
-export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 'minutes' | 'days' | 'hours' = 'minutes') {
+export function fetchStats(limit: Ref<number>, by: string = 'time', unit: 'minutes' | 'days' | 'hours' = 'minutes') {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-  return await (by === 'time'
+  return by === 'time'
     ? useAsyncData(`stats-time-${unit}-${tz}-${limit.value}`, async () => {
         const resp = await v3ListSelfStatsTime({
           query: {
@@ -43,11 +43,11 @@ export async function fetchStats(limit: Ref<number>, by: string = 'time', unit: 
       }, {
         server: false,
         watch: [limit],
-      }))
+      })
 }
 
-export async function fetchUser() {
-  return await useAsyncData('user-self', async () => {
+export function fetchUser() {
+  return useAsyncData('user-self', async () => {
     const resp = await v3GetUserSelf()
     return resp.data
   }, {
@@ -65,11 +65,11 @@ export type TopData = {
   icon?: string
 }
 
-export async function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
+export function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
   const filterArray = unref(filters)
   const filterKey = JSON.stringify(filterArray)
   
-  return await useAsyncData(`top-${field}-${minutes.value}-${limit}-${filterKey}`, async () => {
+  return useAsyncData(`top-${field}-${minutes.value}-${limit}-${filterKey}`, async () => {
     const activeFilters = unref(filters)
     
     // Convert filters to arrays for the API

@@ -42,7 +42,7 @@ const user = useUser()
 
 const days = ref(user.value?.plan === 'pro' ? 365 * 100 : 28)
 
-const { data, pending } = await useAsyncData(async () => {
+const { data, pending } = useAsyncData(async () => {
   if (!projectName.value) {
     return null
   }

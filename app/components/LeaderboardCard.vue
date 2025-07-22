@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 const days = computed(() => props.days)
 const t = useI18N()
-const resp = await useAsyncData(`leaderboard-${days.value}`, async () => {
+const resp = useAsyncData(`leaderboard-${days.value}`, async () => {
   const result = await v3GetLeaderboard({
     query: {
       days: days.value,
@@ -40,8 +40,21 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
   <Paper
     class="h-full w-full flex flex-col gap-6 rounded-2xl"
   >
-    <template v-if="resp.status.value === 'pending'" />
-    <template v-else-if="resp.error.value" />
+    <template v-if="resp.status.value === 'pending'">
+      <div v-for="i in 20" :key="i" class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-6 animate-pulse rounded bg-surface-variant-1" />
+          <div class="h-10 w-10 animate-pulse rounded-full bg-surface-variant-1" />
+          <div class="w-32">
+            <div class="h-4 w-20 animate-pulse rounded bg-surface-variant-1 mb-1" />
+            <div class="h-3 w-16 animate-pulse rounded bg-surface-variant-1" />
+          </div>
+        </div>
+        <div class="pr-4">
+          <div class="h-4 w-12 animate-pulse rounded bg-surface-variant-1" />
+        </div>
+      </div>
+    </template>
     <template v-else-if="resp.data.value">
       <div
         v-for="item, i in resp.data.value"
