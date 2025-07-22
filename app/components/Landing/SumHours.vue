@@ -65,7 +65,7 @@ const t = useI18N()
 </script>
 
 <template>
-  <div class="stats-card relative flex flex-col items-center gap-4 overflow-hidden px-8 py-12 shadow-xl backdrop-blur-sm">
+  <div class="stats-card relative flex flex-col items-center gap-4 overflow-hidden px-8 py-12 shadow-sm backdrop-blur-sm">
     <div class="absolute inset-0 opacity-20">
       <div class="floating-circles">
         <div class="floating-circle" />
