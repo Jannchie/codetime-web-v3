@@ -45,7 +45,7 @@ const textCS = useCS({
 <template>
   <CardBase
 
-    no-padding with-border
+    with-border no-padding
     class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
     :class="{
       'border-primary-container': isCurrent,
