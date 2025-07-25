@@ -84,7 +84,7 @@ export const it: Partial<Translation> = {
       p2: 'Puoi scegliere di aggiornare a un abbonamento Pro per sbloccare più funzionalità.',
       p3: 'Se incontri problemi durante il processo di pagamento, contattaci via email.',
     },
-    status(str:string): string {
+    status(str: string): string {
       switch (str) {
         case 'active': {
           return 'Attivo'
@@ -164,6 +164,7 @@ export const it: Partial<Translation> = {
         settings: 'Impostazioni',
         leaderboard: 'Classifica',
         workspace: 'Spazio di lavoro',
+        tags: 'Tag',
       },
       description: {
         overview: 'Visualizza tutti i tuoi dati di CodeTime.',
@@ -171,6 +172,7 @@ export const it: Partial<Translation> = {
         settings: 'Gestisci le tue impostazioni di CodeTime, inclusi aspetto, lingua, dati, ecc.',
         leaderboard: 'Visualizza la classifica di CodeTime di tutti gli utenti.',
         workspace: 'Visualizza i tuoi dati di CodeTime per uno spazio di lavoro specifico.',
+        tags: 'Gestire tag e regole per la categorizzazione automatica dello spazio di lavoro.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const it: Partial<Translation> = {
         return `${string} dietro`
       },
     },
+    tags: {
+      title: 'Tag',
+      description: 'Gestire tag e regole per la categorizzazione automatica dello spazio di lavoro.',
+      tagList: {
+        title: 'Elenco dei tag',
+        noTags: 'Nessun tag trovato. Crea il tuo primo tag per iniziare.',
+        createTag: 'Crea tag',
+      },
+      tagForm: {
+        name: 'Nome',
+        namePlaceholder: 'Inserisci il nome del tag',
+        color: 'Colore',
+        colorPlaceholder: 'Scegli un colore',
+        create: 'Crea tag',
+        edit: 'Modifica tag',
+        cancel: 'Annulla',
+        save: 'Salva',
+      },
+      tagRules: {
+        title: 'Regole del tag',
+        noRules: 'Nessuna regola trovata per questo tag.',
+        createRule: 'Crea regola',
+        rule: 'Regola',
+        enabled: 'Abilitato',
+        disabled: 'Disabilitato',
+        delete: 'Elimina',
+        edit: 'Modifica',
+        selectTagPrompt: 'Seleziona un tag per gestire le sue regole',
+      },
+      ruleForm: {
+        name: 'Nome della regola',
+        namePlaceholder: 'Inserisci il nome della regola',
+        enabled: 'Abilitato',
+        conditions: 'Condizioni',
+        addCondition: 'Aggiungi condizione',
+        field: 'Campo',
+        conditionType: 'Tipo di condizione',
+        value: 'Valore',
+        valuePlaceholder: 'Inserisci il valore',
+        negate: 'Nega',
+        create: 'Crea regola',
+        edit: 'Modifica regola',
+        cancel: 'Annulla',
+        save: 'Salva',
+      },
+      conditionTypes: {
+        CONTAINS: 'Contiene',
+        EQUALS: 'Uguale',
+        STARTS_WITH: 'Inizia con',
+        ENDS_WITH: 'Finisce con',
+        REGEX: 'Espressione regolare',
+      },
+      fields: {
+        workspaceName: 'Nome dello spazio di lavoro',
+        language: 'Linguaggio',
+        gitOrigin: 'Origine Git',
+        gitBranch: 'Ramo Git',
+        platform: 'Piattaforma',
+        editor: 'Editor',
+        absoluteFile: 'Percorso assoluto del file',
+        relativeFile: 'Percorso relativo del file',
+      },
+      actions: {
+        delete: 'Elimina',
+        edit: 'Modifica',
+        manageRules: 'Gestisci regole',
+        enable: 'Abilita',
+        disable: 'Disabilita',
+      },
+      deleteConfirm: {
+        deleteTag: 'Elimina tag',
+        deleteTagMessage: 'Sei sicuro/a di voler eliminare questo tag? Questa azione non può essere annullata.',
+        deleteRule: 'Elimina regola',
+        deleteRuleMessage: 'Sei sicuro/a di voler eliminare questa regola? Questa azione non può essere annullata.',
+        cancel: 'Annulla',
+        delete: 'Elimina',
+      },
+    },
   },
   button: {
     copy: 'Copia',
@@ -379,6 +459,7 @@ export const it: Partial<Translation> = {
       duration: 'Durata',
       other: 'Altro',
       unknown: 'Sconosciuto',
+      currentTime: 'Ora Attuale',
     },
   },
 }

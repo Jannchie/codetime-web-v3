@@ -84,7 +84,7 @@ export const ms: Partial<Translation> = {
       p2: 'Anda boleh memilih untuk menaik taraf kepada langganan Pro untuk membuka lebih banyak ciri.',
       p3: 'Jika anda menghadapi sebarang masalah semasa proses pembayaran, sila hubungi kami melalui e-mel.',
     },
-    status(str:string) {
+    status(str: string) {
       switch (str) {
         case 'active': {
           return 'Aktif'
@@ -164,6 +164,7 @@ export const ms: Partial<Translation> = {
         settings: 'Tetapan',
         leaderboard: 'Papan Kepimpinan',
         workspace: 'Ruang Kerja',
+        tags: 'Tags',
       },
       description: {
         overview: 'Lihat semua data CodeTime anda.',
@@ -171,6 +172,7 @@ export const ms: Partial<Translation> = {
         settings: 'Uruskan tetapan CodeTime anda, termasuk penampilan, bahasa, data, dan sebagainya.',
         leaderboard: 'Lihat papan kepimpinan CodeTime semua pengguna.',
         workspace: 'Lihat data masa kod, fail, dan grafik API untuk ruang kerja yang dipilih.',
+        tags: 'Manage tags and rules for automatic workspace categorization.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const ms: Partial<Translation> = {
         return `${string} ketinggalan`
       },
     },
+    tags: {
+      title: 'Tag',
+      description: 'Urus tag dan peraturan untuk pengkategorian ruang kerja automatik.',
+      tagList: {
+        title: 'Senarai Tag',
+        noTags: 'Tiada tag dijumpai. Cipta tag pertama anda untuk bermula.',
+        createTag: 'Cipta Tag',
+      },
+      tagForm: {
+        name: 'Nama',
+        namePlaceholder: 'Masukkan nama tag',
+        color: 'Warna',
+        colorPlaceholder: 'Pilih warna',
+        create: 'Cipta Tag',
+        edit: 'Edit Tag',
+        cancel: 'Batal',
+        save: 'Simpan',
+      },
+      tagRules: {
+        title: 'Peraturan Tag',
+        noRules: 'Tiada peraturan dijumpai untuk tag ini.',
+        createRule: 'Cipta Peraturan',
+        rule: 'Peraturan',
+        enabled: 'Diaktifkan',
+        disabled: 'Dimatikan',
+        delete: 'Padam',
+        edit: 'Edit',
+        selectTagPrompt: 'Pilih tag untuk mengurus peraturannya',
+      },
+      ruleForm: {
+        name: 'Nama Peraturan',
+        namePlaceholder: 'Masukkan nama peraturan',
+        enabled: 'Diaktifkan',
+        conditions: 'Syarat',
+        addCondition: 'Tambah Syarat',
+        field: 'Medan',
+        conditionType: 'Jenis Syarat',
+        value: 'Nilai',
+        valuePlaceholder: 'Masukkan nilai',
+        negate: 'Nafi',
+        create: 'Cipta Peraturan',
+        edit: 'Edit Peraturan',
+        cancel: 'Batal',
+        save: 'Simpan',
+      },
+      conditionTypes: {
+        CONTAINS: 'Mengandungi',
+        EQUALS: 'Sama',
+        STARTS_WITH: 'Bermula dengan',
+        ENDS_WITH: 'Berakhir dengan',
+        REGEX: 'Ungkapan nalar',
+      },
+      fields: {
+        workspaceName: 'Nama Ruang Kerja',
+        language: 'Bahasa',
+        gitOrigin: 'Asal Git',
+        gitBranch: 'Cawangan Git',
+        platform: 'Platform',
+        editor: 'Editor',
+        absoluteFile: 'Laluan Fail Mutlak',
+        relativeFile: 'Laluan Fail Relatif',
+      },
+      actions: {
+        delete: 'Padam',
+        edit: 'Edit',
+        manageRules: 'Urus Peraturan',
+        enable: 'Aktifkan',
+        disable: 'Matikan',
+      },
+      deleteConfirm: {
+        deleteTag: 'Padam Tag',
+        deleteTagMessage: 'Adakah anda pasti untuk memadam tag ini? Tindakan ini tidak boleh dibatalkan.',
+        deleteRule: 'Padam Peraturan',
+        deleteRuleMessage: 'Adakah anda pasti untuk memadam peraturan ini? Tindakan ini tidak boleh dibatalkan.',
+        cancel: 'Batal',
+        delete: 'Padam',
+      },
+    },
   },
   button: {
     copy: 'Salin',
@@ -379,6 +459,7 @@ export const ms: Partial<Translation> = {
       duration: 'Tempoh',
       other: 'Lain-lain',
       unknown: 'Tidak diketahui',
+      currentTime: 'Masa Semasa',
     },
   },
 }

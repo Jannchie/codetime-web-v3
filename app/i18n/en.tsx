@@ -84,7 +84,7 @@ export const en: Translation = {
       p2: 'You can choose to upgrade to a Pro subscription to unlock more features.',
       p3: 'If you encounter any problems during the payment process, please contact us by email.',
     },
-    status(str:string): string {
+    status(str: string): string {
       switch (str) {
         case 'active': {
           return 'Active'
@@ -164,6 +164,7 @@ export const en: Translation = {
         settings: 'Settings',
         leaderboard: 'Leaderboard',
         workspace: 'Workspace',
+        tags: 'Tags',
       },
       description: {
         overview: 'View all your CodeTime data.',
@@ -171,6 +172,7 @@ export const en: Translation = {
         settings: 'Manage your CodeTime settings, including appearance, language, data, etc.',
         leaderboard: 'View the CodeTime leaderboard of all users.',
         workspace: 'View your workspace details.',
+        tags: 'Manage tags and rules for automatic workspace categorization.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const en: Translation = {
         return `${string} behind`
       },
     },
+    tags: {
+      title: 'Tags',
+      description: 'Manage tags and rules for automatic workspace categorization.',
+      tagList: {
+        title: 'Tag List',
+        noTags: 'No tags found. Create your first tag to get started.',
+        createTag: 'Create Tag',
+      },
+      tagForm: {
+        name: 'Name',
+        namePlaceholder: 'Enter tag name',
+        color: 'Color',
+        colorPlaceholder: 'Choose a color',
+        create: 'Create Tag',
+        edit: 'Edit Tag',
+        cancel: 'Cancel',
+        save: 'Save',
+      },
+      tagRules: {
+        title: 'Tag Rules',
+        noRules: 'No rules found for this tag.',
+        createRule: 'Create Rule',
+        rule: 'Rule',
+        enabled: 'Enabled',
+        disabled: 'Disabled',
+        delete: 'Delete',
+        edit: 'Edit',
+        selectTagPrompt: 'Select a tag to manage its rules',
+      },
+      ruleForm: {
+        name: 'Rule Name',
+        namePlaceholder: 'Enter rule name',
+        enabled: 'Enabled',
+        conditions: 'Conditions',
+        addCondition: 'Add Condition',
+        field: 'Field',
+        conditionType: 'Condition Type',
+        value: 'Value',
+        valuePlaceholder: 'Enter value',
+        negate: 'Negate',
+        create: 'Create Rule',
+        edit: 'Edit Rule',
+        cancel: 'Cancel',
+        save: 'Save',
+      },
+      conditionTypes: {
+        CONTAINS: 'Contains',
+        EQUALS: 'Equals',
+        STARTS_WITH: 'Starts with',
+        ENDS_WITH: 'Ends with',
+        REGEX: 'Regular expression',
+      },
+      fields: {
+        workspaceName: 'Workspace Name',
+        language: 'Language',
+        gitOrigin: 'Git Origin',
+        gitBranch: 'Git Branch',
+        platform: 'Platform',
+        editor: 'Editor',
+        absoluteFile: 'Absolute File Path',
+        relativeFile: 'Relative File Path',
+      },
+      actions: {
+        delete: 'Delete',
+        edit: 'Edit',
+        manageRules: 'Manage Rules',
+        enable: 'Enable',
+        disable: 'Disable',
+      },
+      deleteConfirm: {
+        deleteTag: 'Delete Tag',
+        deleteTagMessage: 'Are you sure you want to delete this tag? This action cannot be undone.',
+        deleteRule: 'Delete Rule',
+        deleteRuleMessage: 'Are you sure you want to delete this rule? This action cannot be undone.',
+        cancel: 'Cancel',
+        delete: 'Delete',
+      },
+    },
   },
   button: {
     copy: 'Copy',
@@ -379,6 +459,7 @@ export const en: Translation = {
       duration: 'Duration',
       other: 'Other',
       unknown: 'Unknown',
+      currentTime: 'Current Time',
     },
   },
 }

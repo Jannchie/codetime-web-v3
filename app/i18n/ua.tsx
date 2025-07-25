@@ -93,7 +93,8 @@ export const ua: Partial<Translation> = {
       p3: 'Якщо ви зіткнетеся з якими-небудь проблемами під час оплати, будь ласка, зв\'яжіться з нами по електронній пошті.',
     },
     status(
-      str:string): string {
+      str: string,
+    ): string {
       switch (str) {
         case 'active': {
           return 'Активний'
@@ -174,6 +175,7 @@ export const ua: Partial<Translation> = {
         settings: 'Налаштування',
         leaderboard: 'Таблиця лідерів',
         workspace: 'Робочий простір',
+        tags: 'Tags',
       },
       description: {
         overview: 'Перегляд усіх даних CodeTime.',
@@ -183,6 +185,7 @@ export const ua: Partial<Translation> = {
           'Керуйте налаштуваннями CodeTime, включаючи вигляд, мову, дані тощо.',
         leaderboard: 'Перегляньте таблицю лідерів CodeTime.',
         workspace: 'Перегляньте дані конкретного робочого простору.',
+        tags: 'Manage tags and rules for automatic workspace categorization.',
       },
     },
     overview: {
@@ -385,6 +388,84 @@ export const ua: Partial<Translation> = {
         return `${string} позаду`
       },
     },
+    tags: {
+      title: 'Теги',
+      description: 'Управляйте тегами та правилами для автоматичної категоризації робочих просторів.',
+      tagList: {
+        title: 'Список тегів',
+        noTags: 'Теги не знайдено. Створіть свій перший тег для початку.',
+        createTag: 'Створити тег',
+      },
+      tagForm: {
+        name: 'Назва',
+        namePlaceholder: 'Введіть назву тегу',
+        color: 'Колір',
+        colorPlaceholder: 'Оберіть колір',
+        create: 'Створити тег',
+        edit: 'Редагувати тег',
+        cancel: 'Скасувати',
+        save: 'Зберегти',
+      },
+      tagRules: {
+        title: 'Правила тегів',
+        noRules: 'Правила для цього тегу не знайдено.',
+        createRule: 'Створити правило',
+        rule: 'Правило',
+        enabled: 'Увімкнено',
+        disabled: 'Вимкнено',
+        delete: 'Видалити',
+        edit: 'Редагувати',
+        selectTagPrompt: 'Оберіть тег для управління його правилами',
+      },
+      ruleForm: {
+        name: 'Назва правила',
+        namePlaceholder: 'Введіть назву правила',
+        enabled: 'Увімкнено',
+        conditions: 'Умови',
+        addCondition: 'Додати умову',
+        field: 'Поле',
+        conditionType: 'Тип умови',
+        value: 'Значення',
+        valuePlaceholder: 'Введіть значення',
+        negate: 'Заперечення',
+        create: 'Створити правило',
+        edit: 'Редагувати правило',
+        cancel: 'Скасувати',
+        save: 'Зберегти',
+      },
+      conditionTypes: {
+        CONTAINS: 'Містить',
+        EQUALS: 'Дорівнює',
+        STARTS_WITH: 'Починається з',
+        ENDS_WITH: 'Закінчується на',
+        REGEX: 'Регулярний вираз',
+      },
+      fields: {
+        workspaceName: 'Назва робочого простору',
+        language: 'Мова',
+        gitOrigin: 'Git Origin',
+        gitBranch: 'Git Branch',
+        platform: 'Платформа',
+        editor: 'Редактор',
+        absoluteFile: 'Абсолютний шлях до файлу',
+        relativeFile: 'Відносний шлях до файлу',
+      },
+      actions: {
+        delete: 'Видалити',
+        edit: 'Редагувати',
+        manageRules: 'Керувати правилами',
+        enable: 'Увімкнути',
+        disable: 'Вимкнути',
+      },
+      deleteConfirm: {
+        deleteTag: 'Видалити тег',
+        deleteTagMessage: 'Ви впевнені, що хочете видалити цей тег? Цю дію неможливо скасувати.',
+        deleteRule: 'Видалити правило',
+        deleteRuleMessage: 'Ви впевнені, що хочете видалити це правило? Цю дію неможливо скасувати.',
+        cancel: 'Скасувати',
+        delete: 'Видалити',
+      },
+    },
   },
   button: {
     copy: 'Копіювати',
@@ -401,6 +482,7 @@ export const ua: Partial<Translation> = {
       duration: 'Тривалість',
       other: 'Інше',
       unknown: 'Невідомо',
+      currentTime: 'Поточний час',
     },
   },
 }

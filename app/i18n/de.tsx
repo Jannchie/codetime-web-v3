@@ -84,7 +84,7 @@ export const de: Partial<Translation> = {
       p2: 'Sie können ein Upgrade auf ein Pro-Abonnement durchführen, um weitere Funktionen freizuschalten.',
       p3: 'Wenn Sie während des Zahlungsvorgangs Probleme haben, kontaktieren Sie uns bitte per E-Mail.',
     },
-    status(str:string): string {
+    status(str: string): string {
       switch (str) {
         case 'active': {
           return 'Aktiv'
@@ -164,6 +164,7 @@ export const de: Partial<Translation> = {
         settings: 'Einstellungen',
         leaderboard: 'Bestenliste',
         workspace: 'Arbeitsbereich',
+        tags: 'Tags',
       },
       description: {
         overview: 'Zeigen Sie alle Ihre CodeTime-Daten an.',
@@ -171,6 +172,7 @@ export const de: Partial<Translation> = {
         settings: 'Verwalten Sie Ihre CodeTime-Einstellungen, einschließlich Aussehen, Sprache, Daten usw.',
         leaderboard: 'Zeigen Sie die CodeTime-Bestenliste aller Benutzer an.',
         workspace: 'Zeigen Sie Ihre Arbeitsbereichdetails an.',
+        tags: 'Verwalten Sie Tags und Regeln für die automatische Arbeitsbereichkategorisierung.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const de: Partial<Translation> = {
         return `${string} hinter`
       },
     },
+    tags: {
+      title: 'Tags',
+      description: 'Tags und Regeln für die automatische Arbeitsbereichkategorisierung verwalten.',
+      tagList: {
+        title: 'Tag-Liste',
+        noTags: 'Keine Tags gefunden. Erstellen Sie Ihren ersten Tag, um zu beginnen.',
+        createTag: 'Tag erstellen',
+      },
+      tagForm: {
+        name: 'Name',
+        namePlaceholder: 'Tag-Name eingeben',
+        color: 'Farbe',
+        colorPlaceholder: 'Farbe wählen',
+        create: 'Tag erstellen',
+        edit: 'Tag bearbeiten',
+        cancel: 'Abbrechen',
+        save: 'Speichern',
+      },
+      tagRules: {
+        title: 'Tag-Regeln',
+        noRules: 'Keine Regeln für diesen Tag gefunden.',
+        createRule: 'Regel erstellen',
+        rule: 'Regel',
+        enabled: 'Aktiviert',
+        disabled: 'Deaktiviert',
+        delete: 'Löschen',
+        edit: 'Bearbeiten',
+        selectTagPrompt: 'Wählen Sie einen Tag aus, um seine Regeln zu verwalten',
+      },
+      ruleForm: {
+        name: 'Regelname',
+        namePlaceholder: 'Regelname eingeben',
+        enabled: 'Aktiviert',
+        conditions: 'Bedingungen',
+        addCondition: 'Bedingung hinzufügen',
+        field: 'Feld',
+        conditionType: 'Bedingungstyp',
+        value: 'Wert',
+        valuePlaceholder: 'Wert eingeben',
+        negate: 'Negieren',
+        create: 'Regel erstellen',
+        edit: 'Regel bearbeiten',
+        cancel: 'Abbrechen',
+        save: 'Speichern',
+      },
+      conditionTypes: {
+        CONTAINS: 'Enthält',
+        EQUALS: 'Gleich',
+        STARTS_WITH: 'Beginnt mit',
+        ENDS_WITH: 'Endet mit',
+        REGEX: 'Regulärer Ausdruck',
+      },
+      fields: {
+        workspaceName: 'Arbeitsbereichname',
+        language: 'Sprache',
+        gitOrigin: 'Git-Origin',
+        gitBranch: 'Git-Branch',
+        platform: 'Plattform',
+        editor: 'Editor',
+        absoluteFile: 'Absoluter Dateipfad',
+        relativeFile: 'Relativer Dateipfad',
+      },
+      actions: {
+        delete: 'Löschen',
+        edit: 'Bearbeiten',
+        manageRules: 'Regeln verwalten',
+        enable: 'Aktivieren',
+        disable: 'Deaktivieren',
+      },
+      deleteConfirm: {
+        deleteTag: 'Tag löschen',
+        deleteTagMessage: 'Sind Sie sicher, dass Sie diesen Tag löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+        deleteRule: 'Regel löschen',
+        deleteRuleMessage: 'Sind Sie sicher, dass Sie diese Regel löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+        cancel: 'Abbrechen',
+        delete: 'Löschen',
+      },
+    },
   },
   button: {
     copy: 'Kopieren',
@@ -379,6 +459,7 @@ export const de: Partial<Translation> = {
       duration: 'Dauer',
       other: 'Andere',
       unknown: 'Unbekannt',
+      currentTime: 'Aktuelle Zeit',
     },
   },
 }

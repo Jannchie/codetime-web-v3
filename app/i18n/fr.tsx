@@ -84,7 +84,7 @@ export const fr: Partial<Translation> = {
       p2: 'Vous pouvez choisir de passer à un abonnement Pro pour déverrouiller plus de fonctionnalités.',
       p3: 'Si vous rencontrez des problèmes lors du processus de paiement, veuillez nous contacter par e-mail.',
     },
-    status(str:string): string {
+    status(str: string): string {
       switch (str) {
         case 'active': {
           return 'Actif'
@@ -164,6 +164,7 @@ export const fr: Partial<Translation> = {
         settings: 'Paramètres',
         leaderboard: 'Classement',
         workspace: 'Espace de travail',
+        tags: 'Étiquettes',
       },
       description: {
         overview: 'Affichez toutes vos données CodeTime.',
@@ -171,6 +172,7 @@ export const fr: Partial<Translation> = {
         settings: 'Gérez vos paramètres CodeTime, y compris l\'apparence, la langue, les données, etc.',
         leaderboard: 'Afficher le classement CodeTime de tous les utilisateurs.',
         workspace: 'Affichez les données d\'un espace de travail spécifique.',
+        tags: 'Gérer les étiquettes et les règles pour la catégorisation automatique de l\'espace de travail.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const fr: Partial<Translation> = {
         return `${string} derrière`
       },
     },
+    tags: {
+      title: 'Étiquettes',
+      description: 'Gérer les étiquettes et les règles pour la catégorisation automatique de l\'espace de travail.',
+      tagList: {
+        title: 'Liste des étiquettes',
+        noTags: 'Aucune étiquette trouvée. Créez votre première étiquette pour commencer.',
+        createTag: 'Créer une étiquette',
+      },
+      tagForm: {
+        name: 'Nom',
+        namePlaceholder: 'Entrez le nom de l\'étiquette',
+        color: 'Couleur',
+        colorPlaceholder: 'Choisissez une couleur',
+        create: 'Créer une étiquette',
+        edit: 'Modifier l\'étiquette',
+        cancel: 'Annuler',
+        save: 'Enregistrer',
+      },
+      tagRules: {
+        title: 'Règles d\'étiquettes',
+        noRules: 'Aucune règle trouvée pour cette étiquette.',
+        createRule: 'Créer une règle',
+        rule: 'Règle',
+        enabled: 'Activé',
+        disabled: 'Désactivé',
+        delete: 'Supprimer',
+        edit: 'Modifier',
+        selectTagPrompt: 'Sélectionnez une étiquette pour gérer ses règles',
+      },
+      ruleForm: {
+        name: 'Nom de la règle',
+        namePlaceholder: 'Entrez le nom de la règle',
+        enabled: 'Activé',
+        conditions: 'Conditions',
+        addCondition: 'Ajouter une condition',
+        field: 'Champ',
+        conditionType: 'Type de condition',
+        value: 'Valeur',
+        valuePlaceholder: 'Entrez la valeur',
+        negate: 'Négation',
+        create: 'Créer une règle',
+        edit: 'Modifier la règle',
+        cancel: 'Annuler',
+        save: 'Enregistrer',
+      },
+      conditionTypes: {
+        CONTAINS: 'Contient',
+        EQUALS: 'Égal',
+        STARTS_WITH: 'Commence par',
+        ENDS_WITH: 'Se termine par',
+        REGEX: 'Expression régulière',
+      },
+      fields: {
+        workspaceName: 'Nom de l\'espace de travail',
+        language: 'Langage',
+        gitOrigin: 'Origine Git',
+        gitBranch: 'Branche Git',
+        platform: 'Plateforme',
+        editor: 'Éditeur',
+        absoluteFile: 'Chemin absolu du fichier',
+        relativeFile: 'Chemin relatif du fichier',
+      },
+      actions: {
+        delete: 'Supprimer',
+        edit: 'Modifier',
+        manageRules: 'Gérer les règles',
+        enable: 'Activer',
+        disable: 'Désactiver',
+      },
+      deleteConfirm: {
+        deleteTag: 'Supprimer le tag',
+        deleteTagMessage: 'Êtes-vous sûr(e) de vouloir supprimer ce tag ? Cette action ne peut pas être annulée.',
+        deleteRule: 'Supprimer la règle',
+        deleteRuleMessage: 'Êtes-vous sûr(e) de vouloir supprimer cette règle ? Cette action ne peut pas être annulée.',
+        cancel: 'Annuler',
+        delete: 'Supprimer',
+      },
+    },
   },
   button: {
     copy: 'Copier',
@@ -379,6 +459,7 @@ export const fr: Partial<Translation> = {
       duration: 'Durée',
       other: 'Autre',
       unknown: 'Inconnu',
+      currentTime: 'Heure Actuelle',
     },
   },
 }

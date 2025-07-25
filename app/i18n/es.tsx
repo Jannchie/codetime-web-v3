@@ -84,7 +84,7 @@ export const es: Partial<Translation> = {
       p2: 'Puedes optar por actualizar a una suscripción Pro para desbloquear más funciones.',
       p3: 'Si encuentras algún problema durante el proceso de pago, contáctanos por correo electrónico.',
     },
-    status(str:string) {
+    status(str: string) {
       switch (str) {
         case 'active': {
           return 'Activo'
@@ -164,6 +164,7 @@ export const es: Partial<Translation> = {
         settings: 'Configuración',
         leaderboard: 'Clasificación',
         workspace: 'Espacio de trabajo',
+        tags: 'Etiquetas',
       },
       description: {
         overview: 'Ver todos tus datos de CodeTime.',
@@ -171,6 +172,7 @@ export const es: Partial<Translation> = {
         settings: 'Administra la configuración de CodeTime, incluyendo la apariencia, el idioma, los datos, etc.',
         leaderboard: 'Ver la clasificación de CodeTime de todos los usuarios.',
         workspace: 'Ver los datos de un espacio de trabajo específico.',
+        tags: 'Gestionar etiquetas y reglas para la categorización automática del espacio de trabajo.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const es: Partial<Translation> = {
         return `${string} detrás`
       },
     },
+    tags: {
+      title: 'Etiquetas',
+      description: 'Gestionar etiquetas y reglas para la categorización automática del espacio de trabajo.',
+      tagList: {
+        title: 'Lista de etiquetas',
+        noTags: 'No se encontraron etiquetas. Crea tu primera etiqueta para comenzar.',
+        createTag: 'Crear etiqueta',
+      },
+      tagForm: {
+        name: 'Nombre',
+        namePlaceholder: 'Ingresa el nombre de la etiqueta',
+        color: 'Color',
+        colorPlaceholder: 'Elige un color',
+        create: 'Crear etiqueta',
+        edit: 'Editar etiqueta',
+        cancel: 'Cancelar',
+        save: 'Guardar',
+      },
+      tagRules: {
+        title: 'Reglas de etiquetas',
+        noRules: 'No se encontraron reglas para esta etiqueta.',
+        createRule: 'Crear regla',
+        rule: 'Regla',
+        enabled: 'Habilitado',
+        disabled: 'Deshabilitado',
+        delete: 'Eliminar',
+        edit: 'Editar',
+        selectTagPrompt: 'Selecciona una etiqueta para gestionar sus reglas',
+      },
+      ruleForm: {
+        name: 'Nombre de la regla',
+        namePlaceholder: 'Ingresa el nombre de la regla',
+        enabled: 'Habilitado',
+        conditions: 'Condiciones',
+        addCondition: 'Añadir condición',
+        field: 'Campo',
+        conditionType: 'Tipo de condición',
+        value: 'Valor',
+        valuePlaceholder: 'Ingresa el valor',
+        negate: 'Negar',
+        create: 'Crear regla',
+        edit: 'Editar regla',
+        cancel: 'Cancelar',
+        save: 'Guardar',
+      },
+      conditionTypes: {
+        CONTAINS: 'Contiene',
+        EQUALS: 'Igual',
+        STARTS_WITH: 'Comienza con',
+        ENDS_WITH: 'Termina con',
+        REGEX: 'Expresión regular',
+      },
+      fields: {
+        workspaceName: 'Nombre del espacio de trabajo',
+        language: 'Lenguaje',
+        gitOrigin: 'Origen de Git',
+        gitBranch: 'Rama de Git',
+        platform: 'Plataforma',
+        editor: 'Editor',
+        absoluteFile: 'Ruta absoluta del archivo',
+        relativeFile: 'Ruta relativa del archivo',
+      },
+      actions: {
+        delete: 'Eliminar',
+        edit: 'Editar',
+        manageRules: 'Gestionar reglas',
+        enable: 'Habilitar',
+        disable: 'Deshabilitar',
+      },
+      deleteConfirm: {
+        deleteTag: 'Eliminar etiqueta',
+        deleteTagMessage: '¿Estás seguro/a de que quieres eliminar esta etiqueta? Esta acción no se puede deshacer.',
+        deleteRule: 'Eliminar regla',
+        deleteRuleMessage: '¿Estás seguro/a de que quieres eliminar esta regla? Esta acción no se puede deshacer.',
+        cancel: 'Cancelar',
+        delete: 'Eliminar',
+      },
+    },
   },
   button: {
     copy: 'Copiar',
@@ -379,6 +459,7 @@ export const es: Partial<Translation> = {
       duration: 'Duración',
       other: 'Otro',
       unknown: 'Desconocido',
+      currentTime: 'Hora Actual',
     },
   },
 }

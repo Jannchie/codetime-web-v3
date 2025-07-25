@@ -84,7 +84,7 @@ export const zhTW: Partial<Translation> = {
       p2: '您可以選擇升級到 Pro 訂閱以解鎖更多功能。',
       p3: '如果您在支付過程中遇到任何問題，請通過電子郵件與我們聯繫。',
     },
-    status(str:string) {
+    status(str: string) {
       switch (str) {
         case 'active': {
           return '有效'
@@ -164,6 +164,7 @@ export const zhTW: Partial<Translation> = {
         settings: '設定',
         leaderboard: '排行榜',
         workspace: '工作區',
+        tags: 'Tags',
       },
       description: {
         overview: '查看您的所有 CodeTime 數據。',
@@ -171,6 +172,7 @@ export const zhTW: Partial<Translation> = {
         settings: '管理您的 CodeTime 設定，包含外觀、語言、數據等。',
         leaderboard: '查看 CodeTime 使用者的排行榜。',
         workspace: '查看特定工作區的數據。',
+        tags: 'Manage tags and rules for automatic workspace categorization.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const zhTW: Partial<Translation> = {
         return `相差 ${string}`
       },
     },
+    tags: {
+      title: '標籤',
+      description: '管理標籤和規則以實現自動工作區分類。',
+      tagList: {
+        title: '標籤列表',
+        noTags: '未找到標籤。創建您的第一個標籤開始使用。',
+        createTag: '創建標籤',
+      },
+      tagForm: {
+        name: '名稱',
+        namePlaceholder: '輸入標籤名稱',
+        color: '顏色',
+        colorPlaceholder: '選擇顏色',
+        create: '創建標籤',
+        edit: '編輯標籤',
+        cancel: '取消',
+        save: '保存',
+      },
+      tagRules: {
+        title: '標籤規則',
+        noRules: '未找到此標籤的規則。',
+        createRule: '創建規則',
+        rule: '規則',
+        enabled: '已啟用',
+        disabled: '已禁用',
+        delete: '刪除',
+        edit: '編輯',
+        selectTagPrompt: '選擇標籤以管理其規則',
+      },
+      ruleForm: {
+        name: '規則名稱',
+        namePlaceholder: '輸入規則名稱',
+        enabled: '已啟用',
+        conditions: '條件',
+        addCondition: '添加條件',
+        field: '字段',
+        conditionType: '條件類型',
+        value: '值',
+        valuePlaceholder: '輸入值',
+        negate: '否定',
+        create: '創建規則',
+        edit: '編輯規則',
+        cancel: '取消',
+        save: '保存',
+      },
+      conditionTypes: {
+        CONTAINS: '包含',
+        EQUALS: '等於',
+        STARTS_WITH: '開始於',
+        ENDS_WITH: '結束於',
+        REGEX: '正則表達式',
+      },
+      fields: {
+        workspaceName: '工作區名稱',
+        language: '語言',
+        gitOrigin: 'Git 來源',
+        gitBranch: 'Git 分支',
+        platform: '平台',
+        editor: '編輯器',
+        absoluteFile: '絕對文件路徑',
+        relativeFile: '相對文件路徑',
+      },
+      actions: {
+        delete: '刪除',
+        edit: '編輯',
+        manageRules: '管理規則',
+        enable: '啟用',
+        disable: '禁用',
+      },
+      deleteConfirm: {
+        deleteTag: '刪除標籤',
+        deleteTagMessage: '確定要刪除這個標籤嗎？此操作無法撤銷。',
+        deleteRule: '刪除規則',
+        deleteRuleMessage: '確定要刪除這個規則嗎？此操作無法撤銷。',
+        cancel: '取消',
+        delete: '刪除',
+      },
+    },
   },
   button: {
     copy: '複製',
@@ -379,6 +459,7 @@ export const zhTW: Partial<Translation> = {
       duration: '時間',
       other: '其他',
       unknown: '未知',
+      currentTime: '目前時間',
     },
   },
 }

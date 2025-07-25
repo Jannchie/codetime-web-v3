@@ -94,7 +94,8 @@ export const ru: Partial<Translation> = {
       p3: 'Если у вас возникли проблемы во время оплаты, свяжитесь с нами по электронной почте.',
     },
     status(
-      str: string): string {
+      str: string,
+    ): string {
       switch (str) {
         case 'active': {
           return 'Активный'
@@ -175,6 +176,7 @@ export const ru: Partial<Translation> = {
         settings: 'Настройки',
         leaderboard: 'Таблица лидеров',
         workspace: 'Рабочая область',
+        tags: 'Tags',
       },
       description: {
         overview: 'Просмотр всех ваших данных CodeTime.',
@@ -184,6 +186,7 @@ export const ru: Partial<Translation> = {
           'Управление настройками CodeTime, включая внешний вид, язык, данные и т.д.',
         leaderboard: 'Просмотр таблицы лидеров CodeTime.',
         workspace: 'Просмотр данных конкретной рабочей области.',
+        tags: 'Manage tags and rules for automatic workspace categorization.',
       },
     },
     overview: {
@@ -386,6 +389,84 @@ export const ru: Partial<Translation> = {
         return `отстает ${string}`
       },
     },
+    tags: {
+      title: 'Теги',
+      description: 'Управление тегами и правилами для автоматической категоризации рабочих областей.',
+      tagList: {
+        title: 'Список тегов',
+        noTags: 'Теги не найдены. Создайте свой первый тег для начала.',
+        createTag: 'Создать тег',
+      },
+      tagForm: {
+        name: 'Название',
+        namePlaceholder: 'Введите название тега',
+        color: 'Цвет',
+        colorPlaceholder: 'Выберите цвет',
+        create: 'Создать тег',
+        edit: 'Редактировать тег',
+        cancel: 'Отменить',
+        save: 'Сохранить',
+      },
+      tagRules: {
+        title: 'Правила тегов',
+        noRules: 'Правила для этого тега не найдены.',
+        createRule: 'Создать правило',
+        rule: 'Правило',
+        enabled: 'Включено',
+        disabled: 'Отключено',
+        delete: 'Удалить',
+        edit: 'Редактировать',
+        selectTagPrompt: 'Выберите тег для управления его правилами',
+      },
+      ruleForm: {
+        name: 'Название правила',
+        namePlaceholder: 'Введите название правила',
+        enabled: 'Включено',
+        conditions: 'Условия',
+        addCondition: 'Добавить условие',
+        field: 'Поле',
+        conditionType: 'Тип условия',
+        value: 'Значение',
+        valuePlaceholder: 'Введите значение',
+        negate: 'Отрицание',
+        create: 'Создать правило',
+        edit: 'Редактировать правило',
+        cancel: 'Отменить',
+        save: 'Сохранить',
+      },
+      conditionTypes: {
+        CONTAINS: 'Содержит',
+        EQUALS: 'Равно',
+        STARTS_WITH: 'Начинается с',
+        ENDS_WITH: 'Заканчивается на',
+        REGEX: 'Регулярное выражение',
+      },
+      fields: {
+        workspaceName: 'Название рабочей области',
+        language: 'Язык',
+        gitOrigin: 'Git Origin',
+        gitBranch: 'Git Branch',
+        platform: 'Платформа',
+        editor: 'Редактор',
+        absoluteFile: 'Абсолютный путь к файлу',
+        relativeFile: 'Относительный путь к файлу',
+      },
+      actions: {
+        delete: 'Удалить',
+        edit: 'Редактировать',
+        manageRules: 'Управлять правилами',
+        enable: 'Включить',
+        disable: 'Отключить',
+      },
+      deleteConfirm: {
+        deleteTag: 'Удалить тег',
+        deleteTagMessage: 'Вы уверены, что хотите удалить этот тег? Это действие нельзя отменить.',
+        deleteRule: 'Удалить правило',
+        deleteRuleMessage: 'Вы уверены, что хотите удалить это правило? Это действие нельзя отменить.',
+        cancel: 'Отменить',
+        delete: 'Удалить',
+      },
+    },
   },
   button: {
     copy: 'Копировать',
@@ -402,6 +483,7 @@ export const ru: Partial<Translation> = {
       duration: 'Длительность',
       other: 'Другие',
       unknown: 'Неизвестный',
+      currentTime: 'Текущее время',
     },
   },
 }

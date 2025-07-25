@@ -132,6 +132,7 @@ export type Translation = {
         settings: string
         leaderboard: string
         workspace: string
+        tags: string
       }
       description: {
         overview: string
@@ -139,6 +140,7 @@ export type Translation = {
         settings: string
         leaderboard: string
         workspace: string
+        tags: string
       }
     }
     overview: {
@@ -266,6 +268,84 @@ export type Translation = {
       title: (days: number) => string
       delta: (string: string) => string
     }
+    tags: {
+      title: string
+      description: string
+      tagList: {
+        title: string
+        noTags: string
+        createTag: string
+      }
+      tagForm: {
+        name: string
+        namePlaceholder: string
+        color: string
+        colorPlaceholder: string
+        create: string
+        edit: string
+        cancel: string
+        save: string
+      }
+      tagRules: {
+        title: string
+        noRules: string
+        createRule: string
+        rule: string
+        enabled: string
+        disabled: string
+        delete: string
+        edit: string
+        selectTagPrompt: string
+      }
+      ruleForm: {
+        name: string
+        namePlaceholder: string
+        enabled: string
+        conditions: string
+        addCondition: string
+        field: string
+        conditionType: string
+        value: string
+        valuePlaceholder: string
+        negate: string
+        create: string
+        edit: string
+        cancel: string
+        save: string
+      }
+      conditionTypes: {
+        CONTAINS: string
+        EQUALS: string
+        STARTS_WITH: string
+        ENDS_WITH: string
+        REGEX: string
+      }
+      fields: {
+        workspaceName: string
+        language: string
+        gitOrigin: string
+        gitBranch: string
+        platform: string
+        editor: string
+        absoluteFile: string
+        relativeFile: string
+      }
+      actions: {
+        delete: string
+        edit: string
+        manageRules: string
+        enable: string
+        disable: string
+      }
+      deleteConfirm: {
+        deleteTag: string
+        deleteTagMessage: string
+        deleteRule: string
+        deleteRuleMessage: string
+        cancel: string
+        delete: string
+      }
+    }
   }
   button: {
     copy: string
@@ -282,6 +362,7 @@ export type Translation = {
       duration: string
       other: string
       unknown: string
+      currentTime: string
     }
   }
 }

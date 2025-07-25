@@ -84,7 +84,7 @@ export const ja: Partial<Translation> = {
       p2: 'あなたは Pro サブスクリプションにアップグレードして、より多くの機能をアンロックすることができます。',
       p3: '支払いプロセスで問題が発生した場合は、メールでお問い合わせください。',
     },
-    status(str:string) {
+    status(str: string) {
       switch (str) {
         case 'active': {
           return '有効'
@@ -164,6 +164,7 @@ export const ja: Partial<Translation> = {
         settings: '設定',
         leaderboard: 'リーダーボード',
         workspace: 'ワークスペース',
+        tags: 'タグ',
       },
       description: {
         overview: 'すべての CodeTime データを見る。',
@@ -171,6 +172,7 @@ export const ja: Partial<Translation> = {
         settings: 'CodeTime の設定を管理する、外観、言語、データ等を含む。',
         leaderboard: 'CodeTime ユーザーのリーダーボードを見る。',
         workspace: 'ワークスペースのデータを見る。',
+        tags: 'ワークスペースの自動分類のためのタグとルールを管理。',
       },
     },
     overview: {
@@ -355,6 +357,84 @@ export const ja: Partial<Translation> = {
         title: 'ファイルリスト',
       },
     },
+    tags: {
+      title: 'タグ',
+      description: 'ワークスペースの自動分類のためのタグとルールを管理。',
+      tagList: {
+        title: 'タグリスト',
+        noTags: 'タグが見つかりません。最初のタグを作成して開始してください。',
+        createTag: 'タグを作成',
+      },
+      tagForm: {
+        name: '名前',
+        namePlaceholder: 'タグ名を入力',
+        color: '色',
+        colorPlaceholder: '色を選択',
+        create: 'タグを作成',
+        edit: 'タグを編集',
+        cancel: 'キャンセル',
+        save: '保存',
+      },
+      tagRules: {
+        title: 'タグルール',
+        noRules: 'このタグのルールが見つかりません。',
+        createRule: 'ルールを作成',
+        rule: 'ルール',
+        enabled: '有効',
+        disabled: '無効',
+        delete: '削除',
+        edit: '編集',
+        selectTagPrompt: 'ルールを管理するタグを選択してください',
+      },
+      ruleForm: {
+        name: 'ルール名',
+        namePlaceholder: 'ルール名を入力',
+        enabled: '有効',
+        conditions: '条件',
+        addCondition: '条件を追加',
+        field: 'フィールド',
+        conditionType: '条件タイプ',
+        value: '値',
+        valuePlaceholder: '値を入力',
+        negate: '否定',
+        create: 'ルールを作成',
+        edit: 'ルールを編集',
+        cancel: 'キャンセル',
+        save: '保存',
+      },
+      conditionTypes: {
+        CONTAINS: '含む',
+        EQUALS: '等しい',
+        STARTS_WITH: '開始する',
+        ENDS_WITH: '終了する',
+        REGEX: '正規表現',
+      },
+      fields: {
+        workspaceName: 'ワークスペース名',
+        language: '言語',
+        gitOrigin: 'Git オリジン',
+        gitBranch: 'Git ブランチ',
+        platform: 'プラットフォーム',
+        editor: 'エディタ',
+        absoluteFile: '絶対ファイルパス',
+        relativeFile: '相対ファイルパス',
+      },
+      actions: {
+        delete: '削除',
+        edit: '編集',
+        manageRules: 'ルールを管理',
+        enable: '有効化',
+        disable: '無効化',
+      },
+      deleteConfirm: {
+        deleteTag: 'タグを削除',
+        deleteTagMessage: 'このタグを削除してもよろしいですか？この操作は取り消せません。',
+        deleteRule: 'ルールを削除',
+        deleteRuleMessage: 'このルールを削除してもよろしいですか？この操作は取り消せません。',
+        cancel: 'キャンセル',
+        delete: '削除',
+      },
+    },
     leaderboard: {
       title(days: number) {
         return `${days} 日間のコーディング時間リーダーボード`
@@ -379,6 +459,7 @@ export const ja: Partial<Translation> = {
       duration: '時間',
       other: 'その他',
       unknown: '不明',
+      currentTime: '現在時刻',
     },
   },
 }

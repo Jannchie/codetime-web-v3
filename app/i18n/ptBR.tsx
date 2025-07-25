@@ -84,7 +84,7 @@ export const ptBR: Partial<Translation> = {
       p2: 'Você pode optar por atualizar para uma assinatura Pro para desbloquear mais recursos.',
       p3: 'Se você encontrar algum problema durante o processo de pagamento, entre em contato conosco por e-mail.',
     },
-    status(str:string) {
+    status(str: string) {
       switch (str) {
         case 'active': {
           return 'Ativo'
@@ -164,6 +164,7 @@ export const ptBR: Partial<Translation> = {
         settings: 'Configurações',
         leaderboard: 'Quadro de líderes',
         workspace: 'Espaço de trabalho',
+        tags: 'Tags',
       },
       description: {
         overview: 'Visualize todos os seus dados do CodeTime.',
@@ -171,6 +172,7 @@ export const ptBR: Partial<Translation> = {
         settings: 'Gerencie suas configurações do CodeTime, incluindo aparência, idioma, dados, etc.',
         leaderboard: 'Visualize o quadro de líderes CodeTime de todos os usuários.',
         workspace: 'Visualize os dados de um espaço de trabalho específico.',
+        tags: 'Manage tags and rules for automatic workspace categorization.',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const ptBR: Partial<Translation> = {
         return `${string} atrás`
       },
     },
+    tags: {
+      title: 'Tags',
+      description: 'Gerenciar tags e regras para categorização automática do espaço de trabalho.',
+      tagList: {
+        title: 'Lista de Tags',
+        noTags: 'Nenhuma tag encontrada. Crie sua primeira tag para começar.',
+        createTag: 'Criar Tag',
+      },
+      tagForm: {
+        name: 'Nome',
+        namePlaceholder: 'Digite o nome da tag',
+        color: 'Cor',
+        colorPlaceholder: 'Escolha uma cor',
+        create: 'Criar Tag',
+        edit: 'Editar Tag',
+        cancel: 'Cancelar',
+        save: 'Salvar',
+      },
+      tagRules: {
+        title: 'Regras da Tag',
+        noRules: 'Nenhuma regra encontrada para esta tag.',
+        createRule: 'Criar Regra',
+        rule: 'Regra',
+        enabled: 'Habilitado',
+        disabled: 'Desabilitado',
+        delete: 'Excluir',
+        edit: 'Editar',
+        selectTagPrompt: 'Selecione uma tag para gerenciar suas regras',
+      },
+      ruleForm: {
+        name: 'Nome da Regra',
+        namePlaceholder: 'Digite o nome da regra',
+        enabled: 'Habilitado',
+        conditions: 'Condições',
+        addCondition: 'Adicionar Condição',
+        field: 'Campo',
+        conditionType: 'Tipo de Condição',
+        value: 'Valor',
+        valuePlaceholder: 'Digite o valor',
+        negate: 'Negar',
+        create: 'Criar Regra',
+        edit: 'Editar Regra',
+        cancel: 'Cancelar',
+        save: 'Salvar',
+      },
+      conditionTypes: {
+        CONTAINS: 'Contém',
+        EQUALS: 'Igual',
+        STARTS_WITH: 'Começa com',
+        ENDS_WITH: 'Termina com',
+        REGEX: 'Expressão regular',
+      },
+      fields: {
+        workspaceName: 'Nome do Espaço de Trabalho',
+        language: 'Linguagem',
+        gitOrigin: 'Origem do Git',
+        gitBranch: 'Branch do Git',
+        platform: 'Plataforma',
+        editor: 'Editor',
+        absoluteFile: 'Caminho Absoluto do Arquivo',
+        relativeFile: 'Caminho Relativo do Arquivo',
+      },
+      actions: {
+        delete: 'Excluir',
+        edit: 'Editar',
+        manageRules: 'Gerenciar Regras',
+        enable: 'Habilitar',
+        disable: 'Desabilitar',
+      },
+      deleteConfirm: {
+        deleteTag: 'Excluir tag',
+        deleteTagMessage: 'Tem certeza de que deseja excluir esta tag? Esta ação não pode ser desfeita.',
+        deleteRule: 'Excluir regra',
+        deleteRuleMessage: 'Tem certeza de que deseja excluir esta regra? Esta ação não pode ser desfeita.',
+        cancel: 'Cancelar',
+        delete: 'Excluir',
+      },
+    },
   },
   button: {
     copy: 'Copiar',
@@ -379,6 +459,7 @@ export const ptBR: Partial<Translation> = {
       duration: 'Duração',
       other: 'Outro',
       unknown: 'Desconhecido',
+      currentTime: 'Hora Atual',
     },
   },
 }

@@ -84,7 +84,7 @@ export const zhCN: Partial<Translation> = {
       p2: '您可以选择升级到 Pro 订阅以解锁更多功能。',
       p3: '如果您在支付过程中遇到任何问题，请通过电子邮件与我们联系。',
     },
-    status(str:string) {
+    status(str: string) {
       switch (str) {
         case 'active': {
           return '有效'
@@ -164,6 +164,7 @@ export const zhCN: Partial<Translation> = {
         settings: '设置',
         leaderboard: '排行榜',
         workspace: '工作区',
+        tags: '标签',
       },
       description: {
         overview: '查看您的所有 CodeTime 数据。',
@@ -171,6 +172,7 @@ export const zhCN: Partial<Translation> = {
         settings: '管理您的 CodeTime 设置，包含外观、语言、数据等。',
         leaderboard: '查看 CodeTime 用户的排行榜。',
         workspace: '查看特定工作区的数据。',
+        tags: '管理标签和规则，实现工作区的自动分类。',
       },
     },
     overview: {
@@ -363,6 +365,84 @@ export const zhCN: Partial<Translation> = {
         return `相差 ${string}`
       },
     },
+    tags: {
+      title: '标签',
+      description: '管理标签和规则，实现工作区的自动分类。',
+      tagList: {
+        title: '标签列表',
+        noTags: '暂无标签。创建您的第一个标签开始使用。',
+        createTag: '创建标签',
+      },
+      tagForm: {
+        name: '名称',
+        namePlaceholder: '输入标签名称',
+        color: '颜色',
+        colorPlaceholder: '选择颜色',
+        create: '创建标签',
+        edit: '编辑标签',
+        cancel: '取消',
+        save: '保存',
+      },
+      tagRules: {
+        title: '标签规则',
+        noRules: '该标签暂无规则。',
+        createRule: '创建规则',
+        rule: '规则',
+        enabled: '已启用',
+        disabled: '已禁用',
+        delete: '删除',
+        edit: '编辑',
+        selectTagPrompt: '选择一个标签来管理其规则',
+      },
+      ruleForm: {
+        name: '规则名称',
+        namePlaceholder: '输入规则名称',
+        enabled: '启用',
+        conditions: '条件',
+        addCondition: '添加条件',
+        field: '字段',
+        conditionType: '条件类型',
+        value: '值',
+        valuePlaceholder: '输入值',
+        negate: '取反',
+        create: '创建规则',
+        edit: '编辑规则',
+        cancel: '取消',
+        save: '保存',
+      },
+      conditionTypes: {
+        CONTAINS: '包含',
+        EQUALS: '等于',
+        STARTS_WITH: '开始于',
+        ENDS_WITH: '结束于',
+        REGEX: '正则表达式',
+      },
+      fields: {
+        workspaceName: '工作区名称',
+        language: '编程语言',
+        gitOrigin: 'Git 源',
+        gitBranch: 'Git 分支',
+        platform: '平台',
+        editor: '编辑器',
+        absoluteFile: '绝对文件路径',
+        relativeFile: '相对文件路径',
+      },
+      actions: {
+        delete: '删除',
+        edit: '编辑',
+        manageRules: '管理规则',
+        enable: '启用',
+        disable: '禁用',
+      },
+      deleteConfirm: {
+        deleteTag: '删除标签',
+        deleteTagMessage: '确定要删除这个标签吗？此操作无法撤销。',
+        deleteRule: '删除规则',
+        deleteRuleMessage: '确定要删除这个规则吗？此操作无法撤销。',
+        cancel: '取消',
+        delete: '删除',
+      },
+    },
   },
   button: {
     copy: '复制',
@@ -379,6 +459,7 @@ export const zhCN: Partial<Translation> = {
       duration: '时间',
       other: '其他',
       unknown: '未知',
+      currentTime: '当前时间',
     },
   },
 }
