@@ -68,16 +68,16 @@ export type TopData = {
 export function fetchTop(field: string, minutes: ComputedRef<number>, limit: number = 5, filters: MaybeRef<FilterItem[]>, options?: any) {
   const filterArray = unref(filters)
   const filterKey = JSON.stringify(filterArray)
-  
+
   return useAsyncData(`top-${field}-${minutes.value}-${limit}-${filterKey}`, async () => {
     const activeFilters = unref(filters)
-    
+
     // Convert filters to arrays for the API
     const platformFilters = activeFilters.filter(f => f.key === 'platform').map(f => f.value)
     const workspaceFilters = activeFilters.filter(f => f.key === 'workspace').map(f => f.value)
     const languageFilters = activeFilters.filter(f => f.key === 'language').map(f => f.value)
     const editorFilters = activeFilters.filter(f => f.key === 'editor').map(f => f.value)
-    
+
     const resp = await v3ListSelfTop({
       query: {
         field: field as any,
