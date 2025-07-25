@@ -247,6 +247,58 @@ export const RootResponseSchema = {
     title: 'RootResponse'
 } as const;
 
+export const RuleConditionRequestSchema = {
+    properties: {
+        field: {
+            type: 'string'
+        },
+        conditionType: {
+            '$ref': '#/components/schemas/RuleConditionType'
+        },
+        value: {
+            type: 'string'
+        }
+    },
+    type: 'object',
+    required: ['conditionType', 'field', 'value'],
+    title: 'RuleConditionRequest'
+} as const;
+
+export const RuleConditionResponseSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        field: {
+            type: 'string'
+        },
+        conditionType: {
+            '$ref': '#/components/schemas/RuleConditionType'
+        },
+        value: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['conditionType', 'createdAt', 'field', 'id', 'updatedAt', 'value'],
+    title: 'RuleConditionResponse'
+} as const;
+
+export const RuleConditionTypeSchema = {
+    type: 'string',
+    enum: ['CONTAINS', 'EQUALS', 'STARTS_WITH', 'ENDS_WITH', 'REGEX', 'NOT_CONTAINS', 'NOT_EQUALS', 'NOT_STARTS_WITH', 'NOT_ENDS_WITH', 'NOT_REGEX'],
+    title: 'RuleConditionType'
+} as const;
+
 export const ShieldResponseSchema = {
     properties: {
         schemaVersion: {
@@ -346,6 +398,216 @@ export const StatsTimeResponseSchema = {
     type: 'object',
     required: ['data'],
     title: 'StatsTimeResponse'
+} as const;
+
+export const TagCreateRequestSchema = {
+    properties: {
+        name: {
+            type: 'string'
+        },
+        color: {
+            type: 'string'
+        },
+        emoji: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    type: 'object',
+    required: ['color', 'name'],
+    title: 'TagCreateRequest'
+} as const;
+
+export const TagResponseSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        color: {
+            type: 'string'
+        },
+        emoji: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['color', 'createdAt', 'id', 'name', 'updatedAt'],
+    title: 'TagResponse'
+} as const;
+
+export const TagRuleCreateRequestSchema = {
+    properties: {
+        name: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        enabled: {
+            type: 'boolean',
+            default: true
+        },
+        conditions: {
+            items: {
+                '$ref': '#/components/schemas/RuleConditionRequest'
+            },
+            type: 'array'
+        }
+    },
+    type: 'object',
+    required: ['conditions'],
+    title: 'TagRuleCreateRequest'
+} as const;
+
+export const TagRuleResponseSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        tagId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        enabled: {
+            type: 'boolean'
+        },
+        conditions: {
+            items: {
+                '$ref': '#/components/schemas/RuleConditionResponse'
+            },
+            type: 'array'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['conditions', 'createdAt', 'enabled', 'id', 'tagId', 'updatedAt'],
+    title: 'TagRuleResponse'
+} as const;
+
+export const TagRuleUpdateRequestSchema = {
+    properties: {
+        name: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        enabled: {
+            oneOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        conditions: {
+            oneOf: [
+                {
+                    items: {
+                        '$ref': '#/components/schemas/RuleConditionRequest'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    type: 'object',
+    required: [],
+    title: 'TagRuleUpdateRequest'
+} as const;
+
+export const TagUpdateRequestSchema = {
+    properties: {
+        name: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        color: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        emoji: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    type: 'object',
+    required: [],
+    title: 'TagUpdateRequest'
 } as const;
 
 export const TimeDistributionDataSchema = {
@@ -562,6 +824,73 @@ export const WebhookResponseSchema = {
     title: 'WebhookResponse'
 } as const;
 
+export const WorkspaceEvaluationRequestSchema = {
+    properties: {
+        workspaceName: {
+            type: 'string'
+        },
+        language: {
+            type: 'string'
+        },
+        gitOrigin: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        gitBranch: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        platform: {
+            type: 'string'
+        },
+        editor: {
+            type: 'string'
+        },
+        absoluteFile: {
+            oneOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        relativeFile: {
+            type: 'string'
+        }
+    },
+    type: 'object',
+    required: ['editor', 'language', 'platform', 'relativeFile', 'workspaceName'],
+    title: 'WorkspaceEvaluationRequest'
+} as const;
+
+export const WorkspaceEvaluationResponseSchema = {
+    properties: {
+        matchingTags: {
+            items: {
+                '$ref': '#/components/schemas/TagResponse'
+            },
+            type: 'array'
+        }
+    },
+    type: 'object',
+    required: ['matchingTags'],
+    title: 'WorkspaceEvaluationResponse'
+} as const;
+
 export const WorkspaceFileActivitySchema = {
     properties: {
         language: {
@@ -573,13 +902,12 @@ export const WorkspaceFileActivitySchema = {
         gitBranch: {
             type: 'string'
         },
-        createdAt: {
-            type: 'string',
-            format: 'date-time'
+        minutes: {
+            type: 'integer'
         }
     },
     type: 'object',
-    required: ['createdAt', 'gitBranch', 'language', 'relativeFile'],
+    required: ['gitBranch', 'language', 'minutes', 'relativeFile'],
     title: 'WorkspaceFileActivity'
 } as const;
 

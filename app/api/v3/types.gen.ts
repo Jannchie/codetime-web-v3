@@ -108,6 +108,32 @@ export type RootResponse = {
 };
 
 /**
+ * RuleConditionRequest
+ */
+export type RuleConditionRequest = {
+    field: string;
+    conditionType: RuleConditionType;
+    value: string;
+};
+
+/**
+ * RuleConditionResponse
+ */
+export type RuleConditionResponse = {
+    id: string;
+    field: string;
+    conditionType: RuleConditionType;
+    value: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+/**
+ * RuleConditionType
+ */
+export type RuleConditionType = 'CONTAINS' | 'EQUALS' | 'STARTS_WITH' | 'ENDS_WITH' | 'REGEX' | 'NOT_CONTAINS' | 'NOT_EQUALS' | 'NOT_STARTS_WITH' | 'NOT_ENDS_WITH' | 'NOT_REGEX';
+
+/**
  * ShieldResponse
  */
 export type ShieldResponse = {
@@ -154,6 +180,67 @@ export type StatsTimeData = {
  */
 export type StatsTimeResponse = {
     data: Array<StatsTimeData>;
+};
+
+/**
+ * TagCreateRequest
+ */
+export type TagCreateRequest = {
+    name: string;
+    color: string;
+    emoji?: string | null;
+};
+
+/**
+ * TagResponse
+ */
+export type TagResponse = {
+    id: string;
+    name: string;
+    color: string;
+    emoji?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+/**
+ * TagRuleCreateRequest
+ */
+export type TagRuleCreateRequest = {
+    name?: string | null;
+    enabled?: boolean;
+    conditions: Array<RuleConditionRequest>;
+};
+
+/**
+ * TagRuleResponse
+ */
+export type TagRuleResponse = {
+    id: string;
+    tagId: string;
+    name?: string | null;
+    enabled: boolean;
+    conditions: Array<RuleConditionResponse>;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+/**
+ * TagRuleUpdateRequest
+ */
+export type TagRuleUpdateRequest = {
+    name?: string | null;
+    enabled?: boolean | null;
+    conditions?: Array<RuleConditionRequest> | null;
+};
+
+/**
+ * TagUpdateRequest
+ */
+export type TagUpdateRequest = {
+    name?: string | null;
+    color?: string | null;
+    emoji?: string | null;
 };
 
 /**
@@ -234,13 +321,34 @@ export type WebhookResponse = {
 };
 
 /**
+ * WorkspaceEvaluationRequest
+ */
+export type WorkspaceEvaluationRequest = {
+    workspaceName: string;
+    language: string;
+    gitOrigin?: string | null;
+    gitBranch?: string | null;
+    platform: string;
+    editor: string;
+    absoluteFile?: string | null;
+    relativeFile: string;
+};
+
+/**
+ * WorkspaceEvaluationResponse
+ */
+export type WorkspaceEvaluationResponse = {
+    matchingTags: Array<TagResponse>;
+};
+
+/**
  * WorkspaceFileActivity
  */
 export type WorkspaceFileActivity = {
     language: string;
     relativeFile: string;
     gitBranch: string;
-    createdAt: Date;
+    minutes: number;
 };
 
 /**
@@ -1064,6 +1172,425 @@ export type V3GetLeaderboardResponses = {
 };
 
 export type V3GetLeaderboardResponse = V3GetLeaderboardResponses[keyof V3GetLeaderboardResponses];
+
+export type V3GetTagsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/tags';
+};
+
+export type V3GetTagsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<TagResponse>;
+};
+
+export type V3GetTagsResponse = V3GetTagsResponses[keyof V3GetTagsResponses];
+
+export type V3CreateTagData = {
+    body: TagCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/v3/tags';
+};
+
+export type V3CreateTagErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3CreateTagError = V3CreateTagErrors[keyof V3CreateTagErrors];
+
+export type V3CreateTagResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: TagResponse;
+};
+
+export type V3CreateTagResponse = V3CreateTagResponses[keyof V3CreateTagResponses];
+
+export type V3GetTagRulesData = {
+    body?: never;
+    path: {
+        tag_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/{tag_id}/rules';
+};
+
+export type V3GetTagRulesErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetTagRulesError = V3GetTagRulesErrors[keyof V3GetTagRulesErrors];
+
+export type V3GetTagRulesResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<TagRuleResponse>;
+};
+
+export type V3GetTagRulesResponse = V3GetTagRulesResponses[keyof V3GetTagRulesResponses];
+
+export type V3CreateTagRuleData = {
+    body: TagRuleCreateRequest;
+    path: {
+        tag_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/{tag_id}/rules';
+};
+
+export type V3CreateTagRuleErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3CreateTagRuleError = V3CreateTagRuleErrors[keyof V3CreateTagRuleErrors];
+
+export type V3CreateTagRuleResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: TagRuleResponse;
+};
+
+export type V3CreateTagRuleResponse = V3CreateTagRuleResponses[keyof V3CreateTagRuleResponses];
+
+export type V3DeleteRuleData = {
+    body?: never;
+    path: {
+        rule_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/rules/{rule_id}';
+};
+
+export type V3DeleteRuleErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3DeleteRuleError = V3DeleteRuleErrors[keyof V3DeleteRuleErrors];
+
+export type V3DeleteRuleResponses = {
+    /**
+     * Request fulfilled, nothing follows
+     */
+    204: void;
+};
+
+export type V3DeleteRuleResponse = V3DeleteRuleResponses[keyof V3DeleteRuleResponses];
+
+export type V3GetRuleData = {
+    body?: never;
+    path: {
+        rule_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/rules/{rule_id}';
+};
+
+export type V3GetRuleErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetRuleError = V3GetRuleErrors[keyof V3GetRuleErrors];
+
+export type V3GetRuleResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TagRuleResponse;
+};
+
+export type V3GetRuleResponse = V3GetRuleResponses[keyof V3GetRuleResponses];
+
+export type V3UpdateRuleData = {
+    body: TagRuleUpdateRequest;
+    path: {
+        rule_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/rules/{rule_id}';
+};
+
+export type V3UpdateRuleErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3UpdateRuleError = V3UpdateRuleErrors[keyof V3UpdateRuleErrors];
+
+export type V3UpdateRuleResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TagRuleResponse;
+};
+
+export type V3UpdateRuleResponse = V3UpdateRuleResponses[keyof V3UpdateRuleResponses];
+
+export type V3DeleteTagData = {
+    body?: never;
+    path: {
+        tag_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/{tag_id}';
+};
+
+export type V3DeleteTagErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3DeleteTagError = V3DeleteTagErrors[keyof V3DeleteTagErrors];
+
+export type V3DeleteTagResponses = {
+    /**
+     * Request fulfilled, nothing follows
+     */
+    204: void;
+};
+
+export type V3DeleteTagResponse = V3DeleteTagResponses[keyof V3DeleteTagResponses];
+
+export type V3GetTagData = {
+    body?: never;
+    path: {
+        tag_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/{tag_id}';
+};
+
+export type V3GetTagErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetTagError = V3GetTagErrors[keyof V3GetTagErrors];
+
+export type V3GetTagResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TagResponse;
+};
+
+export type V3GetTagResponse = V3GetTagResponses[keyof V3GetTagResponses];
+
+export type V3UpdateTagData = {
+    body: TagUpdateRequest;
+    path: {
+        tag_id: string;
+    };
+    query?: never;
+    url: '/v3/tags/{tag_id}';
+};
+
+export type V3UpdateTagErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3UpdateTagError = V3UpdateTagErrors[keyof V3UpdateTagErrors];
+
+export type V3UpdateTagResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TagResponse;
+};
+
+export type V3UpdateTagResponse = V3UpdateTagResponses[keyof V3UpdateTagResponses];
+
+export type V3EvaluateWorkspaceTagsData = {
+    body: WorkspaceEvaluationRequest;
+    path?: never;
+    query?: never;
+    url: '/v3/tags/evaluate';
+};
+
+export type V3EvaluateWorkspaceTagsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3EvaluateWorkspaceTagsError = V3EvaluateWorkspaceTagsErrors[keyof V3EvaluateWorkspaceTagsErrors];
+
+export type V3EvaluateWorkspaceTagsResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: WorkspaceEvaluationResponse;
+};
+
+export type V3EvaluateWorkspaceTagsResponse = V3EvaluateWorkspaceTagsResponses[keyof V3EvaluateWorkspaceTagsResponses];
+
+export type V3GetCalendarFeedData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Group calendar by field (language, workspace, editor, platform)
+         */
+        target?: string;
+        /**
+         * Start date (YYYY-MM-DD format)
+         */
+        start_date?: string | null;
+        /**
+         * End date (YYYY-MM-DD format)
+         */
+        end_date?: string | null;
+        /**
+         * Minimum event duration in minutes
+         */
+        minimum_duration_minutes?: number;
+        /**
+         * Timezone for events
+         */
+        timezone?: string;
+    };
+    url: '/v3/icalendar/feed.ics';
+};
+
+export type V3GetCalendarFeedErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetCalendarFeedError = V3GetCalendarFeedErrors[keyof V3GetCalendarFeedErrors];
+
+export type V3GetCalendarFeedResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: string;
+};
+
+export type V3GetCalendarFeedResponse = V3GetCalendarFeedResponses[keyof V3GetCalendarFeedResponses];
+
+export type V3GetCalendarInfoData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/icalendar/info';
+};
+
+export type V3GetCalendarInfoResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type V3GetCalendarInfoResponse = V3GetCalendarInfoResponses[keyof V3GetCalendarInfoResponses];
+
+export type V3BeAnyUserData = {
+    body?: never;
+    path?: never;
+    query: {
+        uid: number;
+    };
+    url: '/v3/dev/be';
+};
+
+export type V3BeAnyUserErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3BeAnyUserError = V3BeAnyUserErrors[keyof V3BeAnyUserErrors];
+
+export type V3BeAnyUserResponses = {
+    /**
+     * Document created, URL follows
+     */
+    201: unknown;
+};
 
 export type ClientOptions = {
     baseUrl: `${string}://${string}` | (string & {});
