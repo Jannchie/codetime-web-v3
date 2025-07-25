@@ -112,11 +112,12 @@ const options = computed<Plot.PlotOptions>(() => {
         strokeWidth: 2,
         opacity: 0.8,
       }),
-      Plot.text([{ x: currentTime.value, y: 0.95, label: `Current Time (${currentTimeLabel.value})` }], {
+      Plot.text([{ x: currentTime.value, y: 0.95, label: `${t.value.plot.label.currentTime} (${currentTimeLabel.value})` }], {
         x: 'x',
         y: 'y',
         text: 'label',
         fill: 'var(--color-error-1)',
+        stroke: 'var(--r-surface-background-color)',
         fontSize: 12,
         dx: currentTime.value < 600 ? 5 : -5,
         textAnchor: currentTime.value < 600 ? 'start' : 'end',
