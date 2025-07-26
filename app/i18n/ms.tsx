@@ -446,6 +446,14 @@ export const ms: Partial<Translation> = {
         cancel: 'Batal',
         delete: 'Padam',
       },
+      common: {
+        not: 'bukan',
+        optional: '(pilihan)',
+        ruleRelationship: 'Peraturan disambungkan dengan logik ATAU, syarat dengan logik DAN',
+        freeUserRuleLimit: 'Pengguna percuma hanya boleh membuat 1 peraturan per tag',
+        upgradeForMoreRules: 'Naik taraf untuk membuat lebih banyak peraturan',
+        ruleIdFormat: (id: string) => `Peraturan #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: '7 hari terakhir',
         last30Days: '30 hari terakhir',

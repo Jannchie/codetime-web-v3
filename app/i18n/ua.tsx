@@ -469,6 +469,14 @@ export const ua: Partial<Translation> = {
         cancel: 'Скасувати',
         delete: 'Видалити',
       },
+      common: {
+        not: 'не',
+        optional: '(опціонально)',
+        ruleRelationship: 'Правила з\'єднані логікою АБО, умови логікою ТА',
+        freeUserRuleLimit: 'Безкоштовні користувачі можуть створити лише 1 правило на тег',
+        upgradeForMoreRules: 'Оновіться, щоб створити більше правил',
+        ruleIdFormat: (id: string) => `Правило #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: 'Останні 7 днів',
         last30Days: 'Останні 30 днів',

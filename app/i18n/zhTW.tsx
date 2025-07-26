@@ -446,6 +446,14 @@ export const zhTW: Partial<Translation> = {
         cancel: '取消',
         delete: '刪除',
       },
+      common: {
+        not: '不',
+        optional: '（可選）',
+        ruleRelationship: '規則間為 OR 關係，條件間為 AND 關係',
+        freeUserRuleLimit: '免費用戶每個標籤只能創建 1 個規則',
+        upgradeForMoreRules: '升級以創建更多規則',
+        ruleIdFormat: (id: string) => `規則 #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: '過去 7 天',
         last30Days: '過去 30 天',

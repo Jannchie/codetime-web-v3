@@ -75,17 +75,17 @@ const chartData = computed(() => {
   // 创建数据映射
   const dataMap = new Map()
   if (tagStats.value?.data) {
-    tagStats.value.data.forEach((dataPoint: any) => {
+    for (const dataPoint of tagStats.value.data) {
       const dateKey = new Date(dataPoint.time).toDateString()
       dataMap.set(dateKey, dataPoint)
-    })
+    }
   }
 
   // 为每个日期生成数据点
-  return fullDateRange.map(date => {
+  const result = fullDateRange.map((date) => {
     const dateKey = date.toDateString()
     const dataPoint = dataMap.get(dateKey)
-    
+
     return {
       date: new Date(date),
       duration: dataPoint?.duration || 0, // 原始分钟数
@@ -93,13 +93,18 @@ const chartData = computed(() => {
       hours: (dataPoint?.duration || 0) / 60, // 转换为小时用于Y轴显示
     }
   })
+  return result
+})
+
+// 检查是否有实际数据
+const hasActualData = computed(() => {
+  return chartData.value.some(d => d.duration > 0)
 })
 
 // 图表配置
 const chartOptions = computed<PlotOptions>(() => {
   const data = chartData.value
   const hasData = data.length > 0
-
   if (!hasData) {
     return {
       height: 200,
@@ -115,7 +120,6 @@ const chartOptions = computed<PlotOptions>(() => {
   const endDate = new Date()
   const startDate = new Date()
   startDate.setDate(endDate.getDate() - days + 1)
-
   return {
     padding: 0,
     marginLeft: 30,
@@ -125,7 +129,7 @@ const chartOptions = computed<PlotOptions>(() => {
     height: 200,
     x: {
       label: t.value.plot.label.date,
-      domain: [startDate, endDate],
+      paddingInner: 0.1,
       tickFormat: d3.timeFormat('%m/%d'),
       interval: d3.timeDay,
     },
@@ -281,7 +285,7 @@ const chartOptions = computed<PlotOptions>(() => {
         <h4 class="mb-3 font-medium">
           {{ t.dashboard.tags.stats.timeTrend }}
         </h4>
-        <div v-if="chartData.length > 0" :key="`chart-${props.tag.id}-${timeRange}`" class="h-52 w-full">
+        <div v-if="hasActualData" :key="`chart-${props.tag.id}-${timeRange}`" class="h-52 w-full">
           <PoltChart
             ref="chart"
             :key="`plot-${props.tag.id}-${timeRange}`"

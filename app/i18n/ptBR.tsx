@@ -446,6 +446,14 @@ export const ptBR: Partial<Translation> = {
         cancel: 'Cancelar',
         delete: 'Excluir',
       },
+      common: {
+        not: 'não',
+        optional: '(opcional)',
+        ruleRelationship: 'Regras são conectadas por lógica OU, condições por lógica E',
+        freeUserRuleLimit: 'Usuários gratuitos podem criar apenas 1 regra por tag',
+        upgradeForMoreRules: 'Faça upgrade para criar mais regras',
+        ruleIdFormat: (id: string) => `Regra #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: 'Últimos 7 dias',
         last30Days: 'Últimos 30 dias',

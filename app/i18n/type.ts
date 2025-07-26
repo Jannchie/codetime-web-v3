@@ -349,6 +349,14 @@ export type Translation = {
         cancel: string
         delete: string
       }
+      common: {
+        not: string
+        optional: string
+        ruleRelationship: string
+        freeUserRuleLimit: string
+        upgradeForMoreRules: string
+        ruleIdFormat: (id: string) => string
+      }
       timeRange: {
         last7Days: string
         last30Days: string

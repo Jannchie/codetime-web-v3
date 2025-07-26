@@ -446,6 +446,14 @@ export const it: Partial<Translation> = {
         cancel: 'Annulla',
         delete: 'Elimina',
       },
+      common: {
+        not: 'non',
+        optional: '(opzionale)',
+        ruleRelationship: 'Le regole sono collegate da logica OR, le condizioni da logica AND',
+        freeUserRuleLimit: 'Gli utenti gratuiti possono creare solo 1 regola per tag',
+        upgradeForMoreRules: 'Aggiorna per creare più regole',
+        ruleIdFormat: (id: string) => `Regola #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: 'Ultimi 7 giorni',
         last30Days: 'Ultimi 30 giorni',

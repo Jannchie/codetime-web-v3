@@ -7,7 +7,7 @@ defineProps<{
 <template>
   <div
     v-if="plan === 'pro'"
-    class="border-purple-5 rounded-full bg-purple-5/20 px-3 py-0.5 text-xs text-purple-5 font-mono uppercase"
+    class="border-purple-5 rounded-full bg-sky-5/20 px-3 py-0.5 text-xs text-purple-5 font-mono uppercase"
   >
     {{ plan }}
   </div>

@@ -464,6 +464,14 @@ export const zhCN: Partial<Translation> = {
         cancel: '取消',
         delete: '删除',
       },
+      common: {
+        not: '不',
+        optional: '（可选）',
+        ruleRelationship: '规则间为 OR 关系，条件间为 AND 关系',
+        freeUserRuleLimit: '免费用户每个标签只能创建 1 个规则',
+        upgradeForMoreRules: '升级以创建更多规则',
+        ruleIdFormat: (id: string) => `规则 #${id.slice(-4)}`,
+      },
     },
   },
   button: {

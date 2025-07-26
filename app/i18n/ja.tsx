@@ -438,6 +438,14 @@ export const ja: Partial<Translation> = {
         cancel: 'キャンセル',
         delete: '削除',
       },
+      common: {
+        not: 'でない',
+        optional: '（オプション）',
+        ruleRelationship: 'ルール間はOR論理で接続、条件間はAND論理で接続',
+        freeUserRuleLimit: '無料ユーザーはタグごとに1つのルールのみ作成可能',
+        upgradeForMoreRules: 'より多くのルールを作成するにはアップグレード',
+        ruleIdFormat: (id: string) => `ルール #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: '過去7日間',
         last30Days: '過去30日間',

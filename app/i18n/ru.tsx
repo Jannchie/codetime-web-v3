@@ -470,6 +470,14 @@ export const ru: Partial<Translation> = {
         cancel: 'Отменить',
         delete: 'Удалить',
       },
+      common: {
+        not: 'не',
+        optional: '(опционально)',
+        ruleRelationship: 'Правила связаны логикой ИЛИ, условия логикой И',
+        freeUserRuleLimit: 'Бесплатные пользователи могут создать только 1 правило на тег',
+        upgradeForMoreRules: 'Обновитесь, чтобы создать больше правил',
+        ruleIdFormat: (id: string) => `Правило #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: 'Последние 7 дней',
         last30Days: 'Последние 30 дней',

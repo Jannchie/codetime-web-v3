@@ -80,11 +80,11 @@ const conditionTypeOptions = computed(() => [
   { label: t.value.dashboard.tags.conditionTypes.STARTS_WITH, id: 'STARTS_WITH' },
   { label: t.value.dashboard.tags.conditionTypes.ENDS_WITH, id: 'ENDS_WITH' },
   { label: t.value.dashboard.tags.conditionTypes.REGEX, id: 'REGEX' },
-  { label: `不${t.value.dashboard.tags.conditionTypes.CONTAINS}`, id: 'NOT_CONTAINS' },
-  { label: `不${t.value.dashboard.tags.conditionTypes.EQUALS}`, id: 'NOT_EQUALS' },
-  { label: `不${t.value.dashboard.tags.conditionTypes.STARTS_WITH}`, id: 'NOT_STARTS_WITH' },
-  { label: `不${t.value.dashboard.tags.conditionTypes.ENDS_WITH}`, id: 'NOT_ENDS_WITH' },
-  { label: `不${t.value.dashboard.tags.conditionTypes.REGEX}`, id: 'NOT_REGEX' },
+  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.CONTAINS}`, id: 'NOT_CONTAINS' },
+  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.EQUALS}`, id: 'NOT_EQUALS' },
+  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.STARTS_WITH}`, id: 'NOT_STARTS_WITH' },
+  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.ENDS_WITH}`, id: 'NOT_ENDS_WITH' },
+  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.REGEX}`, id: 'NOT_REGEX' },
 ])
 
 // 重置表单
@@ -212,7 +212,7 @@ function formatConditions(conditions: any[]) {
     const isNegated = condition.conditionType.startsWith('NOT_')
     const baseCondition = isNegated ? condition.conditionType.replace('NOT_', '') : condition.conditionType
     const typeName = t.value.dashboard.tags.conditionTypes[baseCondition as keyof typeof t.value.dashboard.tags.conditionTypes] || baseCondition
-    const prefix = isNegated ? '不' : ''
+    const prefix = isNegated ? t.value.dashboard.tags.common.not : ''
     return `${fieldName} ${prefix}${typeName} "${condition.value}"`
   }).join(' & ')
 }
@@ -231,7 +231,7 @@ function formatConditions(conditions: any[]) {
             {{ tag.name }}
           </h3>
           <p class="text-xs text-surface-dimmed">
-            规则间为 OR 关系，条件间为 AND 关系
+            {{ t.dashboard.tags.common.ruleRelationship }}
           </p>
           <p v-if="isFreeUser" class="text-xs text-surface-dimmed">
             {{ t.dashboard.tags.tagRules.freeUserLimit }} {{ rules?.length || 0 }}/{{ maxRulesForFree }}
@@ -276,7 +276,7 @@ function formatConditions(conditions: any[]) {
           {{ t.dashboard.tags.tagRules.noRules }}
         </p>
         <div v-if="isFreeUser" class="mb-4 text-xs text-surface-dimmed">
-          免费用户每个标签只能创建 1 个规则
+          {{ t.dashboard.tags.common.freeUserRuleLimit }}
         </div>
         <Btn
           variant="light"
@@ -289,7 +289,7 @@ function formatConditions(conditions: any[]) {
           {{ t.dashboard.tags.tagRules.createRule }}
         </Btn>
         <div v-if="!canCreateMoreRules && isFreeUser" class="mt-2 text-xs text-surface-dimmed">
-          升级以创建更多规则
+          {{ t.dashboard.tags.common.upgradeForMoreRules }}
         </div>
       </div>
       <!-- 内联创建/编辑表单 -->
@@ -317,7 +317,7 @@ function formatConditions(conditions: any[]) {
           <div>
             <label class="mb-2 block text-sm font-medium">
               {{ t.dashboard.tags.ruleForm.name }}
-              <span class="text-surface-dimmed font-normal">（可选）</span>
+              <span class="text-surface-dimmed font-normal">{{ t.dashboard.tags.common.optional }}</span>
             </label>
             <TextField
               v-model="formData.name"
@@ -453,7 +453,7 @@ function formatConditions(conditions: any[]) {
             <div class="min-w-0 flex-1">
               <div class="mb-2 flex items-center gap-2">
                 <h4 class="truncate font-medium" :class="{ 'text-surface-dimmed italic': !rule.name }">
-                  {{ rule.name || `规则 #${rule.id.slice(-4)}` }}
+                  {{ rule.name || t.dashboard.tags.common.ruleIdFormat(rule.id) }}
                 </h4>
               </div>
               <p class="line-clamp-2 text-sm text-surface-dimmed">
@@ -502,7 +502,7 @@ function formatConditions(conditions: any[]) {
         </p>
         <div v-if="ruleToDelete" class="bg-surface-variant border-surface-variant-2 border rounded-xl p-4">
           <div class="font-medium" :class="{ 'text-surface-dimmed italic': !ruleToDelete.name }">
-            {{ ruleToDelete.name || `规则 #${ruleToDelete.id.slice(-4)}` }}
+            {{ ruleToDelete.name || t.dashboard.tags.common.ruleIdFormat(ruleToDelete.id) }}
           </div>
           <div class="mt-1 text-xs text-surface-dimmed">
             {{ formatConditions(ruleToDelete.conditions) }}
@@ -522,7 +522,7 @@ function formatConditions(conditions: any[]) {
           color="error"
           @click="confirmDeleteRule"
         >
-          删除
+          {{ t.dashboard.tags.deleteConfirm.delete }}
         </Btn>
       </div>
     </Paper>

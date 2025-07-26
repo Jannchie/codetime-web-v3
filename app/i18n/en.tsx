@@ -446,6 +446,14 @@ export const en: Translation = {
         cancel: 'Cancel',
         delete: 'Delete',
       },
+      common: {
+        not: 'not',
+        optional: '(optional)',
+        ruleRelationship: 'Rules are connected by OR logic, conditions by AND logic',
+        freeUserRuleLimit: 'Free users can only create 1 rule per tag',
+        upgradeForMoreRules: 'Upgrade to create more rules',
+        ruleIdFormat: (id: string) => `Rule #${id.slice(-4)}`,
+      },
       timeRange: {
         last7Days: 'Last 7 days',
         last30Days: 'Last 30 days',
