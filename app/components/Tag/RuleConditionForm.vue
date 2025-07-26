@@ -21,7 +21,6 @@ const modelValue = defineModel<boolean>('modelValue', { required: true })
 const t = useI18N()
 
 const formData = reactive({
-  name: props.rule?.name || '',
   conditions: props.rule?.conditions.map(c => ({
     field: c.field,
     conditionType: c.conditionType,
@@ -87,7 +86,7 @@ async function handleSave() {
   try {
     saving.value = true
     emit('save', {
-      name: formData.name.trim() || null,
+      name: null,
       conditions: formData.conditions.filter(c => c.value.trim()),
     })
     modelValue.value = false
@@ -122,18 +121,6 @@ function handleClose() {
       </div>
 
       <form id="rule-form" class="space-y-6" @submit.prevent="handleSave">
-        <!-- 规则名称 -->
-        <div>
-          <label class="text-sm font-medium mb-2 block">
-            {{ t.dashboard.tags.ruleForm.name }}
-            <span class="text-surface-dimmed font-normal">（可选）</span>
-          </label>
-          <TextField
-            v-model="formData.name"
-            :placeholder="t.dashboard.tags.ruleForm.namePlaceholder"
-          />
-        </div>
-
         <!-- 条件列表 -->
         <div>
           <div class="mb-4 flex items-center justify-between">

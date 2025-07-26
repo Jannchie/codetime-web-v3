@@ -30,7 +30,6 @@ const maxRulesForFree = 1
 
 // 表单数据
 const formData = reactive({
-  name: '',
   conditions: [{
     field: 'workspaceName',
     conditionType: 'CONTAINS' as RuleConditionType,
@@ -89,7 +88,6 @@ const conditionTypeOptions = computed(() => [
 
 // 重置表单
 function resetForm() {
-  formData.name = ''
   formData.conditions = [{
     field: 'workspaceName',
     conditionType: 'CONTAINS' as RuleConditionType,
@@ -129,7 +127,7 @@ async function saveRule() {
   try {
     saving.value = true
     const ruleData = {
-      name: formData.name.trim() || null,
+      name: null,
       conditions: formData.conditions.filter(c => c.value.trim()),
     }
 
@@ -180,7 +178,6 @@ function cancelDelete() {
 // 编辑规则
 function editRule(rule: TagRuleResponse) {
   editingRule.value = rule
-  formData.name = rule.name || ''
   formData.conditions = rule.conditions.map(c => ({
     field: c.field,
     conditionType: c.conditionType,
@@ -313,18 +310,6 @@ function formatConditions(conditions: any[]) {
         </div>
 
         <form class="space-y-4" @submit.prevent="saveRule">
-          <!-- 规则名称 -->
-          <div>
-            <label class="text-sm font-medium mb-2 block">
-              {{ t.dashboard.tags.ruleForm.name }}
-              <span class="text-surface-dimmed font-normal">{{ t.dashboard.tags.common.optional }}</span>
-            </label>
-            <TextField
-              v-model="formData.name"
-              :placeholder="t.dashboard.tags.ruleForm.namePlaceholder"
-            />
-          </div>
-
           <!-- 条件列表 -->
           <div>
             <div class="mb-4 flex items-center justify-between">
@@ -451,11 +436,6 @@ function formatConditions(conditions: any[]) {
         >
           <div class="flex items-start justify-between">
             <div class="flex-1 min-w-0">
-              <div class="mb-2 flex gap-2 items-center">
-                <h4 class="font-medium truncate" :class="{ 'text-surface-dimmed italic': !rule.name }">
-                  {{ rule.name || t.dashboard.tags.common.ruleIdFormat(rule.id) }}
-                </h4>
-              </div>
               <p class="text-sm text-surface-dimmed line-clamp-2">
                 {{ formatConditions(rule.conditions) }}
               </p>
@@ -501,9 +481,6 @@ function formatConditions(conditions: any[]) {
           {{ t.dashboard.tags.deleteConfirm.deleteRuleMessage }}
         </p>
         <div v-if="ruleToDelete" class="bg-surface-variant border-surface-variant-2 p-4 border rounded-xl">
-          <div class="font-medium" :class="{ 'text-surface-dimmed italic': !ruleToDelete.name }">
-            {{ ruleToDelete.name || t.dashboard.tags.common.ruleIdFormat(ruleToDelete.id) }}
-          </div>
           <div class="text-xs text-surface-dimmed mt-1">
             {{ formatConditions(ruleToDelete.conditions) }}
           </div>
