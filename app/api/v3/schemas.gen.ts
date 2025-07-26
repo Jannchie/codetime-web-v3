@@ -424,6 +424,34 @@ export const TagCreateRequestSchema = {
     title: 'TagCreateRequest'
 } as const;
 
+export const TagHistoryResponseSchema = {
+    properties: {
+        tag: {
+            '$ref': '#/components/schemas/TagResponse'
+        },
+        data: {
+            items: {
+                '$ref': '#/components/schemas/StatsTimeData'
+            },
+            type: 'array'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        periodStart: {
+            type: 'string',
+            format: 'date'
+        },
+        periodEnd: {
+            type: 'string',
+            format: 'date'
+        }
+    },
+    type: 'object',
+    required: ['data', 'periodEnd', 'periodStart', 'tag', 'totalMinutes'],
+    title: 'TagHistoryResponse'
+} as const;
+
 export const TagResponseSchema = {
     properties: {
         id: {
@@ -570,6 +598,45 @@ export const TagRuleUpdateRequestSchema = {
     type: 'object',
     required: [],
     title: 'TagRuleUpdateRequest'
+} as const;
+
+export const TagTimeDataSchema = {
+    properties: {
+        tag: {
+            '$ref': '#/components/schemas/TagResponse'
+        },
+        totalMinutes: {
+            type: 'integer'
+        }
+    },
+    type: 'object',
+    required: ['tag', 'totalMinutes'],
+    title: 'TagTimeData'
+} as const;
+
+export const TagTimeStatsResponseSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TagTimeData'
+            },
+            type: 'array'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        periodStart: {
+            type: 'string',
+            format: 'date'
+        },
+        periodEnd: {
+            type: 'string',
+            format: 'date'
+        }
+    },
+    type: 'object',
+    required: ['data', 'periodEnd', 'periodStart', 'totalMinutes'],
+    title: 'TagTimeStatsResponse'
 } as const;
 
 export const TagUpdateRequestSchema = {

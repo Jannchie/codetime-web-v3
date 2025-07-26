@@ -11,10 +11,11 @@ type Emits = {
   (e: 'close'): void
 }
 
-const modelValue = defineModel<boolean>('modelValue', { required: true })
-
 const props = defineProps<Props>()
+
 const emit = defineEmits<Emits>()
+
+const modelValue = defineModel<boolean>('modelValue', { required: true })
 
 const t = useI18N()
 

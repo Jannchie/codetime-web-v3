@@ -2,6 +2,7 @@
 import type { RuleConditionType, TagResponse, TagRuleResponse } from '~/api/v3/types.gen'
 import { Btn, Modal, Paper, Select, TextField } from '@roku-ui/vue'
 import { v3CreateTagRule, v3DeleteRule, v3GetTagRules, v3UpdateRule } from '~/api/v3'
+import { useUser } from '~/utils'
 
 type Props = {
   tag: TagResponse
@@ -15,12 +16,17 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const t = useI18N()
+const user = useUser()
 
 const showInlineForm = ref(false)
 const editingRule = ref<TagRuleResponse | null>(null)
 const deleteModal = ref(false)
 const ruleToDelete = ref<TagRuleResponse | null>(null)
 const saving = ref(false)
+
+// 检查用户是否为 free 用户以及规则数量限制
+const isFreeUser = computed(() => user.value?.plan === 'free')
+const maxRulesForFree = 1
 
 // 表单数据
 const formData = reactive({
@@ -45,6 +51,14 @@ const { data: rules, refresh: refreshRules } = useAsyncData(() => `tag-rules-${p
 }, {
   server: false,
   watch: [() => props.tag.id],
+})
+
+// 检查是否可以创建更多规则
+const canCreateMoreRules = computed(() => {
+  if (!isFreeUser.value) {
+    return true
+  }
+  return (rules.value?.length || 0) < maxRulesForFree
 })
 
 // 字段选项
@@ -219,17 +233,26 @@ function formatConditions(conditions: any[]) {
           <p class="text-xs text-surface-dimmed">
             规则间为 OR 关系，条件间为 AND 关系
           </p>
+          <p v-if="isFreeUser" class="text-xs text-surface-dimmed">
+            {{ t.dashboard.tags.tagRules.freeUserLimit }} {{ rules?.length || 0 }}/{{ maxRulesForFree }}
+          </p>
         </div>
       </div>
-      <Btn
-        variant="light"
-        @click="() => showCreateForm()"
-      >
-        <template #leftSection>
-          <i class="i-tabler-plus" />
-        </template>
-        {{ t.dashboard.tags.tagRules.createRule }}
-      </Btn>
+      <div class="flex flex-col items-end gap-2">
+        <Btn
+          variant="light"
+          :disabled="!canCreateMoreRules"
+          @click="() => showCreateForm()"
+        >
+          <template #leftSection>
+            <i class="i-tabler-plus" />
+          </template>
+          {{ t.dashboard.tags.tagRules.createRule }}
+        </Btn>
+        <div v-if="!canCreateMoreRules && isFreeUser" class="text-xs text-surface-dimmed">
+          {{ t.dashboard.tags.tagRules.upgradeForMore }}
+        </div>
+      </div>
     </div>
 
     <div v-if="!rules" class="flex-1 space-y-2">
@@ -252,8 +275,12 @@ function formatConditions(conditions: any[]) {
         <p class="mb-4">
           {{ t.dashboard.tags.tagRules.noRules }}
         </p>
+        <div v-if="isFreeUser" class="mb-4 text-xs text-surface-dimmed">
+          免费用户每个标签只能创建 1 个规则
+        </div>
         <Btn
           variant="light"
+          :disabled="!canCreateMoreRules"
           @click="() => showCreateForm()"
         >
           <template #leftSection>
@@ -261,6 +288,9 @@ function formatConditions(conditions: any[]) {
           </template>
           {{ t.dashboard.tags.tagRules.createRule }}
         </Btn>
+        <div v-if="!canCreateMoreRules && isFreeUser" class="mt-2 text-xs text-surface-dimmed">
+          升级以创建更多规则
+        </div>
       </div>
       <!-- 内联创建/编辑表单 -->
       <div

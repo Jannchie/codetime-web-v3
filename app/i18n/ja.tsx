@@ -364,6 +364,8 @@ export const ja: Partial<Translation> = {
         title: 'タグリスト',
         noTags: 'タグが見つかりません。最初のタグを作成して開始してください。',
         createTag: 'タグを作成',
+        freeUserLimit: '無料ユーザーは最大',
+        upgradeForMore: 'より多くのタグを作成するにはアップグレード',
       },
       tagForm: {
         name: '名前',
@@ -385,6 +387,8 @@ export const ja: Partial<Translation> = {
         delete: '削除',
         edit: '編集',
         selectTagPrompt: 'ルールを管理するタグを選択してください',
+        freeUserLimit: '無料ユーザーは最大',
+        upgradeForMore: 'より多くのルールを作成するにはアップグレード',
       },
       ruleForm: {
         name: 'ルール名',
@@ -434,6 +438,24 @@ export const ja: Partial<Translation> = {
         cancel: 'キャンセル',
         delete: '削除',
       },
+      timeRange: {
+        last7Days: '過去7日間',
+        last30Days: '過去30日間',
+        last90Days: '過去90日間',
+      },
+      stats: {
+        title: 'タグ統計',
+        viewAll: 'すべて表示',
+        noData: 'タグデータがありません',
+        totalDuration: '総時間',
+        recordCount: '記録数',
+        timeRange: '時間範囲',
+        days: '日',
+        dailyAverage: '日平均',
+        timeTrend: '時間トレンド',
+        noChartData: 'チャートデータがありません',
+        statisticsTitle: (tagName: string) => `${tagName} 統計`,
+      },
     },
     leaderboard: {
       title(days: number) {
@@ -457,6 +479,7 @@ export const ja: Partial<Translation> = {
       language: '言語',
       date: '日付',
       duration: '時間',
+      durationHours: '時間 (時間)',
       other: 'その他',
       unknown: '不明',
       currentTime: '現在時刻',

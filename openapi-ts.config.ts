@@ -1,7 +1,7 @@
 import { defineConfig } from '@hey-api/openapi-ts'
 
 export default defineConfig({
-  input: 'https://api.codetime.dev/v3/docs/openapi.json',
+  input: 'https://test.codetime.dev/v3/docs/openapi.json',
   output: {
     path: 'app/api/v3',
   },

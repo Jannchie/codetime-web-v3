@@ -275,6 +275,8 @@ export type Translation = {
         title: string
         noTags: string
         createTag: string
+        freeUserLimit: string
+        upgradeForMore: string
       }
       tagForm: {
         name: string
@@ -296,6 +298,8 @@ export type Translation = {
         delete: string
         edit: string
         selectTagPrompt: string
+        freeUserLimit: string
+        upgradeForMore: string
       }
       ruleForm: {
         name: string
@@ -345,6 +349,24 @@ export type Translation = {
         cancel: string
         delete: string
       }
+      timeRange: {
+        last7Days: string
+        last30Days: string
+        last90Days: string
+      }
+      stats: {
+        title: string
+        viewAll: string
+        noData: string
+        totalDuration: string
+        recordCount: string
+        timeRange: string
+        days: string
+        dailyAverage: string
+        timeTrend: string
+        noChartData: string
+        statisticsTitle: (tagName: string) => string
+      }
     }
   }
   button: {
@@ -360,6 +382,7 @@ export type Translation = {
       language: string
       date: string
       duration: string
+      durationHours: string
       other: string
       unknown: string
       currentTime: string

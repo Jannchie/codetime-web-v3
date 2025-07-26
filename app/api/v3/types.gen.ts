@@ -192,6 +192,17 @@ export type TagCreateRequest = {
 };
 
 /**
+ * TagHistoryResponse
+ */
+export type TagHistoryResponse = {
+    tag: TagResponse;
+    data: Array<StatsTimeData>;
+    totalMinutes: number;
+    periodStart: Date;
+    periodEnd: Date;
+};
+
+/**
  * TagResponse
  */
 export type TagResponse = {
@@ -232,6 +243,24 @@ export type TagRuleUpdateRequest = {
     name?: string | null;
     enabled?: boolean | null;
     conditions?: Array<RuleConditionRequest> | null;
+};
+
+/**
+ * TagTimeData
+ */
+export type TagTimeData = {
+    tag: TagResponse;
+    totalMinutes: number;
+};
+
+/**
+ * TagTimeStatsResponse
+ */
+export type TagTimeStatsResponse = {
+    data: Array<TagTimeData>;
+    totalMinutes: number;
+    periodStart: Date;
+    periodEnd: Date;
 };
 
 /**
@@ -1494,6 +1523,92 @@ export type V3EvaluateWorkspaceTagsResponses = {
 };
 
 export type V3EvaluateWorkspaceTagsResponse = V3EvaluateWorkspaceTagsResponses[keyof V3EvaluateWorkspaceTagsResponses];
+
+export type V3GetTagHistoryData = {
+    body?: never;
+    path: {
+        tag_id: string;
+    };
+    query?: {
+        /**
+         * Start datetime
+         */
+        start_datetime?: Date | null;
+        /**
+         * End datetime
+         */
+        end_datetime?: Date | null;
+        /**
+         * Group by time period: day, week, month
+         */
+        group_by?: string;
+    };
+    url: '/v3/tags/{tag_id}/history';
+};
+
+export type V3GetTagHistoryErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetTagHistoryError = V3GetTagHistoryErrors[keyof V3GetTagHistoryErrors];
+
+export type V3GetTagHistoryResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TagHistoryResponse;
+};
+
+export type V3GetTagHistoryResponse = V3GetTagHistoryResponses[keyof V3GetTagHistoryResponses];
+
+export type V3GetTagTimeStatsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Start datetime
+         */
+        start_datetime?: Date | null;
+        /**
+         * End datetime
+         */
+        end_datetime?: Date | null;
+        /**
+         * Comma-separated tag IDs
+         */
+        tag_ids?: string | null;
+    };
+    url: '/v3/tags/stats';
+};
+
+export type V3GetTagTimeStatsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetTagTimeStatsError = V3GetTagTimeStatsErrors[keyof V3GetTagTimeStatsErrors];
+
+export type V3GetTagTimeStatsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: TagTimeStatsResponse;
+};
+
+export type V3GetTagTimeStatsResponse = V3GetTagTimeStatsResponses[keyof V3GetTagTimeStatsResponses];
 
 export type V3GetCalendarFeedData = {
     body?: never;

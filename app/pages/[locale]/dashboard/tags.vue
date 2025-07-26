@@ -84,33 +84,29 @@ function closeTagForm() {
   />
 
   <DashboardPageContent>
-    <div class="flex flex-col gap-4">
+    <div class="space-y-6">
       <!-- 标签列表 -->
-      <div>
-        <TagList
-          :tags="tags || []"
-          :selected-tag="selectedTag"
-          :loading="!tags"
-          @select="selectTag"
-          @edit="editTag"
-          @delete="deleteTag"
-          @create-new="showTagForm = true"
-        />
-      </div>
+      <TagList
+        :tags="tags || []"
+        :selected-tag="selectedTag"
+        :loading="!tags"
+        @select="selectTag"
+        @edit="editTag"
+        @delete="deleteTag"
+        @create-new="showTagForm = true"
+      />
 
       <!-- 标签规则管理 -->
-      <div>
+      <div v-if="selectedTag">
         <TagRuleManager
-          v-if="selectedTag"
           :tag="selectedTag"
           @refresh="refreshTags"
         />
-        <CardBase v-else class="h-full min-h-64 flex items-center justify-center">
-          <div class="text-center text-surface-dimmed">
-            <i class="i-tabler-tag mb-4 text-4xl" />
-            <p>{{ t.dashboard.tags.tagRules.selectTagPrompt }}</p>
-          </div>
-        </CardBase>
+      </div>
+
+      <!-- 标签统计数据 -->
+      <div v-if="selectedTag">
+        <TagStats :tag="selectedTag" />
       </div>
     </div>
   </DashboardPageContent>
