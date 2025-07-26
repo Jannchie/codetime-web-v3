@@ -70,7 +70,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
 
     <div
       v-if="hasData"
-      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
+      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)] sm:children:max-w-[calc(100%/3-0.5rem*2/3)]"
     >
       <DashboardTopCard
         icon="i-tabler-braces"
@@ -101,7 +101,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       :data="filtedData"
     />
     <CardBase v-else-if="allDataResp.status.value === 'pending'">
-      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+      <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
     </CardBase>
 
     <CardBase
@@ -109,7 +109,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       :loading="false"
     >
       <div>
-        <div class="flex items-center gap-2 text-lg">
+        <div class="text-lg flex gap-2 items-center">
           <i class="i-carbon-chart-line-data" />
           <div>
             {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
@@ -122,7 +122,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       />
     </CardBase>
     <CardBase v-else-if="allLanguageDataResp.status.value === 'pending'" :loading="true">
-      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+      <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
     </CardBase>
 
     <CardBase
@@ -130,7 +130,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       :loading="false"
     >
       <div>
-        <div class="flex items-center gap-2 text-lg">
+        <div class="text-lg flex gap-2 items-center">
           <i class="i-carbon-chart-line-data" />
           <div>
             {{ t.dashboard.overview.codetimeProjectTrendTitle }}
@@ -143,7 +143,7 @@ const NoDataBody = t.value.dashboard.overview.noData.notice.body
       />
     </CardBase>
     <CardBase v-else-if="allProjectDataResp.status.value === 'pending'" :loading="true">
-      <div class="h-64 w-full animate-pulse rounded-2xl bg-surface-variant-1" />
+      <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
     </CardBase>
 
     <PoltDailyDistribution

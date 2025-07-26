@@ -1,7 +1,7 @@
 <template>
   <footer class="mt-32 mt-auto pb-8 pt-32 text-center">
-    <div class="flex justify-center text-sm text-surface-dimmed">
-      <div class="flex items-center gap-5">
+    <div class="text-sm text-surface-dimmed flex justify-center">
+      <div class="flex gap-5 items-center">
         <div class="bg-surface-low h-1px w-16" />
         <div>
           datreks @ {{ new Date().getFullYear() }}
@@ -9,7 +9,7 @@
         <div class="bg-surface-low h-1px w-16" />
       </div>
     </div>
-    <div class="mt-6 flex items-center justify-center gap-4">
+    <div class="mt-6 flex gap-4 items-center justify-center">
       <NuxtLink
         aria-label="github"
         class="text-surface-dimmed hover:op75"
@@ -40,7 +40,7 @@
         to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
         target="_blank"
       >
-        <i class="i-tabler-brand-vscode h-6 w-6 text-surface-dimmed hover:op75" />
+        <i class="i-tabler-brand-vscode text-surface-dimmed h-6 w-6 hover:op75" />
       </NuxtLink>
       <NuxtLink
         aria-label="jetbrains"
@@ -48,7 +48,7 @@
         target="_blank"
         to="https://plugins.jetbrains.com/plugin/25617-codetime"
       >
-        <i class="i-devicon-plain-jetbrains h-5 w-5 text-surface-dimmed hover:op75" />
+        <i class="i-devicon-plain-jetbrains text-surface-dimmed h-5 w-5 hover:op75" />
       </NuxtLink>
       <NuxtLink
         aria-label="discord"

@@ -1,4 +1,3 @@
 <script>
-import PoltRenderer from './Renderer.js'
-export default PoltRenderer
+export { default } from './Renderer.js'
 </script>

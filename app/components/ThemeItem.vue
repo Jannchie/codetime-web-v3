@@ -46,7 +46,7 @@ const textCS = useCS({
   <CardBase
 
     with-border no-padding
-    class="cursor-pointer overflow-hidden border rounded-2xl p-2 !p-0"
+    class="p-2 border rounded-2xl cursor-pointer overflow-hidden !p-0"
     :class="{
       'border-primary-container': isCurrent,
       'border-surface-border-base': !isCurrent,
@@ -54,7 +54,7 @@ const textCS = useCS({
     @click="() => currentScheme = props.theme ?? 'system'"
   >
     <div
-      class="flex items-center gap-2 border-b p-2 text-sm op75"
+      class="text-sm p-2 border-b op75 flex gap-2 items-center"
       :class="{
         'text-primary-on': isCurrent,
       }"
@@ -70,18 +70,18 @@ const textCS = useCS({
       :scheme="theme"
     >
       <div
-        class="h-full w-86 bg-[var(--r-surface-background-base-color)] p-4"
+        class="p-4 bg-[var(--r-surface-background-base-color)] h-full w-86"
       >
         <CardBase>
           <div
             v-bind="filledCS"
-            class="mb-2 h-1em w-32 rounded-full"
+            class="mb-2 rounded-full h-1em w-32"
           />
           <div
             v-bind="textCS"
-            class="mb-1 h-1em w-full rounded-full text-sm op-25"
+            class="text-sm mb-1 rounded-full op-25 h-1em w-full"
           />
-          <div class="h-1em w-2/3 rounded-full text-sm op-25" />
+          <div class="text-sm rounded-full op-25 h-1em w-2/3" />
         </CardBase>
       </div>
     </ThemeProvider>

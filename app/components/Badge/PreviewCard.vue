@@ -8,12 +8,12 @@ const loaded = ref(false)
 
 <template>
   <CardBase sparse>
-    <div class="mb-4 text-xl">
+    <div class="text-xl mb-4">
       {{ t.dashboard.badge.preview.title }}
     </div>
     <div
 
-      class="h-32 flex items-center justify-center"
+      class="flex h-32 items-center justify-center"
     >
       <div
         :class="{

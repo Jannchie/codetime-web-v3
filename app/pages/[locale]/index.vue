@@ -14,12 +14,12 @@ const t = useI18N()
     :min-deepth="1"
     :max-deepth="4"
   >
-    <div class="flex justify-center pb-8 pt-32">
+    <div class="pb-8 pt-32 flex justify-center">
       <div
-        class="max-w-4xl flex flex-col items-center px-8 space-y-6"
+        class="px-8 flex flex-col max-w-4xl items-center space-y-6"
       >
         <LandingTitle />
-        <div class="max-w-2xl px-4 py-2 text-center text-lg text-surface leading-relaxed">
+        <div class="text-lg text-surface leading-relaxed px-4 py-2 text-center max-w-2xl">
           {{ t.landing.description }}
         </div>
       </div>
@@ -33,11 +33,11 @@ const t = useI18N()
   </div>
 
   <div class="children:px-2">
-    <div class="m-auto mt-16 max-w-6xl p-10">
-      <h2 class="relative my-4 max-w-xl flex flex-col text-3xl font-bold md:max-w-6xl">
+    <div class="m-auto mt-16 p-10 max-w-6xl">
+      <h2 class="text-3xl font-bold my-4 flex flex-col max-w-xl relative md:max-w-6xl">
         {{ t.landing.features.visualization.title }}
       </h2>
-      <div class="mb-2 mt-4 text-lg">
+      <div class="text-lg mb-2 mt-4">
         {{ t.landing.features.visualization.description }}
       </div>
       <div class="my-8 flex flex-col gap-2">
@@ -54,49 +54,49 @@ const t = useI18N()
       </div>
     </div>
 
-    <div class="bg-surface-low relative my-20 overflow-hidden py-24">
-      <div class="relative mx-auto max-w-4xl px-6 text-center">
-        <div class="relative mb-6 inline-block">
+    <div class="bg-surface-low my-20 py-24 relative overflow-hidden">
+      <div class="mx-auto px-6 text-center max-w-4xl relative">
+        <div class="mb-6 inline-block relative">
           <h2 class="text-4xl font-bold md:text-5xl">
             {{ t.landing.features.save.title }}
           </h2>
           <i
-            class="i-line-md-calendar absolute h-16 w-16 rotate-12 text-blue-500 opacity-20 -right-16 -top-8 md:h-20 md:w-20"
+            class="i-line-md-calendar text-blue-500 opacity-20 h-16 w-16 rotate-12 absolute md:h-20 md:w-20 -right-16 -top-8"
           />
         </div>
-        <div class="mx-auto max-w-2xl text-xl text-surface-dimmed leading-relaxed">
+        <div class="text-xl text-surface-dimmed leading-relaxed mx-auto max-w-2xl">
           {{ t.landing.features.save.description }}
         </div>
       </div>
     </div>
 
-    <div class="relative overflow-hidden py-24 text-center">
-      <div class="relative mx-auto max-w-4xl px-6">
-        <div class="relative mb-6 inline-block">
+    <div class="py-24 text-center relative overflow-hidden">
+      <div class="mx-auto px-6 max-w-4xl relative">
+        <div class="mb-6 inline-block relative">
           <h2 class="text-4xl font-bold md:text-5xl">
             {{ t.landing.features.export.title }}
           </h2>
           <i
-            class="i-line-md-cloud-down-twotone absolute h-16 w-16 rotate-12 text-purple-500 opacity-20 -right-16 -top-8 md:h-20 md:w-20"
+            class="i-line-md-cloud-down-twotone text-purple-500 opacity-20 h-16 w-16 rotate-12 absolute md:h-20 md:w-20 -right-16 -top-8"
           />
         </div>
-        <div class="mx-auto max-w-2xl text-xl text-surface-dimmed leading-relaxed">
+        <div class="text-xl text-surface-dimmed leading-relaxed mx-auto max-w-2xl">
           {{ t.landing.features.export.description }}
         </div>
       </div>
     </div>
 
-    <div class="bg-surface-low relative my-20 overflow-hidden py-24">
-      <div class="relative mx-auto max-w-6xl flex flex-col items-center justify-center gap-12 px-6 lg:flex-row">
-        <div class="flex-1 text-center lg:text-left">
-          <h2 class="mb-6 text-4xl font-bold md:text-5xl">
+    <div class="bg-surface-low my-20 py-24 relative overflow-hidden">
+      <div class="mx-auto px-6 flex flex-col gap-12 max-w-6xl items-center justify-center relative lg:flex-row">
+        <div class="text-center flex-1 lg:text-left">
+          <h2 class="text-4xl font-bold mb-6 md:text-5xl">
             {{ t.landing.features.editor.title }}
           </h2>
-          <div class="max-w-xl text-xl text-surface-dimmed leading-relaxed">
+          <div class="text-xl text-surface-dimmed leading-relaxed max-w-xl">
             {{ t.landing.features.editor.description }}
           </div>
         </div>
-        <div class="flex items-center gap-8">
+        <div class="flex gap-8 items-center">
           <div class="transform transition-all duration-300 hover:scale-110">
             <i class="i-logos-visual-studio-code h-20 w-20 md:h-24 md:w-24" />
           </div>

@@ -11,7 +11,7 @@ const borderCS = useCS({
 <template>
   <header
     v-bind="borderCS"
-    class="relative flex items-center justify-between gap-2 border-b"
+    class="border-b flex gap-2 items-center justify-between relative"
   >
     <slot />
   </header>

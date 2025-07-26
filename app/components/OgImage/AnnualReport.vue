@@ -17,16 +17,16 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    class="relative h-full w-full flex items-center justify-center bg-neutral-900 text-white"
+    class="text-white bg-neutral-900 flex h-full w-full items-center justify-center relative"
     :style="{ backgroundImage: bg }"
   >
     <div
       v-if="image"
-      class="absolute inset-0 h-full w-full bg-center opacity-10"
+      class="opacity-10 h-full w-full inset-0 absolute bg-center"
       :style="{ backgroundImage: `url(${image})` }"
     />
-    <div class="flex flex-col items-center text-center">
-      <h1 class="flex gap-4 text-7xl font-bold">
+    <div class="text-center flex flex-col items-center">
+      <h1 class="text-7xl font-bold flex gap-4">
         <img
           v-if="logo"
           class="h-18 w-18"
@@ -35,16 +35,16 @@ withDefaults(defineProps<{
         >
         {{ title }}
       </h1>
-      <p class="max-w-3xl text-2xl">
+      <p class="text-2xl max-w-3xl">
         {{ description }}
       </p>
     </div>
 
-    <div class="absolute bottom-0 left-0 flex flex-row gap-2 p-5">
+    <div class="p-5 flex flex-row gap-2 bottom-0 left-0 absolute">
       <img
         v-if="avatar"
         :src="avatar"
-        class="h-10 w-10 rounded-full"
+        class="rounded-full h-10 w-10"
       >
       <div
         v-if="username"

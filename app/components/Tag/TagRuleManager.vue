@@ -219,11 +219,11 @@ function formatConditions(conditions: any[]) {
 </script>
 
 <template>
-  <Paper with-border class="h-full flex flex-col rounded-xl p-6 shadow-sm">
+  <Paper with-border class="rounded-xl flex flex-col h-full shadow-sm">
     <div class="mb-6 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div class="flex gap-3 items-center">
         <div
-          class="h-5 w-5 rounded-full shadow-sm"
+          class="rounded-full h-5 w-5 shadow-sm"
           :style="{ backgroundColor: tag.color }"
         />
         <div>
@@ -238,7 +238,7 @@ function formatConditions(conditions: any[]) {
           </p>
         </div>
       </div>
-      <div class="flex flex-col items-end gap-2">
+      <div class="flex flex-col gap-2 items-end">
         <Btn
           variant="light"
           :disabled="!canCreateMoreRules"
@@ -259,7 +259,7 @@ function formatConditions(conditions: any[]) {
       <div
         v-for="i in 2"
         :key="i"
-        class="bg-surface-variant h-20 animate-pulse rounded-xl"
+        class="bg-surface-variant rounded-xl h-20 animate-pulse"
       />
     </div>
 
@@ -267,15 +267,15 @@ function formatConditions(conditions: any[]) {
       <!-- 空状态提示 -->
       <div
         v-if="rules.length === 0 && !showInlineForm"
-        class="flex flex-col items-center justify-center py-12 text-center text-surface-dimmed"
+        class="text-surface-dimmed py-12 text-center flex flex-col items-center justify-center"
       >
-        <div class="bg-surface-variant-highlight mb-4 rounded-full p-4">
+        <div class="bg-surface-variant-highlight mb-4 p-4 rounded-full">
           <i class="i-tabler-rules-off text-4xl text-surface-dimmed" />
         </div>
         <p class="mb-4">
           {{ t.dashboard.tags.tagRules.noRules }}
         </p>
-        <div v-if="isFreeUser" class="mb-4 text-xs text-surface-dimmed">
+        <div v-if="isFreeUser" class="text-xs text-surface-dimmed mb-4">
           {{ t.dashboard.tags.common.freeUserRuleLimit }}
         </div>
         <Btn
@@ -288,14 +288,14 @@ function formatConditions(conditions: any[]) {
           </template>
           {{ t.dashboard.tags.tagRules.createRule }}
         </Btn>
-        <div v-if="!canCreateMoreRules && isFreeUser" class="mt-2 text-xs text-surface-dimmed">
+        <div v-if="!canCreateMoreRules && isFreeUser" class="text-xs text-surface-dimmed mt-2">
           {{ t.dashboard.tags.common.upgradeForMoreRules }}
         </div>
       </div>
       <!-- 内联创建/编辑表单 -->
       <div
         v-if="showInlineForm"
-        class="bg-surface-variant-highlight border border-primary rounded-xl p-6 shadow-sm"
+        class="bg-surface-variant-highlight p-6 border border-primary rounded-xl shadow-sm"
       >
         <div class="mb-4 flex items-center justify-between">
           <h4 class="font-medium">
@@ -315,7 +315,7 @@ function formatConditions(conditions: any[]) {
         <form class="space-y-4" @submit.prevent="saveRule">
           <!-- 规则名称 -->
           <div>
-            <label class="mb-2 block text-sm font-medium">
+            <label class="text-sm font-medium mb-2 block">
               {{ t.dashboard.tags.ruleForm.name }}
               <span class="text-surface-dimmed font-normal">{{ t.dashboard.tags.common.optional }}</span>
             </label>
@@ -328,7 +328,7 @@ function formatConditions(conditions: any[]) {
           <!-- 条件列表 -->
           <div>
             <div class="mb-4 flex items-center justify-between">
-              <label class="block text-sm font-medium">
+              <label class="text-sm font-medium block">
                 {{ t.dashboard.tags.ruleForm.conditions }}
               </label>
               <Btn
@@ -350,16 +350,16 @@ function formatConditions(conditions: any[]) {
                   v-if="index > 0"
                   class="flex items-center justify-center"
                 >
-                  <span class="bg-surface-variant rounded px-2 py-0.5 text-xs text-surface-dimmed font-medium">AND</span>
+                  <span class="bg-surface-variant text-xs text-surface-dimmed font-medium px-2 py-0.5 rounded">AND</span>
                 </div>
 
                 <div
-                  class="hover:bg-surface-variant-highlight rounded-xl bg-surface-variant-1 p-4 transition-colors"
+                  class="hover:bg-surface-variant-highlight p-4 rounded-xl bg-surface-variant-1 transition-colors"
                 >
-                  <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+                  <div class="gap-4 grid grid-cols-1 md:grid-cols-4">
                     <!-- 字段选择 -->
                     <div>
-                      <label class="mb-1 block text-xs text-surface-dimmed font-medium">
+                      <label class="text-xs text-surface-dimmed font-medium mb-1 block">
                         {{ t.dashboard.tags.ruleForm.field }}
                       </label>
                       <Select
@@ -371,7 +371,7 @@ function formatConditions(conditions: any[]) {
 
                     <!-- 条件类型 -->
                     <div>
-                      <label class="mb-1 block text-xs text-surface-dimmed font-medium">
+                      <label class="text-xs text-surface-dimmed font-medium mb-1 block">
                         {{ t.dashboard.tags.ruleForm.conditionType }}
                       </label>
                       <Select
@@ -383,7 +383,7 @@ function formatConditions(conditions: any[]) {
 
                     <!-- 值 -->
                     <div>
-                      <label class="mb-1 block text-xs text-surface-dimmed font-medium">
+                      <label class="text-xs text-surface-dimmed font-medium mb-1 block">
                         {{ t.dashboard.tags.ruleForm.value }}
                       </label>
                       <TextField
@@ -394,7 +394,7 @@ function formatConditions(conditions: any[]) {
                     </div>
 
                     <!-- 操作按钮 -->
-                    <div class="flex items-end gap-2">
+                    <div class="flex gap-2 items-end">
                       <Btn
                         v-if="formData.conditions.length > 1"
                         icon
@@ -414,7 +414,7 @@ function formatConditions(conditions: any[]) {
           </div>
 
           <!-- 按钮组 -->
-          <div class="mt-2 flex justify-end gap-3 pt-6">
+          <div class="mt-2 pt-6 flex gap-3 justify-end">
             <Btn
               type="button"
               @click="cancelEdit"
@@ -441,27 +441,27 @@ function formatConditions(conditions: any[]) {
         <!-- 规则之间的连接符 -->
         <div
           v-if="index > 0"
-          class="flex items-center justify-center py-2"
+          class="py-2 flex items-center justify-center"
         >
-          <span class="bg-surface-variant-highlight rounded-full px-3 py-1 text-sm text-surface-dimmed font-medium">OR</span>
+          <span class="bg-surface-variant-highlight text-sm text-surface-dimmed font-medium px-3 py-1 rounded-full">OR</span>
         </div>
 
         <div
-          class="group bg-surface-variant hover:border-surface-variant-2 border border-transparent rounded-xl p-4 transition-all duration-200 hover:bg-surface-variant-1 hover:shadow-md"
+          class="group bg-surface-variant hover:border-surface-variant-2 p-4 border border-transparent rounded-xl transition-all duration-200 hover:bg-surface-variant-1 hover:shadow-md"
         >
           <div class="flex items-start justify-between">
-            <div class="min-w-0 flex-1">
-              <div class="mb-2 flex items-center gap-2">
-                <h4 class="truncate font-medium" :class="{ 'text-surface-dimmed italic': !rule.name }">
+            <div class="flex-1 min-w-0">
+              <div class="mb-2 flex gap-2 items-center">
+                <h4 class="font-medium truncate" :class="{ 'text-surface-dimmed italic': !rule.name }">
                   {{ rule.name || t.dashboard.tags.common.ruleIdFormat(rule.id) }}
                 </h4>
               </div>
-              <p class="line-clamp-2 text-sm text-surface-dimmed">
+              <p class="text-sm text-surface-dimmed line-clamp-2">
                 {{ formatConditions(rule.conditions) }}
               </p>
             </div>
 
-            <div class="ml-4 flex items-center gap-2 opacity-0 transition-all duration-200 group-hover:opacity-100">
+            <div class="ml-4 opacity-0 flex gap-2 transition-all duration-200 items-center group-hover:opacity-100">
               <Btn
                 icon
                 variant="light"
@@ -496,21 +496,21 @@ function formatConditions(conditions: any[]) {
         </h3>
       </div>
 
-      <div class="mb-6 text-sm text-surface-dimmed">
+      <div class="text-sm text-surface-dimmed mb-6">
         <p class="mb-2">
           {{ t.dashboard.tags.deleteConfirm.deleteRuleMessage }}
         </p>
-        <div v-if="ruleToDelete" class="bg-surface-variant border-surface-variant-2 border rounded-xl p-4">
+        <div v-if="ruleToDelete" class="bg-surface-variant border-surface-variant-2 p-4 border rounded-xl">
           <div class="font-medium" :class="{ 'text-surface-dimmed italic': !ruleToDelete.name }">
             {{ ruleToDelete.name || t.dashboard.tags.common.ruleIdFormat(ruleToDelete.id) }}
           </div>
-          <div class="mt-1 text-xs text-surface-dimmed">
+          <div class="text-xs text-surface-dimmed mt-1">
             {{ formatConditions(ruleToDelete.conditions) }}
           </div>
         </div>
       </div>
 
-      <div class="flex justify-end gap-2">
+      <div class="flex gap-2 justify-end">
         <Btn
           variant="default"
           @click="cancelDelete"

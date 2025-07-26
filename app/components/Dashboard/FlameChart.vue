@@ -147,7 +147,7 @@ function getAscii(str: string) {
   >
     <div
       v-if="data"
-      class="relative text-sm transition-width,left,opacity duration-1000"
+      class="text-sm transition-width,left,opacity duration-1000 relative"
       :style="{
         height: `${(max(basicFlameNodes.map(node => node.depth + 1)) ?? 0) * lineHeight}px`,
       }"
@@ -161,7 +161,7 @@ function getAscii(str: string) {
         <div
           v-for="flareNode in flameNodes"
           :key="flareNode.path"
-          class="absolute cursor-pointer overflow-hidden transition-width,left,opacity duration-500"
+          class="cursor-pointer transition-width,left,opacity duration-500 absolute overflow-hidden"
           :style="{
             height: `${lineHeight}px`,
             width: `${(flareNode.end - flareNode.start) * 100}%`,
@@ -171,10 +171,10 @@ function getAscii(str: string) {
           }"
           @click="onClickNode(flareNode)"
         >
-          <div class="h-full p-1px">
+          <div class="p-1px h-full">
             <div
               :style="`background-color: rgb(var(--r-color-primary-${((getAscii(flareNode.path) % 4 + 7))}))`"
-              class="box-border h-full w-full flex items-center overflow-hidden px-2 text-nowrap text-white"
+              class="text-white px-2 flex h-full w-full text-nowrap items-center box-border overflow-hidden"
             >
               {{ flareNode.name }} ({{ getDurationString(flareNode.value * 60 * 1000) }}, {{ Math.floor(((flareNode.end - flareNode.start) * 100)) }}%)
             </div>
@@ -184,7 +184,7 @@ function getAscii(str: string) {
     </div>
     <div
       v-else
-      class="pointer-events-none h-full min-h-32 w-full flex select-none items-center justify-center op50"
+      class="op50 flex h-full min-h-32 w-full pointer-events-none select-none items-center justify-center"
     >
       <div class="flex flex-col gap-2">
         <div>

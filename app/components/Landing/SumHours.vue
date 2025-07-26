@@ -65,8 +65,8 @@ const t = useI18N()
 </script>
 
 <template>
-  <div class="stats-card relative flex flex-col items-center gap-4 overflow-hidden px-8 py-12 shadow-sm backdrop-blur-sm">
-    <div class="absolute inset-0 opacity-20">
+  <div class="stats-card px-8 py-12 flex flex-col gap-4 shadow-sm items-center relative overflow-hidden backdrop-blur-sm">
+    <div class="opacity-20 inset-0 absolute">
       <div class="floating-circles">
         <div class="floating-circle" />
         <div class="floating-circle" />
@@ -74,12 +74,12 @@ const t = useI18N()
       </div>
     </div>
 
-    <div class="relative z-10 flex flex-col items-center gap-4">
-      <span class="stats-subtitle inline-block text-sm font-medium tracking-wide">
+    <div class="flex flex-col gap-4 items-center relative z-10">
+      <span class="stats-subtitle text-sm tracking-wide font-medium inline-block">
         {{ t.landing.alreadyStatistical }} ({{ t.landing.minutes }})
       </span>
 
-      <div v-if="status === 'success'" class="flex items-end gap-3 text-6xl">
+      <div v-if="status === 'success'" class="text-6xl flex gap-3 items-end">
         <span
           key="b"
           class="stats-number animate-pulse-glow font-bold font-mono"
@@ -88,16 +88,16 @@ const t = useI18N()
         </span>
       </div>
 
-      <div v-else class="flex items-end gap-3 text-6xl">
+      <div v-else class="text-6xl flex gap-3 items-end">
         <div
           key="a"
-          class="shimmer h-15 min-w-84 animate-pulse rounded-lg font-bold font-mono"
+          class="shimmer font-bold font-mono rounded-lg h-15 min-w-84 animate-pulse"
         />
       </div>
 
       <div class="mt-2 max-w-xs w-full">
-        <div class="progress-bg h-1 overflow-hidden rounded-full">
-          <div class="progress-bar animate-progress h-full rounded-full" />
+        <div class="progress-bg rounded-full h-1 overflow-hidden">
+          <div class="progress-bar animate-progress rounded-full h-full" />
         </div>
       </div>
     </div>

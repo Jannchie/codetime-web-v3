@@ -22,7 +22,7 @@ const t = useI18N()
     class="min-h-250px"
     :loading="loading"
   >
-    <div class="flex flex-col p-2">
+    <div class="p-2 flex flex-col">
       <div
         :style="{
           flexWrap: 'nowrap',

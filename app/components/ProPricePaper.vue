@@ -95,20 +95,20 @@ async function toCheckoutLink() {
 
 <template>
   <Paper
-    class="h-full min-h-600px w-full flex flex-col justify-between"
+    class="flex flex-col h-full min-h-600px w-full justify-between"
   >
     <Teleport to="body">
       <div
         v-if="user && user.plan !== 'pro'"
         ref="discountRef"
-        class="relative z-110 min-h-2em w-full flex items-center justify-center bg-sky-9 px-1 py-2 text-sm text-white"
+        class="bg-sky-9 text-sm text-white px-1 py-2 flex min-h-2em w-full items-center justify-center relative z-110"
       >
         {{ discountText }}
       </div>
     </Teleport>
     <div
       v-bind="filledContainerCS"
-      class="absolute right-4 top-0 rounded-full px-4 py-1 text-sm text-white -translate-y-50%"
+      class="text-sm text-white px-4 py-1 rounded-full right-4 top-0 absolute -translate-y-50%"
     >
       {{ !isAnuual ? t.plan.mostPopular : t.plan.bestValue }}
     </div>
@@ -117,7 +117,7 @@ async function toCheckoutLink() {
         {{ t.plan.pro.title }}
       </div>
       <div
-        class="flex items-end gap-2 font-light"
+        class="font-light flex gap-2 items-end"
       >
         <div
           :class="{
@@ -132,10 +132,10 @@ async function toCheckoutLink() {
           {{ isAnuual ? t.plan.pro.preYear : t.plan.pro.preMonth }}
         </div>
       </div>
-      <div class="mb-2 mt-4 text-xl">
+      <div class="text-xl mb-2 mt-4">
         {{ t.plan.basic.features.title }}
       </div>
-      <div class="flex flex-col gap-2 text-sm text-surface-dimmed">
+      <div class="text-sm text-surface-dimmed flex flex-col gap-2">
         <FeatureItem>
           {{ t.plan.pro.features.item.include }}
         </FeatureItem>

@@ -171,9 +171,9 @@ const chartOptions = computed<PlotOptions>(() => {
 <template>
   <CardBase>
     <div class="mb-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div class="flex gap-3 items-center">
         <div
-          class="h-6 w-6 rounded-lg shadow-sm"
+          class="rounded-lg h-6 w-6 shadow-sm"
           :style="{ backgroundColor: tag.color }"
         />
         <h3 class="text-lg font-medium">
@@ -184,7 +184,7 @@ const chartOptions = computed<PlotOptions>(() => {
       <!-- 时间范围选择 -->
       <select
         v-model="timeRange"
-        class="border-surface-variant-2 border rounded bg-surface px-2 py-1 text-sm"
+        class="border-surface-variant-2 text-sm px-2 py-1 border rounded bg-surface"
       >
         <option v-for="option in timeRangeOptions" :key="option.id" :value="option.id">
           {{ option.label }}
@@ -194,27 +194,27 @@ const chartOptions = computed<PlotOptions>(() => {
 
     <div v-if="loadingStats" class="space-y-4">
       <!-- 加载状态 -->
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2">
+      <div class="gap-4 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2">
         <div v-for="i in 4" :key="i" class="space-y-2">
-          <div class="h-4 w-16 animate-pulse rounded bg-surface-variant-1" />
-          <div class="h-6 w-20 animate-pulse rounded bg-surface-variant-1" />
+          <div class="rounded bg-surface-variant-1 h-4 w-16 animate-pulse" />
+          <div class="rounded bg-surface-variant-1 h-6 w-20 animate-pulse" />
         </div>
       </div>
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div class="gap-4 grid grid-cols-1 lg:grid-cols-2">
         <div v-for="i in 2" :key="i" class="space-y-3">
-          <div class="h-4 w-24 animate-pulse rounded bg-surface-variant-1" />
+          <div class="rounded bg-surface-variant-1 h-4 w-24 animate-pulse" />
           <div class="space-y-2">
             <div v-for="j in 3" :key="j" class="flex items-center justify-between">
-              <div class="h-4 w-32 animate-pulse rounded bg-surface-variant-1" />
-              <div class="h-4 w-16 animate-pulse rounded bg-surface-variant-1" />
+              <div class="rounded bg-surface-variant-1 h-4 w-32 animate-pulse" />
+              <div class="rounded bg-surface-variant-1 h-4 w-16 animate-pulse" />
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div v-else-if="!tagStats" class="py-8 text-center text-surface-dimmed">
-      <i class="i-tabler-chart-bar-off mb-2 text-2xl" />
+    <div v-else-if="!tagStats" class="text-surface-dimmed py-8 text-center">
+      <i class="i-tabler-chart-bar-off text-2xl mb-2" />
       <p class="text-sm">
         {{ t.dashboard.tags.stats.noData }}
       </p>
@@ -222,9 +222,9 @@ const chartOptions = computed<PlotOptions>(() => {
 
     <div v-else class="space-y-6">
       <!-- 统计卡片 -->
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2">
-        <div class="flex items-center gap-3 rounded-lg bg-surface-variant-1 p-3">
-          <div class="bg-primary/10 rounded p-2">
+      <div class="gap-4 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2">
+        <div class="p-3 rounded-lg bg-surface-variant-1 flex gap-3 items-center">
+          <div class="bg-primary/10 p-2 rounded">
             <i class="i-tabler-clock text-sm text-primary" />
           </div>
           <div>
@@ -237,8 +237,8 @@ const chartOptions = computed<PlotOptions>(() => {
           </div>
         </div>
 
-        <div class="flex items-center gap-3 rounded-lg bg-surface-variant-1 p-3">
-          <div class="bg-success/10 rounded p-2">
+        <div class="p-3 rounded-lg bg-surface-variant-1 flex gap-3 items-center">
+          <div class="bg-success/10 p-2 rounded">
             <i class="text-success i-tabler-list text-sm" />
           </div>
           <div>
@@ -251,8 +251,8 @@ const chartOptions = computed<PlotOptions>(() => {
           </div>
         </div>
 
-        <div class="flex items-center gap-3 rounded-lg bg-surface-variant-1 p-3">
-          <div class="bg-calendar/10 rounded p-2">
+        <div class="p-3 rounded-lg bg-surface-variant-1 flex gap-3 items-center">
+          <div class="bg-calendar/10 p-2 rounded">
             <i class="text-calendar i-tabler-calendar text-sm" />
           </div>
           <div>
@@ -265,8 +265,8 @@ const chartOptions = computed<PlotOptions>(() => {
           </div>
         </div>
 
-        <div class="flex items-center gap-3 rounded-lg bg-surface-variant-1 p-3">
-          <div class="bg-info/10 rounded p-2">
+        <div class="p-3 rounded-lg bg-surface-variant-1 flex gap-3 items-center">
+          <div class="bg-info/10 p-2 rounded">
             <i class="text-info i-tabler-chart-line text-sm" />
           </div>
           <div>
@@ -282,7 +282,7 @@ const chartOptions = computed<PlotOptions>(() => {
 
       <!-- 时间趋势图表 -->
       <div v-if="!loadingStats && tagStats">
-        <h4 class="mb-3 font-medium">
+        <h4 class="font-medium mb-3">
           {{ t.dashboard.tags.stats.timeTrend }}
         </h4>
         <div v-if="hasActualData" :key="`chart-${props.tag.id}-${timeRange}`" class="h-52 w-full">
@@ -292,9 +292,9 @@ const chartOptions = computed<PlotOptions>(() => {
             :options="chartOptions"
           />
         </div>
-        <div v-else class="h-52 flex items-center justify-center text-surface-dimmed">
+        <div v-else class="text-surface-dimmed flex h-52 items-center justify-center">
           <div class="text-center">
-            <i class="i-tabler-chart-line-off mb-2 text-2xl" />
+            <i class="i-tabler-chart-line-off text-2xl mb-2" />
             <p class="text-sm">
               {{ t.dashboard.tags.stats.noChartData }}
             </p>

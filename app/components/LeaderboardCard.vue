@@ -38,20 +38,20 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
   </div>
 
   <Paper
-    class="h-full w-full flex flex-col gap-6 rounded-2xl"
+    class="rounded-2xl flex flex-col gap-6 h-full w-full"
   >
     <template v-if="resp.status.value === 'pending'">
-      <div v-for="i in 20" :key="i" class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-2">
-          <div class="h-6 w-8 animate-pulse rounded bg-surface-variant-1" />
-          <div class="h-10 w-10 animate-pulse rounded-full bg-surface-variant-1" />
+      <div v-for="i in 20" :key="i" class="flex gap-4 items-center justify-between">
+        <div class="flex gap-2 items-center">
+          <div class="rounded bg-surface-variant-1 h-6 w-8 animate-pulse" />
+          <div class="rounded-full bg-surface-variant-1 h-10 w-10 animate-pulse" />
           <div class="w-32">
-            <div class="mb-1 h-4 w-20 animate-pulse rounded bg-surface-variant-1" />
-            <div class="h-3 w-16 animate-pulse rounded bg-surface-variant-1" />
+            <div class="mb-1 rounded bg-surface-variant-1 h-4 w-20 animate-pulse" />
+            <div class="rounded bg-surface-variant-1 h-3 w-16 animate-pulse" />
           </div>
         </div>
         <div class="pr-4">
-          <div class="h-4 w-12 animate-pulse rounded bg-surface-variant-1" />
+          <div class="rounded bg-surface-variant-1 h-4 w-12 animate-pulse" />
         </div>
       </div>
     </template>
@@ -59,10 +59,10 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
       <div
         v-for="item, i in resp.data.value"
         :key="item.username"
-        class="flex items-center justify-between gap-4"
+        class="flex gap-4 items-center justify-between"
       >
-        <div class="flex items-center gap-2">
-          <div class="w-8 text-center">
+        <div class="flex gap-2 items-center">
+          <div class="text-center w-8">
             <i
               v-if="i === 0"
               class="i-fluent-emoji-flat-1st-place-medal h-6 w-6"
@@ -89,20 +89,20 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
             :src="item.avatar ?? ''"
             :size="2.25"
             :name="item.username"
-            class="h-40px w-40px rounded-full"
+            class="rounded-full h-40px w-40px"
           />
           <div class="max-w-32 w-32">
-            <div class="overflow-hidden truncate text-sm">
+            <div class="text-sm truncate overflow-hidden">
               {{ item.username }}
             </div>
-            <div class="overflow-hidden truncate text-nowrap text-xs op75">
+            <div class="text-xs op75 text-nowrap truncate overflow-hidden">
               {{ getDurationString(item.minutes * 60 * 1000) }}
             </div>
           </div>
         </div>
 
         <div class="pr-4">
-          <div class="overflow-hidden truncate text-nowrap text-surface-dimmed">
+          <div class="text-surface-dimmed text-nowrap truncate overflow-hidden">
             {{ `${(((item.minutes * 60 * 1000) / (days * 60 * 24 * 60 * 1000) * 100)).toFixed(2)}%` }}
           </div>
         </div>

@@ -70,10 +70,10 @@ const showAnnualReport = computed(() => {
       class="px-2 pt-2"
       v-bind="containerCS"
     >
-      <div class="w-full flex flex-col gap-4 px-2 pt-2">
-        <div class="h-34px flex items-center justify-between">
+      <div class="px-2 pt-2 flex flex-col gap-4 w-full">
+        <div class="flex h-34px items-center justify-between">
           <ClientOnly>
-            <div class="flex items-center gap-2">
+            <div class="flex gap-2 items-center">
               <NuxtLink :to="`/${locale}`">
                 <NuxtImg
                   alt="Code Time"
@@ -84,13 +84,13 @@ const showAnnualReport = computed(() => {
               </NuxtLink>
               <NuxtLink
                 v-if="user"
-                class="flex items-center gap-3 text-sm"
+                class="text-sm flex gap-3 items-center"
                 :to="`/${locale}/dashboard`"
               >
                 <Image
                   v-if="user.avatar"
                   :src="user.avatar"
-                  class="h-7 w-7 rounded-full"
+                  class="rounded-full h-7 w-7"
                   height="28px"
                   width="28px"
                 />
@@ -101,10 +101,10 @@ const showAnnualReport = computed(() => {
               </NuxtLink>
               <div
                 v-else-if="pending"
-                class="flex items-center gap-3 text-sm"
+                class="text-sm flex gap-3 items-center"
               >
-                <div class="h-7 w-7 animate-pulse rounded-full bg-op50" />
-                <div class="h-1em w-16 animate-pulse rounded bg-op50" />
+                <div class="rounded-full bg-op50 h-7 w-7 animate-pulse" />
+                <div class="rounded bg-op50 h-1em w-16 animate-pulse" />
               </div>
 
               <NuxtLink
@@ -122,15 +122,15 @@ const showAnnualReport = computed(() => {
               </NuxtLink>
 
               <div v-if="resp.status.value === 'pending'">
-                <div class="h-4 w-20 animate-pulse rounded-full bg-white bg-op50" />
+                <div class="rounded-full bg-white bg-op50 h-4 w-20 animate-pulse" />
               </div>
               <div
                 v-else-if="resp.data.value"
-                class="flex items-center gap-2 text-xs"
+                class="text-xs flex gap-2 items-center"
               >
                 <div class="relative">
-                  <div class="h-3 w-3 animate-ping rounded-full bg-primary" />
-                  <div class="absolute left-0 top-0 h-3 w-3 rounded-full bg-primary" />
+                  <div class="rounded-full bg-primary h-3 w-3 animate-ping" />
+                  <div class="rounded-full bg-primary h-3 w-3 left-0 top-0 absolute" />
                 </div>
                 <VSCodeIcon
                   :language="resp.data.value.language"
@@ -143,7 +143,7 @@ const showAnnualReport = computed(() => {
             </div>
           </ClientOnly>
 
-          <div class="hidden items-center gap-2 sm:flex">
+          <div class="gap-2 hidden items-center sm:flex">
             <i class="i-tabler-language-hiragana h-6 w-6" />
             <LanguageSelect />
           </div>
@@ -156,7 +156,7 @@ const showAnnualReport = computed(() => {
             <NuxtLink
               :to="`/${locale}${tab.path}`"
               v-bind="hoverCS"
-              class="rounded px-3 py-2 text-sm"
+              class="text-sm px-3 py-2 rounded"
             >
               {{ tab.label }}
             </NuxtLink>
@@ -175,10 +175,10 @@ const showAnnualReport = computed(() => {
     </RHeader>
     <div v-if="pending">
       <!-- loading -->
-      <div class="m-auto h-full op75">
+      <div class="m-auto op75 h-full">
         <DashboardPageTitle loading />
-        <div class="m-auto mt-8 w-6xl animate-pulse md:max-w-6xl -px-6">
-          <div class="mt-2 h-32 w-full rounded-2xl bg-surface-variant-1" />
+        <div class="m-auto mt-8 w-6xl animate-pulse -px-6 md:max-w-6xl">
+          <div class="mt-2 rounded-2xl bg-surface-variant-1 h-32 w-full" />
         </div>
       </div>
     </div>
@@ -186,7 +186,7 @@ const showAnnualReport = computed(() => {
       <slot v-if="user" />
       <div
         v-else
-        class="h-full flex flex-col items-center justify-center py-16 op75"
+        class="py-16 op75 flex flex-col h-full items-center justify-center"
       >
         <div class="mb-8">
           <NuxtImg
@@ -195,7 +195,7 @@ const showAnnualReport = computed(() => {
             width="64"
           />
         </div>
-        <span class="max-w-2xl pb-6 text-center text-sm">
+        <span class="text-sm pb-6 text-center max-w-2xl">
           {{ t.dashboard.loginRequired }}
         </span>
         <LoginButton />

@@ -70,6 +70,12 @@ function selectTag(tag: TagResponse) {
   selectedTag.value = tag
 }
 
+// 创建新标签
+function createNewTag() {
+  editingTag.value = null
+  showTagForm.value = true
+}
+
 // 关闭表单
 function closeTagForm() {
   showTagForm.value = false
@@ -93,7 +99,7 @@ function closeTagForm() {
         @select="selectTag"
         @edit="editTag"
         @delete="deleteTag"
-        @create-new="showTagForm = true"
+        @create-new="createNewTag"
       />
 
       <!-- 标签规则管理 -->

@@ -86,7 +86,7 @@ const height = 26
     :description="t.dashboard.pageHeader.description.workspace"
   />
   <DashboardPageContent>
-    <div class="mx-4 text-xl">
+    <div class="text-xl mx-4">
       {{ projectName }}
     </div>
     <CardBase>
@@ -105,9 +105,9 @@ const height = 26
     <DashboardDataRange v-model:days="days" />
     <CardBase
       :loading="pending"
-      class="relative min-h-64"
+      class="min-h-64 relative"
     >
-      <div class="mb-4 text-xl">
+      <div class="text-xl mb-4">
         {{ t.dashboard.workspace.flameGraph.title }}
       </div>
       <DashboardFlameChart
@@ -118,11 +118,11 @@ const height = 26
     </CardBase>
     <div
       v-if="data && data.length > 0"
-      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:max-w-[calc(100%/3-0.5rem*2/3)] sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)]"
+      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)] sm:children:max-w-[calc(100%/3-0.5rem*2/3)]"
     >
       <CardBase :loading="pending">
         <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2">
+          <div class="flex gap-2 items-center">
             <i class="i-tabler-git-branch" />
             <div class="text-lg">
               Top Branch
@@ -134,18 +134,18 @@ const height = 26
             :key="branch"
           >
             <div
-              class="flex justify-between gap-2 text-sm"
+              class="text-sm flex gap-2 justify-between"
             >
-              <div class="overflow-hidden truncate text-nowrap">
+              <div class="text-nowrap truncate overflow-hidden">
                 {{ branch }}
               </div>
               <div class="flex-shrink-0">
                 {{ getDurationString(count * 60 * 1000) }}
               </div>
             </div>
-            <div class="bg-surface-variant my-0.5 h-0.5 overflow-hidden rounded-xl">
+            <div class="bg-surface-variant my-0.5 rounded-xl h-0.5 overflow-hidden">
               <div
-                class="h-full bg-primary"
+                class="bg-primary h-full"
                 :style="{ width: `${count / maxBranchCount * 100}%` }"
               />
             </div>

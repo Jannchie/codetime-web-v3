@@ -23,23 +23,23 @@ const cs = useMergedCS(borderCS, containerCS)
 
 <template>
   <div
-    class="flex border-b pt-6"
+    class="pt-6 border-b flex"
     v-bind="cs"
   >
-    <div class="mx-auto my-8 max-w-6xl w-6xl px-7">
+    <div class="mx-auto my-8 px-7 max-w-6xl w-6xl">
       <div
         v-if="loading"
-        class="mb-4 h-36px w-40 animate-pulse bg-surface-variant-1 bg-op50 text-3xl"
+        class="text-3xl mb-4 bg-surface-variant-1 bg-op50 h-36px w-40 animate-pulse"
       />
       <div
         v-else
-        class="mb-4 text-3xl"
+        class="text-3xl mb-4"
       >
         {{ title }}
       </div>
       <div
         v-if="loading"
-        class="h-20px w-60 animate-pulse bg-surface-variant-1 bg-op50 text-sm"
+        class="text-sm bg-surface-variant-1 bg-op50 h-20px w-60 animate-pulse"
       />
       <div
         v-else

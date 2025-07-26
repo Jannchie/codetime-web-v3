@@ -65,10 +65,10 @@ const t = useI18N()
   <DashboardPageContent>
     <DashboardSettingsUser />
     <CardBase sparse>
-      <div class="mb-4 text-xl">
+      <div class="text-xl mb-4">
         {{ t.dashboard.settings.token.title }}
       </div>
-      <div class="mb-2 text-xs text-surface-dimmed">
+      <div class="text-xs text-surface-dimmed mb-2">
         <component :is="t.dashboard.settings.token.getPlugin" />
       </div>
       <div class="mb-2 flex gap-2">
@@ -82,24 +82,24 @@ const t = useI18N()
           :value="token"
         />
       </div>
-      <div class="mb-4 text-xs text-surface-dimmed">
+      <div class="text-xs text-surface-dimmed mb-4">
         {{ t.dashboard.settings.token.tip }}
       </div>
       <!-- TODO: DO REFRESH -->
       <DashboardRefreshBtn />
-      <div class="mb-2 text-xs text-surface-dimmed">
+      <div class="text-xs text-surface-dimmed mb-2">
         {{ t.dashboard.settings.token.refreshTip }}
       </div>
     </CardBase>
     <CardBase sparse>
-      <div class="mb-4 text-xl">
+      <div class="text-xl mb-4">
         {{ t.dashboard.settings.theme.title }}
       </div>
       <div class="mb-2 flex gap-2">
         <ClientOnly>
           <template #placeholder>
             <div class="h-145px">
-              <div class="m-8 animate-pulse bg-neutral-5" />
+              <div class="bg-neutral-5 m-8 animate-pulse" />
             </div>
           </template>
           <ThemeItem theme="dark" />
@@ -115,7 +115,7 @@ const t = useI18N()
       sparse
       class="z-4"
     >
-      <div class="mb-4 text-xl">
+      <div class="text-xl mb-4">
         {{ t.dashboard.settings.language.title }}
       </div>
       <div class="mb-2">
@@ -129,15 +129,15 @@ const t = useI18N()
       sparse
       :loading="exporting"
     >
-      <div class="mb-4 text-xl">
+      <div class="text-xl mb-4">
         {{ t.dashboard.settings.export.title }}
       </div>
-      <div class="mb-4 text-sm op75">
+      <div class="text-sm mb-4 op75">
         {{ t.dashboard.settings.export.description }}
       </div>
-      <div class="mb-2 flex items-center gap-2">
+      <div class="mb-2 flex gap-2 items-center">
         <Btn
-          class="flex items-center gap-2"
+          class="flex gap-2 items-center"
           :class="{
             ['!bg-error-container !border-error-container !hover:bg-error-container !hover:border-error-container']: exportFailed,
             ['!bg-secondary-container !border-secondary-container !hover:bg-secondary-container !hover:border-secondary-container']: exportSucceed,
@@ -191,15 +191,15 @@ const t = useI18N()
       </div>
     </CardBase>
     <CardBase sparse>
-      <div class="mb-4 text-xl">
+      <div class="text-xl mb-4">
         {{ t.dashboard.settings.other.title }}
       </div>
-      <div class="mb-4 text-sm op75">
+      <div class="text-sm mb-4 op75">
         {{ t.dashboard.settings.other.description }}
       </div>
       <div class="mb-2">
         <Btn
-          class="flex items-center gap-2"
+          class="flex gap-2 items-center"
           @click="logout"
         >
           <i class="i-tabler-logout" />

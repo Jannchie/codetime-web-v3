@@ -19,10 +19,10 @@ async function deleteAllData() {
     sparse
     class="border-error-container"
   >
-    <div class="mb-4 text-xl text-error-7 dark:text-error-5">
+    <div class="text-xl text-red-700 mb-4 dark:text-red-500">
       {{ t.dashboard.settings.dangerZone.title }}
     </div>
-    <div class="mb-4 text-sm op75">
+    <div class="text-sm mb-4 op75">
       {{ t.dashboard.settings.dangerZone.description }}
     </div>
     <div class="mb-2">
@@ -39,7 +39,7 @@ async function deleteAllData() {
         <div>
           {{ t.dashboard.settings.dangerZone.button.removeAllData }}
         </div>
-        <div class="py-2 text-sm text-surface-dimmed">
+        <div class="text-sm text-surface-dimmed py-2">
           <div class="pb-2">
             {{ t.dashboard.settings.dangerZone.button.removeAllDataModal.p1 }}
           </div>

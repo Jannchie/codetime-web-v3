@@ -124,7 +124,7 @@ function handleClose() {
       <form id="rule-form" class="space-y-6" @submit.prevent="handleSave">
         <!-- 规则名称 -->
         <div>
-          <label class="mb-2 block text-sm font-medium">
+          <label class="text-sm font-medium mb-2 block">
             {{ t.dashboard.tags.ruleForm.name }}
             <span class="text-surface-dimmed font-normal">（可选）</span>
           </label>
@@ -137,7 +137,7 @@ function handleClose() {
         <!-- 条件列表 -->
         <div>
           <div class="mb-4 flex items-center justify-between">
-            <label class="block text-sm font-medium">
+            <label class="text-sm font-medium block">
               {{ t.dashboard.tags.ruleForm.conditions }}
             </label>
             <Btn
@@ -157,12 +157,12 @@ function handleClose() {
             <div
               v-for="(condition, index) in formData.conditions"
               :key="index"
-              class="border border-surface-variant rounded-lg p-4"
+              class="p-4 border border-surface-variant rounded-lg"
             >
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+              <div class="gap-4 grid grid-cols-1 md:grid-cols-4">
                 <!-- 字段选择 -->
                 <div class="relative z-[1000]">
-                  <label class="mb-1 block text-xs text-surface-dimmed font-medium">
+                  <label class="text-xs text-surface-dimmed font-medium mb-1 block">
                     {{ t.dashboard.tags.ruleForm.field }}
                   </label>
                   <Select
@@ -175,7 +175,7 @@ function handleClose() {
 
                 <!-- 条件类型 -->
                 <div class="relative z-[1000]">
-                  <label class="mb-1 block text-xs text-surface-dimmed font-medium">
+                  <label class="text-xs text-surface-dimmed font-medium mb-1 block">
                     {{ t.dashboard.tags.ruleForm.conditionType }}
                   </label>
                   <Select
@@ -188,7 +188,7 @@ function handleClose() {
 
                 <!-- 值 -->
                 <div>
-                  <label class="mb-1 block text-xs text-surface-dimmed font-medium">
+                  <label class="text-xs text-surface-dimmed font-medium mb-1 block">
                     {{ t.dashboard.tags.ruleForm.value }}
                   </label>
                   <TextField
@@ -199,7 +199,7 @@ function handleClose() {
                 </div>
 
                 <!-- 操作按钮 -->
-                <div class="flex items-end gap-2">
+                <div class="flex gap-2 items-end">
                   <Btn
                     v-if="formData.conditions.length > 1"
                     type="button"
@@ -219,7 +219,7 @@ function handleClose() {
         </div>
 
         <!-- 按钮组 -->
-        <div class="mt-6 flex gap-3 pt-6">
+        <div class="mt-6 pt-6 flex gap-3">
           <Btn
             type="button"
             variant="light"

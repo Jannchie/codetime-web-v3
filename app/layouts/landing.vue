@@ -25,7 +25,7 @@ watchEffect(() => {
         width="26"
         class="ml-2 mr-3"
       >
-      <div class="flex items-center gap-2">
+      <div class="flex gap-2 items-center">
         <LanguageSelect />
       </div>
     </RHeader>

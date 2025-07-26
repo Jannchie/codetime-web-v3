@@ -34,7 +34,7 @@ watchEffect(() => {
     color="var(--color-primary-1)"
     :height="1"
   />
-  <RokuProvider class="min-h-100vh flex flex-col">
+  <RokuProvider class="flex flex-col min-h-100vh">
     <slot />
   </RokuProvider>
 </template>

@@ -65,7 +65,7 @@ function cancelDelete() {
           {{ t.dashboard.tags.tagList.freeUserLimit }} {{ props.tags?.length || 0 }}/{{ maxTagsForFree }}
         </p>
       </div>
-      <div class="flex flex-col items-end gap-2">
+      <div class="flex flex-col gap-2 items-end">
         <Btn
           variant="light"
           :disabled="!canCreateMoreTags"
@@ -86,15 +86,15 @@ function cancelDelete() {
       <div
         v-for="i in 3"
         :key="i"
-        class="h-16 animate-pulse rounded-lg bg-surface-variant-1"
+        class="rounded-lg bg-surface-variant-1 h-16 animate-pulse"
       />
     </div>
 
     <div
       v-else-if="tags.length === 0"
-      class="py-8 text-center text-surface-dimmed"
+      class="text-surface-dimmed py-8 text-center"
     >
-      <i class="i-tabler-tag-off mb-4 text-4xl" />
+      <i class="i-tabler-tag-off text-4xl mb-4" />
       <p>{{ t.dashboard.tags.tagList.noTags }}</p>
       <Btn
         variant="light"
@@ -108,11 +108,11 @@ function cancelDelete() {
       </Btn>
     </div>
 
-    <div v-else class="grid grid-cols-1 gap-3 lg:grid-cols-3 md:grid-cols-2">
+    <div v-else class="gap-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
       <div
         v-for="tag in tags"
         :key="tag.id"
-        class="group cursor-pointer border rounded-lg bg-surface-variant-1 p-3 transition-all hover:shadow-md"
+        class="group p-3 border rounded-lg bg-surface-variant-1 cursor-pointer transition-all hover:shadow-md"
         :class="{
           'border-primary bg-primary-container': selectedTag?.id === tag.id,
           'border-transparent hover:border-surface-variant-2': selectedTag?.id !== tag.id,
@@ -120,13 +120,13 @@ function cancelDelete() {
         @click="emit('select', tag)"
       >
         <div class="flex items-center justify-between">
-          <div class="min-w-0 flex flex-1 items-center gap-2">
+          <div class="flex flex-1 gap-2 min-w-0 items-center">
             <div
-              class="h-4 w-4 flex-shrink-0 rounded shadow-sm"
+              class="rounded flex-shrink-0 h-4 w-4 shadow-sm"
               :style="{ backgroundColor: tag.color }"
             />
             <div class="min-w-0">
-              <h4 class="truncate text-sm font-medium">
+              <h4 class="text-sm font-medium truncate">
                 {{ tag.name }}
               </h4>
               <p class="text-xs text-surface-dimmed">
@@ -135,16 +135,16 @@ function cancelDelete() {
             </div>
           </div>
 
-          <div class="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+          <div class="opacity-0 flex gap-1 transition-opacity items-center group-hover:opacity-100">
             <button
-              class="rounded p-1 text-surface-dimmed hover:bg-surface-variant-2 hover:text-surface"
+              class="text-surface-dimmed p-1 rounded hover:text-surface hover:bg-surface-variant-2"
               @click.stop="emit('edit', tag)"
             >
               <i class="i-tabler-edit text-sm" />
             </button>
 
             <button
-              class="hover:bg-error/10 rounded p-1 text-surface-dimmed hover:text-error"
+              class="hover:bg-error/10 text-surface-dimmed p-1 rounded hover:text-error"
               @click.stop="showDeleteConfirm(tag)"
             >
               <i class="i-tabler-trash text-sm" />
@@ -164,20 +164,20 @@ function cancelDelete() {
         </h3>
       </div>
 
-      <div class="mb-6 text-sm">
+      <div class="text-sm mb-6">
         <p class="mb-2">
           {{ t.dashboard.tags.deleteConfirm.deleteTagMessage }}
         </p>
-        <div v-if="tagToDelete" class="flex items-center gap-2 rounded-lg bg-surface-variant-1 p-2">
+        <div v-if="tagToDelete" class="p-2 rounded-lg bg-surface-variant-1 flex gap-2 items-center">
           <div
-            class="h-4 w-4 rounded"
+            class="rounded h-4 w-4"
             :style="{ backgroundColor: tagToDelete.color }"
           />
           <span class="font-medium">{{ tagToDelete.name }}</span>
         </div>
       </div>
 
-      <div class="flex justify-end gap-2">
+      <div class="flex gap-2 justify-end">
         <Btn
           variant="default"
           @click="cancelDelete"

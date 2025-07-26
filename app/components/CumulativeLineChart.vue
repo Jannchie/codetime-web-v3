@@ -128,7 +128,7 @@ const options = computed<PlotOptions>(() => ({
 <template>
   <CardBase :loading="loading">
     <div>
-      <div class="flex items-center gap-2 text-lg">
+      <div class="text-lg flex gap-2 items-center">
         <i class="i-tabler-calendar-event" />
         <div>
           {{ t.dashboard.overview.codetimeTrendTitle }}

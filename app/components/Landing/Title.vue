@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:text-10xl flex gap-6 text-7xl font-bold md:text-9xl">
+  <div class="lg:text-10xl text-7xl font-bold flex gap-6 md:text-9xl">
     <span class="gradient-text title-code transition-transform duration-300">Code</span>
     <span class="gradient-text title-time transition-transform duration-300">Time</span>
   </div>

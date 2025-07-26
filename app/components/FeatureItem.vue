@@ -9,7 +9,7 @@ const targetIsVisible = useElementVisibility(target)
 <template>
   <div
     ref="target"
-    class="flex items-center gap-2"
+    class="flex gap-2 items-center"
   >
     <i
       v-show="targetIsVisible"

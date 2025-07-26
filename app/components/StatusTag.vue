@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div
-    class="border-gray-5 rounded-full bg-gray-5/20 px-3 py-0.5 text-xs text-gray-5 font-mono uppercase"
+    class="bg-gray-5/20 border-gray-5 text-gray-5 text-xs font-mono px-3 py-0.5 rounded-full uppercase"
   >
     {{ status }}
   </div>

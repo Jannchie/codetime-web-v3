@@ -17,7 +17,7 @@ const t = useI18N()
 
 <template>
   <div>
-    <div class="flex flex-col gap-3 pb-16 pt-8 text-center">
+    <div class="pb-16 pt-8 text-center flex flex-col gap-3">
       <div class="text-4xl font-bold">
         {{ t.landing.pricing.title }}
       </div>
@@ -28,13 +28,13 @@ const t = useI18N()
     <div class="m-auto mb-18 flex justify-center">
       <LandingPriceTab v-model="variant" />
     </div>
-    <div class="container m-auto flex flex-col justify-center gap-4 md:flex-row">
+    <div class="m-auto container flex flex-col gap-4 justify-center md:flex-row">
       <Paper class="flex flex-col justify-between md:min-w-72">
-        <div class="h-full flex flex-col">
+        <div class="flex flex-col h-full">
           <div class="text-base font-light">
             {{ t.plan.basic.title }}
           </div>
-          <div class="flex items-end gap-2 font-light">
+          <div class="font-light flex gap-2 items-end">
             <div class="text-4xl font-light">
               $0
             </div>
@@ -42,10 +42,10 @@ const t = useI18N()
               {{ t.plan.basic.forever }}
             </div>
           </div>
-          <div class="mb-2 mt-4 text-xl">
+          <div class="text-xl mb-2 mt-4">
             {{ t.plan.basic.features.title }}
           </div>
-          <div class="flex flex-grow-1 flex-col gap-2 text-sm text-surface-dimmed">
+          <div class="text-sm text-surface-dimmed flex flex-grow-1 flex-col gap-2">
             <FeatureItem>
               {{ t.plan.basic.features.item.saveHistory }}
             </FeatureItem>
@@ -86,7 +86,7 @@ const t = useI18N()
         </div>
       </Paper>
       <div
-        class="relative flex flex-col justify-between before:absolute before:inset-0 md:min-w-72 before:bg-primary-9/20 before:blur-32 before:content-[''] before:-z-10"
+        class="flex flex-col justify-between relative before:bg-primary-9/20 md:min-w-72 before:content-[''] before:inset-0 before:absolute before:blur-32 before:-z-10"
         :class="[
           {
             'scale-100 md:scale-110 transition-all transition-delay-300 transition-duration-1000': !!targetIsVisible,

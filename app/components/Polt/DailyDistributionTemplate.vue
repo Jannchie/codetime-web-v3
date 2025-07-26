@@ -129,7 +129,7 @@ const options = computed<Plot.PlotOptions>(() => {
 
 <template>
   <CardBase :loading="loading">
-    <div class="mb-4 flex items-center gap-2 text-lg">
+    <div class="text-lg mb-4 flex gap-2 items-center">
       <i class="i-carbon-chart-line-data" />
       <div>
         {{ t.dashboard.overview.dailyCodingDistributionTitle }}

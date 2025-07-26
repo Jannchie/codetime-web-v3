@@ -267,7 +267,7 @@ export const ja: Partial<Translation> = {
                 </span>
                 <NuxtLink
                   to="https://marketplace.visualstudio.com/items?itemName=jannchie.codetime"
-                  class="text-primary-on inline-flex items-center gap-1 px-2"
+                  class="text-primary-on px-2 inline-flex gap-1 items-center"
                   style="baseline-source: last;"
                 >
                   <i class="i-tabler-brand-vscode" />
@@ -280,7 +280,7 @@ export const ja: Partial<Translation> = {
                 </span>
                 <NuxtLink
                   to="https://plugins.jetbrains.com/plugin/25617-codetime"
-                  class="text-primary-on inline-flex items-center gap-1 px-2"
+                  class="text-primary-on px-2 inline-flex gap-1 items-center"
                   style="baseline-source: last;"
                 >
                   <i class="i-devicon-plain-jetbrains pr-2" />

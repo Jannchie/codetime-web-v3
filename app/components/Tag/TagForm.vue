@@ -27,6 +27,12 @@ const formData = reactive({
 const isEditing = computed(() => !!props.tag)
 const saving = ref(false)
 
+// 当 tag 改变时重置表单数据
+watch(() => props.tag, (newTag) => {
+  formData.name = newTag?.name || ''
+  formData.color = newTag?.color || '#3B82F6'
+}, { immediate: true })
+
 // 预设颜色调色板
 const presetColors = [
   '#3B82F6', // blue
@@ -73,7 +79,7 @@ function handleClose() {
 
 <template>
   <Modal v-model="modelValue">
-    <Paper class="max-w-md w-full" with-border>
+    <Paper class="p-6 max-w-md w-full" with-border>
       <div class="mb-6 flex items-center justify-between">
         <h2 class="text-xl font-semibold">
           {{ isEditing ? t.dashboard.tags.tagForm.edit : t.dashboard.tags.tagForm.create }}
@@ -93,7 +99,7 @@ function handleClose() {
       <form class="space-y-4" @submit.prevent="handleSave">
         <!-- 标签名称 -->
         <div>
-          <label class="mb-2 block text-sm font-medium">
+          <label class="text-sm font-medium mb-2 block">
             {{ t.dashboard.tags.tagForm.name }}
           </label>
           <TextField
@@ -105,14 +111,14 @@ function handleClose() {
 
         <!-- 颜色选择 -->
         <div>
-          <label class="mb-2 block text-sm font-medium">
+          <label class="text-sm font-medium mb-2 block">
             {{ t.dashboard.tags.tagForm.color }}
           </label>
 
           <!-- 当前颜色预览 -->
-          <div class="bg-surface-variant mb-4 flex items-center gap-3 rounded-lg p-3">
+          <div class="bg-surface-variant mb-4 p-3 rounded-lg flex gap-3 items-center">
             <div
-              class="h-8 w-8 rounded-lg shadow-sm"
+              class="rounded-lg h-8 w-8 shadow-sm"
               :style="{ backgroundColor: formData.color }"
             />
             <div class="flex-1">
@@ -124,12 +130,12 @@ function handleClose() {
           </div>
 
           <!-- 预设颜色选择 -->
-          <div class="grid grid-cols-6 gap-3">
+          <div class="gap-3 grid grid-cols-6">
             <button
               v-for="color in presetColors"
               :key="color"
               type="button"
-              class="h-10 w-10 border-2 rounded-lg shadow-sm transition-all hover:scale-105"
+              class="border-2 rounded-lg h-10 w-10 shadow-sm transition-all hover:scale-105"
               :class="{
                 'border-primary shadow-md': formData.color === color,
                 'border-transparent hover:border-surface-variant': formData.color !== color,
@@ -144,7 +150,7 @@ function handleClose() {
         </div>
 
         <!-- 按钮组 -->
-        <div class="flex gap-3 pt-4">
+        <div class="pt-4 flex gap-3">
           <Btn
             type="button"
             variant="default"

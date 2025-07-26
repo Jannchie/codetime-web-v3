@@ -35,6 +35,6 @@ export function useLRU<T>(key: string, capacity = 10) {
       keys.value.push(key)
     }
   }
-  const values = computed(() => keys.value.map(key => cache.value[key]).reverse())
+  const values = computed(() => keys.value.map(key => cache.value[key]).toReversed())
   return { get, set, keys, values }
 }

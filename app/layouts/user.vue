@@ -25,11 +25,11 @@ useHead({
 <template>
   <NuxtLayout name="default">
     <RHeader class="bg-surface-low px-2 pt-2">
-      <div class="w-full flex flex-col gap-2 px-2 pt-2">
+      <div class="px-2 pt-2 flex flex-col gap-2 w-full">
         <div
-          class="h-34px flex items-center justify-between"
+          class="flex h-34px items-center justify-between"
         >
-          <div class="flex items-center gap-2">
+          <div class="flex gap-2 items-center">
             <NuxtLink
               :to="`/${locale}`"
             >
@@ -43,13 +43,13 @@ useHead({
             <ClientOnly>
               <NuxtLink
                 v-if="user"
-                class="flex items-center gap-3 text-sm"
+                class="text-sm flex gap-3 items-center"
                 :to="`/${locale}/dashboard`"
               >
                 <Image
                   v-if="user.avatar"
                   :src="user.avatar"
-                  class="h-7 w-7 rounded-full"
+                  class="rounded-full h-7 w-7"
                   height="28px"
                   width="28px"
                 />
@@ -62,16 +62,16 @@ useHead({
               </NuxtLink>
               <div
                 v-else-if="pending "
-                class="flex items-center gap-3 text-sm"
+                class="text-sm flex gap-3 items-center"
               >
                 <div
-                  class="h-7 w-7 animate-pulse rounded-full bg-surface-variant-1 bg-op50"
+                  class="rounded-full bg-surface-variant-1 bg-op50 h-7 w-7 animate-pulse"
                 />
-                <div class="h-1em w-16 animate-pulse rounded bg-surface-variant-1 bg-op50" />
+                <div class="rounded bg-surface-variant-1 bg-op50 h-1em w-16 animate-pulse" />
               </div>
             </ClientOnly>
           </div>
-          <div class="hidden items-center gap-2 sm:flex">
+          <div class="gap-2 hidden items-center sm:flex">
             <i class="i-tabler-language-hiragana h-6 w-6" />
             <LanguageSelect />
           </div>

@@ -1,4 +1,4 @@
-import fs from 'node:fs'
+import * as fs from 'node:fs'
 import { rokuPreset } from '@roku-ui/preset'
 import { defineConfig } from 'unocss'
 

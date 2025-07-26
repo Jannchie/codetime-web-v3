@@ -242,7 +242,7 @@ const topLanguage = computed(() => {
       v-if=" yearlyData?.dailyDistribution.length === 0 || !user"
       class="m-32 mx-auto max-w-820px"
     >
-      <div class="flex flex-col items-center gap-4">
+      <div class="flex flex-col gap-4 items-center">
         <div class="text-4xl font-bold">
           No Data
         </div>
@@ -253,9 +253,9 @@ const topLanguage = computed(() => {
     </div>
     <div
       v-else
-      class="mx-auto max-w-820px p-2"
+      class="mx-auto p-2 max-w-820px"
     >
-      <div class="mb-6 mt-8 flex items-center justify-center gap-4">
+      <div class="mb-6 mt-8 flex gap-4 items-center justify-center">
         <h1 class="text-4xl font-bold">
           {{ t.annualReport.annualCodeTimeReport('2024') }}
         </h1>
@@ -268,7 +268,7 @@ const topLanguage = computed(() => {
           <img
             v-if="user.avatar"
             :src="user.avatar"
-            class="h-10 w-10 rounded-full"
+            class="rounded-full h-10 w-10"
           >
           <div>
             <div class="text-sm font-bold">
@@ -290,7 +290,7 @@ const topLanguage = computed(() => {
             :data="yearCalendarData"
             :end-date="new Date(2024, 11, 31)"
           />
-          <div class="w-full flex items-center gap-4">
+          <div class="flex gap-4 w-full items-center">
             <div>
               <div class="text-3xl text-primary">
                 {{ (weekendMinutesRatio * 100).toFixed(0) }}%
@@ -371,7 +371,7 @@ const topLanguage = computed(() => {
           <HeaderComponent
             :title="t.annualReport.theMostUsedLanguageOfTheYear"
           />
-          <div class="flex items-center gap-2">
+          <div class="flex gap-2 items-center">
             <VSCodeIcon
               :language="topLanguage.field || 'Unknown'"
               class="h-16 w-16"
@@ -385,11 +385,11 @@ const topLanguage = computed(() => {
               </span>
             </div>
           </div>
-          <div class="mt-4 flex flex-col items-center gap-1">
+          <div class="mt-4 flex flex-col gap-1 items-center">
             <div
               v-for="lang in yearlyData?.topLanguages.slice(1)"
               :key="lang.field"
-              class="flex items-center gap-2"
+              class="flex gap-2 items-center"
             >
               <VSCodeIcon
                 :language="lang.field || 'Unknown'"

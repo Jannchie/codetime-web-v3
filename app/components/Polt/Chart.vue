@@ -20,7 +20,7 @@ const op = computed(() => {
   <div
     ref="chartWrapper"
     data-allow-mismatch
-    class="h-full w-full flex-col overflow-y-auto"
+    class="flex-col h-full w-full overflow-y-auto"
   >
     <PoltRenderer
       :options="op"

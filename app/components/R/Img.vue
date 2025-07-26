@@ -20,7 +20,7 @@ const loaded = ref(false)
   />
   <div
     v-if="!loaded"
-    class="animate-pulse bg-neutral-5"
+    class="bg-neutral-5 animate-pulse"
     :class="className"
   />
 </template>

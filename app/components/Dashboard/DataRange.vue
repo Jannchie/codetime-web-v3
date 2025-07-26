@@ -44,12 +44,12 @@ useI18N()
 
 <template>
   <Modal v-model="priceModal">
-    <div class="min-w-72 flex flex-col gap-8">
+    <div class="flex flex-col gap-8 min-w-72">
       <Paper class="max-w-92">
         <div class="text-xl font-bold">
           {{ t.plan.modal.title }}
         </div>
-        <div class="mt-4 w-full text-sm text-surface-dimmed children:py-1">
+        <div class="text-sm text-surface-dimmed mt-4 w-full children:py-1">
           <p>
             {{ t.plan.modal.p1 }}
           </p>
@@ -73,7 +73,7 @@ useI18N()
   <div class="ml-4 mt-8">
     <div class="flex gap-2">
       <div>
-        <div class="flex items-center gap-2">
+        <div class="flex gap-2 items-center">
           <Btn
             icon
             size="sm"

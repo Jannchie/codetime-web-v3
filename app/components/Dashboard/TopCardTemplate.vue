@@ -41,7 +41,7 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
       ref="ani"
       class="flex flex-col gap-2"
     >
-      <div class="flex items-center gap-2">
+      <div class="flex gap-2 items-center">
         <i
           :class="icon"
         />
@@ -53,21 +53,21 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
         <div
           v-for="i in 5"
           :key="i"
-          class="flex justify-between py-1"
+          class="py-1 flex justify-between"
           :style="{
             opacity: 0.5 + 0.5 * (-i / 5),
           }"
         >
           <div class="flex gap-1">
             <div
-              class="h-20px w-20px animate-pulse bg-surface-variant-1"
+              class="bg-surface-variant-1 h-20px w-20px animate-pulse"
             />
             <div
-              class="h-20px w-20 animate-pulse bg-surface-variant-1"
+              class="bg-surface-variant-1 h-20px w-20 animate-pulse"
             />
           </div>
           <div
-            class="h-20px w-30 animate-pulse bg-surface-variant-1"
+            class="bg-surface-variant-1 h-20px w-30 animate-pulse"
           />
         </div>
       </template>
@@ -77,16 +77,16 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
           :key="d.field"
         >
           <div
-            class="flex cursor-pointer justify-between gap-2 text-sm"
+            class="text-sm flex gap-2 cursor-pointer justify-between"
             :class="filters?.find(f => f.key === type && f.value === d.field) ? 'text-primary-on' : ''"
             @click="$emit('clickItem', d.field, type)"
           >
-            <div class="overflow-hidden truncate text-nowrap">
+            <div class="text-nowrap truncate overflow-hidden">
               <template v-if="d.icon">
                 <i
                   v-if="!d.icon.startsWith('i-vscode-icons')"
                   :class="d.icon"
-                  class="mb-0.5 mr-1 inline-block h-14px w-14px"
+                  class="mb-0.5 mr-1 h-14px w-14px inline-block"
                 />
                 <NuxtImg
                   v-else
@@ -105,7 +105,7 @@ const surfaceVariantCS = useContainerDefaultVariantCS()
           </div>
           <div
             v-bind="surfaceVariantCS"
-            class="my-0.5 h-0.5 overflow-hidden rounded-xl"
+            class="my-0.5 rounded-xl h-0.5 overflow-hidden"
           >
             <div
               v-bind="filledCS"

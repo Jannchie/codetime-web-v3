@@ -19,7 +19,7 @@ const textCS = useTextCS('primary')
       </div>
       <div
         v-if="value !== ''"
-        class="text-surface-on text-nowrap text-sm"
+        class="text-surface-on text-sm text-nowrap"
       >
         {{ value }}
       </div>

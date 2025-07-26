@@ -11,19 +11,19 @@ const checkoutLink = await getCheckoutLink()
   <CardBase
     sparse
   >
-    <div class="mb-4 text-xl">
+    <div class="text-xl mb-4">
       {{ t.dashboard.settings.account.title }}
     </div>
-    <div class="mb-4 text-sm op75">
+    <div class="text-sm mb-4 op75">
       {{ t.dashboard.settings.account.description }}
     </div>
-    <div v-if="user" class="mb-2 flex items-center gap-4">
+    <div v-if="user" class="mb-2 flex gap-4 items-center">
       <Avatar v-if="user.avatar" :src="user?.avatar" />
       <div
         v-if="user"
         class="flex-grow"
       >
-        <div class="flex items-center gap-2 text-sm">
+        <div class="text-sm flex gap-2 items-center">
           {{ user.username }}
           <PlanTag
             class="inline"

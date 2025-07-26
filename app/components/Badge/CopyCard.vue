@@ -11,13 +11,13 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
 
 <template>
   <CardBase class="flex flex-col gap-2">
-    <div class="flex items-center gap-2">
+    <div class="flex gap-2 items-center">
       <i class="i-tabler-markdown" />
       <TextField
         v-model="markdown"
         size="sm"
         readonly
-        class="grow-1 text-xs"
+        class="text-xs grow-1 children:w-full"
       />
       <RCopyBtn
         class="text-xs"
@@ -25,13 +25,13 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
         :value="markdown"
       />
     </div>
-    <div class="flex items-center gap-2">
+    <div class="flex gap-2 items-center">
       <i class="i-tabler-code" />
       <TextField
         v-model="html"
         size="sm"
         readonly
-        class="grow-1 text-xs"
+        class="text-xs grow-1 children:w-full"
       />
       <RCopyBtn
         class="text-xs"
@@ -39,13 +39,13 @@ const html = computed(() => `<img href="https://codetime.dev" alt="CodeTime Badg
         :value="html"
       />
     </div>
-    <div class="flex items-center gap-2">
+    <div class="flex gap-2 items-center">
       <i class="i-tabler-link" />
       <TextField
         v-model="link"
         size="sm"
         readonly
-        class="grow-1 text-xs"
+        class="text-xs grow-1 children:w-full"
       />
       <RCopyBtn
         class="text-xs"

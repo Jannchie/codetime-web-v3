@@ -53,7 +53,7 @@ async function handleGitHubLogin() {
 
 <template>
   <div
-    class="h-96px flex flex-col items-center"
+    class="flex flex-col h-96px items-center"
   >
     <ClientOnly>
       <div>
@@ -71,9 +71,9 @@ async function handleGitHubLogin() {
               key="demo"
               aria-label="demo"
               :to="`/${locale}/dashboard`"
-              class="border-surface-border-low hover:bg-surface-low hidden border rounded-xl bg-surface-base bg-transparent px-4 py-3 transition-all"
+              class="border-surface-border-low hover:bg-surface-low px-4 py-3 border rounded-xl bg-surface-base bg-transparent hidden transition-all"
             >
-              <div class="flex items-center gap-2 text-sm">
+              <div class="text-sm flex gap-2 items-center">
                 <i class="i-eva-bar-chart-outline h-4 w-4" />
                 <span>
                   {{ t.landing.demo }}
@@ -81,7 +81,7 @@ async function handleGitHubLogin() {
               </div>
             </NuxtLink>
           </div>
-          <div class="flex flex-col items-center gap-3">
+          <div class="flex flex-col gap-3 items-center">
             <div class="text-sm text-surface-dimmed">
               {{ t.landing.login }}
             </div>
@@ -107,16 +107,16 @@ async function handleGitHubLogin() {
                 key="github"
                 aria-label="github"
                 :disabled="isGitHubLoading"
-                class="h-32px w-32px flex items-center justify-center border border-[#dadce0] rounded-full bg-white transition-colors disabled:cursor-not-allowed hover:bg-gray-50 disabled:opacity-50"
+                class="border border-[#dadce0] rounded-full bg-white flex h-32px w-32px transition-colors items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="handleGitHubLogin"
               >
                 <i
                   v-if="!isGitHubLoading"
-                  class="i-eva-github-fill h-5 w-5 bg-black"
+                  class="i-eva-github-fill bg-black h-5 w-5"
                 />
                 <i
                   v-else
-                  class="i-eva-loader-outline h-5 w-5 animate-spin bg-black"
+                  class="i-eva-loader-outline bg-black h-5 w-5 animate-spin"
                 />
               </button>
             </div>
@@ -134,18 +134,18 @@ async function handleGitHubLogin() {
             color="black"
             aria-label="dashboard"
             :to="`/${locale}/dashboard`"
-            class="flex items-center gap-2 rounded-xl px-4 py-3"
+            class="px-4 py-3 rounded-xl flex gap-2 items-center"
           >
             <ClientOnly>
               <template #placeholder>
-                <div class="h-5 w-5 animate-pulse rounded-full" />
+                <div class="rounded-full h-5 w-5 animate-pulse" />
               </template>
               <NuxtImg
                 v-if="user && user.avatar"
                 key="main"
                 alt="avatar"
                 :src="user.avatar"
-                class="h-5 w-5 rounded-full"
+                class="rounded-full h-5 w-5"
               />
             </ClientOnly>
             <span class="text-sm">

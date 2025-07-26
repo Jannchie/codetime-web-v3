@@ -126,7 +126,7 @@ const data = Array.from({ length: 30 }, (_, i) => {
 <template>
   <CardBase>
     <div>
-      <div class="flex items-center gap-2 text-lg">
+      <div class="text-lg flex gap-2 items-center">
         <i class="i-carbon-chart-line-data" />
         <div>
           {{ t.dashboard.overview.codetimeProjectTrendTitle }}

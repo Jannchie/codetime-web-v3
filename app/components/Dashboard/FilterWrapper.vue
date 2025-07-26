@@ -16,7 +16,7 @@ watchEffect(() => {
 
 <template>
   <div
-    class="relative min-h-6 flex flex-wrap gap-2 px-2 text-xs"
+    class="text-xs px-2 flex flex-wrap gap-2 min-h-6 relative"
   >
     <TransitionGroup
       enter-from-class="opacity-0"
