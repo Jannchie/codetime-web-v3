@@ -82,7 +82,7 @@ const options = computed<PlotOptions>(() => {
     y: {
       grid: true,
       nice: true,
-      label: t.value.general.durationHours,
+      label: t.value.plot.label.durationHours,
       tickFormat: (d: number) => d3.format('.1f')(d / 60),
     },
     color: {

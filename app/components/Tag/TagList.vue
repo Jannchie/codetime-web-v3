@@ -136,19 +136,22 @@ function cancelDelete() {
           </div>
 
           <div class="opacity-0 flex gap-1 transition-opacity items-center group-hover:opacity-100">
-            <button
-              class="text-surface-dimmed p-1 rounded hover:text-surface hover:bg-surface-variant-2"
+            <Btn
+              icon
+              variant="subtle"
               @click.stop="emit('edit', tag)"
             >
               <i class="i-tabler-edit text-sm" />
-            </button>
+            </Btn>
 
-            <button
-              class="hover:bg-error/10 text-surface-dimmed p-1 rounded hover:text-error"
+            <Btn
+              icon
+              color="error"
+              variant="subtle"
               @click.stop="showDeleteConfirm(tag)"
             >
               <i class="i-tabler-trash text-sm" />
-            </button>
+            </Btn>
           </div>
         </div>
       </div>

@@ -356,6 +356,8 @@ export type Translation = {
         freeUserRuleLimit: string
         upgradeForMoreRules: string
         ruleIdFormat: (id: string) => string
+        conditionGroup: string
+        editingMode: string
       }
       timeRange: {
         last7Days: string

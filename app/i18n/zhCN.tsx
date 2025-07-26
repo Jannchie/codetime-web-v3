@@ -472,6 +472,8 @@ export const zhCN: Partial<Translation> = {
         freeUserRuleLimit: '免费用户每个标签只能创建 1 个规则',
         upgradeForMoreRules: '升级以创建更多规则',
         ruleIdFormat: (id: string) => `规则 #${id.slice(-4)}`,
+        conditionGroup: '条件组',
+        editingMode: '编辑模式 - 记得保存更改',
       },
     },
   },

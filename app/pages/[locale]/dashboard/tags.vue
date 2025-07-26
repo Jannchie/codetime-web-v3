@@ -25,7 +25,7 @@ const { data: tags, refresh: refreshTags } = useAsyncData('tags', async () => {
 })
 
 // 获取所有标签历史数据
-const { data: tagsHistory, refresh: refreshTagsHistory } = useAsyncData('tagsHistory', async () => {
+const { refresh: refreshTagsHistory } = useAsyncData('tagsHistory', async () => {
   try {
     const response = await v3GetAllTagsHistory()
     return response.data || null
@@ -52,7 +52,7 @@ async function saveTag(tagData: { name: string, color: string }) {
     await refreshTags()
     await refreshTagsHistory()
     // 刷新所有tag统计相关的缓存
-    await clearNuxtData('allTagStats')
+    clearNuxtData('allTagStats')
     closeTagForm()
   }
   catch (error_) {
@@ -75,7 +75,7 @@ async function deleteTag(tagId: string) {
     await refreshTags()
     await refreshTagsHistory()
     // 刷新所有tag统计相关的缓存
-    await clearNuxtData('allTagStats')
+    clearNuxtData('allTagStats')
     if (selectedTag.value?.id === tagId) {
       selectedTag.value = null
     }
@@ -107,13 +107,13 @@ async function handleTagRuleRefresh() {
   await refreshTags()
   await refreshTagsHistory()
   // 刷新所有tag统计相关的缓存
-  await clearNuxtData('allTagStats')
+  clearNuxtData('allTagStats')
   // 如果有选中的标签，也刷新其统计数据
   if (selectedTag.value) {
     const tagId = selectedTag.value.id
-    await clearNuxtData(`tag-stats-${tagId}-7d`)
-    await clearNuxtData(`tag-stats-${tagId}-30d`)
-    await clearNuxtData(`tag-stats-${tagId}-90d`)
+    clearNuxtData(`tag-stats-${tagId}-7d`)
+    clearNuxtData(`tag-stats-${tagId}-30d`)
+    clearNuxtData(`tag-stats-${tagId}-90d`)
   }
 }
 </script>
@@ -126,12 +126,6 @@ async function handleTagRuleRefresh() {
 
   <DashboardPageContent>
     <div class="space-y-6">
-      <!-- 所有标签编程情况堆叠图 -->
-      <TagStackedBarChart
-        :data="tagsHistory"
-        :loading="!tagsHistory"
-      />
-
       <!-- 标签列表 -->
       <TagList
         :tags="tags || []"
@@ -143,16 +137,9 @@ async function handleTagRuleRefresh() {
         @create-new="createNewTag"
       />
 
-      <!-- 标签规则管理 -->
-      <div v-if="selectedTag">
-        <TagRuleManager
-          :tag="selectedTag"
-          @refresh="handleTagRuleRefresh"
-        />
-      </div>
-
       <!-- 标签统计数据 -->
       <div v-if="selectedTag">
+        <TagRuleManager :tag="selectedTag" />
         <TagStats :tag="selectedTag" />
       </div>
     </div>
@@ -164,5 +151,6 @@ async function handleTagRuleRefresh() {
     :tag="editingTag"
     @save="saveTag"
     @close="closeTagForm"
+    @refresh="handleTagRuleRefresh"
   />
 </template>

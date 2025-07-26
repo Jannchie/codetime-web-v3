@@ -79,7 +79,7 @@ function handleClose() {
 
 <template>
   <Modal v-model="modelValue">
-    <Paper class="p-6 max-w-md w-full" with-border>
+    <Paper class="p-6 w-800px" with-border>
       <div class="mb-6 flex items-center justify-between">
         <h2 class="text-xl font-semibold">
           {{ isEditing ? t.dashboard.tags.tagForm.edit : t.dashboard.tags.tagForm.create }}
@@ -116,17 +116,11 @@ function handleClose() {
           </label>
 
           <!-- 当前颜色预览 -->
-          <div class="bg-surface-variant mb-4 p-3 rounded-lg flex gap-3 items-center">
-            <div
-              class="rounded-lg h-8 w-8 shadow-sm"
-              :style="{ backgroundColor: formData.color }"
+          <div class="bg-surface-variant mb-4 rounded-lg items-center">
+            <ColorInput
+              v-model="formData.color"
+              :placeholder="t.dashboard.tags.tagForm.colorPlaceholder"
             />
-            <div class="flex-1">
-              <ColorInput
-                v-model="formData.color"
-                :placeholder="t.dashboard.tags.tagForm.colorPlaceholder"
-              />
-            </div>
           </div>
 
           <!-- 预设颜色选择 -->
@@ -135,10 +129,10 @@ function handleClose() {
               v-for="color in presetColors"
               :key="color"
               type="button"
-              class="border-2 rounded-lg h-10 w-10 shadow-sm transition-all hover:scale-105"
+              class="border-2 rounded-lg h-10 w-10 shadow-sm transition-all"
               :class="{
                 'border-primary shadow-md': formData.color === color,
-                'border-transparent hover:border-surface-variant': formData.color !== color,
+                'border-transparent': formData.color !== color,
               }"
               :style="{
                 backgroundColor: color,

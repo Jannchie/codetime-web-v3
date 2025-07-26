@@ -2,6 +2,7 @@
 import type { PlotOptions } from '@observablehq/plot'
 import type { TagResponse } from '~/api/v3/types.gen'
 import * as Plot from '@observablehq/plot'
+import { Select } from '@roku-ui/vue'
 import * as d3 from 'd3'
 import { v3GetTagHistory } from '~/api/v3'
 import { getDurationString } from '~/utils/format'
@@ -148,6 +149,7 @@ const chartOptions = computed<PlotOptions>(() => {
         fill: props.tag.color,
         fillOpacity: 0.8,
         tip: true,
+        ry1: 8,
         title: (d: any) => {
           return `${d.date.toLocaleDateString()}\n${getDurationString(d.minutes * 60 * 1000, ['hours', 'minutes'])}`
         },
@@ -169,7 +171,7 @@ const chartOptions = computed<PlotOptions>(() => {
 </script>
 
 <template>
-  <CardBase>
+  <CardBase class="h-103" :loading="loadingStats">
     <div class="mb-4 flex items-center justify-between">
       <div class="flex gap-3 items-center">
         <div
@@ -182,14 +184,11 @@ const chartOptions = computed<PlotOptions>(() => {
       </div>
 
       <!-- 时间范围选择 -->
-      <select
+      <Select
         v-model="timeRange"
-        class="border-surface-variant-2 text-sm px-2 py-1 border rounded bg-surface"
-      >
-        <option v-for="option in timeRangeOptions" :key="option.id" :value="option.id">
-          {{ option.label }}
-        </option>
-      </select>
+        :options="timeRangeOptions.map(opt => opt.id)"
+        :label-getter="opt => opt"
+      />
     </div>
 
     <div v-if="loadingStats" class="space-y-4">
