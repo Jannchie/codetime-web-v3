@@ -420,6 +420,11 @@ export const zhTW: Partial<Translation> = {
         STARTS_WITH: '開始於',
         ENDS_WITH: '結束於',
         REGEX: '正則表達式',
+        NOT_CONTAINS: '不包含',
+        NOT_EQUALS: '不等於',
+        NOT_STARTS_WITH: '不開始於',
+        NOT_ENDS_WITH: '不結束於',
+        NOT_REGEX: '不符合正則',
       },
       fields: {
         workspaceName: '工作區名稱',
@@ -453,6 +458,7 @@ export const zhTW: Partial<Translation> = {
         freeUserRuleLimit: '免費用戶每個標籤只能創建 1 個規則',
         upgradeForMoreRules: '升級以創建更多規則',
         ruleIdFormat: (id: string) => `規則 #${id.slice(-4)}`,
+        editingMode: '編輯模式 - 請記得保存更改',
       },
       timeRange: {
         last7Days: '過去 7 天',

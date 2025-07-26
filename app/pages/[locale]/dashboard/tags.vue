@@ -138,7 +138,7 @@ async function handleTagRuleRefresh() {
       />
 
       <!-- 标签统计数据 -->
-      <div v-if="selectedTag">
+      <div v-if="selectedTag" class="space-y-6">
         <TagRuleManager :tag="selectedTag" />
         <TagStats :tag="selectedTag" />
       </div>

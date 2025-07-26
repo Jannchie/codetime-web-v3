@@ -420,6 +420,11 @@ export const ptBR: Partial<Translation> = {
         STARTS_WITH: 'Começa com',
         ENDS_WITH: 'Termina com',
         REGEX: 'Expressão regular',
+        NOT_CONTAINS: 'Não contém',
+        NOT_EQUALS: 'Não igual',
+        NOT_STARTS_WITH: 'Não começa com',
+        NOT_ENDS_WITH: 'Não termina com',
+        NOT_REGEX: 'Não corresponde regex',
       },
       fields: {
         workspaceName: 'Nome do Espaço de Trabalho',
@@ -453,6 +458,7 @@ export const ptBR: Partial<Translation> = {
         freeUserRuleLimit: 'Usuários gratuitos podem criar apenas 1 regra por tag',
         upgradeForMoreRules: 'Faça upgrade para criar mais regras',
         ruleIdFormat: (id: string) => `Regra #${id.slice(-4)}`,
+        editingMode: 'Modo de edição - Não se esqueça de salvar as alterações',
       },
       timeRange: {
         last7Days: 'Últimos 7 dias',

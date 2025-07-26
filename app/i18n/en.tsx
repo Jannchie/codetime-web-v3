@@ -420,6 +420,11 @@ export const en: Translation = {
         STARTS_WITH: 'Starts with',
         ENDS_WITH: 'Ends with',
         REGEX: 'Regular expression',
+        NOT_CONTAINS: 'Does not contain',
+        NOT_EQUALS: 'Does not equal',
+        NOT_STARTS_WITH: 'Does not start with',
+        NOT_ENDS_WITH: 'Does not end with',
+        NOT_REGEX: 'Does not match regex',
       },
       fields: {
         workspaceName: 'Workspace Name',
@@ -453,8 +458,7 @@ export const en: Translation = {
         freeUserRuleLimit: 'Free users can only create 1 rule per tag',
         upgradeForMoreRules: 'Upgrade to create more rules',
         ruleIdFormat: (id: string) => `Rule #${id.slice(-4)}`,
-        conditionGroup: 'Condition Group',
-        editingMode: 'Editing mode - remember to save changes',
+        editingMode: 'Editing Mode - Remember to save changes',
       },
       timeRange: {
         last7Days: 'Last 7 days',

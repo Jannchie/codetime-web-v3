@@ -323,6 +323,11 @@ export type Translation = {
         STARTS_WITH: string
         ENDS_WITH: string
         REGEX: string
+        NOT_CONTAINS: string
+        NOT_EQUALS: string
+        NOT_STARTS_WITH: string
+        NOT_ENDS_WITH: string
+        NOT_REGEX: string
       }
       fields: {
         workspaceName: string
@@ -356,7 +361,6 @@ export type Translation = {
         freeUserRuleLimit: string
         upgradeForMoreRules: string
         ruleIdFormat: (id: string) => string
-        conditionGroup: string
         editingMode: string
       }
       timeRange: {

@@ -420,6 +420,11 @@ export const ms: Partial<Translation> = {
         STARTS_WITH: 'Bermula dengan',
         ENDS_WITH: 'Berakhir dengan',
         REGEX: 'Ungkapan nalar',
+        NOT_CONTAINS: 'Tidak mengandungi',
+        NOT_EQUALS: 'Tidak sama',
+        NOT_STARTS_WITH: 'Tidak bermula dengan',
+        NOT_ENDS_WITH: 'Tidak berakhir dengan',
+        NOT_REGEX: 'Tidak sepadan regex',
       },
       fields: {
         workspaceName: 'Nama Ruang Kerja',
@@ -453,6 +458,7 @@ export const ms: Partial<Translation> = {
         freeUserRuleLimit: 'Pengguna percuma hanya boleh membuat 1 peraturan per tag',
         upgradeForMoreRules: 'Naik taraf untuk membuat lebih banyak peraturan',
         ruleIdFormat: (id: string) => `Peraturan #${id.slice(-4)}`,
+        editingMode: 'Mod Penyuntingan - Ingat untuk menyimpan perubahan',
       },
       timeRange: {
         last7Days: '7 hari terakhir',

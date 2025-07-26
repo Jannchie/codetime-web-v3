@@ -96,16 +96,6 @@ function cancelDelete() {
     >
       <i class="i-tabler-tag-off text-4xl mb-4" />
       <p>{{ t.dashboard.tags.tagList.noTags }}</p>
-      <Btn
-        variant="light"
-        class="mt-4"
-        @click="emit('createNew')"
-      >
-        <template #leftSection>
-          <i class="i-tabler-plus" />
-        </template>
-        {{ t.dashboard.tags.tagList.createTag }}
-      </Btn>
     </div>
 
     <div v-else class="gap-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2">

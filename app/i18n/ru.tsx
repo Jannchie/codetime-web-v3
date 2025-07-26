@@ -444,6 +444,11 @@ export const ru: Partial<Translation> = {
         STARTS_WITH: 'Начинается с',
         ENDS_WITH: 'Заканчивается на',
         REGEX: 'Регулярное выражение',
+        NOT_CONTAINS: 'Не содержит',
+        NOT_EQUALS: 'Не равно',
+        NOT_STARTS_WITH: 'Не начинается с',
+        NOT_ENDS_WITH: 'Не заканчивается на',
+        NOT_REGEX: 'Не соответствует regex',
       },
       fields: {
         workspaceName: 'Название рабочей области',
@@ -477,6 +482,7 @@ export const ru: Partial<Translation> = {
         freeUserRuleLimit: 'Бесплатные пользователи могут создать только 1 правило на тег',
         upgradeForMoreRules: 'Обновитесь, чтобы создать больше правил',
         ruleIdFormat: (id: string) => `Правило #${id.slice(-4)}`,
+        editingMode: 'Режим редактирования - Не забудьте сохранить изменения',
       },
       timeRange: {
         last7Days: 'Последние 7 дней',

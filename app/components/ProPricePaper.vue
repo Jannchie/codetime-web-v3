@@ -6,8 +6,8 @@ const props = defineProps<{
 }>()
 const isAnuual = computed(() => props.variant === 'annual')
 const isOneTime = computed(() => props.variant === 'one-time')
-const annualGradientCls = 'bg-gradient-to-rb from-red-6 via-purple-6 to-purple-5 inline-block text-transparent bg-clip-text'
-const monthlyGradientCls = 'bg-gradient-to-r from-primary-8 via-primary-6 to-primary-5 inline-block text-transparent bg-clip-text bg-primary'
+const annualGradientCls = 'bg-gradient-to-rb from-red-600 via-purple-600 to-purple-500 bg-purple-500 inline-block text-transparent bg-clip-text'
+const monthlyGradientCls = 'bg-gradient-to-r from-primary-800 via-primary-600 to-primary-500 inline-block text-transparent bg-clip-text bg-primary'
 
 const user = useUser()
 
@@ -101,7 +101,7 @@ async function toCheckoutLink() {
       <div
         v-if="user && user.plan !== 'pro'"
         ref="discountRef"
-        class="bg-sky-9 text-sm text-white px-1 py-2 flex min-h-2em w-full items-center justify-center relative z-110"
+        class="text-sm text-white px-1 py-2 bg-sky-900 flex min-h-2em w-full items-center justify-center relative z-110"
       >
         {{ discountText }}
       </div>

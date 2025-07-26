@@ -412,6 +412,11 @@ export const ja: Partial<Translation> = {
         STARTS_WITH: '開始する',
         ENDS_WITH: '終了する',
         REGEX: '正規表現',
+        NOT_CONTAINS: '含まない',
+        NOT_EQUALS: '等しくない',
+        NOT_STARTS_WITH: '開始しない',
+        NOT_ENDS_WITH: '終了しない',
+        NOT_REGEX: '正規表現に一致しない',
       },
       fields: {
         workspaceName: 'ワークスペース名',
@@ -445,6 +450,7 @@ export const ja: Partial<Translation> = {
         freeUserRuleLimit: '無料ユーザーはタグごとに1つのルールのみ作成可能',
         upgradeForMoreRules: 'より多くのルールを作成するにはアップグレード',
         ruleIdFormat: (id: string) => `ルール #${id.slice(-4)}`,
+        editingMode: '編集モード - 変更を保存することを忘れないでください',
       },
       timeRange: {
         last7Days: '過去7日間',

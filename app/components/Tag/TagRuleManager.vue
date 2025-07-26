@@ -110,11 +110,11 @@ const conditionTypeOptions = computed(() => [
   { label: t.value.dashboard.tags.conditionTypes.STARTS_WITH, id: 'STARTS_WITH' },
   { label: t.value.dashboard.tags.conditionTypes.ENDS_WITH, id: 'ENDS_WITH' },
   { label: t.value.dashboard.tags.conditionTypes.REGEX, id: 'REGEX' },
-  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.CONTAINS}`, id: 'NOT_CONTAINS' },
-  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.EQUALS}`, id: 'NOT_EQUALS' },
-  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.STARTS_WITH}`, id: 'NOT_STARTS_WITH' },
-  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.ENDS_WITH}`, id: 'NOT_ENDS_WITH' },
-  { label: `${t.value.dashboard.tags.common.not}${t.value.dashboard.tags.conditionTypes.REGEX}`, id: 'NOT_REGEX' },
+  { label: t.value.dashboard.tags.conditionTypes.NOT_CONTAINS, id: 'NOT_CONTAINS' },
+  { label: t.value.dashboard.tags.conditionTypes.NOT_EQUALS, id: 'NOT_EQUALS' },
+  { label: t.value.dashboard.tags.conditionTypes.NOT_STARTS_WITH, id: 'NOT_STARTS_WITH' },
+  { label: t.value.dashboard.tags.conditionTypes.NOT_ENDS_WITH, id: 'NOT_ENDS_WITH' },
+  { label: t.value.dashboard.tags.conditionTypes.NOT_REGEX, id: 'NOT_REGEX' },
 ])
 const conditionTypeDisplayMap = computed(() => {
   return Object.fromEntries(conditionTypeOptions.value.map(c => [c.id, c.label]))

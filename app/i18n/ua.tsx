@@ -443,6 +443,11 @@ export const ua: Partial<Translation> = {
         STARTS_WITH: 'Починається з',
         ENDS_WITH: 'Закінчується на',
         REGEX: 'Регулярний вираз',
+        NOT_CONTAINS: 'Не містить',
+        NOT_EQUALS: 'Не дорівнює',
+        NOT_STARTS_WITH: 'Не починається з',
+        NOT_ENDS_WITH: 'Не закінчується на',
+        NOT_REGEX: 'Не відповідає regex',
       },
       fields: {
         workspaceName: 'Назва робочого простору',
@@ -476,6 +481,7 @@ export const ua: Partial<Translation> = {
         freeUserRuleLimit: 'Безкоштовні користувачі можуть створити лише 1 правило на тег',
         upgradeForMoreRules: 'Оновіться, щоб створити більше правил',
         ruleIdFormat: (id: string) => `Правило #${id.slice(-4)}`,
+        editingMode: 'Режим редагування - Не забудьте зберегти зміни',
       },
       timeRange: {
         last7Days: 'Останні 7 днів',
