@@ -463,6 +463,7 @@ export const fr: Partial<Translation> = {
         title: 'Statistiques des étiquettes',
         viewAll: 'Voir tout',
         noData: 'Aucune donnée d\'étiquette disponible',
+        timeDistribution: 'Distribution du Temps de Codage par Tags',
         totalDuration: 'Durée totale',
         recordCount: 'Nombre d\'enregistrements',
         timeRange: 'Période',

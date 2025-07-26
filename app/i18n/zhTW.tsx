@@ -463,6 +463,7 @@ export const zhTW: Partial<Translation> = {
         title: '標籤統計',
         viewAll: '查看全部',
         noData: '沒有標籤資料',
+        timeDistribution: '標籤編程時間分佈',
         totalDuration: '總時間',
         recordCount: '記錄數',
         timeRange: '時間範圍',

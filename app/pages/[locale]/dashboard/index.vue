@@ -50,7 +50,6 @@ const filtedData = computed(() => {
 })
 
 const t = useI18N()
-const NoDataBody = t.value.dashboard.overview.noData.notice.body
 </script>
 
 <template>

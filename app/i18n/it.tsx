@@ -463,6 +463,7 @@ export const it: Partial<Translation> = {
         title: 'Statistiche tag',
         viewAll: 'Visualizza tutto',
         noData: 'Nessun dato tag disponibile',
+        timeDistribution: 'Distribuzione del Tempo di Codifica per Tag',
         totalDuration: 'Durata totale',
         recordCount: 'Numero di record',
         timeRange: 'Intervallo di tempo',

@@ -366,6 +366,7 @@ export type Translation = {
         title: string
         viewAll: string
         noData: string
+        timeDistribution: string
         totalDuration: string
         recordCount: string
         timeRange: string

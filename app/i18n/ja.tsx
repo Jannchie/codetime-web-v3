@@ -455,6 +455,7 @@ export const ja: Partial<Translation> = {
         title: 'タグ統計',
         viewAll: 'すべて表示',
         noData: 'タグデータがありません',
+        timeDistribution: 'タグプログラミング時間分布',
         totalDuration: '総時間',
         recordCount: '記録数',
         timeRange: '時間範囲',

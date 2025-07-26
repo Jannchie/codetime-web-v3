@@ -463,6 +463,7 @@ export const en: Translation = {
         title: 'Tag Statistics',
         viewAll: 'View All',
         noData: 'No tag data available',
+        timeDistribution: 'Tag Coding Time Distribution',
         totalDuration: 'Total Duration',
         recordCount: 'Record Count',
         timeRange: 'Time Range',

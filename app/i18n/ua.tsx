@@ -486,6 +486,7 @@ export const ua: Partial<Translation> = {
         title: 'Статистика тегів',
         viewAll: 'Переглянути все',
         noData: 'Дані по тегах недоступні',
+        timeDistribution: 'Розподіл часу програмування за тегами',
         totalDuration: 'Загальна тривалість',
         recordCount: 'Кількість записів',
         timeRange: 'Часовий діапазон',

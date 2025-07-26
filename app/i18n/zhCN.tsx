@@ -442,6 +442,7 @@ export const zhCN: Partial<Translation> = {
         title: '标签统计',
         viewAll: '查看全部',
         noData: '暂无标签数据',
+        timeDistribution: '标签编程时间分布',
         totalDuration: '总时长',
         recordCount: '记录数',
         timeRange: '时间范围',

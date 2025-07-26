@@ -463,6 +463,7 @@ export const ms: Partial<Translation> = {
         title: 'Statistik Tag',
         viewAll: 'Lihat Semua',
         noData: 'Tiada data tag tersedia',
+        timeDistribution: 'Pengedaran Masa Kod mengikut Tag',
         totalDuration: 'Jumlah Tempoh',
         recordCount: 'Bilangan Rekod',
         timeRange: 'Julat Masa',

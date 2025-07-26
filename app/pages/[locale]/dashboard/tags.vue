@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TagResponse } from '~/api/v3/types.gen'
-import { v3CreateTag, v3DeleteTag, v3GetTags, v3UpdateTag } from '~/api/v3'
+import { v3CreateTag, v3DeleteTag, v3GetAllTagsHistory, v3GetTags, v3UpdateTag } from '~/api/v3'
 
 definePageMeta({
   layout: 'dashboard',
@@ -24,6 +24,20 @@ const { data: tags, refresh: refreshTags } = useAsyncData('tags', async () => {
   server: false,
 })
 
+// 获取所有标签历史数据
+const { data: tagsHistory, refresh: refreshTagsHistory } = useAsyncData('tagsHistory', async () => {
+  try {
+    const response = await v3GetAllTagsHistory()
+    return response.data || null
+  }
+  catch (error_) {
+    console.error('Failed to fetch tags history:', error_)
+    return null
+  }
+}, {
+  server: false,
+})
+
 // 创建或更新标签
 async function saveTag(tagData: { name: string, color: string }) {
   try {
@@ -36,6 +50,9 @@ async function saveTag(tagData: { name: string, color: string }) {
           body: tagData,
         })
     await refreshTags()
+    await refreshTagsHistory()
+    // 刷新所有tag统计相关的缓存
+    await clearNuxtData('allTagStats')
     closeTagForm()
   }
   catch (error_) {
@@ -56,6 +73,9 @@ async function deleteTag(tagId: string) {
       path: { tag_id: tagId },
     } as any)
     await refreshTags()
+    await refreshTagsHistory()
+    // 刷新所有tag统计相关的缓存
+    await clearNuxtData('allTagStats')
     if (selectedTag.value?.id === tagId) {
       selectedTag.value = null
     }
@@ -81,6 +101,21 @@ function closeTagForm() {
   showTagForm.value = false
   editingTag.value = null
 }
+
+// 处理标签规则更新后的刷新
+async function handleTagRuleRefresh() {
+  await refreshTags()
+  await refreshTagsHistory()
+  // 刷新所有tag统计相关的缓存
+  await clearNuxtData('allTagStats')
+  // 如果有选中的标签，也刷新其统计数据
+  if (selectedTag.value) {
+    const tagId = selectedTag.value.id
+    await clearNuxtData(`tag-stats-${tagId}-7d`)
+    await clearNuxtData(`tag-stats-${tagId}-30d`)
+    await clearNuxtData(`tag-stats-${tagId}-90d`)
+  }
+}
 </script>
 
 <template>
@@ -91,6 +126,12 @@ function closeTagForm() {
 
   <DashboardPageContent>
     <div class="space-y-6">
+      <!-- 所有标签编程情况堆叠图 -->
+      <TagStackedBarChart
+        :data="tagsHistory"
+        :loading="!tagsHistory"
+      />
+
       <!-- 标签列表 -->
       <TagList
         :tags="tags || []"
@@ -106,7 +147,7 @@ function closeTagForm() {
       <div v-if="selectedTag">
         <TagRuleManager
           :tag="selectedTag"
-          @refresh="refreshTags"
+          @refresh="handleTagRuleRefresh"
         />
       </div>
 

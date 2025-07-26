@@ -487,6 +487,7 @@ export const ru: Partial<Translation> = {
         title: 'Статистика тегов',
         viewAll: 'Посмотреть все',
         noData: 'Данные по тегам недоступны',
+        timeDistribution: 'Распределение времени программирования по тегам',
         totalDuration: 'Общая продолжительность',
         recordCount: 'Количество записей',
         timeRange: 'Временной диапазон',
