@@ -102,20 +102,6 @@ function closeTagForm() {
   editingTag.value = null
 }
 
-// 处理标签规则更新后的刷新
-async function handleTagRuleRefresh() {
-  await refreshTags()
-  await refreshTagsHistory()
-  // 刷新所有tag统计相关的缓存
-  clearNuxtData('allTagStats')
-  // 如果有选中的标签，也刷新其统计数据
-  if (selectedTag.value) {
-    const tagId = selectedTag.value.id
-    clearNuxtData(`tag-stats-${tagId}-7d`)
-    clearNuxtData(`tag-stats-${tagId}-30d`)
-    clearNuxtData(`tag-stats-${tagId}-90d`)
-  }
-}
 </script>
 
 <template>
@@ -151,6 +137,5 @@ async function handleTagRuleRefresh() {
     :tag="editingTag"
     @save="saveTag"
     @close="closeTagForm"
-    @refresh="handleTagRuleRefresh"
   />
 </template>

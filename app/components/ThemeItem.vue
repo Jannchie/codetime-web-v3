@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { borderCS, defaultTheme, ThemeProvider, useContainerFilledCS, useCS, useSchemeString } from '@roku-ui/vue'
+import { borderCS, ThemeProvider, useContainerFilledCS, useCS, useSchemeString } from '@roku-ui/vue'
 
 const props = defineProps<{
   theme?: string
@@ -66,7 +66,6 @@ const textCS = useCS({
       {{ title }}
     </div>
     <ThemeProvider
-      :theme="defaultTheme"
       :scheme="theme"
     >
       <div
