@@ -53,7 +53,7 @@
       <NuxtLink
         aria-label="discord"
         class="text-surface-dimmed hover:op75"
-        to="https://discord.gg/CvHzcWTj"
+        to="https://discord.gg/WWEQrWCkkP"
         target="_blank"
       >
         <i class="i-tabler-brand-discord h-6 w-6" />
