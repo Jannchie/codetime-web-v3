@@ -75,6 +75,7 @@ const link = computed(() => {
       <TextField
         v-model="language"
         :placeholder="t.dashboard.badge.placeholder.language"
+        class="children:w-full"
       />
       <ProjectSelect
         v-model="project"
@@ -82,6 +83,7 @@ const link = computed(() => {
       <TextField
         v-model="days"
         type="number"
+        class="children:w-full"
         :placeholder="t.dashboard.badge.placeholder.days"
       />
     </CardBase>
