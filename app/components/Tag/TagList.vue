@@ -111,7 +111,7 @@ function cancelDelete() {
         @click="emit('select', tag)"
       >
         <div class="flex items-center justify-between">
-          <div class="flex flex-1 gap-2 min-w-0 items-center">
+          <div class="leading-0 flex flex-1 gap-2 min-w-0 items-center">
             <div class="flex flex-shrink-0 gap-1.5 items-center">
               <div
                 class="text-xs font-medium rounded-full flex flex-shrink-0 h-6 w-6 items-center justify-center"

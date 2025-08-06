@@ -184,13 +184,9 @@ onMounted(() => {
               <Btn
                 type="button"
                 variant="subtle"
-                class="emoji-picker-trigger flex-1 justify-start"
+                class="emoji-picker-trigger justify-start"
                 @click="showEmojiPicker = !showEmojiPicker"
               >
-                <template #leftSection>
-                  <span v-if="formData.emoji" class="text-xl">{{ formData.emoji }}</span>
-                  <i v-else class="i-tabler-mood-smile" />
-                </template>
                 {{ formData.emoji || t.dashboard.tags.tagForm.emojiPlaceholder }}
               </Btn>
               <Btn
