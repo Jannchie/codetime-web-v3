@@ -95,13 +95,13 @@ export const en: Translation = {
         case 'expired': {
           return 'Expired'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'On Trial'
         }
         case 'paused': {
           return 'Paused'
         }
-        case 'past-due': {
+        case 'past_due': {
           return 'Past Due'
         }
         case 'unpaid': {
@@ -380,6 +380,8 @@ export const en: Translation = {
         namePlaceholder: 'Enter tag name',
         color: 'Color',
         colorPlaceholder: 'Choose a color',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'Enter emoji (optional)',
         create: 'Create Tag',
         edit: 'Edit Tag',
         cancel: 'Cancel',
@@ -480,6 +482,9 @@ export const en: Translation = {
         statisticsTitle: (tagName: string) => `${tagName} Statistics`,
       },
     },
+  },
+  common: {
+    optional: 'optional',
   },
   button: {
     copy: 'Copy',

@@ -95,13 +95,13 @@ export const ptBR: Partial<Translation> = {
         case 'expired': {
           return 'Expirado'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'Em teste'
         }
         case 'paused': {
           return 'Pausado'
         }
-        case 'past-due': {
+        case 'past_due': {
           return 'Vencido'
         }
         case 'unpaid': {
@@ -380,6 +380,8 @@ export const ptBR: Partial<Translation> = {
         namePlaceholder: 'Digite o nome da tag',
         color: 'Cor',
         colorPlaceholder: 'Escolha uma cor',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'Digite emoji (opcional)',
         create: 'Criar Tag',
         edit: 'Editar Tag',
         cancel: 'Cancelar',

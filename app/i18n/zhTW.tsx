@@ -95,13 +95,13 @@ export const zhTW: Partial<Translation> = {
         case 'expired': {
           return '已過期'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return '試用中'
         }
         case 'paused': {
           return '已暫停'
         }
-        case 'past-due': {
+        case 'past_due': {
           return '已逾期'
         }
         case 'unpaid': {
@@ -380,6 +380,8 @@ export const zhTW: Partial<Translation> = {
         namePlaceholder: '輸入標籤名稱',
         color: '顏色',
         colorPlaceholder: '選擇顏色',
+        emoji: 'Emoji',
+        emojiPlaceholder: '輸入 emoji（可選）',
         create: '創建標籤',
         edit: '編輯標籤',
         cancel: '取消',

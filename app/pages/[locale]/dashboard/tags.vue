@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TagResponse } from '~/api/v3/types.gen'
-import { v3CreateTag, v3DeleteTag, v3GetAllTagsHistory, v3GetTags, v3UpdateTag } from '~/api/v3'
+import { v3CreateTag, v3DeleteTag, v3GetTags, v3UpdateTag } from '~/api/v3'
 
 definePageMeta({
   layout: 'dashboard',
@@ -9,6 +9,7 @@ const t = useI18N()
 const selectedTag = ref<TagResponse | null>(null)
 const showTagForm = ref(false)
 const editingTag = ref<TagResponse | null>(null)
+const tagStatsRef = ref()
 
 // 获取标签列表
 const { data: tags, refresh: refreshTags } = useAsyncData('tags', async () => {
@@ -24,35 +25,35 @@ const { data: tags, refresh: refreshTags } = useAsyncData('tags', async () => {
   server: false,
 })
 
-// 获取所有标签历史数据
-const { refresh: refreshTagsHistory } = useAsyncData('tagsHistory', async () => {
-  try {
-    const response = await v3GetAllTagsHistory()
-    return response.data || null
-  }
-  catch (error_) {
-    console.error('Failed to fetch tags history:', error_)
-    return null
-  }
-}, {
-  server: false,
-})
-
 // 创建或更新标签
-async function saveTag(tagData: { name: string, color: string }) {
+async function saveTag(tagData: { name: string, color: string, emoji?: string | null }) {
   try {
-    editingTag.value
-      ? await v3UpdateTag({
+    await (editingTag.value
+      ? v3UpdateTag({
           path: { tag_id: editingTag.value.id },
-          body: tagData,
+          body: {
+            ...tagData,
+            rules: (editingTag.value.rules || null) as unknown,
+          } as any,
         })
-      : await v3CreateTag({
-          body: tagData,
-        })
+      : v3CreateTag({
+          body: {
+            ...tagData,
+            rules: null as unknown,
+          } as any,
+        }))
     await refreshTags()
-    await refreshTagsHistory()
     // 刷新所有tag统计相关的缓存
     clearNuxtData('allTagStats')
+
+    // 如果是编辑现有标签且当前有选中标签，更新选中标签的数据
+    if (editingTag.value && selectedTag.value && tags.value) {
+      const updatedTag = tags.value.find(tag => tag.id === selectedTag.value?.id)
+      if (updatedTag) {
+        selectedTag.value = updatedTag
+      }
+    }
+
     closeTagForm()
   }
   catch (error_) {
@@ -73,7 +74,6 @@ async function deleteTag(tagId: string) {
       path: { tag_id: tagId },
     } as any)
     await refreshTags()
-    await refreshTagsHistory()
     // 刷新所有tag统计相关的缓存
     clearNuxtData('allTagStats')
     if (selectedTag.value?.id === tagId) {
@@ -102,6 +102,29 @@ function closeTagForm() {
   editingTag.value = null
 }
 
+// 处理规则更新后的刷新
+async function handleRuleRefresh() {
+  await refreshTags()
+  // 刷新所有tag统计相关的缓存
+  clearNuxtData('allTagStats')
+  // 清除当前标签的统计数据缓存（所有时间范围）
+  if (selectedTag.value) {
+    clearNuxtData(`tag-stats-${selectedTag.value.id}-7d`)
+    clearNuxtData(`tag-stats-${selectedTag.value.id}-30d`)
+    clearNuxtData(`tag-stats-${selectedTag.value.id}-90d`)
+  }
+  // 如果当前有选中的标签，更新选中标签的数据
+  if (selectedTag.value && tags.value) {
+    const updatedTag = tags.value.find(tag => tag.id === selectedTag.value?.id)
+    if (updatedTag) {
+      selectedTag.value = updatedTag
+    }
+  }
+  // 刷新 TagStats 组件的数据
+  if (tagStatsRef.value) {
+    await tagStatsRef.value.refreshStats()
+  }
+}
 </script>
 
 <template>
@@ -125,8 +148,8 @@ function closeTagForm() {
 
       <!-- 标签统计数据 -->
       <div v-if="selectedTag" class="space-y-6">
-        <TagRuleManager :tag="selectedTag" />
-        <TagStats :tag="selectedTag" />
+        <TagRuleManager :tag="selectedTag" @refresh="handleRuleRefresh" />
+        <TagStats ref="tagStatsRef" :tag="selectedTag" />
       </div>
     </div>
   </DashboardPageContent>

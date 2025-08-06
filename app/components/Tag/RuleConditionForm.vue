@@ -1,14 +1,28 @@
 <script setup lang="ts">
-import type { RuleConditionType, TagResponse, TagRuleResponse } from '~/api/v3/types.gen'
+import type { TagResponse } from '~/api/v3/types.gen'
 import { Btn, Modal, Paper, Select, TextField } from '@roku-ui/vue'
+
+// 定义规则相关的类型
+type RuleConditionType = 'CONTAINS' | 'EQUALS' | 'STARTS_WITH' | 'ENDS_WITH' | 'REGEX' | 'NOT_CONTAINS' | 'NOT_EQUALS' | 'NOT_STARTS_WITH' | 'NOT_ENDS_WITH' | 'NOT_REGEX'
+
+type RuleCondition = {
+  field: string
+  conditionType: RuleConditionType
+  value: string
+}
+
+type RuleGroup = {
+  conditions: RuleCondition[]
+  name?: string
+}
 
 type Props = {
   tag: TagResponse
-  rule?: TagRuleResponse | null
+  rule?: RuleGroup | null
 }
 
 type Emits = {
-  (e: 'save', data: { name: string | null, conditions: any[] }): void
+  (e: 'save', data: { name: string | null, conditions: RuleCondition[] }): void
   (e: 'close'): void
 }
 
@@ -21,7 +35,7 @@ const modelValue = defineModel<boolean>('modelValue', { required: true })
 const t = useI18N()
 
 const formData = reactive({
-  conditions: props.rule?.conditions.map(c => ({
+  conditions: props.rule?.conditions.map((c: RuleCondition) => ({
     field: c.field,
     conditionType: c.conditionType,
     value: c.value,
@@ -79,7 +93,7 @@ function removeCondition(index: number) {
 
 // 保存规则
 async function handleSave() {
-  if (formData.conditions.some(c => !c.value.trim())) {
+  if (formData.conditions.some((c: RuleCondition) => !c.value.trim())) {
     return
   }
 
@@ -87,7 +101,7 @@ async function handleSave() {
     saving.value = true
     emit('save', {
       name: null,
-      conditions: formData.conditions.filter(c => c.value.trim()),
+      conditions: formData.conditions.filter((c: RuleCondition) => c.value.trim()),
     })
     modelValue.value = false
   }
@@ -219,7 +233,7 @@ function handleClose() {
             form="rule-form"
             type="submit"
             class="flex-1"
-            :disabled="formData.conditions.some(c => !c.value.trim()) || saving"
+            :disabled="formData.conditions.some((c: RuleCondition) => !c.value.trim()) || saving"
             @click="handleSave"
           >
             <template v-if="saving" #leftSection>

@@ -95,13 +95,13 @@ export const ja: Partial<Translation> = {
         case 'expired': {
           return '期限切れ'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'トライアル中'
         }
         case 'paused': {
           return '一時停止'
         }
-        case 'past-due': {
+        case 'past_due': {
           return '期限切れ'
         }
         case 'unpaid': {
@@ -372,6 +372,8 @@ export const ja: Partial<Translation> = {
         namePlaceholder: 'タグ名を入力',
         color: '色',
         colorPlaceholder: '色を選択',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'emoji を入力（オプション）',
         create: 'タグを作成',
         edit: 'タグを編集',
         cancel: 'キャンセル',

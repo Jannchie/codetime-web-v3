@@ -2,6 +2,7 @@
 import type { TagTimeData } from '~/api/v3/types.gen'
 import { v3GetTagTimeStats } from '~/api/v3'
 import { getDurationString } from '~/utils/format'
+import { getTagDisplay } from '~/utils/tag'
 
 type Props = {
   timeRange?: string
@@ -99,9 +100,11 @@ const tagStats = computed(() => {
         class="flex gap-3 items-center"
       >
         <div
-          class="rounded-full h-4 w-4 shadow-sm"
-          :style="{ backgroundColor: stat.tag.color }"
-        />
+          class="text-xs font-medium rounded-full flex h-5 w-5 items-center justify-center"
+          :style="{ backgroundColor: stat.tag.color, color: 'white' }"
+        >
+          {{ getTagDisplay(stat.tag) }}
+        </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center justify-between">
             <span class="text-sm font-medium truncate">{{ stat.tag.name }}</span>

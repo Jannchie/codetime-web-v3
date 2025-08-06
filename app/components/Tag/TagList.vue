@@ -2,6 +2,7 @@
 import type { TagResponse } from '~/api/v3/types.gen'
 import { Btn, Modal, Paper } from '@roku-ui/vue'
 import { useUser } from '~/utils'
+import { getTagDisplay } from '~/utils/tag'
 
 type Props = {
   tags: TagResponse[]
@@ -111,10 +112,14 @@ function cancelDelete() {
       >
         <div class="flex items-center justify-between">
           <div class="flex flex-1 gap-2 min-w-0 items-center">
-            <div
-              class="rounded flex-shrink-0 h-4 w-4 shadow-sm"
-              :style="{ backgroundColor: tag.color }"
-            />
+            <div class="flex flex-shrink-0 gap-1.5 items-center">
+              <div
+                class="text-xs font-medium rounded-full flex flex-shrink-0 h-6 w-6 items-center justify-center"
+                :style="{ backgroundColor: tag.color, color: 'white' }"
+              >
+                {{ getTagDisplay(tag) }}
+              </div>
+            </div>
             <div class="min-w-0">
               <h4 class="text-sm font-medium truncate">
                 {{ tag.name }}
@@ -163,9 +168,11 @@ function cancelDelete() {
         </p>
         <div v-if="tagToDelete" class="p-2 rounded-lg bg-surface-variant-1 flex gap-2 items-center">
           <div
-            class="rounded h-4 w-4"
-            :style="{ backgroundColor: tagToDelete.color }"
-          />
+            class="text-xs font-medium rounded-full flex h-6 w-6 items-center justify-center"
+            :style="{ backgroundColor: tagToDelete.color, color: 'white' }"
+          >
+            {{ getTagDisplay(tagToDelete) }}
+          </div>
           <span class="font-medium">{{ tagToDelete.name }}</span>
         </div>
       </div>

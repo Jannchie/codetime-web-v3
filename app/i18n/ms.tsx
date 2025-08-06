@@ -95,13 +95,13 @@ export const ms: Partial<Translation> = {
         case 'expired': {
           return 'Luput'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'Ujian'
         }
         case 'paused': {
           return 'Dijeda'
         }
-        case 'past-due': {
+        case 'past_due': {
           return 'Lewat'
         }
         case 'unpaid': {
@@ -380,6 +380,8 @@ export const ms: Partial<Translation> = {
         namePlaceholder: 'Masukkan nama tag',
         color: 'Warna',
         colorPlaceholder: 'Pilih warna',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'Masukkan emoji (pilihan)',
         create: 'Cipta Tag',
         edit: 'Edit Tag',
         cancel: 'Batal',

@@ -105,13 +105,13 @@ export const ua: Partial<Translation> = {
         case 'expired': {
           return 'Термін дії закінчився'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'Пробний період'
         }
         case 'paused': {
           return 'Призупинено'
         }
-        case 'past-due': {
+        case 'past_due': {
           return 'Закінчився термін дії'
         }
         case 'unpaid': {
@@ -403,6 +403,8 @@ export const ua: Partial<Translation> = {
         namePlaceholder: 'Введіть назву тегу',
         color: 'Колір',
         colorPlaceholder: 'Оберіть колір',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'Введіть emoji (необов\'язково)',
         create: 'Створити тег',
         edit: 'Редагувати тег',
         cancel: 'Скасувати',

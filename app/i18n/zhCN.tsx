@@ -95,13 +95,13 @@ export const zhCN: Partial<Translation> = {
         case 'expired': {
           return '已过期'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return '试用中'
         }
         case 'paused': {
           return '已暂停'
         }
-        case 'past-due': {
+        case 'past_due': {
           return '已逾期'
         }
         case 'unpaid': {
@@ -380,6 +380,8 @@ export const zhCN: Partial<Translation> = {
         namePlaceholder: '输入标签名称',
         color: '颜色',
         colorPlaceholder: '选择颜色',
+        emoji: 'Emoji',
+        emojiPlaceholder: '输入 emoji（可选）',
         create: '创建标签',
         edit: '编辑标签',
         cancel: '取消',
@@ -480,6 +482,9 @@ export const zhCN: Partial<Translation> = {
         editingMode: '编辑模式 - 请记得保存更改',
       },
     },
+  },
+  common: {
+    optional: '可选',
   },
   button: {
     copy: '复制',

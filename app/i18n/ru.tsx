@@ -106,13 +106,13 @@ export const ru: Partial<Translation> = {
         case 'expired': {
           return 'Просроченный'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'Пробный период'
         }
         case 'paused': {
           return 'Приостановленный'
         }
-        case 'past-due': {
+        case 'past_due': {
           return 'Просроченный'
         }
         case 'unpaid': {
@@ -404,6 +404,8 @@ export const ru: Partial<Translation> = {
         namePlaceholder: 'Введите название тега',
         color: 'Цвет',
         colorPlaceholder: 'Выберите цвет',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'Введите emoji (необязательно)',
         create: 'Создать тег',
         edit: 'Редактировать тег',
         cancel: 'Отменить',

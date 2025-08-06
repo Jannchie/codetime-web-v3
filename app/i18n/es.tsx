@@ -95,13 +95,13 @@ export const es: Partial<Translation> = {
         case 'expired': {
           return 'Expirado'
         }
-        case 'on-trial': {
+        case 'on_trial': {
           return 'En prueba'
         }
         case 'paused': {
           return 'Pausado'
         }
-        case 'past-due': {
+        case 'past_due': {
           return 'Vencido'
         }
         case 'unpaid': {
@@ -380,6 +380,8 @@ export const es: Partial<Translation> = {
         namePlaceholder: 'Ingresa el nombre de la etiqueta',
         color: 'Color',
         colorPlaceholder: 'Elige un color',
+        emoji: 'Emoji',
+        emojiPlaceholder: 'Ingresa emoji (opcional)',
         create: 'Crear etiqueta',
         edit: 'Editar etiqueta',
         cancel: 'Cancelar',

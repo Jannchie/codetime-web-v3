@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import type { TagResponse } from '~/api/v3/types.gen'
 import { Btn, ColorInput, Modal, Paper, TextField } from '@roku-ui/vue'
+import EmojiPicker from 'vue3-emoji-picker'
+import 'vue3-emoji-picker/css'
 
 type Props = {
   tag?: TagResponse | null
 }
 
 type Emits = {
-  (e: 'save', data: { name: string, color: string }): void
+  (e: 'save', data: { name: string, color: string, emoji?: string | null }): void
   (e: 'close'): void
 }
 
@@ -22,7 +24,10 @@ const t = useI18N()
 const formData = reactive({
   name: props.tag?.name || '',
   color: props.tag?.color || '#3B82F6',
+  emoji: props.tag?.emoji || null,
 })
+
+const showEmojiPicker = ref(false)
 
 const isEditing = computed(() => !!props.tag)
 const saving = ref(false)
@@ -31,6 +36,7 @@ const saving = ref(false)
 watch(() => props.tag, (newTag) => {
   formData.name = newTag?.name || ''
   formData.color = newTag?.color || '#3B82F6'
+  formData.emoji = newTag?.emoji || null
 }, { immediate: true })
 
 // 预设颜色调色板
@@ -56,9 +62,12 @@ async function handleSave() {
 
   try {
     saving.value = true
+    // 确保 null 和空字符串都被处理为 null
+    const emojiValue = (formData.emoji === '' || formData.emoji === null) ? null : formData.emoji
     emit('save', {
       name: formData.name.trim(),
       color: formData.color,
+      emoji: emojiValue,
     })
     modelValue.value = false
   }
@@ -73,8 +82,30 @@ function handleColorSelect(color: string) {
 
 function handleClose() {
   modelValue.value = false
+  showEmojiPicker.value = false
   emit('close')
 }
+
+function handleEmojiSelect(emoji: any) {
+  formData.emoji = emoji.i
+  showEmojiPicker.value = false
+}
+
+// 点击外部关闭 emoji picker
+function handleClickOutside(event: MouseEvent) {
+  const target = event.target as HTMLElement
+  if (!target.closest('.v3-emoji-picker') && !target.closest('.emoji-picker-trigger')) {
+    showEmojiPicker.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+
+  onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside)
+  })
+})
 </script>
 
 <template>
@@ -140,6 +171,50 @@ function handleClose() {
               }"
               @click="handleColorSelect(color)"
             />
+          </div>
+        </div>
+
+        <!-- Emoji 输入 (可选) -->
+        <div>
+          <label class="text-sm font-medium mb-2 block">
+            {{ t.dashboard.tags.tagForm.emoji }} <span class="text-xs text-surface-dimmed">({{ t.common.optional }})</span>
+          </label>
+          <div class="relative">
+            <div class="flex gap-2">
+              <Btn
+                type="button"
+                variant="subtle"
+                class="emoji-picker-trigger flex-1 justify-start"
+                @click="showEmojiPicker = !showEmojiPicker"
+              >
+                <template #leftSection>
+                  <span v-if="formData.emoji" class="text-xl">{{ formData.emoji }}</span>
+                  <i v-else class="i-tabler-mood-smile" />
+                </template>
+                {{ formData.emoji || t.dashboard.tags.tagForm.emojiPlaceholder }}
+              </Btn>
+              <Btn
+                v-if="formData.emoji"
+                type="button"
+                variant="subtle"
+                color="surface"
+                icon
+                @click="formData.emoji = null"
+              >
+                <template #leftSection>
+                  <i class="i-tabler-x" />
+                </template>
+              </Btn>
+            </div>
+            <div v-if="showEmojiPicker" class="mt-2 absolute z-50">
+              <EmojiPicker
+                theme="auto"
+                :native="true"
+                :display-recent="true"
+                :disable-skin-tones="false"
+                @select="handleEmojiSelect"
+              />
+            </div>
           </div>
         </div>
 

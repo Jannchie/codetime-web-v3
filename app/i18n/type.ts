@@ -283,6 +283,8 @@ export type Translation = {
         namePlaceholder: string
         color: string
         colorPlaceholder: string
+        emoji: string
+        emojiPlaceholder: string
         create: string
         edit: string
         cancel: string
@@ -383,6 +385,9 @@ export type Translation = {
         statisticsTitle: (tagName: string) => string
       }
     }
+  }
+  common: {
+    optional: string
   }
   button: {
     copy: string

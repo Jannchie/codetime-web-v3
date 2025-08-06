@@ -6,6 +6,7 @@ import { Select } from '@roku-ui/vue'
 import * as d3 from 'd3'
 import { v3GetTagHistory } from '~/api/v3'
 import { getDurationString } from '~/utils/format'
+import { getTagDisplay } from '~/utils/tag'
 
 type Props = {
   tag: TagResponse
@@ -23,8 +24,16 @@ const timeRangeOptions = computed(() => [
   { label: t.value.dashboard.tags.timeRange.last90Days, id: '90d' },
 ])
 
+// 先声明刷新函数，稍后赋值
+let refreshStats: (() => Promise<void>) | undefined
+
+// 暴露方法给父组件
+defineExpose({
+  refreshStats: () => refreshStats?.(),
+})
+
 // 获取标签历史统计数据
-const { data: tagStats, pending: loadingStats } = await useAsyncData(
+const { data: tagStats, pending: loadingStats, refresh } = await useAsyncData(
   `tag-stats-${props.tag.id}-${timeRange.value}`,
   async () => {
     try {
@@ -53,6 +62,9 @@ const { data: tagStats, pending: loadingStats } = await useAsyncData(
     watch: [timeRange, () => props.tag.id],
   },
 )
+
+// 给 refreshStats 赋值
+refreshStats = refresh
 
 const chart = ref()
 useElementBounding(chart)
@@ -175,9 +187,11 @@ const chartOptions = computed<PlotOptions>(() => {
     <div class="mb-4 flex items-center justify-between">
       <div class="flex gap-3 items-center">
         <div
-          class="rounded-lg h-6 w-6 shadow-sm"
-          :style="{ backgroundColor: tag.color }"
-        />
+          class="text-sm font-medium rounded-full flex h-6 w-6 items-center justify-center"
+          :style="{ backgroundColor: tag.color, color: 'white' }"
+        >
+          {{ getTagDisplay(tag) }}
+        </div>
         <h3 class="text-lg font-medium">
           {{ t.dashboard.tags.stats.statisticsTitle(tag.name) }}
         </h3>

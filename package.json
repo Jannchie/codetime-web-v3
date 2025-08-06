@@ -24,7 +24,8 @@
     "date-fns": "^4.1.0",
     "jsdom": "^26.1.0",
     "seedrandom": "^3.0.5",
-    "vue-wf": "^0.5.0"
+    "vue-wf": "^0.5.0",
+    "vue3-emoji-picker": "^1.1.8"
   },
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
