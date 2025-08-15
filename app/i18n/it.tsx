@@ -482,6 +482,33 @@ export const it: Partial<Translation> = {
         statisticsTitle: (tagName: string) => `Statistiche di ${tagName}`,
       },
     },
+    pluginGuide: {
+      title: 'Inizia con CodeTime',
+      description: 'Installa il plugin CodeTime per tracciare automaticamente il tuo tempo di programmazione',
+      token: {
+        title: 'Il Tuo Token',
+        description: 'Copia questo token e incollalo nelle impostazioni del plugin',
+      },
+      plugins: {
+        title: 'Scarica Plugin',
+      },
+      vscode: {
+        title: 'Famiglia VSCode',
+        description: 'Compatibile con VSCode, Cursor e Windsurf',
+      },
+      jetbrains: {
+        title: 'Famiglia JetBrains',
+        description: 'Compatibile con tutti gli IDE JetBrains',
+      },
+      downloadPlugin: 'Scarica Plugin',
+      setup: {
+        title: 'Istruzioni di Configurazione',
+        step1: 'Scarica e installa il plugin per il tuo editor',
+        step2: 'Apri le impostazioni del plugin nel tuo editor',
+        step3: 'Copia e incolla il tuo token qui sopra',
+        step4: 'Inizia a programmare e i dati appariranno in 2-3 minuti',
+      },
+    },
   },
   button: {
     copy: 'Copia',

@@ -482,6 +482,33 @@ export const ms: Partial<Translation> = {
         statisticsTitle: (tagName: string) => `Statistik ${tagName}`,
       },
     },
+    pluginGuide: {
+      title: 'Bermula dengan CodeTime',
+      description: 'Pasang plugin CodeTime untuk menjejaki masa pengaturcaraan anda secara automatik',
+      token: {
+        title: 'Token Anda',
+        description: 'Salin token ini dan tampal ke dalam tetapan plugin',
+      },
+      plugins: {
+        title: 'Muat Turun Plugin',
+      },
+      vscode: {
+        title: 'Keluarga VSCode',
+        description: 'Serasi dengan VSCode, Cursor, dan Windsurf',
+      },
+      jetbrains: {
+        title: 'Keluarga JetBrains',
+        description: 'Serasi dengan semua IDE JetBrains',
+      },
+      downloadPlugin: 'Muat Turun Plugin',
+      setup: {
+        title: 'Arahan Pemasangan',
+        step1: 'Muat turun dan pasang plugin untuk editor anda',
+        step2: 'Buka tetapan plugin dalam editor anda',
+        step3: 'Salin dan tampal token anda di atas',
+        step4: 'Mula mengaturcara dan data akan muncul dalam 2-3 minit',
+      },
+    },
   },
   button: {
     copy: 'Salin',

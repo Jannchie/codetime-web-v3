@@ -228,6 +228,33 @@ export const en: Translation = {
         },
       },
     },
+    pluginGuide: {
+      title: 'Get Started with CodeTime',
+      description: 'Install CodeTime plugin to automatically track your coding time',
+      token: {
+        title: 'Your Token',
+        description: 'Copy this token and paste it into the plugin settings',
+      },
+      plugins: {
+        title: 'Download Plugins',
+      },
+      vscode: {
+        title: 'VSCode Family',
+        description: 'Compatible with VSCode, Cursor, and Windsurf',
+      },
+      jetbrains: {
+        title: 'JetBrains Family',
+        description: 'Compatible with all JetBrains IDEs',
+      },
+      downloadPlugin: 'Download Plugin',
+      setup: {
+        title: 'Setup Instructions',
+        step1: 'Download and install the plugin for your editor',
+        step2: 'Open plugin settings in your editor',
+        step3: 'Copy and paste your token above',
+        step4: 'Start coding and data will appear in 2-3 minutes',
+      },
+    },
     badge: {
       preview: {
         title: 'Preview',

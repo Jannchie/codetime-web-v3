@@ -474,6 +474,33 @@ export const ja: Partial<Translation> = {
         statisticsTitle: (tagName: string) => `${tagName} 統計`,
       },
     },
+    pluginGuide: {
+      title: 'CodeTimeを始める',
+      description: 'CodeTimeプラグインをインストールして、コーディング時間を自動的に追跡しましょう',
+      token: {
+        title: 'あなたのトークン',
+        description: 'このトークンをコピーしてプラグイン設定に貼り付けてください',
+      },
+      plugins: {
+        title: 'プラグインをダウンロード',
+      },
+      vscode: {
+        title: 'VSCodeファミリー',
+        description: 'VSCode、Cursor、Windsurfと互換性があります',
+      },
+      jetbrains: {
+        title: 'JetBrainsファミリー',
+        description: 'すべてのJetBrains IDEと互換性があります',
+      },
+      downloadPlugin: 'プラグインをダウンロード',
+      setup: {
+        title: 'セットアップ手順',
+        step1: 'エディター用のプラグインをダウンロードしてインストールします',
+        step2: 'エディターでプラグイン設定を開きます',
+        step3: '上記のトークンをコピーして貼り付けます',
+        step4: 'コーディングを開始すると、2〜3分でデータが表示されます',
+      },
+    },
     leaderboard: {
       title(days: number) {
         return `${days} 日間のコーディング時間リーダーボード`

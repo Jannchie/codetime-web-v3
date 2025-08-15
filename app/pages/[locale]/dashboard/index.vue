@@ -58,98 +58,104 @@ const t = useI18N()
     :description="t.dashboard.pageHeader.description.overview"
   />
   <DashboardPageContent>
-    <DashboardDataRange v-model:days="days" />
+    <!-- Show plugin guide when no data -->
+    <DashboardPluginGuide v-if="allDataResp.status.value === 'success' && !hasData" />
 
-    <DashboardCalendarCard
-      :loading="allDataResp.status.value !== 'success'"
-      :data="allData"
-    />
+    <!-- Show dashboard content when has data -->
+    <template v-else>
+      <DashboardDataRange v-model:days="days" />
 
-    <DashboardFilterWrapper />
-
-    <div
-      v-if="hasData"
-      class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)] sm:children:max-w-[calc(100%/3-0.5rem*2/3)]"
-    >
-      <DashboardTopCard
-        icon="i-tabler-braces"
-        type="language"
-        :days="days"
-        :filters="filters"
-        :title="t.dashboard.overview.top.language"
+      <DashboardCalendarCard
+        :loading="allDataResp.status.value !== 'success'"
+        :data="allData"
       />
-      <DashboardTopCard
-        icon="i-tabler-app-window"
-        type="workspace"
-        :days="days"
-        :filters="filters"
-        :title="t.dashboard.overview.top.workspace"
-      />
-      <DashboardTopCard
-        icon="i-tabler-terminal"
-        type="platform"
-        :days="days"
-        :filters="filters"
-        :title="t.dashboard.overview.top.platform"
-      />
-    </div>
 
-    <CumulativeLineChart
-      v-if="allDataResp.status.value === 'success' && hasData"
-      :loading="false"
-      :data="filtedData"
-    />
-    <CardBase v-else-if="allDataResp.status.value === 'pending'">
-      <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
-    </CardBase>
+      <DashboardFilterWrapper />
 
-    <CardBase
-      v-if="allLanguageDataResp.status.value === 'success' && pAllLangData.length > 0"
-      :loading="false"
-    >
-      <div>
-        <div class="text-lg flex gap-2 items-center">
-          <i class="i-carbon-chart-line-data" />
-          <div>
-            {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
+      <div
+        v-if="hasData"
+        class="flex flex-basis-[100%] flex-col flex-wrap gap-2 sm:flex-row sm:children:flex-basis-[calc(100%/3-0.5rem*2/3)] sm:children:max-w-[calc(100%/3-0.5rem*2/3)]"
+      >
+        <DashboardTopCard
+          icon="i-tabler-braces"
+          type="language"
+          :days="days"
+          :filters="filters"
+          :title="t.dashboard.overview.top.language"
+        />
+        <DashboardTopCard
+          icon="i-tabler-app-window"
+          type="workspace"
+          :days="days"
+          :filters="filters"
+          :title="t.dashboard.overview.top.workspace"
+        />
+        <DashboardTopCard
+          icon="i-tabler-terminal"
+          type="platform"
+          :days="days"
+          :filters="filters"
+          :title="t.dashboard.overview.top.platform"
+        />
+      </div>
+
+      <CumulativeLineChart
+        v-if="allDataResp.status.value === 'success' && hasData"
+        :loading="false"
+        :data="filtedData"
+      />
+      <CardBase v-else-if="allDataResp.status.value === 'pending'">
+        <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
+      </CardBase>
+
+      <CardBase
+        v-if="allLanguageDataResp.status.value === 'success' && pAllLangData.length > 0"
+        :loading="false"
+      >
+        <div>
+          <div class="text-lg flex gap-2 items-center">
+            <i class="i-carbon-chart-line-data" />
+            <div>
+              {{ t.dashboard.overview.codetimeLanguaeTrendTitle }}
+            </div>
           </div>
         </div>
-      </div>
-      <PoltYDot
-        :data="pAllLangData"
-        :y-label="t.plot.label.language"
-      />
-    </CardBase>
-    <CardBase v-else-if="allLanguageDataResp.status.value === 'pending'" :loading="true">
-      <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
-    </CardBase>
+        <PoltYDot
+          :data="pAllLangData"
+          :y-label="t.plot.label.language"
+        />
+      </CardBase>
+      <CardBase v-else-if="allLanguageDataResp.status.value === 'pending'" :loading="true">
+        <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
+      </CardBase>
 
-    <CardBase
-      v-if="allProjectDataResp.status.value === 'success' && pAllProjectData.length > 0"
-      :loading="false"
-    >
-      <div>
-        <div class="text-lg flex gap-2 items-center">
-          <i class="i-carbon-chart-line-data" />
-          <div>
-            {{ t.dashboard.overview.codetimeProjectTrendTitle }}
+      <CardBase
+        v-if="allProjectDataResp.status.value === 'success' && pAllProjectData.length > 0"
+        :loading="false"
+      >
+        <div>
+          <div class="text-lg flex gap-2 items-center">
+            <i class="i-carbon-chart-line-data" />
+            <div>
+              {{ t.dashboard.overview.codetimeProjectTrendTitle }}
+            </div>
           </div>
         </div>
-      </div>
-      <PoltYDot
-        :data="pAllProjectData"
-        :y-label="t.plot.label.project"
-      />
-    </CardBase>
-    <CardBase v-else-if="allProjectDataResp.status.value === 'pending'" :loading="true">
-      <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
-    </CardBase>
+        <PoltYDot
+          :data="pAllProjectData"
+          :y-label="t.plot.label.project"
+        />
+      </CardBase>
+      <CardBase v-else-if="allProjectDataResp.status.value === 'pending'" :loading="true">
+        <div class="rounded-2xl bg-surface-variant-1 h-64 w-full animate-pulse" />
+      </CardBase>
 
-    <PoltDailyDistribution
-      v-if="hasData"
-      :start-time="startTime"
-      :end-time="endTime"
-      :segments="segments"
-    />
+      <PoltDailyDistribution
+        v-if="hasData"
+        :start-time="startTime"
+        :end-time="endTime"
+        :segments="segments"
+      />
+    </template>
   </DashboardPageContent>
 </template>

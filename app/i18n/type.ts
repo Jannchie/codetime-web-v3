@@ -385,6 +385,33 @@ export type Translation = {
         statisticsTitle: (tagName: string) => string
       }
     }
+    pluginGuide: {
+      title: string
+      description: string
+      token: {
+        title: string
+        description: string
+      }
+      plugins: {
+        title: string
+      }
+      vscode: {
+        title: string
+        description: string
+      }
+      jetbrains: {
+        title: string
+        description: string
+      }
+      downloadPlugin: string
+      setup: {
+        title: string
+        step1: string
+        step2: string
+        step3: string
+        step4: string
+      }
+    }
   }
   common: {
     optional: string

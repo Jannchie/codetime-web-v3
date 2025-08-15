@@ -482,6 +482,33 @@ export const zhTW: Partial<Translation> = {
         statisticsTitle: (tagName: string) => `${tagName} 統計`,
       },
     },
+    pluginGuide: {
+      title: '開始使用 CodeTime',
+      description: '安裝 CodeTime 插件自動追蹤您的編程時間',
+      token: {
+        title: '您的令牌',
+        description: '複製此令牌並貼到插件設定中',
+      },
+      plugins: {
+        title: '下載插件',
+      },
+      vscode: {
+        title: 'VSCode 系列',
+        description: '相容於 VSCode、Cursor 和 Windsurf',
+      },
+      jetbrains: {
+        title: 'JetBrains 系列',
+        description: '相容於所有 JetBrains IDE',
+      },
+      downloadPlugin: '下載插件',
+      setup: {
+        title: '設定說明',
+        step1: '下載並安裝您編輯器的插件',
+        step2: '在編輯器中開啟插件設定',
+        step3: '複製並貼上您的令牌',
+        step4: '開始編程，數據將在 2-3 分鐘內出現',
+      },
+    },
   },
   button: {
     copy: '複製',

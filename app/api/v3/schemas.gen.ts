@@ -29,6 +29,56 @@ export const CheckoutResponseSchema = {
     title: 'CheckoutResponse'
 } as const;
 
+export const DiscountPublicSchema = {
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        code: {
+            type: 'string'
+        },
+        amount: {
+            type: 'integer'
+        },
+        amountType: {
+            type: 'string'
+        },
+        expiresAt: {
+            oneOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        duration: {
+            type: 'string'
+        },
+        durationInMonths: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        status: {
+            type: 'string'
+        }
+    },
+    type: 'object',
+    required: ['amount', 'amountType', 'code', 'duration', 'id', 'name', 'status'],
+    title: 'DiscountPublic'
+} as const;
+
 export const EventLogPublicSchema = {
     properties: {
         eventTime: {
@@ -118,6 +168,60 @@ export const EventLogRequestSchema = {
     type: 'object',
     required: ['editor', 'eventTime', 'language', 'platform', 'project', 'relativeFile'],
     title: 'EventLogRequest'
+} as const;
+
+export const LanguageRankingEntrySchema = {
+    properties: {
+        user: {
+            '$ref': '#/components/schemas/src_dto_UserPublic'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        rank: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        }
+    },
+    type: 'object',
+    required: ['percentile', 'rank', 'totalMinutes', 'user'],
+    title: 'LanguageRankingEntry'
+} as const;
+
+export const LanguageRankingResponseSchema = {
+    properties: {
+        entries: {
+            items: {
+                '$ref': '#/components/schemas/LanguageRankingEntry'
+            },
+            type: 'array'
+        },
+        language: {
+            type: 'string'
+        },
+        totalUsers: {
+            type: 'integer'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['entries', 'language', 'totalUsers', 'updatedAt'],
+    title: 'LanguageRankingResponse'
 } as const;
 
 export const LeaderboardEntrySchema = {
@@ -606,6 +710,83 @@ export const UserDeleteResponseSchema = {
     title: 'UserDeleteResponse'
 } as const;
 
+export const UserLanguageRankResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        language: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        rank: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        },
+        totalUsers: {
+            type: 'integer'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['language', 'percentile', 'rank', 'totalMinutes', 'totalUsers', 'updatedAt', 'userId', 'username'],
+    title: 'UserLanguageRankResponse'
+} as const;
+
+export const UserOverallRankResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['percentile', 'totalMinutes', 'updatedAt', 'userId', 'username'],
+    title: 'UserOverallRankResponse'
+} as const;
+
 export const UserSelfPublicSchema = {
     properties: {
         id: {
@@ -955,6 +1136,57 @@ export const dto_UserPublicSchema = {
     title: 'UserPublic'
 } as const;
 
+export const dto_UserTopLanguageRankEntrySchema = {
+    properties: {
+        language: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        }
+    },
+    type: 'object',
+    required: ['language', 'percentile', 'totalMinutes'],
+    title: 'UserTopLanguageRankEntry'
+} as const;
+
+export const dto_UserTopLanguagesRankResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        entries: {
+            items: {
+                '$ref': '#/components/schemas/dto_UserTopLanguageRankEntry'
+            },
+            type: 'array'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['entries', 'updatedAt', 'userId', 'username'],
+    title: 'UserTopLanguagesRankResponse'
+} as const;
+
 export const src_dto_UserPublicSchema = {
     properties: {
         id: {
@@ -1038,4 +1270,55 @@ export const src_dto_UserPublicSchema = {
     type: 'object',
     required: ['createdAt', 'id', 'plan', 'updatedAt', 'username'],
     title: 'UserPublic'
+} as const;
+
+export const src_dto_UserTopLanguageRankEntrySchema = {
+    properties: {
+        language: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        }
+    },
+    type: 'object',
+    required: ['language', 'percentile', 'totalMinutes'],
+    title: 'UserTopLanguageRankEntry'
+} as const;
+
+export const src_dto_UserTopLanguagesRankResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        entries: {
+            items: {
+                '$ref': '#/components/schemas/src_dto_UserTopLanguageRankEntry'
+            },
+            type: 'array'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['entries', 'updatedAt', 'userId', 'username'],
+    title: 'UserTopLanguagesRankResponse'
 } as const;

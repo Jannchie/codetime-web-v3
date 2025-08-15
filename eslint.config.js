@@ -6,6 +6,7 @@ export default jannchie({
 }, {
   rules: {
     'style/indent-binary-ops': 'off',
+    'style/indent': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
   },
 })

@@ -506,6 +506,33 @@ export const ru: Partial<Translation> = {
         statisticsTitle: (tagName: string) => `Статистика ${tagName}`,
       },
     },
+    pluginGuide: {
+      title: 'Начать с CodeTime',
+      description: 'Установите плагин CodeTime для автоматического отслеживания времени программирования',
+      token: {
+        title: 'Ваш токен',
+        description: 'Скопируйте этот токен и вставьте в настройки плагина',
+      },
+      plugins: {
+        title: 'Скачать плагины',
+      },
+      vscode: {
+        title: 'Семейство VSCode',
+        description: 'Совместимо с VSCode, Cursor и Windsurf',
+      },
+      jetbrains: {
+        title: 'Семейство JetBrains',
+        description: 'Совместимо со всеми IDE JetBrains',
+      },
+      downloadPlugin: 'Скачать плагин',
+      setup: {
+        title: 'Инструкции по настройке',
+        step1: 'Скачайте и установите плагин для вашего редактора',
+        step2: 'Откройте настройки плагина в вашем редакторе',
+        step3: 'Скопируйте и вставьте ваш токен сверху',
+        step4: 'Начните программировать и данные появятся через 2-3 минуты',
+      },
+    },
   },
   button: {
     copy: 'Копировать',

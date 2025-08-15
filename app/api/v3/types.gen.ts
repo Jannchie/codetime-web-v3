@@ -17,6 +17,21 @@ export type CheckoutResponse = {
 };
 
 /**
+ * DiscountPublic
+ */
+export type DiscountPublic = {
+    id: string;
+    name: string;
+    code: string;
+    amount: number;
+    amountType: string;
+    expiresAt?: Date | null;
+    duration: string;
+    durationInMonths?: number | null;
+    status: string;
+};
+
+/**
  * EventLogPublic
  */
 export type EventLogPublic = {
@@ -44,6 +59,27 @@ export type EventLogRequest = {
     absoluteFile?: string | null;
     gitOrigin?: string | null;
     gitBranch?: string | null;
+};
+
+/**
+ * LanguageRankingEntry
+ */
+export type LanguageRankingEntry = {
+    user: SrcDtoUserPublic;
+    totalMinutes: number;
+    rank: number;
+    percentile: number;
+};
+
+/**
+ * LanguageRankingResponse
+ */
+export type LanguageRankingResponse = {
+    entries: Array<LanguageRankingEntry>;
+    language: string;
+    totalUsers: number;
+    timeRangeDays?: number | null;
+    updatedAt: Date;
 };
 
 /**
@@ -267,6 +303,33 @@ export type UserDeleteResponse = {
 };
 
 /**
+ * UserLanguageRankResponse
+ */
+export type UserLanguageRankResponse = {
+    userId: number;
+    username: string;
+    language: string;
+    totalMinutes: number;
+    rank: number;
+    percentile: number;
+    totalUsers: number;
+    timeRangeDays?: number | null;
+    updatedAt: Date;
+};
+
+/**
+ * UserOverallRankResponse
+ */
+export type UserOverallRankResponse = {
+    userId: number;
+    username: string;
+    totalMinutes: number;
+    percentile: number;
+    timeRangeDays?: number | null;
+    updatedAt: Date;
+};
+
+/**
  * UserSelfPublic
  */
 export type UserSelfPublic = {
@@ -367,6 +430,26 @@ export type DtoUserPublic = {
 };
 
 /**
+ * UserTopLanguageRankEntry
+ */
+export type DtoUserTopLanguageRankEntry = {
+    language: string;
+    totalMinutes: number;
+    percentile: number;
+};
+
+/**
+ * UserTopLanguagesRankResponse
+ */
+export type DtoUserTopLanguagesRankResponse = {
+    userId: number;
+    username: string;
+    entries: Array<DtoUserTopLanguageRankEntry>;
+    timeRangeDays?: number | null;
+    updatedAt: Date;
+};
+
+/**
  * UserPublic
  */
 export type SrcDtoUserPublic = {
@@ -380,6 +463,26 @@ export type SrcDtoUserPublic = {
     plan: string;
     timezone?: string | null;
     createdAt: Date;
+    updatedAt: Date;
+};
+
+/**
+ * UserTopLanguageRankEntry
+ */
+export type SrcDtoUserTopLanguageRankEntry = {
+    language: string;
+    totalMinutes: number;
+    percentile: number;
+};
+
+/**
+ * UserTopLanguagesRankResponse
+ */
+export type SrcDtoUserTopLanguagesRankResponse = {
+    userId: number;
+    username: string;
+    entries: Array<SrcDtoUserTopLanguageRankEntry>;
+    timeRangeDays?: number | null;
     updatedAt: Date;
 };
 
@@ -487,8 +590,12 @@ export type V3LogoutResponses = {
     /**
      * Document created, URL follows
      */
-    201: unknown;
+    201: {
+        [key: string]: unknown;
+    };
 };
+
+export type V3LogoutResponse = V3LogoutResponses[keyof V3LogoutResponses];
 
 export type V3RefreshTokenData = {
     body?: never;
@@ -647,6 +754,76 @@ export type V3GetSelfMinutesResponses = {
 };
 
 export type V3GetSelfMinutesResponse = V3GetSelfMinutesResponses[keyof V3GetSelfMinutesResponses];
+
+export type V3GetSelfOverallRankData = {
+    body?: never;
+    path?: never;
+    query?: {
+        start_time?: Date | null;
+        end_time?: Date | null;
+        days?: number | null;
+    };
+    url: '/v3/users/self/overall-rank';
+};
+
+export type V3GetSelfOverallRankErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetSelfOverallRankError = V3GetSelfOverallRankErrors[keyof V3GetSelfOverallRankErrors];
+
+export type V3GetSelfOverallRankResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: UserOverallRankResponse;
+};
+
+export type V3GetSelfOverallRankResponse = V3GetSelfOverallRankResponses[keyof V3GetSelfOverallRankResponses];
+
+export type V3GetSelfTopLanguagesRankData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Number of top languages to include
+         */
+        top_n?: number;
+        start_time?: Date | null;
+        end_time?: Date | null;
+        days?: number | null;
+    };
+    url: '/v3/users/self/top-languages-rank';
+};
+
+export type V3GetSelfTopLanguagesRankErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetSelfTopLanguagesRankError = V3GetSelfTopLanguagesRankErrors[keyof V3GetSelfTopLanguagesRankErrors];
+
+export type V3GetSelfTopLanguagesRankResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: DtoUserTopLanguagesRankResponse;
+};
+
+export type V3GetSelfTopLanguagesRankResponse = V3GetSelfTopLanguagesRankResponses[keyof V3GetSelfTopLanguagesRankResponses];
 
 export type V3GetTimeDistributionData = {
     body?: never;
@@ -1051,7 +1228,9 @@ export type V3GetYearlyReportDataResponse = V3GetYearlyReportDataResponses[keyof
 export type V3CreateCheckoutData = {
     body: CheckoutRequest;
     path?: never;
-    query?: never;
+    query: {
+        session: unknown;
+    };
     url: '/v3/payments/checkout';
 };
 
@@ -1080,9 +1259,24 @@ export type V3CreateCheckoutResponse = V3CreateCheckoutResponses[keyof V3CreateC
 export type V3GetProductsData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        session: unknown;
+    };
     url: '/v3/payments/products';
 };
+
+export type V3GetProductsErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetProductsError = V3GetProductsErrors[keyof V3GetProductsErrors];
 
 export type V3GetProductsResponses = {
     /**
@@ -1096,9 +1290,24 @@ export type V3GetProductsResponse = V3GetProductsResponses[keyof V3GetProductsRe
 export type V3HandleLemonsqueezyWebhookData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        session: unknown;
+    };
     url: '/v3/payments/webhooks/lemonsqueezy';
 };
+
+export type V3HandleLemonsqueezyWebhookErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3HandleLemonsqueezyWebhookError = V3HandleLemonsqueezyWebhookErrors[keyof V3HandleLemonsqueezyWebhookErrors];
 
 export type V3HandleLemonsqueezyWebhookResponses = {
     /**
@@ -1108,6 +1317,64 @@ export type V3HandleLemonsqueezyWebhookResponses = {
 };
 
 export type V3HandleLemonsqueezyWebhookResponse = V3HandleLemonsqueezyWebhookResponses[keyof V3HandleLemonsqueezyWebhookResponses];
+
+export type V3GetActiveDiscountsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/v3/discounts/active';
+};
+
+export type V3GetActiveDiscountsResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: Array<DiscountPublic>;
+};
+
+export type V3GetActiveDiscountsResponse = V3GetActiveDiscountsResponses[keyof V3GetActiveDiscountsResponses];
+
+export type V3GetLanguageRankingData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Programming language to rank by
+         */
+        language: string;
+        /**
+         * Number of entries to return
+         */
+        limit?: number;
+        /**
+         * Number of days to look back, null for all time
+         */
+        days?: number | null;
+    };
+    url: '/v3/public/language-ranking';
+};
+
+export type V3GetLanguageRankingErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetLanguageRankingError = V3GetLanguageRankingErrors[keyof V3GetLanguageRankingErrors];
+
+export type V3GetLanguageRankingResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: LanguageRankingResponse;
+};
+
+export type V3GetLanguageRankingResponse = V3GetLanguageRankingResponses[keyof V3GetLanguageRankingResponses];
 
 export type V3GetLeaderboardData = {
     body?: never;
@@ -1146,6 +1413,89 @@ export type V3GetLeaderboardResponses = {
 };
 
 export type V3GetLeaderboardResponse = V3GetLeaderboardResponses[keyof V3GetLeaderboardResponses];
+
+export type V3GetUserLanguageRankData = {
+    body?: never;
+    path: {
+        user_id: number;
+    };
+    query: {
+        /**
+         * Programming language to check rank for
+         */
+        language: string;
+        /**
+         * Number of days to look back, null for all time
+         */
+        days?: number | null;
+    };
+    url: '/v3/public/users/{user_id}/language-rank';
+};
+
+export type V3GetUserLanguageRankErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetUserLanguageRankError = V3GetUserLanguageRankErrors[keyof V3GetUserLanguageRankErrors];
+
+export type V3GetUserLanguageRankResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: UserLanguageRankResponse;
+};
+
+export type V3GetUserLanguageRankResponse = V3GetUserLanguageRankResponses[keyof V3GetUserLanguageRankResponses];
+
+export type V3GetUserTopLanguagesRankData = {
+    body?: never;
+    path: {
+        /**
+         * User ID to get top languages ranking for
+         */
+        user_id: number;
+    };
+    query?: {
+        /**
+         * Number of top languages to include
+         */
+        top_n?: number;
+        /**
+         * Number of days to look back (None for all time)
+         */
+        days?: number | null;
+    };
+    url: '/v3/public/users/{user_id}/top-languages-rank';
+};
+
+export type V3GetUserTopLanguagesRankErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetUserTopLanguagesRankError = V3GetUserTopLanguagesRankErrors[keyof V3GetUserTopLanguagesRankErrors];
+
+export type V3GetUserTopLanguagesRankResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: SrcDtoUserTopLanguagesRankResponse;
+};
+
+export type V3GetUserTopLanguagesRankResponse = V3GetUserTopLanguagesRankResponses[keyof V3GetUserTopLanguagesRankResponses];
 
 export type V3GetTagsData = {
     body?: never;
@@ -1508,8 +1858,12 @@ export type V3GetResponses = {
     /**
      * Request fulfilled, document follows
      */
-    200: unknown;
+    200: {
+        [key: string]: unknown;
+    };
 };
+
+export type V3GetResponse = V3GetResponses[keyof V3GetResponses];
 
 export type ClientOptions = {
     baseUrl: `${string}://${string}` | (string & {});

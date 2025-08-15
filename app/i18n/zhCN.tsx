@@ -228,6 +228,33 @@ export const zhCN: Partial<Translation> = {
         },
       },
     },
+    pluginGuide: {
+      title: '开始使用 CodeTime',
+      description: '安装 CodeTime 插件，自动追踪您的编程时间',
+      token: {
+        title: '您的令牌',
+        description: '复制此令牌并粘贴到插件设置中',
+      },
+      plugins: {
+        title: '下载插件',
+      },
+      vscode: {
+        title: 'VSCode 系列',
+        description: '兼容 VSCode、Cursor 和 Windsurf',
+      },
+      jetbrains: {
+        title: 'JetBrains 系列',
+        description: '兼容所有 JetBrains IDE',
+      },
+      downloadPlugin: '下载插件',
+      setup: {
+        title: '设置说明',
+        step1: '为您的编辑器下载并安装插件',
+        step2: '在编辑器中打开插件设置',
+        step3: '复制并粘贴上方的令牌',
+        step4: '开始编程，数据将在 2-3 分钟内显示',
+      },
+    },
     badge: {
       preview: {
         title: '预览',
