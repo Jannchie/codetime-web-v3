@@ -36,6 +36,7 @@ export default defineNuxtConfig({
     dirs: [
       'composables/**',
       'utils/**',
+      'i18n/**',
     ],
   },
 
@@ -52,15 +53,22 @@ export default defineNuxtConfig({
   sitemap: {
     hostname: 'https://codetime.dev',
     i18n: {
-      locales: ['zh-CN', 'zh-TW', 'en', 'ja', 'pt-BR', 'it', 'ms', 'ru', 'ua', 'es', 'fr', 'de'],
+      locales: ['en', 'zh-CN'],
       defaultLocale: 'en',
     },
     exclude: [
       '/[...slug]',
+      '/**/dashboard/**',
+      '/**/demo/**',
     ],
     defaults: {
-      changefreq: 'daily',
-      priority: 0.8,
+      changefreq: 'weekly',
+      priority: 0.6,
+    },
+    autoLastmod: false,
+    urls: async () => {
+      // 只为主要页面生成 URL，用户页面通过动态路由处理
+      return []
     },
   },
 

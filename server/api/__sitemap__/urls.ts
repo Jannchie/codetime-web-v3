@@ -2,42 +2,43 @@ import { locales } from '~/i18n'
 
 export default defineSitemapEventHandler(async () => {
   const urls = []
-  
+
   // Add homepage for all locales
   for (const locale of locales) {
     urls.push({
       loc: `/${locale}`,
       changefreq: 'daily',
-      priority: 1.0,
-      lastmod: new Date().toISOString()
+      priority: 1,
+      lastmod: new Date().toISOString(),
     })
   }
-  
-  // Add static pages for all locales
-  const staticPages = [
-    '/dashboard',
-    '/dashboard/workspace', 
-    '/dashboard/leaderboard',
-    '/dashboard/badges',
-    '/dashboard/tags',
-    '/dashboard/settings',
-    '/demo'
-  ]
-  
+
+  // Add only leaderboard page from dashboard
   for (const locale of locales) {
-    for (const page of staticPages) {
+    urls.push({
+      loc: `/${locale}/dashboard/leaderboard`,
+      changefreq: 'daily',
+      priority: 0.9,
+      lastmod: new Date().toISOString(),
+    })
+  }
+
+  // Add user profile pages
+  // Note: In production, you might want to fetch this from your API
+  // For now, adding some example user IDs
+  // You can replace this with actual API calls to get user list
+  const exampleUserIds = [1, 2, 3, 4, 5] // Replace with real user IDs from API
+
+  for (const locale of locales) {
+    for (const userId of exampleUserIds) {
       urls.push({
-        loc: `/${locale}${page}`,
+        loc: `/${locale}/user/${userId}`,
         changefreq: 'weekly',
-        priority: 0.8,
-        lastmod: new Date().toISOString()
+        priority: 0.7,
+        lastmod: new Date().toISOString(),
       })
     }
   }
-  
-  // TODO: Add dynamic user profile pages
-  // This would require API calls to get user list
-  // for now we skip them as they might be private
-  
+
   return urls
 })

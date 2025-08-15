@@ -1,4 +1,6 @@
 import type { Translation } from './type'
+import { defineComponent } from 'vue'
+import NuxtLink from './NuxtLink'
 
 export const de: Partial<Translation> = {
   annualReport: {
