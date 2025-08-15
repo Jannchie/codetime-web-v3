@@ -165,6 +165,14 @@ export type Translation = {
         platform: string
         workspace: string
       }
+      total: {
+        time: string
+      }
+      ranking: string
+      hours: string
+      active: {
+        days: string
+      }
       noData: {
         notice: {
           title: string

@@ -199,6 +199,14 @@ export const zhCN: Partial<Translation> = {
         platform: '平台',
         workspace: '工作区',
       },
+      total: {
+        time: '总编程时间',
+      },
+      ranking: '排名',
+      hours: '小时',
+      active: {
+        days: '活跃天数',
+      },
       noData: {
         notice: {
           title: '还没有数据',

@@ -270,28 +270,18 @@ export const PlanStatusSchema = {
 
 export const PrivacySettingsRequestSchema = {
     properties: {
-        privacyLevel: {
-            type: 'string'
-        },
-        showEmail: {
-            type: 'boolean',
-            default: false
-        },
         showGithub: {
             type: 'boolean',
             default: false
         }
     },
     type: 'object',
-    required: ['privacyLevel'],
+    required: [],
     title: 'PrivacySettingsRequest'
 } as const;
 
 export const PrivacySettingsResponseSchema = {
     properties: {
-        privacyLevel: {
-            type: 'string'
-        },
         showEmail: {
             type: 'boolean'
         },
@@ -300,7 +290,7 @@ export const PrivacySettingsResponseSchema = {
         }
     },
     type: 'object',
-    required: ['privacyLevel', 'showEmail', 'showGithub'],
+    required: ['showEmail', 'showGithub'],
     title: 'PrivacySettingsResponse'
 } as const;
 
@@ -424,25 +414,11 @@ export const StatsResponseSchema = {
     title: 'StatsResponse'
 } as const;
 
-export const StatsTimeDataSchema = {
-    properties: {
-        duration: {
-            type: 'integer'
-        },
-        time: {
-            type: 'string'
-        }
-    },
-    type: 'object',
-    required: ['duration', 'time'],
-    title: 'StatsTimeData'
-} as const;
-
 export const StatsTimeResponseSchema = {
     properties: {
         data: {
             items: {
-                '$ref': '#/components/schemas/StatsTimeData'
+                '$ref': '#/components/schemas/dto_StatsTimeData'
             },
             type: 'array'
         }
@@ -483,7 +459,7 @@ export const TagHistoryResponseSchema = {
         },
         data: {
             items: {
-                '$ref': '#/components/schemas/StatsTimeData'
+                '$ref': '#/components/schemas/dto_StatsTimeData'
             },
             type: 'array'
         },
@@ -696,6 +672,44 @@ export const TotalMinutesResponseSchema = {
     title: 'TotalMinutesResponse'
 } as const;
 
+export const UserCodingHistoryResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        data: {
+            items: {
+                '$ref': '#/components/schemas/src_dto_StatsTimeData'
+            },
+            type: 'array'
+        },
+        periodStart: {
+            type: 'string',
+            format: 'date'
+        },
+        periodEnd: {
+            type: 'string',
+            format: 'date'
+        },
+        timeRangeDays: {
+            type: 'integer'
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['data', 'periodEnd', 'periodStart', 'timeRangeDays', 'totalMinutes', 'updatedAt', 'userId', 'username'],
+    title: 'UserCodingHistoryResponse'
+} as const;
+
 export const UserDeleteResponseSchema = {
     properties: {
         success: {
@@ -751,40 +765,6 @@ export const UserLanguageRankResponseSchema = {
     type: 'object',
     required: ['language', 'percentile', 'rank', 'totalMinutes', 'totalUsers', 'updatedAt', 'userId', 'username'],
     title: 'UserLanguageRankResponse'
-} as const;
-
-export const UserOverallRankResponseSchema = {
-    properties: {
-        userId: {
-            type: 'integer'
-        },
-        username: {
-            type: 'string'
-        },
-        totalMinutes: {
-            type: 'integer'
-        },
-        percentile: {
-            type: 'number'
-        },
-        timeRangeDays: {
-            oneOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time'
-        }
-    },
-    type: 'object',
-    required: ['percentile', 'totalMinutes', 'updatedAt', 'userId', 'username'],
-    title: 'UserOverallRankResponse'
 } as const;
 
 export const UserSelfPublicSchema = {
@@ -1051,6 +1031,54 @@ export const YearlyReportDataPublicSchema = {
     title: 'YearlyReportDataPublic'
 } as const;
 
+export const dto_StatsTimeDataSchema = {
+    properties: {
+        duration: {
+            type: 'integer'
+        },
+        time: {
+            type: 'string'
+        }
+    },
+    type: 'object',
+    required: ['duration', 'time'],
+    title: 'StatsTimeData'
+} as const;
+
+export const dto_UserOverallRankResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['percentile', 'totalMinutes', 'updatedAt', 'userId', 'username'],
+    title: 'UserOverallRankResponse'
+} as const;
+
 export const dto_UserPublicSchema = {
     properties: {
         id: {
@@ -1185,6 +1213,54 @@ export const dto_UserTopLanguagesRankResponseSchema = {
     type: 'object',
     required: ['entries', 'updatedAt', 'userId', 'username'],
     title: 'UserTopLanguagesRankResponse'
+} as const;
+
+export const src_dto_StatsTimeDataSchema = {
+    properties: {
+        duration: {
+            type: 'integer'
+        },
+        time: {
+            type: 'string'
+        }
+    },
+    type: 'object',
+    required: ['duration', 'time'],
+    title: 'StatsTimeData'
+} as const;
+
+export const src_dto_UserOverallRankResponseSchema = {
+    properties: {
+        userId: {
+            type: 'integer'
+        },
+        username: {
+            type: 'string'
+        },
+        totalMinutes: {
+            type: 'integer'
+        },
+        percentile: {
+            type: 'number'
+        },
+        timeRangeDays: {
+            oneOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    type: 'object',
+    required: ['percentile', 'totalMinutes', 'updatedAt', 'userId', 'username'],
+    title: 'UserOverallRankResponse'
 } as const;
 
 export const src_dto_UserPublicSchema = {

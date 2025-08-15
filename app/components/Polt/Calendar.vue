@@ -19,16 +19,18 @@ watch([op], () => {
 <template>
   <div
     ref="calendarWrapper"
-    class="overflow-x-auto"
+    class="overflow-x-auto flex justify-center calendar-container"
   >
-    <div
-      class="min-w-[700px]"
-    >
-      <PoltRenderer
-        class="flex"
-        :options="op"
-        @pointerup="(e: PointerEvent, d: any) => console.log(e, d)"
-      />
-    </div>
+    <PoltRenderer
+      :options="op"
+      @pointerup="(e: PointerEvent, d: any) => console.log(e, d)"
+    />
   </div>
 </template>
+
+<style scoped>
+.calendar-container :deep(.plot) {
+  --plot-background: transparent !important;
+  background: transparent !important;
+}
+</style>

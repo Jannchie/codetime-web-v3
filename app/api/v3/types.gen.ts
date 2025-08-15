@@ -109,8 +109,6 @@ export type PlanStatus = 'active' | 'cancelled' | 'expired' | 'on_trial' | 'paus
  * PrivacySettingsRequest
  */
 export type PrivacySettingsRequest = {
-    privacyLevel: string;
-    showEmail?: boolean;
     showGithub?: boolean;
 };
 
@@ -118,7 +116,6 @@ export type PrivacySettingsRequest = {
  * PrivacySettingsResponse
  */
 export type PrivacySettingsResponse = {
-    privacyLevel: string;
     showEmail: boolean;
     showGithub: boolean;
 };
@@ -178,18 +175,10 @@ export type StatsResponse = {
 };
 
 /**
- * StatsTimeData
- */
-export type StatsTimeData = {
-    duration: number;
-    time: string;
-};
-
-/**
  * StatsTimeResponse
  */
 export type StatsTimeResponse = {
-    data: Array<StatsTimeData>;
+    data: Array<DtoStatsTimeData>;
 };
 
 /**
@@ -206,7 +195,7 @@ export type TagCreateRequest = {
  */
 export type TagHistoryResponse = {
     tag: TagResponse;
-    data: Array<StatsTimeData>;
+    data: Array<DtoStatsTimeData>;
     totalMinutes: number;
     periodStart: Date;
     periodEnd: Date;
@@ -295,6 +284,20 @@ export type TotalMinutesResponse = {
 };
 
 /**
+ * UserCodingHistoryResponse
+ */
+export type UserCodingHistoryResponse = {
+    userId: number;
+    username: string;
+    totalMinutes: number;
+    data: Array<SrcDtoStatsTimeData>;
+    periodStart: Date;
+    periodEnd: Date;
+    timeRangeDays: number;
+    updatedAt: Date;
+};
+
+/**
  * UserDeleteResponse
  */
 export type UserDeleteResponse = {
@@ -313,18 +316,6 @@ export type UserLanguageRankResponse = {
     rank: number;
     percentile: number;
     totalUsers: number;
-    timeRangeDays?: number | null;
-    updatedAt: Date;
-};
-
-/**
- * UserOverallRankResponse
- */
-export type UserOverallRankResponse = {
-    userId: number;
-    username: string;
-    totalMinutes: number;
-    percentile: number;
     timeRangeDays?: number | null;
     updatedAt: Date;
 };
@@ -413,6 +404,26 @@ export type YearlyReportDataPublic = {
 };
 
 /**
+ * StatsTimeData
+ */
+export type DtoStatsTimeData = {
+    duration: number;
+    time: string;
+};
+
+/**
+ * UserOverallRankResponse
+ */
+export type DtoUserOverallRankResponse = {
+    userId: number;
+    username: string;
+    totalMinutes: number;
+    percentile: number;
+    timeRangeDays?: number | null;
+    updatedAt: Date;
+};
+
+/**
  * UserPublic
  */
 export type DtoUserPublic = {
@@ -445,6 +456,26 @@ export type DtoUserTopLanguagesRankResponse = {
     userId: number;
     username: string;
     entries: Array<DtoUserTopLanguageRankEntry>;
+    timeRangeDays?: number | null;
+    updatedAt: Date;
+};
+
+/**
+ * StatsTimeData
+ */
+export type SrcDtoStatsTimeData = {
+    duration: number;
+    time: string;
+};
+
+/**
+ * UserOverallRankResponse
+ */
+export type SrcDtoUserOverallRankResponse = {
+    userId: number;
+    username: string;
+    totalMinutes: number;
+    percentile: number;
     timeRangeDays?: number | null;
     updatedAt: Date;
 };
@@ -783,7 +814,7 @@ export type V3GetSelfOverallRankResponses = {
     /**
      * Request fulfilled, document follows
      */
-    200: UserOverallRankResponse;
+    200: DtoUserOverallRankResponse;
 };
 
 export type V3GetSelfOverallRankResponse = V3GetSelfOverallRankResponses[keyof V3GetSelfOverallRankResponses];
@@ -1228,9 +1259,7 @@ export type V3GetYearlyReportDataResponse = V3GetYearlyReportDataResponses[keyof
 export type V3CreateCheckoutData = {
     body: CheckoutRequest;
     path?: never;
-    query: {
-        session: unknown;
-    };
+    query?: never;
     url: '/v3/payments/checkout';
 };
 
@@ -1259,24 +1288,9 @@ export type V3CreateCheckoutResponse = V3CreateCheckoutResponses[keyof V3CreateC
 export type V3GetProductsData = {
     body?: never;
     path?: never;
-    query: {
-        session: unknown;
-    };
+    query?: never;
     url: '/v3/payments/products';
 };
-
-export type V3GetProductsErrors = {
-    /**
-     * Validation Exception
-     */
-    400: {
-        status_code: number;
-        detail: string;
-        extra?: null | Array<unknown> | Array<unknown>;
-    };
-};
-
-export type V3GetProductsError = V3GetProductsErrors[keyof V3GetProductsErrors];
 
 export type V3GetProductsResponses = {
     /**
@@ -1290,24 +1304,9 @@ export type V3GetProductsResponse = V3GetProductsResponses[keyof V3GetProductsRe
 export type V3HandleLemonsqueezyWebhookData = {
     body?: never;
     path?: never;
-    query: {
-        session: unknown;
-    };
+    query?: never;
     url: '/v3/payments/webhooks/lemonsqueezy';
 };
-
-export type V3HandleLemonsqueezyWebhookErrors = {
-    /**
-     * Validation Exception
-     */
-    400: {
-        status_code: number;
-        detail: string;
-        extra?: null | Array<unknown> | Array<unknown>;
-    };
-};
-
-export type V3HandleLemonsqueezyWebhookError = V3HandleLemonsqueezyWebhookErrors[keyof V3HandleLemonsqueezyWebhookErrors];
 
 export type V3HandleLemonsqueezyWebhookResponses = {
     /**
@@ -1414,6 +1413,45 @@ export type V3GetLeaderboardResponses = {
 
 export type V3GetLeaderboardResponse = V3GetLeaderboardResponses[keyof V3GetLeaderboardResponses];
 
+export type V3GetUserCodingHistoryData = {
+    body?: never;
+    path: {
+        /**
+         * User ID to get coding history for
+         */
+        user_id: number;
+    };
+    query?: {
+        /**
+         * Number of days to look back (max 90 for non-pro users)
+         */
+        days?: number;
+    };
+    url: '/v3/public/users/{user_id}/coding-history';
+};
+
+export type V3GetUserCodingHistoryErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetUserCodingHistoryError = V3GetUserCodingHistoryErrors[keyof V3GetUserCodingHistoryErrors];
+
+export type V3GetUserCodingHistoryResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: UserCodingHistoryResponse;
+};
+
+export type V3GetUserCodingHistoryResponse = V3GetUserCodingHistoryResponses[keyof V3GetUserCodingHistoryResponses];
+
 export type V3GetUserLanguageRankData = {
     body?: never;
     path: {
@@ -1453,6 +1491,45 @@ export type V3GetUserLanguageRankResponses = {
 };
 
 export type V3GetUserLanguageRankResponse = V3GetUserLanguageRankResponses[keyof V3GetUserLanguageRankResponses];
+
+export type V3GetUserOverallRankData = {
+    body?: never;
+    path: {
+        /**
+         * User ID to get overall ranking for
+         */
+        user_id: number;
+    };
+    query?: {
+        /**
+         * Number of days to look back (None for all time)
+         */
+        days?: number | null;
+    };
+    url: '/v3/public/users/{user_id}/overall-rank';
+};
+
+export type V3GetUserOverallRankErrors = {
+    /**
+     * Validation Exception
+     */
+    400: {
+        status_code: number;
+        detail: string;
+        extra?: null | Array<unknown> | Array<unknown>;
+    };
+};
+
+export type V3GetUserOverallRankError = V3GetUserOverallRankErrors[keyof V3GetUserOverallRankErrors];
+
+export type V3GetUserOverallRankResponses = {
+    /**
+     * Request fulfilled, document follows
+     */
+    200: SrcDtoUserOverallRankResponse;
+};
+
+export type V3GetUserOverallRankResponse = V3GetUserOverallRankResponses[keyof V3GetUserOverallRankResponses];
 
 export type V3GetUserTopLanguagesRankData = {
     body?: never;

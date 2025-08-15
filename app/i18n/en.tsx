@@ -199,6 +199,14 @@ export const en: Translation = {
         platform: 'Platform',
         workspace: 'Workspace',
       },
+      total: {
+        time: 'Total Coding Time',
+      },
+      ranking: 'Ranking',
+      hours: 'hours',
+      active: {
+        days: 'Active Days',
+      },
       noData: {
         notice: {
           title: 'No data yet',
