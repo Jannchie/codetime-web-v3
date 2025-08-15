@@ -3,7 +3,7 @@ type StatsOverviewProps = {
   totalMinutes: number
   rank?: number
   percentile?: number
-  topLanguage?: string
+  topLanguage?: string | null
   timeRangeDays?: number
   loading?: boolean
 }

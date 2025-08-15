@@ -15,6 +15,7 @@ const resp = useAsyncData(`leaderboard-${days.value}`, async () => {
     },
   })
   return result.data?.entries?.map(entry => ({
+    id: entry.user.id,
     username: entry.user.username,
     avatar: entry.user.avatar,
     minutes: entry.totalMinutes,
@@ -25,6 +26,12 @@ const resp = useAsyncData(`leaderboard-${days.value}`, async () => {
 })
 
 const fromDate = d3.utcDay.offset(new Date(), -days.value)
+
+const locale = useLocale()
+
+function navigateToUser(userId: number) {
+  navigateTo(`/${locale.value}/user/${userId}`)
+}
 </script>
 
 <template>
@@ -37,8 +44,10 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
     </div>
   </div>
 
+  <LeaderboardUserPosition :days="days" />
+
   <Paper
-    class="rounded-2xl flex flex-col gap-6 h-full w-full"
+    class="rounded-2xl flex flex-col gap-6 w-full"
   >
     <template v-if="resp.status.value === 'pending'">
       <div v-for="i in 20" :key="i" class="flex gap-4 items-center justify-between">
@@ -59,7 +68,8 @@ const fromDate = d3.utcDay.offset(new Date(), -days.value)
       <div
         v-for="item, i in resp.data.value"
         :key="item.username"
-        class="flex gap-4 items-center justify-between"
+        class="p-2 rounded-lg flex gap-4 cursor-pointer transition-colors items-center justify-between -m-2 hover:bg-surface-variant-2"
+        @click="navigateToUser(item.id)"
       >
         <div class="flex gap-2 items-center">
           <div class="text-center w-8">
