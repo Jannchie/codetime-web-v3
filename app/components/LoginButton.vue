@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UserSelfPublic } from '~/api/v3'
 import { Btn } from '@roku-ui/vue'
-import NuxtLink from '~/i18n/NuxtLink.vue'
+import NuxtLink from '~/i18n/NuxtLink'
 
 const locale = useRoute().params.locale as string
 const user = inject<Ref<UserSelfPublic | null>>('user', ref(null))
