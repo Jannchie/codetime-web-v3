@@ -1,5 +1,4 @@
 import type { Translation } from './type'
-import NuxtLink from './NuxtLink.vue'
 
 export const zhCN: Partial<Translation> = {
   annualReport: {

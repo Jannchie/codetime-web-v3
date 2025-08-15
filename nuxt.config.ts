@@ -36,11 +36,10 @@ export default defineNuxtConfig({
     dirs: [
       'composables/**',
       'utils/**',
-      'i18n/**',
     ],
   },
 
-  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', '@nuxt/image', 'nuxt-gtag', [
+  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@nuxtjs/robots', '@nuxtjs/sitemap', '@nuxt/image', 'nuxt-gtag', [
     '@nuxtjs/google-fonts',
     {
       download: true,
@@ -48,7 +47,22 @@ export default defineNuxtConfig({
         'Share Tech Mono': true,
       },
     },
-  ], 'nuxt-og-image', '@sentry/nuxt'],
+  ], '@sentry/nuxt'],
+
+  sitemap: {
+    hostname: 'https://codetime.dev',
+    i18n: {
+      locales: ['zh-CN', 'zh-TW', 'en', 'ja', 'pt-BR', 'it', 'ms', 'ru', 'ua', 'es', 'fr', 'de'],
+      defaultLocale: 'en',
+    },
+    exclude: [
+      '/[...slug]',
+    ],
+    defaults: {
+      changefreq: 'daily',
+      priority: 0.8,
+    },
+  },
 
   sentry: {
     dsn: process.env.NUXT_PUBLIC_SENTRY_DSN || 'https://3682972d2ab3f65b115e618182c7fa35@o4509038403911680.ingest.us.sentry.io/4509768911486976',

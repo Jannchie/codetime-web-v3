@@ -169,14 +169,44 @@ const bestLanguagePercentile = computed(() => {
 
 // 设置SEO元数据
 watchEffect(() => {
-  useSeoMeta({
-    title: `${user.value?.username} - CodeTime`,
-    description: user.value?.bio || `${user.value?.username}'s CodeTime profile`,
-    ogTitle: `${user.value?.username} - CodeTime`,
-    ogDescription: user.value?.bio || `${user.value?.username}'s CodeTime profile`,
-    twitterTitle: `${user.value?.username} - CodeTime`,
-    twitterDescription: user.value?.bio || `${user.value?.username}'s CodeTime profile`,
-  })
+  if (user.value && !userHiddenData.value) {
+    useSeoMeta({
+      title: `${user.value.username} - CodeTime Developer Profile`,
+      description: user.value.bio || `View ${user.value.username}'s programming analytics, coding patterns, and development insights on CodeTime. See their most used programming languages and coding activity.`,
+      keywords: `${user.value.username}, developer profile, programming analytics, coding statistics, ${topLanguage.value || 'programming'} developer`,
+      ogTitle: `${user.value.username} - CodeTime Developer Profile`,
+      ogDescription: user.value.bio || `View ${user.value.username}'s programming analytics and coding patterns`,
+      ogType: 'profile',
+      ogImage: user.value.avatar || '/icon.png',
+      twitterTitle: `${user.value.username} - CodeTime Developer Profile`,
+      twitterDescription: user.value.bio || `View ${user.value.username}'s programming analytics`,
+      twitterCard: 'summary',
+    })
+
+    // JSON-LD structured data for Person
+    // TODO: Add structured data when @nuxtjs/seo is properly configured
+    // useSchemaOrg([
+    //   definePerson({
+    //     name: user.value.username,
+    //     url: `https://codetime.dev/en/user/${uid.value}`,
+    //     image: user.value.avatar,
+    //     description: user.value.bio,
+    //     jobTitle: 'Software Developer',
+    //     knowsAbout: topLanguagesRanks.value.map(lang => lang.language).filter(Boolean),
+    //     sameAs: user.value.githubId ? [`https://github.com/${user.value.githubId}`] : undefined,
+    //     worksFor: {
+    //       '@type': 'Organization',
+    //       name: 'CodeTime Community'
+    //     }
+    //   }),
+    //   // BreadcrumbList for navigation
+    //   defineBreadcrumb([
+    //     { name: 'Home', item: 'https://codetime.dev' },
+    //     { name: 'Users', item: 'https://codetime.dev/users' },
+    //     { name: user.value.username, item: `https://codetime.dev/en/user/${uid.value}` }
+    //   ])
+    // ])
+  }
 })
 </script>
 

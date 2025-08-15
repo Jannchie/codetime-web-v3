@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
+    "@nuxtjs/seo": "^3.1.0",
+    "@nuxtjs/sitemap": "^7.4.3",
     "@observablehq/plot": "^0.6.17",
     "@roku-ui/preset": "^0.27.0",
     "@roku-ui/vue": "^0.27.0",

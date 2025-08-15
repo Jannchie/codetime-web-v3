@@ -7,6 +7,54 @@ definePageMeta({
   layout: 'landing',
 })
 const t = useI18N()
+const locale = useLocale()
+
+// Enhanced SEO meta tags
+watchEffect(() => {
+  useSeoMeta({
+    title: 'Code Time - Programming Time Analytics & Insights',
+    description: 'Track your programming time, analyze coding patterns, and get insights into your development productivity. Compatible with VS Code, JetBrains IDEs, and more.',
+    keywords: 'programming time tracker, coding analytics, developer productivity, code metrics, programming insights, VS Code extension, JetBrains plugin',
+    ogTitle: 'Code Time - Programming Time Analytics & Insights',
+    ogDescription: 'Track your programming time, analyze coding patterns, and get insights into your development productivity. Compatible with VS Code, JetBrains IDEs, and more.',
+    ogType: 'website',
+    ogImage: '/icon.png',
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'Code Time - Programming Time Analytics & Insights',
+    twitterDescription: 'Track your programming time, analyze coding patterns, and get insights into your development productivity.',
+  })
+})
+
+// JSON-LD structured data for Organization
+// TODO: Add structured data when @nuxtjs/seo is properly configured
+// useSchemaOrg([
+//   defineOrganization({
+//     name: 'Code Time',
+//     url: 'https://codetime.dev',
+//     logo: 'https://codetime.dev/icon.png',
+//     description: 'Programming time analytics and insights platform',
+//     foundingDate: '2021',
+//     sameAs: [
+//       // Add social media URLs if available
+//     ],
+//     contactPoint: {
+//       '@type': 'ContactPoint',
+//       contactType: 'customer support',
+//       availableLanguage: ['English', '中文', 'Japanese', 'German', 'French', 'Spanish', 'Italian', 'Russian', 'Ukrainian', 'Malay', 'Portuguese']
+//     }
+//   }),
+//   defineWebSite({
+//     name: 'Code Time',
+//     url: 'https://codetime.dev',
+//     description: 'Programming time analytics and insights platform',
+//     inLanguage: locale.value,
+//     potentialAction: {
+//       '@type': 'SearchAction',
+//       target: 'https://codetime.dev/{locale}/dashboard?search={search_term_string}',
+//       'query-input': 'required name=search_term_string'
+//     }
+//   })
+// ])
 </script>
 
 <template>
