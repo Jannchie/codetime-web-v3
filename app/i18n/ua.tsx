@@ -212,6 +212,18 @@ export const ua: Partial<Translation> = {
         platform: 'Платформа',
         workspace: 'Робочий простір',
       },
+      total: {
+        time: 'Загальний час програмування',
+      },
+      recent: {
+        time: 'Нещодавній час програмування',
+      },
+      ranking: 'Рейтинг',
+      hours: 'годин',
+      active: {
+        days: 'Активні дні',
+      },
+      topLanguage: 'Основна мова',
       noData: {
         notice: {
           title: 'Ще немає даних',

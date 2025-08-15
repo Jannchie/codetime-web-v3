@@ -202,11 +202,15 @@ export const zhCN: Partial<Translation> = {
       total: {
         time: '总编程时间',
       },
+      recent: {
+        time: '最近编程时间',
+      },
       ranking: '排名',
       hours: '小时',
       active: {
         days: '活跃天数',
       },
+      topLanguage: '最常用语言',
       noData: {
         notice: {
           title: '还没有数据',

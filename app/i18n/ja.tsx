@@ -199,6 +199,18 @@ export const ja: Partial<Translation> = {
         platform: 'プラットフォーム',
         workspace: 'ワークスペース',
       },
+      total: {
+        time: '総コーディング時間',
+      },
+      recent: {
+        time: '最近のコーディング時間',
+      },
+      ranking: 'ランキング',
+      hours: '時間',
+      active: {
+        days: 'アクティブ日数',
+      },
+      topLanguage: 'トップ言語',
       noData: {
         notice: {
           title: 'まだデータがありません',

@@ -199,6 +199,18 @@ export const zhTW: Partial<Translation> = {
         platform: '平台',
         workspace: '工作區',
       },
+      total: {
+        time: '總編程時間',
+      },
+      recent: {
+        time: '最近編程時間',
+      },
+      ranking: '排名',
+      hours: '小時',
+      active: {
+        days: '活躍天數',
+      },
+      topLanguage: '最常用語言',
       noData: {
         notice: {
           title: '尚無資料',

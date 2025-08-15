@@ -131,37 +131,36 @@ const recentActivityData = computed(() => {
     .sort((a: { date: Date, duration: number }, b: { date: Date, duration: number }) => a.date.getTime() - b.date.getTime())
 })
 
-// 使用新API的数据更新统计概览
-const totalMinutesFromHistory = computed(() => {
+// 90天内的编程时间数据（来自编程历史API）
+const periodMinutesFromHistory = computed(() => {
   return codingHistoryData.value?.totalMinutes || 0
 })
 
-// 更新活跃天数计算（基于实际有编程记录的天数）
-const activeDaysFromHistory = computed(() => {
-  return recentActivityData.value.filter((d: { date: Date, duration: number }) => d.duration > 0).length
+// 最常用语言计算
+const topLanguage = computed(() => {
+  if (topLanguagesRanks.value.length > 0) {
+    return topLanguagesRanks.value[0]?.language
+  }
+  return null
 })
 
-// 计算统计概览数据
+// 时间段范围（天数）
+const timeRangeDays = computed(() => {
+  return codingHistoryData.value?.timeRangeDays || 90
+})
+
+// 统计概览数据 - 使用90天内的时间
 const totalMinutes = computed(() => {
-  // 优先使用编程历史API的总时间，如果没有则使用语言排名数据
-  if (totalMinutesFromHistory.value > 0) {
-    return totalMinutesFromHistory.value
+  // 优先使用编程历史API的90天数据
+  if (periodMinutesFromHistory.value > 0) {
+    return periodMinutesFromHistory.value
   }
-  return topLanguagesRanks.value.reduce((sum, item) => sum + item.totalMinutes, 0)
+  // 如果没有历史数据，显示0（因为我们只要90天内的数据）
+  return 0
 })
 
-const activeDays = computed(() => {
-  // 优先使用编程历史API的活跃天数，如果没有则估算
-  if (activeDaysFromHistory.value > 0) {
-    return activeDaysFromHistory.value
-  }
-  // 简单估算：假设平均每天编程1小时，可以基于总时间估算活跃天数
-  const estimatedDays = Math.min(Math.floor(totalMinutes.value / 60), 365)
-  return estimatedDays
-})
-
-const bestPercentile = computed(() => {
-  // 使用最好的语言排名百分位数作为整体排名参考
+const bestLanguagePercentile = computed(() => {
+  // 使用最好的语言排名百分位数（基于90天内的数据）
   if (topLanguagesRanks.value.length > 0) {
     return Math.min(...topLanguagesRanks.value.map(item => item.percentile))
   }
@@ -242,8 +241,9 @@ watchEffect(() => {
       <div v-if="!userHiddenData" class="mb-8">
         <UserStatsOverview
           :total-minutes="totalMinutes"
-          :percentile="bestPercentile"
-          :active-days="activeDays"
+          :percentile="bestLanguagePercentile ?? undefined"
+          :top-language="topLanguage"
+          :time-range-days="timeRangeDays"
           :loading="languagesPending || codingHistoryPending"
         />
       </div>

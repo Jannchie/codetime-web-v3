@@ -19,7 +19,7 @@ watch([op], () => {
 <template>
   <div
     ref="calendarWrapper"
-    class="overflow-x-auto flex justify-center calendar-container"
+    class="calendar-container flex justify-center overflow-x-auto"
   >
     <PoltRenderer
       :options="op"

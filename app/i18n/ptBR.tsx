@@ -199,6 +199,18 @@ export const ptBR: Partial<Translation> = {
         platform: 'Plataforma',
         workspace: 'Espaço de trabalho',
       },
+      total: {
+        time: 'Tempo Total de Codificação',
+      },
+      recent: {
+        time: 'Tempo de Codificação Recente',
+      },
+      ranking: 'Ranking',
+      hours: 'horas',
+      active: {
+        days: 'Dias Ativos',
+      },
+      topLanguage: 'Linguagem Principal',
       noData: {
         notice: {
           title: 'Ainda não há dados',

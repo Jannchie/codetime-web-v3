@@ -199,6 +199,18 @@ export const es: Partial<Translation> = {
         platform: 'Plataforma',
         workspace: 'Espacio de trabajo',
       },
+      total: {
+        time: 'Tiempo Total de Codificación',
+      },
+      recent: {
+        time: 'Tiempo de Codificación Reciente',
+      },
+      ranking: 'Ranking',
+      hours: 'horas',
+      active: {
+        days: 'Días Activos',
+      },
+      topLanguage: 'Lenguaje Principal',
       noData: {
         notice: {
           title: 'Aún no hay datos',

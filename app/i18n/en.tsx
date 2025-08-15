@@ -202,11 +202,15 @@ export const en: Translation = {
       total: {
         time: 'Total Coding Time',
       },
+      recent: {
+        time: 'Recent Coding Time',
+      },
       ranking: 'Ranking',
       hours: 'hours',
       active: {
         days: 'Active Days',
       },
+      topLanguage: 'Top Language',
       noData: {
         notice: {
           title: 'No data yet',

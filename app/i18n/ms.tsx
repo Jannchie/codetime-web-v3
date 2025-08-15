@@ -199,6 +199,18 @@ export const ms: Partial<Translation> = {
         platform: 'Platform',
         workspace: 'Ruang kerja',
       },
+      total: {
+        time: 'Jumlah Masa Pengkodan',
+      },
+      recent: {
+        time: 'Masa Pengkodan Terkini',
+      },
+      ranking: 'Kedudukan',
+      hours: 'jam',
+      active: {
+        days: 'Hari Aktif',
+      },
+      topLanguage: 'Bahasa Utama',
       noData: {
         notice: {
           title: 'Tiada data lagi',

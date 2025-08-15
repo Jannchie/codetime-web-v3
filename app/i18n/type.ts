@@ -168,11 +168,15 @@ export type Translation = {
       total: {
         time: string
       }
+      recent: {
+        time: string
+      }
       ranking: string
       hours: string
       active: {
         days: string
       }
+      topLanguage: string
       noData: {
         notice: {
           title: string

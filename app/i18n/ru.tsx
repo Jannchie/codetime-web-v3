@@ -213,6 +213,18 @@ export const ru: Partial<Translation> = {
         platform: 'Платформа',
         workspace: 'Рабочая область',
       },
+      total: {
+        time: 'Общее время программирования',
+      },
+      recent: {
+        time: 'Недавнее время программирования',
+      },
+      ranking: 'Рейтинг',
+      hours: 'часов',
+      active: {
+        days: 'Активные дни',
+      },
+      topLanguage: 'Основной язык',
       noData: {
         notice: {
           title: 'Пока нет данных',
