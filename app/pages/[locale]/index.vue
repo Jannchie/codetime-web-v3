@@ -7,7 +7,6 @@ definePageMeta({
   layout: 'landing',
 })
 const t = useI18N()
-const locale = useLocale()
 
 // Enhanced SEO meta tags
 watchEffect(() => {
