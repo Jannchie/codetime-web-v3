@@ -80,8 +80,28 @@ function navigateToUser() {
 </script>
 
 <template>
+  <template v-if="userRankData.status.value === 'pending'">
+    <Paper
+      no-padding
+      class="mb-4 p-2 border rounded-2xl"
+    >
+      <div class="p-2 rounded-xl flex gap-4 items-center justify-between">
+        <div class="flex gap-2 items-center">
+          <div class="rounded bg-surface-variant-1 h-4 w-8 animate-pulse" />
+          <div class="rounded-full bg-surface-variant-1 h-10 w-10 animate-pulse" />
+          <div class="w-32">
+            <div class="mb-1 rounded bg-surface-variant-1 h-4 w-20 animate-pulse" />
+            <div class="rounded bg-surface-variant-1 h-3 w-16 animate-pulse" />
+          </div>
+        </div>
+        <div class="pr-4">
+          <div class="rounded bg-surface-variant-1 h-4 w-12 animate-pulse" />
+        </div>
+      </div>
+    </Paper>
+  </template>
   <Paper
-    v-if="userRankData.data.value"
+    v-else-if="userRankData.data.value"
     no-padding
     class="mb-4 p-2 border rounded-2xl cursor-pointer transition-colors"
     @click="navigateToUser"
