@@ -58,16 +58,28 @@ const { data, pending } = useAsyncData(async () => {
   watch: [projectName, days],
 })
 
+function normalizeMinutes(value: unknown): number {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : 0
+  }
+  if (typeof value === 'string' && value.trim() !== '') {
+    const parsed = Number.parseFloat(value)
+    return Number.isFinite(parsed) ? parsed : 0
+  }
+  return 0
+}
+
 const gitBranchCountMap = computed(() => {
   const map = new Map<string, number>()
   if (data.value) {
     for (const d of data.value) {
       const branch = d.gitBranch || 'Unknown'
+      const duration = normalizeMinutes(d.minutes)
       if (map.has(branch)) {
-        map.set(branch, map.get(branch)! + 1)
+        map.set(branch, map.get(branch)! + duration)
       }
       else {
-        map.set(branch, 1)
+        map.set(branch, duration)
       }
     }
   }
@@ -75,7 +87,8 @@ const gitBranchCountMap = computed(() => {
   return arr.sort((a, b) => b[1] - a[1])
 })
 const maxBranchCount = computed(() => {
-  return Math.max(...gitBranchCountMap.value.map(([, count]) => count))
+  const counts = gitBranchCountMap.value.map(([, count]) => count)
+  return counts.length > 0 ? Math.max(...counts) : 0
 })
 const height = 26
 </script>
@@ -146,7 +159,7 @@ const height = 26
             <div class="bg-surface-variant my-0.5 rounded-xl h-0.5 overflow-hidden">
               <div
                 class="bg-primary h-full"
-                :style="{ width: `${count / maxBranchCount * 100}%` }"
+                :style="{ width: `${maxBranchCount ? count / maxBranchCount * 100 : 0}%` }"
               />
             </div>
           </div>

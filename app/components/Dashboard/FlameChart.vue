@@ -9,13 +9,25 @@ const props = withDefaults(defineProps<{
   lineHeight: 32,
 })
 
+function normalizeMinutes(value: unknown): number {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : 0
+  }
+  if (typeof value === 'string' && value.trim() !== '') {
+    const parsed = Number.parseFloat(value)
+    return Number.isFinite(parsed) ? parsed : 0
+  }
+  return 0
+}
+
 const relativeFileCountList = computed(() => {
-  // count by relativeFile
+  // sum minutes by relativeFile so the flame chart reflects actual activity
   const countMap = new Map<string, number>()
   if (props.data) {
     for (const item of props.data) {
-      const count = countMap.get(item.relativeFile) ?? 0
-      countMap.set(item.relativeFile, count + 1)
+      const duration = normalizeMinutes(item.minutes)
+      const minutes = countMap.get(item.relativeFile) ?? 0
+      countMap.set(item.relativeFile, minutes + duration)
     }
   }
   return [...countMap.entries()].sort((a, b) => b[1] - a[1])
