@@ -60,6 +60,7 @@ export const ms: Partial<Translation> = {
       openData: 'open data',
       editors: 'editors',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -87,6 +88,11 @@ export const ms: Partial<Translation> = {
         donut: 'Donat bahasa',
         status: 'Kad status langsung',
         cta: 'Bina widget',
+      },
+      mobileApp: {
+        title: 'Statistik pengekodan anda, kini di iPhone, iPad dan Mac.',
+        description: 'Aplikasi rasmi Code Time membawa papan pemuka anda ke setiap skrin Apple — jumlah harian, arah aliran, bahasa dan projek dalam aplikasi natif. Percuma di App Store.',
+        availabilityNote: 'Atas keperluan pematuhan, buat masa ini tidak tersedia di Tanah Besar China dan Kesatuan Eropah.',
       },
     },
     pricing: {

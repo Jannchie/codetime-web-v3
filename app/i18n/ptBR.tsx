@@ -60,6 +60,7 @@ export const ptBR: Partial<Translation> = {
       openData: 'open data',
       editors: 'editors',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -87,6 +88,11 @@ export const ptBR: Partial<Translation> = {
         donut: 'Donut de linguagens',
         status: 'Cartão de status ao vivo',
         cta: 'Criar um widget',
+      },
+      mobileApp: {
+        title: 'Suas estatísticas de programação, agora no iPhone, iPad e Mac.',
+        description: 'O app oficial do Code Time leva seu painel a todas as telas da Apple: totais diários, tendências, linguagens e projetos em um app nativo. Grátis na App Store.',
+        availabilityNote: 'Por exigências regulatórias, ainda não está disponível na China continental nem na União Europeia.',
       },
     },
     pricing: {

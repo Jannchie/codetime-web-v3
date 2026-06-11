@@ -61,6 +61,7 @@ export const zhCN: Partial<Translation> = {
       editors: 'editors',
       agentTelemetry: 'agent · telemetry',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -102,6 +103,11 @@ export const zhCN: Partial<Translation> = {
         kpiCalls: '模型调用',
         chartLegend: '按 Agent 拆分的成本 · 最近 14 天',
         cta: '查看 Agent 演示',
+      },
+      mobileApp: {
+        title: '你的编程统计，现已登陆 iPhone、iPad 和 Mac。',
+        description: '官方 Code Time 应用把仪表盘带到每一块 Apple 屏幕——每日时长、趋势、语言与项目分布，原生体验。App Store 免费下载。',
+        availabilityNote: '因合规要求，暂不支持中国大陆和欧盟地区。',
       },
     },
     pricing: {

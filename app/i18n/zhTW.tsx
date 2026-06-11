@@ -60,6 +60,7 @@ export const zhTW: Partial<Translation> = {
       openData: 'open data',
       editors: 'editors',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -87,6 +88,11 @@ export const zhTW: Partial<Translation> = {
         donut: '語言佔比環圖',
         status: '即時狀態卡',
         cta: '生成元件',
+      },
+      mobileApp: {
+        title: '你的程式統計，現已登陸 iPhone、iPad 和 Mac。',
+        description: '官方 Code Time 應用程式將儀表板帶到每一塊 Apple 螢幕——每日時長、趨勢、語言與專案分佈，原生體驗。App Store 免費下載。',
+        availabilityNote: '因法規要求，暫不支援中國大陸與歐盟地區。',
       },
     },
     pricing: {

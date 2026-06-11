@@ -65,6 +65,15 @@ watchEffect(() => {
             Leaderboard
           </NuxtLink>
           <span class="lp-foot-sep">·</span>
+          <NuxtLink
+            to="https://apps.apple.com/app/codetime-dev/id6771632478"
+            target="_blank"
+            rel="noopener"
+            class="lp-foot-link"
+          >
+            iOS App
+          </NuxtLink>
+          <span class="lp-foot-sep">·</span>
           <NuxtLink :to="`/${locale}/privacy`" class="lp-foot-link">
             Privacy
           </NuxtLink>

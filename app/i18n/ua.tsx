@@ -64,6 +64,7 @@ export const ua: Partial<Translation> = {
       openData: 'open data',
       editors: 'editors',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -95,6 +96,11 @@ export const ua: Partial<Translation> = {
         donut: 'Кільце мов',
         status: 'Жива статус-картка',
         cta: 'Створити віджет',
+      },
+      mobileApp: {
+        title: 'Ваша статистика кодингу — тепер на iPhone, iPad і Mac.',
+        description: 'Офіційний застосунок Code Time переносить дашборд на всі екрани Apple: денні підсумки, тренди, мови та проєкти в нативному застосунку. Безкоштовно в App Store.',
+        availabilityNote: 'Через регуляторні вимоги поки недоступно в материковому Китаї та Європейському Союзі.',
       },
     },
     pricing: {

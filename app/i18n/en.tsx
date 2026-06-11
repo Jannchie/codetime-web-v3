@@ -60,6 +60,7 @@ export const en: Translation = {
       editors: 'editors',
       agentTelemetry: 'agent · telemetry',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -101,6 +102,11 @@ export const en: Translation = {
         kpiCalls: 'model calls',
         chartLegend: 'cost by agent · last 14 days',
         cta: 'Open the agent demo',
+      },
+      mobileApp: {
+        title: 'Your coding stats, now on iPhone, iPad, and Mac.',
+        description: 'The official Code Time app puts your dashboard on every Apple screen — daily totals, trends, languages, and projects in a native app. Free on the App Store.',
+        availabilityNote: 'Not yet available in mainland China or the European Union due to regulatory requirements.',
       },
     },
     pricing: {

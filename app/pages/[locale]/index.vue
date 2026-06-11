@@ -6,6 +6,11 @@ definePageMeta({
 const t = useI18N()
 const route = useRoute()
 
+// Region-less App Store link: Apple redirects visitors to their own
+// storefront. The app is a free iOS/iPadOS/macOS universal build; it is
+// deliberately not distributed in mainland China or the EU (compliance).
+const appStoreUrl = 'https://apps.apple.com/app/codetime-dev/id6771632478'
+
 // Landing-page OG image. Dashboard/private routes deliberately get no OG —
 // they require login and are not crawled. Other public pages (user profile,
 // annual report) call defineOgImageComponent themselves.
@@ -45,7 +50,7 @@ watchEffect(() => {
   useSeoMeta({
     title: 'Code Time — Coding Analytics for VS Code & JetBrains',
     description: 'Automatically track how long you spend coding, visualise habits by language and project, and export your raw editor data. Free plugins for VS Code, Cursor, Windsurf and every JetBrains IDE.',
-    keywords: 'coding analytics, programming tracker, developer productivity, code metrics, VS Code extension, JetBrains plugin, Cursor, Windsurf',
+    keywords: 'coding analytics, programming tracker, developer productivity, code metrics, VS Code extension, JetBrains plugin, Cursor, Windsurf, iOS app',
     ogTitle: 'Code Time — Coding Analytics for VS Code & JetBrains',
     ogDescription: 'Automatically track how long you spend coding, visualise habits by language and project, and export your raw editor data. Free plugins for VS Code, Cursor, Windsurf and every JetBrains IDE.',
     ogType: 'website',
@@ -77,6 +82,7 @@ const jsonLd = computed(() => ({
         'https://github.com/jannchie',
         'https://marketplace.visualstudio.com/items?itemName=jannchie.codetime',
         'https://plugins.jetbrains.com/plugin/codetime',
+        appStoreUrl,
       ],
       'contactPoint': [
         {
@@ -114,6 +120,20 @@ const jsonLd = computed(() => ({
       'publisher': { '@id': 'https://codetime.dev/#org' },
     },
     {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://codetime.dev/#ios-app',
+      'name': 'Code Time for iOS',
+      'operatingSystem': 'iOS, iPadOS, macOS',
+      'applicationCategory': 'DeveloperApplication',
+      'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+      'url': appStoreUrl,
+      'installUrl': appStoreUrl,
+      'description':
+        'Native companion app for iPhone, iPad, and Mac: daily coding '
+        + 'totals, trends, language and project breakdowns on the go.',
+      'publisher': { '@id': 'https://codetime.dev/#org' },
+    },
+    {
       '@type': 'FAQPage',
       'mainEntity': [
         {
@@ -147,6 +167,18 @@ const jsonLd = computed(() => ({
               'Code Time exposes an MCP server at /mcp, an OpenAPI 3.1 '
               + 'spec at /openapi.json, an NLWeb /ask endpoint, and an '
               + 'OpenAI plugin manifest at /.well-known/ai-plugin.json.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Is there a Code Time mobile app?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text':
+              'Yes — a free native app for iPhone, iPad, and Mac is '
+              + 'available on the App Store. Due to regulatory '
+              + 'requirements it is not yet offered in mainland China '
+              + 'or the European Union.',
           },
         },
         {
@@ -243,6 +275,12 @@ useHead({
         Rider, RubyMine, CLion, and the rest of the JetBrains family. The
         free tier supports unlimited personal use with full history
         retention.
+      </p>
+      <p class="text-[15px] text-ct-fg-muted leading-[1.7] font-mono">
+        A free native companion app for iPhone, iPad, and Mac is available
+        on the App Store, showing daily totals, trends, and language and
+        project breakdowns. Due to regulatory requirements the app is not
+        yet distributed in mainland China or the European Union.
       </p>
     </div>
   </section>
@@ -452,13 +490,65 @@ useHead({
   <!-- WIDGETS -->
   <LandingWidgetShowcase />
 
+  <!-- 07 MOBILE APP -->
+  <section class="section-band">
+    <div class="mx-auto px-6 py-24 max-w-6xl sm:py-32">
+      <div class="feature-card feature-card--wide">
+        <span class="feature-card-corner feature-card-corner--tl" aria-hidden="true" />
+        <span class="feature-card-corner feature-card-corner--tr" aria-hidden="true" />
+        <span class="feature-card-corner feature-card-corner--bl" aria-hidden="true" />
+        <span class="feature-card-corner feature-card-corner--br" aria-hidden="true" />
+        <div class="feature-card-body">
+          <div class="eyebrow feature-eyebrow">
+            <span class="eyebrow-bracket">[</span>
+            <span class="eyebrow-num">07</span>
+            <span class="eyebrow-sep">/</span>
+            <span>{{ t.landing.sections.mobileApp || 'ios · app' }}</span>
+            <span class="eyebrow-bracket">]</span>
+          </div>
+          <h2 class="section-heading feature-title text-ct-fg leading-[1.05] font-semibold">
+            {{ t.landing.features.mobileApp?.title || 'Your coding stats, now on iPhone, iPad, and Mac.' }}
+          </h2>
+          <p class="feature-desc text-ct-fg-muted leading-[1.7] max-w-2xl">
+            {{ t.landing.features.mobileApp?.description || 'The official Code Time app puts your dashboard on every Apple screen — daily totals, trends, languages, and projects in a native app. Free on the App Store.' }}
+          </p>
+          <div class="feature-chip-row">
+            <span class="feature-chip"><i class="i-tabler-device-mobile" />iPhone</span>
+            <span class="feature-chip"><i class="i-tabler-device-ipad" />iPad</span>
+            <span class="feature-chip"><i class="i-tabler-device-imac" />Mac</span>
+          </div>
+          <a
+            :href="appStoreUrl"
+            target="_blank"
+            rel="noopener"
+            class="appstore-btn"
+            aria-label="Download Code Time on the App Store"
+          >
+            <i class="i-mdi-apple appstore-btn-logo" />
+            <span class="appstore-btn-text">
+              <span class="appstore-btn-top">Download on the</span>
+              <span class="appstore-btn-bottom">App Store</span>
+            </span>
+          </a>
+          <p class="appstore-note">
+            {{ t.landing.features.mobileApp?.availabilityNote || 'Not yet available in mainland China or the European Union due to regulatory requirements.' }}
+          </p>
+        </div>
+        <div class="feature-card-visual">
+          <i class="i-mdi-apple feature-card-visual-icon" />
+          <span class="feature-card-visual-grid" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PRICING -->
   <section>
     <div class="mx-auto px-6 py-24 max-w-6xl sm:py-32">
       <div class="mb-12 text-center flex flex-col gap-3 items-center">
         <div class="eyebrow">
           <span class="eyebrow-bracket">[</span>
-          <span class="eyebrow-num">07</span>
+          <span class="eyebrow-num">08</span>
           <span class="eyebrow-sep">/</span>
           <span>{{ t.landing.sections.pricing }}</span>
           <span class="eyebrow-bracket">]</span>
@@ -1083,6 +1173,56 @@ html[data-scheme="light"] .hero-glow {
 .demo-cta:hover .demo-cta-arrow {
   color: var(--ct-primary);
   transform: translateX(3px);
+}
+
+/* App Store CTA (07) */
+.appstore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  margin-top: 26px;
+  padding: 10px 20px 10px 16px;
+  text-decoration: none;
+  color: var(--ct-fg);
+  background: var(--ct-surface-1);
+  border: 1px solid var(--ct-border);
+  border-radius: 14px;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+.appstore-btn:hover {
+  background: var(--ct-surface-2);
+  border-color: color-mix(in srgb, var(--ct-primary) 45%, transparent);
+  transform: translateY(-1px);
+}
+.appstore-btn-logo {
+  font-size: 30px;
+  color: var(--ct-fg);
+}
+.appstore-btn-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.appstore-btn-top {
+  font-family: var(--ct-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ct-fg-muted);
+}
+.appstore-btn-bottom {
+  font-size: 17px;
+  font-weight: var(--ct-weight-semibold);
+  letter-spacing: -0.01em;
+}
+.appstore-note {
+  margin: 14px 0 0;
+  font-family: var(--ct-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ct-fg-subtle);
+  max-width: 32rem;
 }
 
 /* Editor tile */

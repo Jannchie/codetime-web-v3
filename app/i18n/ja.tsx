@@ -60,6 +60,7 @@ export const ja: Partial<Translation> = {
       openData: 'open data',
       editors: 'editors',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -87,6 +88,11 @@ export const ja: Partial<Translation> = {
         donut: '言語ドーナツ',
         status: 'ライブステータスカード',
         cta: 'ウィジェットを作成',
+      },
+      mobileApp: {
+        title: 'コーディング統計が iPhone、iPad、Mac に対応。',
+        description: '公式 Code Time アプリで、ダッシュボードをあらゆる Apple デバイスへ。1日の合計、トレンド、言語、プロジェクトをネイティブアプリで確認できます。App Store で無料配信中。',
+        availabilityNote: '法規制対応のため、中国本土および EU では現在ご利用いただけません。',
       },
     },
     pricing: {

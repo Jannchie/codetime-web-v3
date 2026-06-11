@@ -60,6 +60,7 @@ export const it: Partial<Translation> = {
       openData: 'open data',
       editors: 'editors',
       widgets: 'widgets',
+      mobileApp: 'ios · app',
       pricing: 'pricing',
       startTracking: 'start tracking',
     },
@@ -87,6 +88,11 @@ export const it: Partial<Translation> = {
         donut: 'Donut dei linguaggi',
         status: 'Scheda di stato live',
         cta: 'Crea un widget',
+      },
+      mobileApp: {
+        title: 'Le tue statistiche di programmazione, ora su iPhone, iPad e Mac.',
+        description: 'L\'app ufficiale di Code Time porta la tua dashboard su ogni schermo Apple: totali giornalieri, tendenze, linguaggi e progetti in un\'app nativa. Gratis sull\'App Store.',
+        availabilityNote: 'Per requisiti normativi non è ancora disponibile in Cina continentale e nell\'Unione Europea.',
       },
     },
     pricing: {

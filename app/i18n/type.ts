@@ -58,6 +58,9 @@ export type Translation = {
       // for locales that haven't translated this yet.
       agentTelemetry?: string
       widgets: string
+      // Optional during rollout — the landing falls back to "ios · app"
+      // for locales that haven't translated this yet.
+      mobileApp?: string
       pricing: string
       startTracking: string
     }
@@ -101,6 +104,15 @@ export type Translation = {
         kpiCalls: string
         chartLegend: string
         cta: string
+      }
+      // Optional during rollout — the mobile-app landing block falls back
+      // to English copy for locales that haven't translated this yet.
+      mobileApp?: {
+        title: string
+        description: string
+        // Regional-availability disclaimer (compliance-driven; mainland
+        // China and the EU are excluded for now).
+        availabilityNote: string
       }
     }
     pricing: {
