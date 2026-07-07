@@ -20,7 +20,7 @@ defineOgImage('NuxtSeoSatori', {
   colorMode: 'dark',
 })
 
-// Hand-tokenised JSON snippet for the 03 EXPORT card. Injected via v-html so
+// Hand-tokenised JSON snippet for the EXPORT card. Injected via v-html so
 // Vue's template whitespace-condense pass doesn't eat the column alignment
 // between the spans.
 const sampleJsonHtml = [
@@ -290,8 +290,6 @@ useHead({
     <div class="px-6 py-24 flex flex-col gap-12 items-center sm:py-32">
       <div class="eyebrow">
         <span class="eyebrow-bracket">[</span>
-        <span class="eyebrow-num">00</span>
-        <span class="eyebrow-sep">/</span>
         <span>{{ t.landing.sections.globalImpact }}</span>
         <span class="eyebrow-bracket">]</span>
       </div>
@@ -305,8 +303,6 @@ useHead({
       <div class="mb-16 flex flex-col gap-3">
         <div class="eyebrow">
           <span class="eyebrow-bracket">[</span>
-          <span class="eyebrow-num">01</span>
-          <span class="eyebrow-sep">/</span>
           <span>{{ t.landing.sections.visualization }}</span>
           <span class="eyebrow-bracket">]</span>
         </div>
@@ -367,7 +363,7 @@ useHead({
   <!-- FEATURE PAIRS -->
   <section class="section-band">
     <div class="mx-auto px-6 py-24 max-w-6xl space-y-28 sm:py-32 sm:space-y-32">
-      <!-- 03 SAVE — wide hero card with calendar visual -->
+      <!-- SAVE — wide hero card with calendar visual -->
       <div class="feature-card feature-card--wide">
         <span class="feature-card-corner feature-card-corner--tl" aria-hidden="true" />
         <span class="feature-card-corner feature-card-corner--tr" aria-hidden="true" />
@@ -376,8 +372,6 @@ useHead({
         <div class="feature-card-body">
           <div class="eyebrow feature-eyebrow">
             <span class="eyebrow-bracket">[</span>
-            <span class="eyebrow-num">03</span>
-            <span class="eyebrow-sep">/</span>
             <span>{{ t.landing.sections.alwaysSynced }}</span>
             <span class="eyebrow-bracket">]</span>
           </div>
@@ -408,13 +402,11 @@ useHead({
         </div>
       </div>
 
-      <!-- 04 EXPORT — split with API/JSON snippet -->
+      <!-- EXPORT — split with API/JSON snippet -->
       <div class="gap-12 grid items-stretch md:gap-14 md:grid-cols-[1fr_1.25fr]">
         <div class="feature-text-block">
           <div class="eyebrow feature-eyebrow">
             <span class="eyebrow-bracket">[</span>
-            <span class="eyebrow-num">04</span>
-            <span class="eyebrow-sep">/</span>
             <span>{{ t.landing.sections.openData }}</span>
             <span class="eyebrow-bracket">]</span>
           </div>
@@ -440,13 +432,11 @@ useHead({
         </div>
       </div>
 
-      <!-- 05 EDITOR — title above, editor grid below -->
+      <!-- EDITOR — title above, editor grid below -->
       <div class="space-y-12">
         <div class="feature-text-block max-w-3xl">
           <div class="eyebrow feature-eyebrow">
             <span class="eyebrow-bracket">[</span>
-            <span class="eyebrow-num">05</span>
-            <span class="eyebrow-sep">/</span>
             <span>{{ t.landing.sections.editors }}</span>
             <span class="eyebrow-bracket">]</span>
           </div>
@@ -490,7 +480,7 @@ useHead({
   <!-- WIDGETS -->
   <LandingWidgetShowcase />
 
-  <!-- 07 MOBILE APP -->
+  <!-- MOBILE APP -->
   <section class="section-band">
     <div class="mx-auto px-6 py-24 max-w-6xl sm:py-32">
       <div class="feature-card feature-card--wide">
@@ -501,8 +491,6 @@ useHead({
         <div class="feature-card-body">
           <div class="eyebrow feature-eyebrow">
             <span class="eyebrow-bracket">[</span>
-            <span class="eyebrow-num">07</span>
-            <span class="eyebrow-sep">/</span>
             <span>{{ t.landing.sections.mobileApp || 'ios · app' }}</span>
             <span class="eyebrow-bracket">]</span>
           </div>
@@ -548,8 +536,6 @@ useHead({
       <div class="mb-12 text-center flex flex-col gap-3 items-center">
         <div class="eyebrow">
           <span class="eyebrow-bracket">[</span>
-          <span class="eyebrow-num">08</span>
-          <span class="eyebrow-sep">/</span>
           <span>{{ t.landing.sections.pricing }}</span>
           <span class="eyebrow-bracket">]</span>
         </div>
@@ -669,7 +655,7 @@ useHead({
   background: color-mix(in srgb, var(--ct-primary) 35%, transparent);
 }
 
-/* Feature card (02 SAVE) */
+/* Feature card (SAVE) */
 .feature-card {
   position: relative;
   display: grid;
@@ -815,7 +801,7 @@ useHead({
   text-transform: uppercase;
 }
 
-/* Feature chip row (03) */
+/* Feature chip row */
 .feature-chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -839,7 +825,7 @@ useHead({
   color: var(--ct-primary);
 }
 
-/* Code card (03) */
+/* Code card */
 .code-card {
   display: flex;
   flex-direction: column;
@@ -930,7 +916,7 @@ html[data-scheme="light"] .code-card-body :deep(.tk-pun) { color: color-mix(in s
   .code-card-body { font-size: 13px; }
 }
 
-/* Editor grid (04) */
+/* Editor grid */
 .editor-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1175,7 +1161,7 @@ html[data-scheme="light"] .hero-glow {
   transform: translateX(3px);
 }
 
-/* App Store CTA (07) */
+/* App Store CTA */
 .appstore-btn {
   display: inline-flex;
   align-items: center;

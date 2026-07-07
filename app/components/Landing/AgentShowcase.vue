@@ -126,8 +126,6 @@ function fmtCompact(n: number): string {
       <div class="mb-12 flex flex-col gap-3">
         <div class="eyebrow">
           <span class="eyebrow-bracket">[</span>
-          <span class="eyebrow-num">02</span>
-          <span class="eyebrow-sep">/</span>
           <span>{{ sectionLabel }}</span>
           <span class="eyebrow-bracket">]</span>
         </div>

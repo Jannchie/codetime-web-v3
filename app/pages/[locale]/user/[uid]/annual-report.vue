@@ -402,7 +402,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
       </div>
 
       <template v-else>
-        <!-- 01 · Activity calendar -->
+        <!-- Activity calendar -->
         <UserProfileSection
           num="01"
           :title="t.annualReport.totalCodingTimeOfTheYear"
@@ -419,7 +419,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
           </div>
         </UserProfileSection>
 
-        <!-- 02 · KPI grid -->
+        <!-- KPI grid -->
         <UserProfileSection
           num="02"
           title="Key Indicators"
@@ -432,7 +432,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
           <UserProfileStats :kpis="kpis" />
         </UserProfileSection>
 
-        <!-- 03 · Monthly trend -->
+        <!-- Monthly trend -->
         <UserProfileSection
           num="03"
           :title="t.annualReport.busiestMonthOfTheYear"
@@ -463,7 +463,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
           </div>
         </UserProfileSection>
 
-        <!-- 04 · Hourly distribution -->
+        <!-- Hourly distribution -->
         <UserProfileSection
           num="04"
           :title="t.annualReport.theMostProductiveHourOfTheYear"
@@ -498,7 +498,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
           </div>
         </UserProfileSection>
 
-        <!-- 05 · Period of day -->
+        <!-- Period of day -->
         <UserProfileSection
           num="05"
           title="Period of day"
@@ -523,7 +523,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
           </div>
         </UserProfileSection>
 
-        <!-- 06 · Top languages -->
+        <!-- Top languages -->
         <UserProfileSection
           v-if="topLanguage"
           num="06"
@@ -536,7 +536,7 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
           <UserProfileLanguages :entries="languageEntries" />
         </UserProfileSection>
 
-        <!-- 07 · Share -->
+        <!-- Share -->
         <UserProfileSection
           num="07"
           title="Share"
