@@ -81,7 +81,7 @@ const jsonLd = computed(() => ({
       'sameAs': [
         'https://github.com/jannchie',
         'https://marketplace.visualstudio.com/items?itemName=jannchie.codetime',
-        'https://plugins.jetbrains.com/plugin/codetime',
+        'https://plugins.jetbrains.com/plugin/25617-codetime',
         appStoreUrl,
       ],
       'contactPoint': [

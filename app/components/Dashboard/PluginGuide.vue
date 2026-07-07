@@ -110,7 +110,7 @@ const tokenDisplay = computed(() => {
         </a>
         <a
           v-if="showJetbrains"
-          href="https://plugins.jetbrains.com/plugin/15507-codetime"
+          href="https://plugins.jetbrains.com/plugin/25617-codetime"
           target="_blank"
           rel="noopener"
           class="onb-card"

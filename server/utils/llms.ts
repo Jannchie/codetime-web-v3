@@ -50,7 +50,7 @@ export const LLMS_TXT = `# Code Time
 ## Optional
 
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=jannchie.codetime)
-- [JetBrains plugin](https://plugins.jetbrains.com/plugin/codetime)
+- [JetBrains plugin](https://plugins.jetbrains.com/plugin/25617-codetime)
 - [Source / author](https://github.com/jannchie)
 - [Support email](mailto:support@codetime.dev)
 `
