@@ -25,11 +25,22 @@ const debounced = refDebounced(query, props.debounceMs ?? 250)
 const activeIdx = ref(0)
 const options = shallowRef<O[]>([])
 
+// When the input merely echoes the already-selected option's label (the user
+// has focused/opened the dropdown but not yet typed a filter), load with an
+// empty query so the loader returns its "recent" list instead of re-searching
+// the one project already chosen. Without this, opening the dropdown on a
+// selected project showed only that project — you had to type to see anything
+// else. onInput clears modelValue the moment the text diverges from the label,
+// so a real filter is never mistaken for an echo.
+const effectiveQuery = computed(() =>
+  modelValue.value && debounced.value === modelValue.value.label ? '' : debounced.value,
+)
+
 async function refresh() {
-  const r = await props.loader(debounced.value)
+  const r = await props.loader(effectiveQuery.value)
   options.value = r ?? []
 }
-watch(debounced, refresh, { immediate: true })
+watch(effectiveQuery, refresh, { immediate: true })
 
 watch(modelValue, (v) => {
   if (v) {
@@ -144,7 +155,7 @@ onClickOutside(root, () => {
         </slot>
       </button>
     </div>
-    <div v-else-if="open && debounced && options.length === 0" class="entity-popover entity-empty">
+    <div v-else-if="open && options.length === 0" class="entity-popover entity-empty">
       {{ emptyText ?? '—' }}
     </div>
   </div>
