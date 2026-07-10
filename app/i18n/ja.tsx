@@ -336,6 +336,10 @@ export const ja: Partial<Translation> = {
       preview: {
         title: 'プレビュー',
       },
+      metric: {
+        time: 'コーディング時間',
+        tokens: 'トークン',
+      },
       style: {
         flat: 'フラット(Flat)',
         flatSquare: 'フラットスクエア(Flat Square)',
@@ -351,6 +355,7 @@ export const ja: Partial<Translation> = {
         color: '色',
         tag: 'タグ',
         scope: 'プロジェクトまたはタグ',
+        agentProject: 'エージェントのプロジェクト',
       },
       scope: {
         tag: 'タグ',

@@ -301,6 +301,10 @@ export const it: Partial<Translation> = {
       preview: {
         title: 'Anteprima',
       },
+      metric: {
+        time: 'Tempo di codifica',
+        tokens: 'Token',
+      },
       style: {
         flat: 'Flat',
         flatSquare: 'Flat Square',
@@ -316,6 +320,7 @@ export const it: Partial<Translation> = {
         color: 'Colore',
         tag: 'Tag',
         scope: 'Progetto o tag',
+        agentProject: 'Progetto dell\'agente',
       },
       scope: {
         tag: 'Tag',

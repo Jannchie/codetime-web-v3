@@ -23,33 +23,36 @@ export function getDurationText(minutes: number): string {
   return result || '0mins'
 }
 
+// Well-known windows get a name ("Day", "Week", ...); anything else is
+// spelled out as a duration. null when no window applies (all-time).
+export function getShieldWindowText(minutes: number): string | null {
+  if (minutes <= 0) {
+    return null
+  }
+  switch (minutes) {
+  case 60 * 24: {
+  return 'Day'
+  }
+  case 60 * 24 * 7: {
+  return 'Week'
+  }
+  case 60 * 24 * 30: {
+  return 'Month'
+  }
+  case 60 * 24 * 365: {
+  return 'Year'
+  }
+  default: {
+  return getDurationText(minutes)
+  }
+  }
+}
+
 // Mirrors controllers/users.py::get_message: append " / Day|Week|Month|
 // Year" or the literal duration text when a custom window is supplied.
 export function getShieldMessage(resultMinutes: number, minutes: number): string {
-  let message = getDurationText(resultMinutes)
-  if (minutes > 0) {
-    let timeDesc = ''
-    switch (minutes) {
-    case 60 * 24: {
-    timeDesc = 'Day'
-    break
-    }
-    case 60 * 24 * 7: {
-    timeDesc = 'Week'
-    break
-    }
-    case 60 * 24 * 30: {
-    timeDesc = 'Month'
-    break
-    }
-    case 60 * 24 * 365: {
-    timeDesc = 'Year'
-    break
-    }
-    default: { timeDesc = getDurationText(minutes)
-    }
-    }
-    message += ` / ${timeDesc}`
-  }
-  return message
+  const windowText = getShieldWindowText(minutes)
+  return windowText
+    ? `${getDurationText(resultMinutes)} / ${windowText}`
+    : getDurationText(resultMinutes)
 }

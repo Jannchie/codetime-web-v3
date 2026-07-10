@@ -334,6 +334,10 @@ export const ms: Partial<Translation> = {
       preview: {
         title: 'Pratonton',
       },
+      metric: {
+        time: 'Masa mengekod',
+        tokens: 'Token',
+      },
       style: {
         flat: 'Datar',
         flatSquare: 'Datar Persegi',
@@ -349,6 +353,7 @@ export const ms: Partial<Translation> = {
         color: 'Warna',
         tag: 'Tag',
         scope: 'Projek atau tag',
+        agentProject: 'Projek ejen',
       },
       scope: {
         tag: 'Tag',

@@ -301,6 +301,10 @@ export const ptBR: Partial<Translation> = {
       preview: {
         title: 'Visualização',
       },
+      metric: {
+        time: 'Tempo de código',
+        tokens: 'Tokens',
+      },
       style: {
         flat: 'Plano',
         flatSquare: 'Plano quadrado',
@@ -316,6 +320,7 @@ export const ptBR: Partial<Translation> = {
         color: 'Cor',
         tag: 'Tag',
         scope: 'Projeto ou tag',
+        agentProject: 'Projeto do agente',
       },
       scope: {
         tag: 'Tag',

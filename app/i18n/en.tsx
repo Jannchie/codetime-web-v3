@@ -505,6 +505,10 @@ export const en: Translation = {
       preview: {
         title: 'Preview',
       },
+      metric: {
+        time: 'Coding time',
+        tokens: 'Tokens',
+      },
       style: {
         flat: 'Flat',
         flatSquare: 'Flat Square',
@@ -520,6 +524,7 @@ export const en: Translation = {
         color: 'Color',
         tag: 'Tag',
         scope: 'Workspace or tag',
+        agentProject: 'Agent project',
       },
       scope: {
         tag: 'Tag',

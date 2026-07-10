@@ -336,6 +336,10 @@ export const zhTW: Partial<Translation> = {
       preview: {
         title: '預覽',
       },
+      metric: {
+        time: '編碼時長',
+        tokens: 'Token 用量',
+      },
       style: {
         flat: '扁平(Flat)',
         flatSquare: '扁平方形(Flat Square)',
@@ -351,6 +355,7 @@ export const zhTW: Partial<Translation> = {
         color: '顏色',
         tag: '標籤',
         scope: '專案或標籤',
+        agentProject: 'Agent 專案',
       },
       scope: {
         tag: '標籤',

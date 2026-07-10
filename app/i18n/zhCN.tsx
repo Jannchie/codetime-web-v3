@@ -506,6 +506,10 @@ export const zhCN: Partial<Translation> = {
       preview: {
         title: '预览',
       },
+      metric: {
+        time: '编码时长',
+        tokens: 'Token 用量',
+      },
       style: {
         flat: '扁平(Flat)',
         flatSquare: '扁平方形(Flat Square)',
@@ -521,6 +525,7 @@ export const zhCN: Partial<Translation> = {
         color: '颜色',
         tag: '标签',
         scope: '项目或标签',
+        agentProject: 'Agent 项目',
       },
       scope: {
         tag: '标签',

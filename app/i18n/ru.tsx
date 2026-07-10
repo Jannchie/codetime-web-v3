@@ -322,6 +322,10 @@ export const ru: Partial<Translation> = {
       preview: {
         title: 'Предварительный просмотр',
       },
+      metric: {
+        time: 'Время кодинга',
+        tokens: 'Токены',
+      },
       style: {
         flat: 'Плоский',
         flatSquare: 'Плоский квадрат',
@@ -337,6 +341,7 @@ export const ru: Partial<Translation> = {
         color: 'Цвет',
         tag: 'Тег',
         scope: 'Проект или тег',
+        agentProject: 'Проект агента',
       },
       scope: {
         tag: 'Тег',

@@ -23,21 +23,33 @@ const colorPresets = [
 
 const user = useUser()
 type ScopeOption = { label: string, id: string, kind: 'tag' | 'workspace', color?: string | null, emoji?: string | null }
+type AgentProjectOption = { label: string, id: string }
+const metricOptions = computed(() => [
+  { id: 'time', label: t.value.dashboard.badge.metric.time },
+  { id: 'tokens', label: t.value.dashboard.badge.metric.tokens },
+])
+const metricId = ref<string>('time')
 const scope = ref<ScopeOption | null>(null)
+const agentProject = ref<AgentProjectOption | null>(null)
 const language = ref<string>('')
 const days = ref<number>(0)
 // Badge URL is pasted into READMEs / status pages, so it has to be an
 // absolute URL that survives without the app.
 const apiHost = 'https://codetime.dev'
 
+// The two metrics filter on disjoint namespaces: time badges scope by
+// workspace/tag/language, token badges by the agent project string.
 const rawParams = computed(() => ({
   uid: user.value?.id,
-  project: scope.value?.kind === 'workspace' ? scope.value.label : '',
-  tag: scope.value?.kind === 'tag' ? scope.value.label : '',
+  metric: metricId.value === 'tokens' ? 'tokens' : '',
+  project: metricId.value === 'tokens'
+    ? (agentProject.value?.label ?? '')
+    : (scope.value?.kind === 'workspace' ? scope.value.label : ''),
+  tag: metricId.value === 'time' && scope.value?.kind === 'tag' ? scope.value.label : '',
   minutes: String(Number(days.value) * 24 * 60),
   color: isValidHex(color.value) ? stripHash(color.value) : '',
   style: styleId.value,
-  language: language.value,
+  language: metricId.value === 'time' ? language.value : '',
 }))
 
 const debouncedParams = refDebounced(rawParams, 300)
@@ -73,11 +85,17 @@ const link = computed(() => {
         :placeholder="t.dashboard.badge.placeholder.color"
       />
     </WidgetFormRow>
-    <WidgetFormRow label="Language">
+    <WidgetFormRow label="Metric">
+      <WidgetFormSeg v-model="metricId" :options="metricOptions" />
+    </WidgetFormRow>
+    <WidgetFormRow v-if="metricId === 'time'" label="Language">
       <EventLanguageSelect v-model="language" />
     </WidgetFormRow>
-    <WidgetFormRow label="Scope">
+    <WidgetFormRow v-if="metricId === 'time'" label="Scope">
       <WidgetScopeSelect v-model="scope" />
+    </WidgetFormRow>
+    <WidgetFormRow v-else label="Project">
+      <WidgetAgentProjectSelect v-model="agentProject" />
     </WidgetFormRow>
     <WidgetFormRow label="Window · days">
       <WidgetFormNumberInput

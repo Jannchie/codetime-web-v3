@@ -311,6 +311,10 @@ export type Translation = {
       preview: {
         title: string
       }
+      metric: {
+        time: string
+        tokens: string
+      }
       style: {
         flat: string
         flatSquare: string
@@ -326,6 +330,7 @@ export type Translation = {
         color: string
         tag: string
         scope: string
+        agentProject: string
       }
       scope: {
         tag: string

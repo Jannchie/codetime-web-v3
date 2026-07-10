@@ -2,11 +2,12 @@ import { and, count, eq, gte, inArray, lte, sql } from 'drizzle-orm'
 import { defineEventHandler, getQuery, setHeader } from 'h3'
 import languageColors from '../../../assets/LanguageColor.json'
 import languageIdentifiers from '../../../assets/LanguageIdentifiers.json'
-import { tags, users, workspaceMetaV2, workspaceMinutesV2 } from '../../../db/schema'
+import { agentSessions, tags, users, workspaceMetaV2, workspaceMinutesV2 } from '../../../db/schema'
 import { useDb } from '../../../utils/db'
-import { getShieldMessage } from '../../../utils/duration'
+import { getShieldMessage, getShieldWindowText } from '../../../utils/duration'
 import { resolveUserPrivacy } from '../../../utils/privacy'
 import { sendPyError } from '../../../utils/py-error'
+import { formatTokens } from '../../../utils/svg-theme'
 import { findMetaHashesMatchingRules } from '../../../utils/tag-meta-hash'
 
 // Mirrors GET /v3/users/shield. Returns the data block for a
@@ -22,6 +23,7 @@ defineRouteMeta({
     summary: 'Shields.io-compatible badge payload',
     parameters: [
       { name: 'uid', in: 'query', required: true, schema: { type: 'integer' } },
+      { name: 'metric', in: 'query', schema: { type: 'string', enum: ['time', 'tokens'], default: 'time' }, description: 'time = coded minutes; tokens = AI agent tokens consumed. With tokens, `project` matches the agent project name and language/tag/only_hours are ignored.' },
       { name: 'minutes', in: 'query', schema: { type: 'integer', default: 0 } },
       { name: 'project', in: 'query', schema: { type: 'string' } },
       { name: 'language', in: 'query', schema: { type: 'string' } },
@@ -127,11 +129,40 @@ export default defineEventHandler(async (event) => {
   const language = strOr(q.language)
   const tagName = strOr(q.tag)
   const onlyHours = asBool(q.only_hours)
+  const metric = strOr(q.metric) === 'tokens' ? 'tokens' : 'time'
 
   const now = new Date()
   const cutoff = minutes > 0
     ? new Date(new Date(now).setSeconds(0, 0) - minutes * 60_000)
     : null
+
+  if (metric === 'tokens') {
+    // Token badge: sum agent session tokens, window on last_event_at to
+    // match the vibe dashboard's summary KPI. `project` matches the raw
+    // agent project string; the editor-centric filters (language, tag)
+    // have no meaning on agent data and are ignored.
+    const where = [eq(agentSessions.userId, uid)]
+    if (cutoff) {
+      where.push(gte(agentSessions.lastEventAt, cutoff))
+    }
+    if (project) {
+      where.push(eq(agentSessions.project, project))
+    }
+    const rows = await db
+      .select({ value: sql<string>`coalesce(sum(${agentSessions.totalTokens}), 0)` })
+      .from(agentSessions)
+      .where(and(...where))
+    const totalTokens = Number(rows[0]?.value ?? 0)
+
+    const windowText = getShieldWindowText(minutes)
+    return {
+      schemaVersion: 1,
+      logoSvg: LOGO_SVG,
+      label: project ? `CodeTime@${project}` : 'CodeTime',
+      message: `${formatTokens(totalTokens)} tokens${windowText ? ` / ${windowText}` : ''}`,
+      color: totalTokens > 0 ? 'blue' : 'lightgrey',
+    }
+  }
 
   // Resolve tag (per-user unique by name). When the user passes ?tag=... we
   // load its rules_json and evaluate per-row in memory, mirroring Python's
