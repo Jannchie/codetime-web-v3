@@ -59,7 +59,7 @@ const HEADERS = {
   'x-github-api-version': '2022-11-28',
 }
 
-const sleep = (ms) => new Promise(r => setTimeout(r, ms))
+const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 async function fetchLogin(githubId) {
   const res = await fetch(`https://api.github.com/user/${githubId}`, { headers: HEADERS })
@@ -140,7 +140,8 @@ async function main() {
     for (const row of rows) {
       const result = await fetchLogin(row.github_id)
       processed++
-      if (result.kind === 'ok') {
+      switch (result.kind) {
+      case 'ok': {
         if (!DRY_RUN) {
           await sql`
             UPDATE users
@@ -151,14 +152,18 @@ async function main() {
         }
         ok++
         lastRemaining = result.remaining
+
+      break
       }
-      else if (result.kind === 'gone') {
+      case 'gone': {
         // GitHub account deleted / suspended. Leave github_login NULL —
         // we have no login to write, and any future re-link would
         // populate it then.
         gone++
+
+      break
       }
-      else if (result.kind === 'ratelimit') {
+      case 'ratelimit': {
         console.warn(`[backfill] rate-limited; sleeping ${Math.round(result.waitMs / 1000)}s`)
         await sleep(result.waitMs + 500)
         // Re-try the same row immediately after waking, so a 429 hit
@@ -183,10 +188,13 @@ async function main() {
           errors++
           console.warn(`[backfill] retry failed for uid=${row.id} gh=${row.github_id}: ${JSON.stringify(retry)}`)
         }
+
+      break
       }
-      else {
+      default: {
         errors++
         console.warn(`[backfill] failed uid=${row.id} gh=${row.github_id}: ${JSON.stringify(result)}`)
+      }
       }
 
       cursor = row.id
@@ -208,8 +216,8 @@ async function main() {
   await sql.end()
 }
 
-main().catch(async (e) => {
-  console.error('[backfill] fatal:', e)
+main().catch(async (error) => {
+  console.error('[backfill] fatal:', error)
   try {
     await sql.end()
   }
