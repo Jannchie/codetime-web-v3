@@ -1,4 +1,4 @@
-import { and, desc, eq, gte, ilike, ne, sql } from 'drizzle-orm'
+import { and, desc, eq, gte, ilike, isNotNull, ne, sql } from 'drizzle-orm'
 import { defineEventHandler, getQuery } from 'h3'
 import { agentSessions } from '../../../db/schema'
 import { tryUser } from '../../../utils/auth'
@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
   const db = useDb()
   const where = [
     eq(agentSessions.userId, user.id),
-    sql`${agentSessions.project} is not null`,
+    isNotNull(agentSessions.project),
     ne(agentSessions.project, ''),
   ]
   const cutoff = agentVisibilityCutoff(user.plan)

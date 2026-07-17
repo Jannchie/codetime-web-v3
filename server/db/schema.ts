@@ -236,6 +236,11 @@ export const agentSessions = pgTable('agent_sessions', {
   tenantIdx: index('agent_sessions_tenant_idx').on(t.userId, t.machineId, t.lastEventAt),
   projectIdx: index('agent_sessions_project_idx').on(t.userId, t.projectId, t.lastEventAt),
   sessionIdx: index('agent_sessions_session_idx').on(t.userId, t.source, t.sessionId),
+  // Serves reads keyed on the raw project string: the public token badge
+  // (sum over user+project+window) and the project picker (group by
+  // project, order by max(last_event_at)) — neither can use projectIdx,
+  // which indexes the resolved UUID.
+  projectNameIdx: index('agent_sessions_project_name_idx').on(t.userId, t.project, t.lastEventAt),
 }))
 
 export type AgentSessionRow = typeof agentSessions.$inferSelect
