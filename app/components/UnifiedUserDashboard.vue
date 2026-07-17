@@ -78,6 +78,23 @@ const rangePreset = props.demoMode
     })
 const segments = ref(5)
 
+// Re-anchor the persisted range before the stats fetchers below read
+// it, so the initial request already carries bounds anchored at the
+// current day (a stale "this week" or "2022 → now" window persisted on
+// a previous visit would otherwise freeze the page at that visit's
+// bounds). The DataRange child re-anchors too, but only after this
+// component's useAsyncData calls have fired — a child-side write races
+// the initial fetch. resolveRangePreset + applyResolvedBounds
+// (app/utils/date.ts) are the shared source of truth for these bounds
+// and their identity-preserving write-back; the resolver returns null
+// for frozen custom ranges, which keep their stored dates.
+if (!props.demoMode) {
+  const resolved = resolveRangePreset(rangePreset.value, { customStart: customStartTime.value })
+  if (resolved) {
+    applyResolvedBounds(resolved, { start: customStartTime, end: customEndTime, days })
+  }
+}
+
 const isCustomRange = computed(() => !!customStartTime.value && !!customEndTime.value)
 
 const endTime = computed(() => {

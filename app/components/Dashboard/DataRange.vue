@@ -32,34 +32,8 @@ const menuOpen = ref(false)
 
 const ROLLING_FREE_MAX = 90
 
-function startOfDay(d: Date): Date {
-  const x = new Date(d)
-  x.setHours(0, 0, 0, 0)
-  return x
-}
-function endOfDay(d: Date): Date {
-  const x = new Date(d)
-  x.setHours(23, 59, 59, 999)
-  return x
-}
-function addMonths(d: Date, n: number): Date {
-  return new Date(d.getFullYear(), d.getMonth() + n, 1)
-}
-function diffDays(a: Date, b: Date): number {
-  return Math.max(1, Math.ceil((b.getTime() - a.getTime()) / (24 * 60 * 60 * 1000)))
-}
-// ISO-week Monday — matches `date_trunc('week', …)` on the server side.
-function startOfIsoWeek(d: Date): Date {
-  const x = startOfDay(d)
-  const dow = (x.getDay() + 6) % 7
-  x.setDate(x.getDate() - dow)
-  return x
-}
-function addDays(d: Date, n: number): Date {
-  const x = new Date(d)
-  x.setDate(x.getDate() + n)
-  return x
-}
+// Date helpers (startOfDay, endOfDay, isSameDay, addDays, addMonths,
+// diffDays, startOfIsoWeek) are auto-imported from app/utils/date.ts.
 
 function serializeState(s: RangeState): string {
   switch (s.kind) {
@@ -75,7 +49,12 @@ function serializeState(s: RangeState): string {
     }
     case 'all': { return 'all'
     }
-    case 'custom': { return 'custom'
+    case 'custom': {
+      // 'custom:now' marks a window whose end was "today" when picked
+      // (e.g. "2022 → now"), so reloads re-anchor the end to the current
+      // day instead of freezing it at the pick date — otherwise new data
+      // silently stops appearing on the dashboard.
+      return isSameDay(s.end, new Date()) ? 'custom:now' : 'custom'
     }
   }
 }
@@ -91,21 +70,18 @@ function parsePreset(raw: string): RangeState | null {
       ? { kind: 'custom', start: startTime.value, end: endTime.value }
       : null
   }
-  const m = /^(rolling|week|month):(-?\d+)$/.exec(raw)
-  if (!m) {
-    return null
+  if (raw === 'custom:now') {
+    // The persisted end was "today" at pick time — re-anchor it to the
+    // current day so the window keeps tracking now across reloads.
+    const bounds = resolveRangePreset('custom:now', { customStart: startTime.value })
+    return bounds?.start && bounds.end
+      ? { kind: 'custom', start: bounds.start, end: bounds.end }
+      : null
   }
-  const n = Number(m[2])
-  if (!Number.isFinite(n)) {
-    return null
-  }
-  if (m[1] === 'rolling') {
-    return n >= 1 ? { kind: 'rolling', days: n } : null
-  }
-  if (m[1] === 'week') {
-    return n <= 0 ? { kind: 'week', offset: n } : null
-  }
-  return n <= 0 ? { kind: 'month', offset: n } : null
+  // Numeric ids share their grammar and validity rules with
+  // resolveRangePreset via parseNumericPreset (app/utils/date.ts); the
+  // parsed value doubles as the matching RangeState variant.
+  return parseNumericPreset(raw)
 }
 
 // Reconstruct the preset from the inbound v-models on mount so deep
@@ -137,9 +113,12 @@ function inferInitial(): RangeState {
 const state = ref<RangeState>(inferInitial())
 
 // Now-relative presets restored from a previous visit must re-anchor:
-// a "year to date" persisted yesterday extends to today on reload
-// instead of staying frozen at yesterday's bounds.
-if (preset.value && state.value.kind !== 'custom') {
+// a "year to date" (or a 'custom:now' window ending "today") persisted
+// yesterday extends to today on reload instead of staying frozen at
+// yesterday's bounds. pushModels writes are identity-preserving, so
+// when the caller already re-anchored (UnifiedUserDashboard does, to
+// beat its stats fetchers) or the range is frozen, this is a no-op.
+if (preset.value) {
   pushModels(state.value)
 }
 
@@ -171,70 +150,25 @@ function applyState(s: RangeState) {
 }
 
 function pushModels(s: RangeState) {
-  const today = startOfDay(new Date())
-  switch (s.kind) {
-    case 'today': {
-      // Full 24-hour window for today — the x-axis spans the entire
-      // day so empty future hours are visible as part of the canvas.
-      const start = today
-      const end = endOfDay(today)
-      startTime.value = start
-      endTime.value = end
-      days.value = 1
-      break
-    }
-    case 'rolling': {
-      startTime.value = null
-      endTime.value = null
-      days.value = s.days
-      break
-    }
-    case 'week': {
-      // Always render the full Mon→Sun span so the timeline x-axis
-      // matches the "week" label even mid-week.
-      const monday = addDays(startOfIsoWeek(today), s.offset * 7)
-      const sunday = addDays(monday, 6)
-      const end = endOfDay(sunday)
-      startTime.value = monday
-      endTime.value = end
-      days.value = diffDays(monday, end)
-      break
-    }
-    case 'month': {
-      // Always render the full first→last day of the month so the
-      // x-axis spans the entire month, even when offset === 0.
-      const anchor = addMonths(today, s.offset)
-      const first = new Date(anchor.getFullYear(), anchor.getMonth(), 1)
-      const lastDayOfMonth = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0)
-      const end = endOfDay(lastDayOfMonth)
-      startTime.value = first
-      endTime.value = end
-      days.value = diffDays(first, end)
-      break
-    }
-    case 'ytd': {
-      const first = new Date(today.getFullYear(), 0, 1)
-      const end = endOfDay(today)
-      startTime.value = first
-      endTime.value = end
-      days.value = diffDays(first, end)
-      break
-    }
-    case 'all': {
-      startTime.value = null
-      endTime.value = null
-      days.value = 36_500
-      break
-    }
-    case 'custom': {
-      const start = startOfDay(s.start)
-      const end = endOfDay(s.end)
-      startTime.value = start
-      endTime.value = end
-      days.value = diffDays(start, end)
-      break
-    }
+  // Bounds come from the shared resolveRangePreset (app/utils/date.ts)
+  // so this component and UnifiedUserDashboard's pre-fetch re-anchor
+  // can never drift apart. A custom range's stored dates are the truth
+  // here: for a frozen 'custom' the resolver deliberately returns null,
+  // and for 'custom:now' (end IS today) it would reproduce these exact
+  // values — re-anchoring only matters on restore, not at pick time.
+  let bounds: ResolvedRangeBounds | null
+  if (s.kind === 'custom') {
+    const start = startOfDay(s.start)
+    const end = endOfDay(s.end)
+    bounds = { start, end, days: diffDays(start, end) }
   }
+  else {
+    bounds = resolveRangePreset(serializeState(s))
+  }
+  if (!bounds) {
+    return
+  }
+  applyResolvedBounds(bounds, { start: startTime, end: endTime, days })
 }
 
 // Arrow keys uniformly shift to the previous / next window of the same

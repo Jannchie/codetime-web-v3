@@ -22,24 +22,30 @@ const data = computed(() => {
 })
 // Grid strategy:
 //   • no rangeStart → legacy trailing 365 days ending at endDate
-//   • rangeStart given → natural calendar year containing rangeStart
-//     (Jan 1 → Dec 31), so "YTD" reads as the full year with the
-//     post-today portion drawn as future cells.
-const gridStartDate = props.rangeStart
-  ? new Date(props.rangeStart.getFullYear(), 0, 1)
-  : d3.utcDay.offset(props.endDate, -365)
-const gridEndDate = props.rangeStart
-  // First-day-of-next-year — d3.utcDay.range is half-open, so this
-  // includes Dec 31 of the target year and stops just short of Jan 1.
-  ? new Date(props.rangeStart.getFullYear() + 1, 0, 1)
-  : props.endDate
-const years = d3.utcDay.range(gridStartDate, gridEndDate)
+//   • range inside one calendar year (YTD, single-year custom) → that
+//     natural year (Jan 1 → Dec 31), so "YTD" reads as the full year
+//     with the post-today portion drawn as future cells
+//   • multi-year range → trailing 365 days ending at rangeEnd, so a
+//     "2022 → now" pick shows the most recent year of activity instead
+//     of a grid pinned to the range's first (possibly empty) year.
+const gridBounds = computed<{ start: Date, end: Date, year: number | null }>(() => {
+  const start = props.rangeStart
+  const end = start ? (props.rangeEnd ?? props.endDate) : props.endDate
+  if (start && start.getFullYear() === end.getFullYear()) {
+    // First-day-of-next-year — d3.utcDay.range is half-open, so this
+    // includes Dec 31 of the target year and stops just short of Jan 1.
+    return {
+      start: new Date(start.getFullYear(), 0, 1),
+      end: new Date(start.getFullYear() + 1, 0, 1),
+      year: start.getFullYear(),
+    }
+  }
+  return { start: d3.utcDay.offset(end, -365), end, year: null }
+})
+const years = computed(() => d3.utcDay.range(gridBounds.value.start, gridBounds.value.end))
 type CellState = 'in-range' | 'past-out' | 'future'
 const todayMs = new Date().setHours(23, 59, 59, 999)
-const rangeStartMs = props.rangeStart?.getTime()
-const rangeEndMs = props.rangeEnd?.getTime()
-function classifyDate(date: Date): CellState {
-  const t = date.getTime()
+function classifyDate(t: number, rangeStartMs?: number, rangeEndMs?: number): CellState {
   if (t > todayMs) {
     return 'future'
   }
@@ -52,21 +58,25 @@ function classifyDate(date: Date): CellState {
   return 'in-range'
 }
 const yearData = computed(() => {
-  const d = data.value.filter((d) => {
-    return d.date.getTime() >= gridStartDate.getTime()
-  })
+  const gridStartMs = gridBounds.value.start.getTime()
+  const rangeStartMs = props.rangeStart?.getTime()
+  const rangeEndMs = props.rangeEnd?.getTime()
+  const byDay = new Map<number, number>()
+  for (const d of data.value) {
+    const t = d.date.getTime()
+    if (t >= gridStartMs) {
+      byDay.set(t, d.duration)
+    }
+  }
 
-  const da = years.map((date) => {
-    const day = d.find((d) => {
-      return d.date.getTime() === date.getTime()
-    })
+  return years.value.map((date) => {
+    const t = date.getTime()
     return {
       date,
-      duration: day?.duration ?? 0,
-      state: classifyDate(date),
+      duration: byDay.get(t) ?? 0,
+      state: classifyDate(t, rangeStartMs, rangeEndMs),
     }
   })
-  return da
 })
 
 const latestWeekDate = computed(() => {
@@ -74,6 +84,11 @@ const latestWeekDate = computed(() => {
 })
 
 const hasData = computed(() => yearData.value.some(d => d.duration > 0))
+
+const emptyHintText = computed(() => {
+  const year = gridBounds.value.year
+  return year === null ? 'NO ACTIVITY · LAST 365 DAYS' : `NO ACTIVITY · ${year}`
+})
 
 const t = useI18N()
 
@@ -179,7 +194,7 @@ const options = computed(() => ({
     </svg>
     <PoltCalendar :options="options" />
     <div v-if="!hasData" class="year-cal__hint">
-      <span>NO ACTIVITY · LAST 365 DAYS</span>
+      <span>{{ emptyHintText }}</span>
     </div>
   </div>
 </template>
