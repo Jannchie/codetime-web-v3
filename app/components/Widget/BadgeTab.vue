@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { AgentProjectOption } from './AgentProjectSelect.vue'
+import type { ScopeOption } from './ScopeSelect.vue'
 import { isValidHex, stripHash } from './Form/presets'
 
 const t = useI18N()
@@ -22,8 +24,6 @@ const colorPresets = [
 ]
 
 const user = useUser()
-type ScopeOption = { label: string, id: string, kind: 'tag' | 'workspace', color?: string | null, emoji?: string | null }
-type AgentProjectOption = { label: string, id: string }
 const metricOptions = computed(() => [
   { id: 'time', label: t.value.dashboard.badge.metric.time },
   { id: 'tokens', label: t.value.dashboard.badge.metric.tokens },

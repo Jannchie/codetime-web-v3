@@ -654,6 +654,42 @@ export type PostV3AgentIngestResponses = {
 
 export type PostV3AgentIngestResponse = PostV3AgentIngestResponses[keyof PostV3AgentIngestResponses];
 
+export type GetV3AgentProjectsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Case-insensitive substring filter.
+         */
+        q?: string;
+        limit?: number;
+    };
+    url: '/v3/agent/projects';
+};
+
+export type GetV3AgentProjectsErrors = {
+    /**
+     * Not authenticated
+     */
+    401: PyError;
+};
+
+export type GetV3AgentProjectsError = GetV3AgentProjectsErrors[keyof GetV3AgentProjectsErrors];
+
+export type GetV3AgentProjectsResponses = {
+    /**
+     * Project name page
+     */
+    200: {
+        results: Array<{
+            project: string;
+            lastEventAt: Date;
+        }>;
+    };
+};
+
+export type GetV3AgentProjectsResponse = GetV3AgentProjectsResponses[keyof GetV3AgentProjectsResponses];
+
 export type GetV3AgentSessionsByRollupKeyData = {
     body?: never;
     path: {
@@ -2905,6 +2941,10 @@ export type GetV3UsersShieldData = {
     path?: never;
     query: {
         uid: number;
+        /**
+         * time = coded minutes; tokens = AI agent tokens consumed. With tokens, `project` matches the agent project name and language/tag/only_hours are ignored.
+         */
+        metric?: 'time' | 'tokens';
         minutes?: number;
         project?: string;
         language?: string;

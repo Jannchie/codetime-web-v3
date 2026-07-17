@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { getV3AgentProjects } from '~/api/v3'
+
 // Picker over the caller's agent project names — the raw
 // `agent_sessions.project` strings the token badge's `project` param
-// matches against. The endpoint is not in the generated SDK yet, so we
-// fetch it directly (same pattern as the vibe dashboard page).
+// matches against.
 
 export type AgentProjectOption = {
   label: string
@@ -13,15 +14,12 @@ export type AgentProjectOption = {
 const modelValue = defineModel<AgentProjectOption | null>()
 const t = useI18N()
 
-type AgentProjectsResponse = { results: { project: string, lastEventAt: string }[] }
-
 async function loader(q: string): Promise<AgentProjectOption[]> {
   const trimmed = q.trim()
-  const resp = await $fetch<AgentProjectsResponse>('/v3/agent/projects', {
+  const resp = await getV3AgentProjects({
     query: trimmed ? { q: trimmed } : undefined,
-    credentials: 'include',
   })
-  return (resp?.results ?? []).map(r => ({
+  return (resp.data?.results ?? []).map(r => ({
     label: r.project,
     id: `agent-project:${r.project}`,
     isRecent: !trimmed,
