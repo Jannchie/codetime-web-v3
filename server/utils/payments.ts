@@ -84,22 +84,31 @@ export function calcExpirationFromVariant(variantId: string | null | undefined, 
   if (variantId === monthlyId) {
  return addCalendar(baseTime, 0, 1)
 }
+  console.warn(`[ls-webhook] unknown variant ID ${variantId}, defaulting expiration to 1 month`)
   return addCalendar(baseTime, 0, 1)
+}
+
+// Variant of the order's first line item. LemonSqueezy order payloads
+// carry the variant only in attributes.first_order_item —
+// relationships.variant holds bare links. Single owner of that path so
+// the subscription check and the expiration calculation can never read
+// different variants (the 2026-06 under-grant incident was a stale
+// read of relationships.variant). Mirrors PaymentService._order_variant_id.
+export function orderVariantId(webhook: Record<string, any>): string | null {
+  const variantId = webhook.data?.attributes?.first_order_item?.variant_id
+  return variantId === undefined || variantId === null ? null : String(variantId)
 }
 
 // Mirror PaymentService._is_subscription_order.
 export function isSubscriptionOrder(webhook: Record<string, any>): boolean {
-  const data = webhook.data || {}
-  const attributes = data.attributes || {}
-  const firstItem = attributes.first_order_item
-  const variantId = firstItem?.variant_id
-  if (variantId !== undefined && variantId !== null) {
+  const variantId = orderVariantId(webhook)
+  if (variantId !== null) {
     const monthly = process.env.LEMONSQUEEZY_SUBSCRIPTION_ID_MONTHLY
     const yearly = process.env.LEMONSQUEEZY_SUBSCRIPTION_ID_YEARLY
-    if ([monthly, yearly].includes(String(variantId))) {
+    if ([monthly, yearly].includes(variantId)) {
  return true
 }
   }
-  const productName = String(attributes.product_name || '').toLowerCase()
+  const productName = String(webhook.data?.attributes?.product_name || '').toLowerCase()
   return productName.includes('subscription')
 }

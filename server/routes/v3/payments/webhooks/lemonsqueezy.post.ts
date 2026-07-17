@@ -9,6 +9,7 @@ import {
   calcExpirationFromVariant,
   endsExpiry,
   isSubscriptionOrder,
+  orderVariantId,
   PlanStatus,
   renewExpiry,
   SUBSCRIPTION_STATUS_MAP,
@@ -290,8 +291,14 @@ async function handleOrderCreated(db: ReturnType<typeof useDb>, w: Webhook) {
  return
 }
 
-  const variantId = w.data?.relationships?.variant?.data?.id
-  const expires = calcExpirationFromVariant(variantId ? String(variantId) : null, user.planExpiresAt)
+  const variantId = orderVariantId(w)
+  if (variantId === null) {
+    // A paid order without a variant means the payload shape drifted —
+    // exactly how the 2026-06 under-grant incident started. The 1-month
+    // default keeps the buyer paid, but the drift must be loud.
+    console.error(`[ls-webhook] order_created: order ${w.data?.id} is paid but has no first_order_item.variant_id; defaulting to 1 month`)
+  }
+  const expires = calcExpirationFromVariant(variantId, user.planExpiresAt)
   await db.update(users)
     .set({ plan: 'pro', planStatus: PlanStatus.ACTIVE, planExpiresAt: expires })
     .where(eq(users.id, user.id))
