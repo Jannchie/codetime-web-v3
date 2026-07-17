@@ -5,6 +5,7 @@ import languageIdentifiers from '../../../assets/LanguageIdentifiers.json'
 import { agentSessions, tags, users, workspaceMetaV2, workspaceMinutesV2 } from '../../../db/schema'
 import { useDb } from '../../../utils/db'
 import { getShieldMessage, getShieldWindowText } from '../../../utils/duration'
+import { agentVisibilityCutoff } from '../../../utils/plan-limits'
 import { resolveUserPrivacy } from '../../../utils/privacy'
 import { sendPyError } from '../../../utils/py-error'
 import { formatTokens } from '../../../utils/svg-theme'
@@ -107,7 +108,7 @@ export default defineEventHandler(async (event) => {
 
   const db = useDb()
   const [user] = await db
-    .select({ id: users.id, privacy: users.privacy })
+    .select({ id: users.id, plan: users.plan, privacy: users.privacy })
     .from(users)
     .where(eq(users.id, uid))
     .limit(1)
@@ -142,6 +143,13 @@ export default defineEventHandler(async (event) => {
     // agent project string; the editor-centric filters (language, tag)
     // have no meaning on agent data and are ignored.
     const where = [eq(agentSessions.userId, uid)]
+    // Free-plan ceiling: clamp to the same visibility cutoff every other
+    // agent_sessions read applies, so the public badge cannot surface
+    // sessions the dashboard would hide.
+    const visibilityCutoff = agentVisibilityCutoff(user.plan)
+    if (visibilityCutoff) {
+      where.push(gte(agentSessions.lastEventAt, visibilityCutoff))
+    }
     if (cutoff) {
       where.push(gte(agentSessions.lastEventAt, cutoff))
     }
