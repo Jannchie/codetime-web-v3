@@ -22,6 +22,18 @@ const colorPresets = [
   { hex: '#a855f7', label: 'violet' },
   { hex: '#222222', label: 'graphite' },
 ]
+// Left block. Empty = renderer default (#555); darker presets since the
+// label sits under white text.
+const labelColor = ref<string>('')
+const labelColorPresets = [
+  { hex: '#334155', label: 'slate' },
+  { hex: '#1e293b', label: 'deep slate' },
+  { hex: '#0f172a', label: 'midnight' },
+  { hex: '#0369a1', label: 'sky' },
+  { hex: '#166534', label: 'forest' },
+  { hex: '#7c3aed', label: 'violet' },
+  { hex: '#222222', label: 'graphite' },
+]
 
 const user = useUser()
 const metricOptions = computed(() => [
@@ -48,6 +60,9 @@ const rawParams = computed(() => ({
   tag: metricId.value === 'time' && scope.value?.kind === 'tag' ? scope.value.label : '',
   minutes: String(Number(days.value) * 24 * 60),
   color: isValidHex(color.value) ? stripHash(color.value) : '',
+  // Rides inside the shield URL: the renderer reads labelColor from the
+  // endpoint JSON, it has no query param of its own (unlike color/style).
+  label_color: isValidHex(labelColor.value) ? stripHash(labelColor.value) : '',
   style: styleId.value,
   language: metricId.value === 'time' ? language.value : '',
 }))
@@ -83,6 +98,13 @@ const link = computed(() => {
         v-model="color"
         :presets="colorPresets"
         :placeholder="t.dashboard.badge.placeholder.color"
+      />
+    </WidgetFormRow>
+    <WidgetFormRow v-if="styleId !== 'social'" label="Label color">
+      <WidgetFormColor
+        v-model="labelColor"
+        :presets="labelColorPresets"
+        placeholder="555555"
       />
     </WidgetFormRow>
     <WidgetFormRow label="Metric">

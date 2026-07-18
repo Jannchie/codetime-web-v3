@@ -8,7 +8,7 @@ import { getShieldMessage, getShieldWindowText } from '../../../utils/duration'
 import { agentVisibilityCutoff } from '../../../utils/plan-limits'
 import { resolveUserPrivacy } from '../../../utils/privacy'
 import { sendPyError } from '../../../utils/py-error'
-import { formatTokens } from '../../../utils/svg-theme'
+import { formatTokens, sanitizeColor } from '../../../utils/svg-theme'
 import { findMetaHashesMatchingRules } from '../../../utils/tag-meta-hash'
 
 // Mirrors GET /v3/users/shield. Returns the data block for a
@@ -30,6 +30,7 @@ defineRouteMeta({
       { name: 'language', in: 'query', schema: { type: 'string' } },
       { name: 'tag', in: 'query', schema: { type: 'string' }, description: 'Tag name (per-user unique). Rules evaluated in-memory.' },
       { name: 'only_hours', in: 'query', schema: { type: 'boolean', default: false } },
+      { name: 'label_color', in: 'query', schema: { type: 'string' }, description: 'Left-block color (hex, # optional). Echoed as `labelColor` in the payload — the shields renderer reads it from the JSON, not from its own query string.' },
     ],
     responses: {
       200: {
@@ -50,6 +51,7 @@ defineRouteMeta({
               label: { type: 'string' },
               message: { type: 'string' },
               color: { type: 'string' },
+              labelColor: { type: 'string', nullable: true },
             },
           },
         },
@@ -131,6 +133,10 @@ export default defineEventHandler(async (event) => {
   const tagName = strOr(q.tag)
   const onlyHours = asBool(q.only_hours)
   const metric = strOr(q.metric) === 'tokens' ? 'tokens' : 'time'
+  // Left-block color rides in the payload (`labelColor`): the shields
+  // renderer honours it from the endpoint JSON but has no query param
+  // for it, unlike the right-block `color`.
+  const labelColor = sanitizeColor(q.label_color)
 
   const now = new Date()
   const cutoff = minutes > 0
@@ -166,9 +172,10 @@ export default defineEventHandler(async (event) => {
     return {
       schemaVersion: 1,
       logoSvg: LOGO_SVG,
-      label: project ? `CodeTime@${project}` : 'CodeTime',
+      label: project ? `VibeToken@${project}` : 'VibeToken',
       message: `${formatTokens(totalTokens)} tokens${windowText ? ` / ${windowText}` : ''}`,
       color: totalTokens > 0 ? 'blue' : 'lightgrey',
+      ...(labelColor ? { labelColor } : {}),
     }
   }
 
@@ -294,5 +301,6 @@ export default defineEventHandler(async (event) => {
     label,
     message,
     color,
+    ...(labelColor ? { labelColor } : {}),
   }
 })
