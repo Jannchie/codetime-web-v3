@@ -1,5 +1,10 @@
 shellEmulator: true
 
+# pnpm 11 ignores pnpm-specific keys in .npmrc; `shamefully-hoist=true`
+# must live here or installs prune the public-hoisted symlinks that
+# uno.config.ts ('unocss') and friends rely on.
+shamefullyHoist: true
+
 trustPolicy: no-downgrade
 
 onlyBuiltDependencies:
