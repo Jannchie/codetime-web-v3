@@ -6,14 +6,17 @@
 import type { ColorPreset } from './presets'
 import { isValidHex, stripHash } from './presets'
 
-const props = defineProps<{
+// `enabled` needs an explicit `true` default: Vue coerces an absent
+// Boolean prop to `false`, so without it every consumer that omits the
+// prop (e.g. BadgeTab) rendered the control disabled.
+const props = withDefaults(defineProps<{
   modelValue: string
   presets: ColorPreset[]
-  // Defaults to enabled; pass `false` to lock the control behind Pro.
+  // Pass `false` to lock the control behind Pro.
   enabled?: boolean
   placeholder?: string
   resetTitle?: string
-}>()
+}>(), { enabled: true })
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
