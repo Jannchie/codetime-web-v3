@@ -421,6 +421,7 @@ export type ShieldResponse = {
     label: string;
     message: string;
     color: string;
+    labelColor?: string;
 };
 
 export type PostV3AgentCliLinkApproveData = {
@@ -2953,6 +2954,10 @@ export type GetV3UsersShieldData = {
          */
         tag?: string;
         only_hours?: boolean;
+        /**
+         * Left-block color (hex, # optional). Echoed as `labelColor` in the payload — the shields renderer reads it from the JSON, not from its own query string.
+         */
+        label_color?: string;
     };
     url: '/v3/users/shield';
 };

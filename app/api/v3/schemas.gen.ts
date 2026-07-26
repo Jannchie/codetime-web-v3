@@ -1428,6 +1428,10 @@ export const ShieldResponseSchema = {
         },
         color: {
             type: 'string'
+        },
+        labelColor: {
+            type: 'string',
+            nullable: true
         }
     }
 } as const;
