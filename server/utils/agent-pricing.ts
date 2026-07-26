@@ -40,12 +40,27 @@ const FALLBACK: Record<string, ModelPrice> = {
   'gpt-5.4': fbPrice('GPT-5.4', 2.5e-6, 2.5e-7, 1.5e-5),
   'gpt-5.4-mini': fbPrice('GPT-5.4 Mini', 7.5e-7, 7.5e-8, 4.5e-6),
   'gpt-5.5': fbPrice('GPT-5.5', 5e-6, 5e-7, 3e-5),
+  // The 5.6 family is the first OpenAI tier OpenRouter reports an
+  // `input_cache_write` for (1.25× input), so these carry an explicit
+  // cache-creation rate instead of defaulting it to the cache-read rate.
+  'gpt-5.6-sol': fbPrice('GPT-5.6 Sol', 5e-6, 5e-7, 3e-5, 6.25e-6),
+  'gpt-5.6-luna': fbPrice('GPT-5.6 Luna', 1e-6, 1e-7, 6e-6, 1.25e-6),
+  'gpt-5.6-terra': fbPrice('GPT-5.6 Terra', 2.5e-6, 2.5e-7, 1.5e-5, 3.125e-6),
   'gpt-5-mini': fbPrice('GPT-5 Mini', 2.5e-7, 2.5e-8, 2e-6),
   'gpt-5-nano': fbPrice('GPT-5 Nano', 5e-8, 5e-9, 4e-7),
   'claude-sonnet-4-6': fbPrice('Claude Sonnet 4.6', 3e-6, 3e-7, 1.5e-5, 3.75e-6),
+  // Sonnet 5 is on introductory pricing ($2/$10 per MTok) through
+  // 2026-08-31; list price afterwards is $3/$15. This table has no
+  // effective-from dimension, so whatever rate it carries is applied to all
+  // history — like every other row here, it is a best-effort degraded-mode
+  // approximation, not a historical price archive. OpenRouter is the source
+  // of truth whenever it is reachable.
+  'claude-sonnet-5': fbPrice('Claude Sonnet 5', 2e-6, 2e-7, 1e-5, 2.5e-6),
   'claude-opus-4-6': fbPrice('Claude Opus 4.6', 5e-6, 5e-7, 25e-6, 6.25e-6),
   'claude-opus-4-7': fbPrice('Claude Opus 4.7', 5e-6, 5e-7, 25e-6, 6.25e-6),
   'claude-opus-4-8': fbPrice('Claude Opus 4.8', 5e-6, 5e-7, 25e-6, 6.25e-6),
+  'claude-opus-5': fbPrice('Claude Opus 5', 5e-6, 5e-7, 25e-6, 6.25e-6),
+  'claude-fable-5': fbPrice('Claude Fable 5', 1e-5, 1e-6, 5e-5, 1.25e-5),
   'claude-haiku-4-5': fbPrice('Claude Haiku 4.5', 1e-6, 1e-7, 5e-6, 1.25e-6),
   'deepseek-chat': fbPrice('DeepSeek Chat', 2.8e-7, 2.8e-8, 4.2e-7),
   'deepseek-reasoner': fbPrice('DeepSeek Reasoner', 2.8e-7, 2.8e-8, 4.2e-7),
@@ -57,12 +72,23 @@ const FALLBACK: Record<string, ModelPrice> = {
 // pricing.ts so the fallback table can still price fast tiers when
 // OpenRouter is unreachable or has not yet catalogued a variant.
 //
-// - Anthropic: Opus only; observed multiplier ×6 across input/output/
-//   cache (matches OpenRouter's `anthropic/claude-opus-4-7-fast`).
-//   Sonnet and Haiku have no fast variant — do not synthesize one.
-// - OpenAI Codex: `service_tier = fast | priority` maps to ×2 across
-//   the board (matches ccusage's CODEX_FAST_FALLBACK_MULTIPLIER).
-addFastVariants(FALLBACK, ['claude-opus-4-6', 'claude-opus-4-7', 'claude-opus-4-8'], 6)
+// The multiplier is NOT constant — the known values are mirrored from
+// ccusage's fast-multiplier-overrides.json
+// (/root/codetime/ccusage/rust/crates/ccusage/src/): Opus 4.6/4.7 ×6
+// ($30/$150), Opus 4.8 ×2 ($10/$50, Anthropic's published fast-mode rate),
+// gpt-5.5 ×2.5, gpt-5.4 / gpt-5.3-codex ×2. Opus 5 follows 4.8; the rest of
+// the Codex tiers use ×2 as the house default, since upstream has not
+// published a rate for them. Sonnet and Haiku have no fast variant — do not
+// synthesize one.
+//
+// These entries are the ONLY source for Codex fast/priority rows: OpenRouter
+// catalogues no `gpt-5.x-fast` model at all, and drops Anthropic fast
+// variants when they retire upstream (4.6-fast is already gone). Stored model
+// strings are immortal, so this table is append-only — never delete a row
+// because upstream retired it, or its historical rows silently price at $0.
+addFastVariants(FALLBACK, ['claude-opus-4-6', 'claude-opus-4-7'], 6)
+addFastVariants(FALLBACK, ['claude-opus-4-8', 'claude-opus-5'], 2)
+addFastVariants(FALLBACK, ['gpt-5.5'], 2.5)
 addFastVariants(FALLBACK, [
   'gpt-5',
   'gpt-5-codex',
@@ -74,7 +100,9 @@ addFastVariants(FALLBACK, [
   'gpt-5.3-codex',
   'gpt-5.4',
   'gpt-5.4-mini',
-  'gpt-5.5',
+  'gpt-5.6-sol',
+  'gpt-5.6-luna',
+  'gpt-5.6-terra',
 ], 2)
 
 function addFastVariants(table: Record<string, ModelPrice>, baseIds: string[], multiplier: number): void {
@@ -123,6 +151,13 @@ let state: CatalogState = {
 
 let inflight: Promise<void> | null = null
 
+// Resolved lookups, keyed by the raw stored model string. A dashboard
+// request resolves thousands of rows across a handful of distinct models
+// (the per-(project, model) breakdown alone is folded three ways), and every
+// miss re-runs the whole candidate expansion. Invalidated wherever `state`
+// is reassigned in loadCatalog — those are the only writes.
+const resolved = new Map<string, ModelPrice | null>()
+
 async function loadCatalog(): Promise<void> {
   try {
     const response = await fetch(SOURCE_URL, { headers: { accept: 'application/json' } })
@@ -153,7 +188,7 @@ async function loadCatalog(): Promise<void> {
       // (most OpenAI/DeepSeek entries have no input_cache_write).
       const cacheRead = Number.parseFloat(String(pricing.input_cache_read ?? '')) || input * 0.1
       const cacheWrite = Number.parseFloat(String(pricing.input_cache_write ?? '')) || cacheRead
-      map.set(id.toLowerCase(), {
+      const price: ModelPrice = {
         displayName: typeof model.name === 'string' ? model.name : undefined,
         inputCostPerToken: input,
         cacheCreationInputCostPerToken: cacheWrite,
@@ -161,7 +196,20 @@ async function loadCatalog(): Promise<void> {
         cachedInputCostPerToken: cacheRead,
         outputCostPerToken: output,
         source: 'openrouter',
-      })
+      }
+      const key = id.toLowerCase()
+      map.set(key, price)
+      // Also index the bare name. The codetime CLI stores model ids without
+      // OpenRouter's mandatory `vendor/` prefix, and this reverse index is
+      // what lets any vendor resolve without a hand-written prefix rule (the
+      // VENDOR_PREFIX_BY_FAMILY table below only ever existed to reconstruct
+      // that prefix). Bare names cannot collide with full ids — those always
+      // contain a slash — and first-wins keeps a future duplicate bare name
+      // from silently flipping an already-resolved price.
+      const bare = key.slice(key.indexOf('/') + 1)
+      if (bare !== key && !map.has(bare)) {
+        map.set(bare, price)
+      }
     }
     state = {
       loadedAt: Date.now(),
@@ -170,6 +218,7 @@ async function loadCatalog(): Promise<void> {
       raw: map,
       source: 'openrouter',
     }
+    resolved.clear()
   }
   catch (error) {
     state = {
@@ -179,6 +228,7 @@ async function loadCatalog(): Promise<void> {
       raw: state.raw,
       source: 'fallback',
     }
+    resolved.clear()
     console.warn('[pricing] OpenRouter fetch failed, fallback to built-in table:', (error as Error).message)
   }
 }
@@ -200,9 +250,11 @@ export function ensurePricingLoaded(): Promise<void> {
 // and sometimes appends a release date (`claude-haiku-4-5-20251001`),
 // while OpenRouter ids use dots and no date (`anthropic/claude-opus-4.7`).
 // We try the literal name first, then progressively normalized variants.
-// Family → OpenRouter vendor prefix lookup. OpenRouter ids carry a
-// mandatory `vendor/` prefix that codetime CLI strips, so we infer it
-// back from the bare model name.
+// Family → OpenRouter vendor prefix lookup. Now a backstop only: the
+// catalogue is indexed by bare name too (see loadCatalog), so a bare id
+// resolves for every vendor without a rule here. These survive because they
+// also let a `vendor/`-prefixed lookup hit the bare-keyed FALLBACK table.
+// Do not add a rule per new vendor — the reverse index already covers it.
 const VENDOR_PREFIX_BY_FAMILY: Array<{ test: (name: string) => boolean, prefix: string }> = [
   { test: n => n.startsWith('claude-'), prefix: 'anthropic/' },
   { test: n => n.startsWith('gpt-') || n.startsWith('o1-') || n.startsWith('o3-') || n.startsWith('o4-'), prefix: 'openai/' },
@@ -214,6 +266,12 @@ const VENDOR_PREFIX_BY_FAMILY: Array<{ test: (name: string) => boolean, prefix: 
   { test: n => n.startsWith('qwen'), prefix: 'qwen/' },
   { test: n => n.startsWith('mistral-') || n.startsWith('codestral-'), prefix: 'mistralai/' },
 ]
+
+// `claude-opus-4-7` → `claude-opus-4.7`. The lookahead keeps the regex from
+// chewing through 8-digit date suffixes.
+function dotted(s: string): string {
+  return s.replaceAll(/(\D)(\d+)-(\d+)(?=-|$)/g, '$1$2.$3')
+}
 
 function pricingCandidates(model: string): string[] {
   const set = new Set<string>()
@@ -233,24 +291,38 @@ function pricingCandidates(model: string): string[] {
       }
     }
   }
-  const base = model.toLowerCase()
-  add(base)
-  // `claude-opus-4-7` → `claude-opus-4.7`, `claude-haiku-4-5-20251001` →
-  // `claude-haiku-4.5-20251001`. Lookahead keeps the regex from chewing
-  // through 8-digit date suffixes.
-  const dotted = base.replaceAll(/(\D)(\d+)-(\d+)(?=-|$)/g, '$1$2.$3')
-  if (dotted !== base) {
-    add(dotted)
-  }
-  // Strip a trailing `-YYYYMMDD` release tag so `claude-haiku-4-5-20251001`
-  // can fall back to `claude-haiku-4-5` / `anthropic/claude-haiku-4.5`.
-  const undated = base.replace(/-\d{8}$/, '')
-  if (undated !== base) {
-    add(undated)
-    const undatedDotted = undated.replaceAll(/(\D)(\d+)-(\d+)(?=-|$)/g, '$1$2.$3')
-    if (undatedDotted !== undated) {
-      add(undatedDotted)
+  // Every spelling variant of one base form: the form itself, its dotted
+  // version, and — when it ends in a `-YYYYMMDD` release tag — the undated
+  // form of both. `add` is Set-backed, so re-adding an unchanged form is a
+  // no-op.
+  const addAllForms = (form: string): void => {
+    for (const variant of [form, form.replace(/-\d{8}$/, '')]) {
+      add(variant)
+      add(dotted(variant))
     }
+  }
+  const base = model.toLowerCase()
+  addAllForms(base)
+  // Some Codex proxies stamp the reasoning effort into the model name
+  // (`gpt-5.5(xhigh)`, `gpt-5.4 (high)`). The parenthetical is not part of
+  // any catalogue id, and pricing does not vary by effort, so retry without
+  // it. This is the permanent home for the rule: historical rows keep their
+  // raw name forever, and users on older CLI builds keep emitting it. The
+  // CLI strips it too (codetime-cli packages/cli/src/adapters/codex.ts,
+  // normalizeCodexModel) so new rows don't split the model leaderboard —
+  // the two copies are in separate repos with no shared package, so these
+  // comments are the sync mechanism. Keep both.
+  const deparenthesized = base.replace(/\s*\([^)]*\)\s*$/, '').trim()
+  if (deparenthesized && deparenthesized !== base) {
+    addAllForms(deparenthesized)
+  }
+  // Some clients join vendor and model with a `-` instead of a `/`
+  // (`deepseek-deepseek-v4-pro`, `openai-gpt-5.6-sol`). Drop the leading
+  // segment and let the lookup decide: every candidate is probed as an exact
+  // key, so a wrong guess simply misses instead of mispricing.
+  const withoutLeadingSegment = base.slice(base.indexOf('-') + 1)
+  if (base.includes('-') && withoutLeadingSegment) {
+    addAllForms(withoutLeadingSegment)
   }
   return [...set]
 }
@@ -259,6 +331,16 @@ export function getPriceFor(model: string): ModelPrice | null {
   if (!model) {
     return null
   }
+  const cached = resolved.get(model)
+  if (cached !== undefined) {
+    return cached
+  }
+  const price = resolvePriceFor(model)
+  resolved.set(model, price)
+  return price
+}
+
+function resolvePriceFor(model: string): ModelPrice | null {
   const candidates = pricingCandidates(model)
   for (const candidate of candidates) {
     const fromRaw = state.raw.get(candidate)
