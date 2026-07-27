@@ -749,6 +749,10 @@ export type Translation = {
           outSuffix: string
           estimated: string
           agentActive: string
+          // Tooltip on the KPI delta. Spells out that the percentage
+          // compares the halves of the selected window, not this
+          // period against the last one — the reading users default to.
+          trendHint: string
         }
         timeline: {
           cost: string

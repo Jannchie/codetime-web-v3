@@ -736,6 +736,7 @@ export const zhTW: Partial<Translation> = {
           outSuffix: '出',
           estimated: '估算值',
           agentActive: 'agent 活躍',
+          trendHint: '趨勢：所選區間後半段與前半段相比，不是與上一週期的環比。',
         },
         timeline: {
           cost: '成本',

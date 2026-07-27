@@ -395,6 +395,7 @@ export const en: Translation = {
           outSuffix: 'out',
           estimated: 'estimated',
           agentActive: 'agent active',
+          trendHint: 'Trend: second half of the selected range vs the first half — not a comparison with the previous period.',
         },
         timeline: {
           cost: 'cost',

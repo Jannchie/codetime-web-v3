@@ -748,6 +748,7 @@ export const ru: Partial<Translation> = {
           outSuffix: 'вых',
           estimated: 'оценка',
           agentActive: 'agent активен',
+          trendHint: 'Тренд: вторая половина выбранного периода по сравнению с первой половиной — это не сравнение с предыдущим периодом.',
         },
         timeline: {
           cost: 'стоимость',

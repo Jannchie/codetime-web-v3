@@ -724,6 +724,7 @@ export const ms: Partial<Translation> = {
           outSuffix: 'keluar',
           estimated: 'anggaran',
           agentActive: 'agent aktif',
+          trendHint: 'Trend: separuh kedua julat yang dipilih berbanding separuh pertama — bukan perbandingan dengan tempoh sebelumnya.',
         },
         timeline: {
           cost: 'kos',

@@ -322,12 +322,17 @@ export default defineEventHandler(async (event) => {
   // Postgres can't parse — explicitly cast an ISO string to
   // timestamptz so the driver hands over a value Postgres understands.
   const sinceIso = range.since ? range.since.toISOString() : null
-  // Anchored ranges (this month / last month / custom) have an upper
-  // bound strictly earlier than `now`, so both ends need filtering —
-  // otherwise the timeline x-axis (pinned to [since, until] on the
-  // client) cuts off, but rows past `until` still come back and render
-  // outside the axis. Rolling ranges (days=N) pin `until` to the
-  // request time; applying the clause is a no-op there.
+  // Anchored ranges (this month / last month / custom) carry their own
+  // upper bound, so both ends need filtering — otherwise the timeline
+  // x-axis (pinned to [since, until] on the client) cuts off, but rows
+  // past `until` still come back and render outside the axis. Rolling
+  // ranges (days=N) pin `until` to the request time; applying the
+  // clause is a no-op there.
+  //
+  // Note `until` is NOT necessarily in the past: the client's calendar
+  // presets resolve 'this month' / 'this week' to the END of the
+  // period, so a window picked mid-period reaches into the future.
+  // See the bucket-spine comment below for what that implies.
   const untilIso = range.until.toISOString()
   const bucketTrunc = range.bucket // postgres date_trunc accepts 'hour'/'day'/'week'
 
@@ -1042,6 +1047,15 @@ export default defineEventHandler(async (event) => {
   // exists. The spine forces the full window's width regardless.
   // For the open-ended 'all' range we fall back to the earliest ts we
   // saw across overview / token rows; if nothing's there we skip.
+  //
+  // The spine runs to `until`, which for a calendar preset picked
+  // mid-period sits in the future — so trailing buckets come back
+  // zero-filled for days that haven't happened. That's deliberate (the
+  // x-axis stays a fixed width as the period fills in), but it means
+  // the zeros are structural, not idle. Any consumer averaging or
+  // trending across the spine has to drop them first, or a flat window
+  // reports as a decline; `elapsedBuckets` in the client's Vibe/types
+  // is the shared way to do that.
   const spineStartIso = sinceIso ?? (() => {
     const candidates: string[] = []
     if (overviewRows[0]) {

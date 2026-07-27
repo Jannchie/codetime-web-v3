@@ -747,6 +747,7 @@ export const ua: Partial<Translation> = {
           outSuffix: 'вих',
           estimated: 'оцінка',
           agentActive: 'agent активний',
+          trendHint: 'Тренд: друга половина вибраного діапазону порівняно з першою половиною — це не порівняння з попереднім періодом.',
         },
         timeline: {
           cost: 'вартість',

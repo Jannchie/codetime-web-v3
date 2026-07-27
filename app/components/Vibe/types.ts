@@ -153,6 +153,18 @@ export type VibeDashboard = {
   availableSources: string[]
 }
 
+// Drop buckets that haven't started yet. Calendar presets ('this
+// month', 'this week') resolve their upper bound to the END of the
+// period, and the server pads its bucket spine across the whole
+// window — so a window picked mid-period carries zero-filled buckets
+// for days that haven't happened. Those zeros are structural, not
+// idle: anything averaging or trending over the spine must drop them
+// first or it reports a flat window as a decline. Charts keep the
+// full spine so their x-extent stays stable.
+export function elapsedBuckets<T extends { ts: string }>(rows: T[], now = Date.now()): T[] {
+  return rows.filter(row => new Date(row.ts).getTime() <= now)
+}
+
 // Common compact formatter used across KPI/table components. Returns
 // the numeric portion separately from the unit so callers can style
 // them differently (e.g. small unit suffix next to a big number).

@@ -724,6 +724,7 @@ export const fr: Partial<Translation> = {
           outSuffix: 'sor',
           estimated: 'estimé',
           agentActive: 'agent actif',
+          trendHint: 'Tendance : seconde moitié de la plage sélectionnée par rapport à la première moitié — ce n\'est pas une comparaison avec la période précédente.',
         },
         timeline: {
           cost: 'coût',

@@ -718,6 +718,7 @@ export const ja: Partial<Translation> = {
           outSuffix: '出',
           estimated: '推定',
           agentActive: 'agent アクティブ',
+          trendHint: 'トレンド: 選択期間の後半と前半の比較です。前の期間との比較ではありません。',
         },
         timeline: {
           cost: 'コスト',

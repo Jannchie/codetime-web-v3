@@ -2,7 +2,7 @@
 import type { VibeOverviewBucket, VibeSummary } from './types'
 import { computed } from 'vue'
 import { useExchangeRate } from '~/composables/useExchangeRate'
-import { compactParts as compact, fmtDurationParts } from './types'
+import { compactParts as compact, elapsedBuckets, fmtDurationParts } from './types'
 
 // Six KPI tiles laid out as a 6-col grid (collapses to 3-col then
 // 2-col on narrower viewports). The shape and sparkline behaviour
@@ -31,13 +31,18 @@ type Kpi = {
 // Half-and-half trend: compare the sum of the latter half to the
 // earlier half. Same heuristic as agent-time; not statistically
 // rigorous but matches user intuition for "is it trending up?"
+//
+// The two halves must be the same WIDTH — these are sums, not means,
+// so an odd bucket count handing the tail one extra bucket reports a
+// flat window as +8% (27 elapsed days => 14 vs 13). On an odd count
+// the middle bucket is dropped rather than assigned to either side.
 function trend(buckets: number[]): { sign: 1 | -1 | 0, label: string } {
   if (buckets.length < 4) {
     return { sign: 0, label: '—' }
   }
   const half = Math.floor(buckets.length / 2)
   const head = buckets.slice(0, half).reduce((s, v) => s + v, 0)
-  const tail = buckets.slice(half).reduce((s, v) => s + v, 0)
+  const tail = buckets.slice(buckets.length - half).reduce((s, v) => s + v, 0)
   if (head === 0 && tail === 0) {
     return { sign: 0, label: '0%' }
   }
@@ -54,14 +59,29 @@ function trend(buckets: number[]): { sign: 1 | -1 | 0, label: string } {
 
 const t = useI18N()
 const L = computed(() => t.value.dashboard.agent?.labels?.kpi)
+const trendHint = computed(() => L.value?.trendHint ?? 'Trend: second half of the selected range vs the first half — not a comparison with the previous period.')
+
+type MetricKey = 'activity' | 'sessions' | 'tokens' | 'linesChanged' | 'estimatedCostUsd'
 
 const kpis = computed<Kpi[]>(() => {
-  const overview = props.overview
-  const activityBucket = overview.map(item => item.activity)
-  const sessionsBucket = overview.map(item => item.sessions)
-  const linesChangedBucket = overview.map(item => item.linesChanged)
-  const tokensBucket = overview.map(item => item.tokens)
-  const costBucket = overview.map(item => item.estimatedCostUsd)
+  const spine = props.overview
+  const started = elapsedBuckets(spine)
+  // Both halves of every tile that reads the bucket spine. Sparklines
+  // draw the full spine so the KPI x-extent lines up with the timeline
+  // below; the delta compares only buckets that have started, since
+  // the spine's trailing zeros would otherwise read as a decline.
+  // Stated once here so a tile can't take its spark and its delta
+  // from different windows.
+  const series = (key: MetricKey) => ({
+    spark: spine.map(item => item[key]),
+    delta: trend(started.map(item => item[key])),
+  })
+
+  const activity = series('activity')
+  const sessions = series('sessions')
+  const tokens = series('tokens')
+  const costSeries = series('estimatedCostUsd')
+  const linesChanged = series('linesChanged')
 
   const totalTokens = props.summary.totalTokens
   const totalCommands = props.summary.totalCommandCalls
@@ -86,36 +106,32 @@ const kpis = computed<Kpi[]>(() => {
       label: l?.events ?? 'events',
       value: eventsCompact.value,
       unit: eventsCompact.unit,
-      delta: trend(activityBucket),
       caption: `${totalTools.toLocaleString()} ${l?.tools ?? 'tool'} · ${totalCommands.toLocaleString()} ${l?.cmd ?? 'cmd'}`,
-      spark: activityBucket,
+      ...activity,
     },
     {
       index: '02',
       label: l?.sessions ?? 'sessions',
       value: sessionsCompact.value,
       unit: sessionsCompact.unit,
-      delta: trend(sessionsBucket),
       caption: `${props.summary.totalProjects} ${l?.projects ?? 'projects'}`,
-      spark: sessionsBucket,
+      ...sessions,
     },
     {
       index: '03',
       label: l?.tokens ?? 'tokens',
       value: tokensCompact.value,
       unit: tokensCompact.unit,
-      delta: trend(tokensBucket),
       caption: `${inCompact.value}${inCompact.unit ?? ''} ${l?.inSuffix ?? 'in'} · ${outCompact.value}${outCompact.unit ?? ''} ${l?.outSuffix ?? 'out'}`,
-      spark: tokensBucket,
+      ...tokens,
     },
     {
       index: '04',
       label: l?.cost ?? 'cost',
       value: cost > 0 ? formatCompactNumber(cost) : '—',
       unit: undefined,
-      delta: trend(costBucket),
       caption: cost > 0 ? (l?.estimated ?? 'estimated') : '—',
-      spark: costBucket,
+      ...costSeries,
       accentValue: true,
     },
     {
@@ -123,18 +139,16 @@ const kpis = computed<Kpi[]>(() => {
       label: l?.time ?? 'time',
       value: timeCompact.value,
       unit: timeCompact.unit,
-      delta: trend(sessionsBucket),
       caption: l?.agentActive ?? 'agent active',
-      spark: sessionsBucket,
+      ...sessions,
     },
     {
       index: '06',
       label: l?.linesNet ?? 'lines net',
       value: `${linesNet >= 0 ? '+' : ''}${linesNetCompact.value}`,
       unit: linesNetCompact.unit,
-      delta: trend(linesChangedBucket),
       caption: `+${props.summary.totalLinesAdded.toLocaleString()} / −${props.summary.totalLinesRemoved.toLocaleString()}`,
-      spark: linesChangedBucket,
+      ...linesChanged,
     },
   ]
 })
@@ -153,6 +167,7 @@ const kpis = computed<Kpi[]>(() => {
           v-if="kpi.delta"
           class="kpi-delta"
           :class="{ up: kpi.delta.sign === 1, down: kpi.delta.sign === -1, flat: kpi.delta.sign === 0 }"
+          :title="trendHint"
         >
           {{ kpi.delta.label }}
         </span>

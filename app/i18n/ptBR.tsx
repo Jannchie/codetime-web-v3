@@ -724,6 +724,7 @@ export const ptBR: Partial<Translation> = {
           outSuffix: 'sai',
           estimated: 'estimado',
           agentActive: 'agent ativo',
+          trendHint: 'Tendência: segunda metade do intervalo selecionado em relação à primeira metade — não é uma comparação com o período anterior.',
         },
         timeline: {
           cost: 'custo',

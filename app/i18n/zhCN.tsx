@@ -429,6 +429,7 @@ export const zhCN: Partial<Translation> = {
           outSuffix: '出',
           estimated: '估算值',
           agentActive: 'agent 活跃',
+          trendHint: '趋势：所选区间后半段与前半段相比，不是与上一周期的环比。',
         },
         timeline: {
           cost: '成本',
