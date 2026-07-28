@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { VibeDashboard } from '~/components/Vibe/types'
 import { getV3AgentSessions, getV3Machines } from '~/api/v3'
-import { compact } from '~/components/Vibe/types'
+import { agentSourceMeta, compact } from '~/components/Vibe/types'
 import { useExchangeRate } from '~/composables/useExchangeRate'
 
 const { format: fmtCurrency } = useExchangeRate()
@@ -242,34 +242,6 @@ function platformIcon(p?: string | null): string {
   return 'i-tabler-device-desktop'
 }
 
-// Map an agent-source id → display label + icon. The icon set
-// mirrors the chips on the empty-state guide (DashboardAgentGuide) so
-// the picker reads consistent with the install page.
-function sourceMeta(id: string): { label: string, icon: string } {
-  const key = id.toLowerCase()
-  switch (key) {
-    case 'claude':
-    case 'claude-code': {
-      return { label: 'Claude Code', icon: 'i-simple-icons-anthropic' }
-    }
-    case 'codex': {
-      return { label: 'Codex', icon: 'i-simple-icons-openai' }
-    }
-    case 'opencode': {
-      return { label: 'OpenCode', icon: 'i-brand-opencode' }
-    }
-    case 'pi': {
-      return { label: 'Pi', icon: 'i-brand-pi' }
-    }
-    default: {
-      // Title-case any unknown source so newly-added agents still
-      // render with a readable label.
-      const label = id.length > 0 ? id.charAt(0).toUpperCase() + id.slice(1) : id
-      return { label, icon: 'i-tabler-terminal-2' }
-    }
-  }
-}
-
 type PillItem<T extends string> = { id: T | null, label: string, icon?: string }
 
 const machineItems = computed<PillItem<string>[]>(() => [
@@ -286,7 +258,7 @@ const sourceItems = computed<PillItem<string>[]>(() => {
   return [
     { id: null, label: 'All agents', icon: 'i-tabler-robot' },
     ...sources.map((id) => {
-      const meta = sourceMeta(id)
+      const meta = agentSourceMeta(id)
       return { id, label: meta.label, icon: meta.icon }
     }),
   ]

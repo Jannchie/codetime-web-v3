@@ -95,6 +95,10 @@ export default defineConfig({
     'i-simple-icons-openai',
     'i-brand-opencode',
     'i-brand-pi',
+    'i-simple-icons-sourcegraph', // Amp is a Sourcegraph product
+    'i-simple-icons-googlegemini',
+    'i-simple-icons-moonshotai', // Kimi Code
+    'i-tabler-terminal-2', // agentSourceMeta's fallback for an unknown source
     // Provider icons rendered next to model names in Vibe ModelCosts.
     // Same dynamic-class issue — explicit listing keeps them in the
     // production CSS even when no template references them statically.

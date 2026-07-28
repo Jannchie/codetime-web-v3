@@ -95,8 +95,8 @@ export const en: Translation = {
       },
       agent: {
         title: 'Track every AI agent session, not just keystrokes.',
-        description: 'Install one CLI and Code Time captures sessions from Claude Code, Codex, OpenCode, and Pi — model calls, tokens, cache hit rate, estimated cost, and the projects they touched. Your prompt text and source code never leave your machine.',
-        supports: 'Hooks into',
+        description: 'Install one CLI and Code Time captures sessions from Claude Code, Codex, OpenCode, Pi, Amp, Gemini CLI, and Kimi Code — model calls, tokens, cache hit rate, estimated cost, and the projects they touched. Your prompt text and source code never leave your machine.',
+        supports: 'Tracks',
         kpiSessions: 'sessions',
         kpiCost: 'est. cost',
         kpiCalls: 'model calls',
@@ -346,7 +346,7 @@ export const en: Translation = {
   },
     agentGuide: {
       title: 'No vibe data yet',
-      description: 'Once the codetime CLI is installed and configured on a machine, your Claude Code, Codex, OpenCode, and Pi sessions will start appearing here.',
+      description: 'Once the codetime CLI is installed and configured on a machine, your Claude Code, Codex, OpenCode, Pi, Amp, Gemini CLI, and Kimi Code sessions will start appearing here.',
       token: {
         title: 'Your Token',
         description: 'Copy this token. You will feed it into the CLI in the final step.',
@@ -364,6 +364,7 @@ export const en: Translation = {
         title: 'Hook Into Agents',
         description: 'Run codetime install — the CLI auto-detects every supported AI agent on your machine and wires up the hooks for you.',
         supports: 'Currently supported:',
+        historyOnly: 'Agents marked ° need no hook — the CLI reads their session history on every sync.',
         latency: 'Use any agent normally. Sessions appear here within ~2 minutes of the agent finishing.',
       },
     },
@@ -744,7 +745,7 @@ export const en: Translation = {
       connect: {
         agent: {
           title: 'Connect AI Agents',
-          meta: 'cli · claude · codex · opencode · pi',
+          meta: 'cli · claude · codex · opencode · pi · amp · gemini · kimi',
         },
         vscode: {
           title: 'Connect VSCode',

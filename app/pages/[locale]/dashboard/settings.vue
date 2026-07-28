@@ -152,7 +152,7 @@ function openConnect(tab: ConnectTab) {
           <i class="i-tabler-robot connect-card-icon" />
           <span class="connect-card-body">
             <span class="connect-card-title">{{ connect?.agent?.title ?? 'Connect AI Agents' }}</span>
-            <span class="connect-card-meta">{{ connect?.agent?.meta ?? 'cli · claude · codex · opencode · pi' }}</span>
+            <span class="connect-card-meta">{{ connect?.agent?.meta ?? 'cli · claude · codex · opencode · pi · amp · gemini · kimi' }}</span>
           </span>
           <i class="i-tabler-arrow-up-right connect-card-cta" />
         </button>

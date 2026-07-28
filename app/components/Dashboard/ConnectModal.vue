@@ -33,7 +33,7 @@ const tabs = computed<Array<{ id: Tab, label: string, meta?: string, icon: strin
   {
     id: 'agent',
     label: connect.value?.agent?.title ?? 'Connect AI Agents',
-    meta: connect.value?.agent?.meta ?? 'cli · claude · codex · opencode · pi',
+    meta: connect.value?.agent?.meta ?? 'cli · claude · codex · opencode · pi · amp · gemini · kimi',
     icon: 'i-tabler-robot',
   },
   {

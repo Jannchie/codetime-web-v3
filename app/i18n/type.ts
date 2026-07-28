@@ -715,6 +715,9 @@ export type Translation = {
         description: string
         supports: string
         latency: string
+        // Optional: locales without it fall back to the English string in
+        // DashboardAgentGuide, same as landing.sections.agentTelemetry.
+        historyOnly?: string
       }
     }
     agent: {

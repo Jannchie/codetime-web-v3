@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { AGENT_SOURCE_IDS, agentSourceMeta } from '~/components/Vibe/types'
+
 withDefaults(defineProps<{
   // Suppress the big lead heading when the guide is embedded inside another
   // PanelSection (e.g. as a collapsible block in Settings or under the agent
@@ -37,15 +39,23 @@ const configureCmdDisplay = computed(() =>
 )
 const hookCmd = 'codetime install'
 
-// Supported agents shown as chips under the hook section. Keep names
-// short; icons map to common iconify sets — fall back to a generic
-// terminal glyph for any agent without dedicated branding.
-const supportedAgents: { name: string, icon: string }[] = [
-  { name: 'Claude Code', icon: 'i-simple-icons-anthropic' },
-  { name: 'Codex', icon: 'i-simple-icons-openai' },
-  { name: 'OpenCode', icon: 'i-brand-opencode' },
-  { name: 'Pi', icon: 'i-brand-pi' },
-]
+// Supported agents shown as chips under the hook section. Labels and
+// icons come from the canonical table in Vibe/types.ts so a new agent
+// needs no edit here.
+//
+// The ids listed in HISTORY_ONLY are the ones `codetime install` does NOT
+// hook: their CLI adapters return [] from installEntries(), so sessions
+// arrive only when a sync reads that agent's own session files. Listing
+// them without the distinction would promise a hook install never writes.
+const HISTORY_ONLY = new Set(['amp', 'gemini', 'kimi'])
+const supportedAgents = AGENT_SOURCE_IDS.map(id => ({
+  id,
+  ...agentSourceMeta(id),
+  history: HISTORY_ONLY.has(id),
+}))
+
+const historyNote = computed(() => t.value.dashboard.agentGuide.hook.historyOnly
+  ?? 'Agents marked ° need no hook — the CLI reads their session history on every sync.')
 </script>
 
 <template>
@@ -185,11 +195,15 @@ const supportedAgents: { name: string, icon: string }[] = [
         <div class="onb-agents">
           <span class="onb-agents-label">{{ t.dashboard.agentGuide.hook.supports }}</span>
           <ul class="onb-agents-list">
-            <li v-for="a in supportedAgents" :key="a.name" class="onb-agents-chip">
+            <li v-for="a in supportedAgents" :key="a.id" class="onb-agents-chip">
               <i :class="`${a.icon} text-[13px]`" />
-              <span>{{ a.name }}</span>
+              <span>{{ a.label }}</span>
+              <span v-if="a.history" class="onb-agents-mark" aria-hidden="true">°</span>
             </li>
           </ul>
+          <p class="onb-agents-note">
+            {{ historyNote }}
+          </p>
         </div>
 
         <p class="onb-hint">
@@ -288,6 +302,21 @@ const supportedAgents: { name: string, icon: string }[] = [
 }
 [data-scheme="light"] .onb-agents-chip {
   background: color-mix(in srgb, var(--ct-fg) 4%, transparent);
+}
+/* Degree sign marking a backfill-only agent. Sits high and dim so the
+   chip still reads as one word at a glance. */
+.onb-agents-mark {
+  align-self: flex-start;
+  margin-left: -2px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--ct-fg-subtle);
+}
+.onb-agents-note {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ct-fg-subtle);
 }
 
 /* Command bar — reused for token and shell commands */

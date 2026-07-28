@@ -118,12 +118,6 @@ const view = computed(() => {
       {{ L?.noAgent ?? '— no agent activity in window —' }}
     </li>
   </ul>
-  <!-- UnoCSS class discovery anchor — agent icons come from
-       agentSourceMeta at runtime so the scanner can't see them. -->
-  <span
-    aria-hidden="true"
-    class="icon-discovery i-simple-icons-anthropic i-simple-icons-openai i-tabler-terminal-2 i-brand-opencode i-brand-pi"
-  />
 </template>
 
 <style scoped>
@@ -222,14 +216,6 @@ const view = computed(() => {
   text-align: center;
   color: var(--ct-fg-muted);
   padding: 24px 0;
-}
-
-.icon-discovery {
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
 }
 
 @media (max-width: 980px) {

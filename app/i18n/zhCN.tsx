@@ -96,8 +96,8 @@ export const zhCN: Partial<Translation> = {
       },
       agent: {
         title: '记录每一次 AI Agent 会话，而不只是键盘敲击。',
-        description: '安装一个 CLI，Code Time 就会自动采集来自 Claude Code、Codex、OpenCode、Pi 的会话记录——模型调用、Token 用量、缓存命中率、估算成本以及涉及的项目。Prompt 与源代码不会离开你的机器。',
-        supports: '已对接',
+        description: '安装一个 CLI，Code Time 就会自动采集来自 Claude Code、Codex、OpenCode、Pi、Amp、Gemini CLI、Kimi Code 的会话记录——模型调用、Token 用量、缓存命中率、估算成本以及涉及的项目。Prompt 与源代码不会离开你的机器。',
+        supports: '已支持',
         kpiSessions: '会话',
         kpiCost: '估算成本',
         kpiCalls: '模型调用',
@@ -380,7 +380,7 @@ export const zhCN: Partial<Translation> = {
     },
     agentGuide: {
       title: '尚未收到 vibe 数据',
-      description: '在任一台机器上安装并配置 codetime CLI 后，您的 Claude Code、Codex、OpenCode、Pi 会话即会出现在此。',
+      description: '在任一台机器上安装并配置 codetime CLI 后，您的 Claude Code、Codex、OpenCode、Pi、Amp、Gemini CLI、Kimi Code 会话即会出现在此。',
       token: {
         title: '您的令牌',
         description: '复制此令牌，最后一步将其填入 CLI。',
@@ -398,6 +398,7 @@ export const zhCN: Partial<Translation> = {
         title: '挂钩到 Agent',
         description: '运行 codetime install，CLI 会自动检测本机所有支持的 AI agent，并自动配置钩子。',
         supports: '目前支持以下 Agent：',
+        historyOnly: '标有 ° 的 Agent 无需钩子——CLI 会在每次同步时读取它们的会话记录。',
         latency: '正常使用任意 agent。会话结束后约 2 分钟内即可在此查看。',
       },
     },
@@ -707,7 +708,7 @@ export const zhCN: Partial<Translation> = {
       connect: {
         agent: {
           title: '接入 AI Agent',
-          meta: 'cli · claude · codex · opencode · pi',
+          meta: 'cli · claude · codex · opencode · pi · amp · gemini · kimi',
         },
         vscode: {
           title: '接入 VSCode',

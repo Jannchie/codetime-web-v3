@@ -435,12 +435,32 @@ export const VIBE_PALETTE = [
   '#8a8a8a', // neutral gray
 ] as const
 
-const AGENT_COLOR_MAP: Record<string, string> = {
-  'opencode': VIBE_PALETTE[4]!, // lavender
-  'claude-code': VIBE_PALETTE[1]!, // warm copper
-  'codex': VIBE_PALETTE[0]!, // steel blue
-  'pi': VIBE_PALETTE[5]!, // teal
+// Canonical display metadata for the agent sources the CLI uploads.
+// Colour, label and icon are one fact per agent, so they live in one
+// table: agentColor() and agentSourceMeta() both read from here, and the
+// landing showcase / onboarding guide derive their chips from it. Adding
+// an agent means one entry here plus its icon in uno.config.ts safelist.
+//
+// Insertion order is the order the landing showcase stacks and ranks them.
+const AGENT_SOURCES: Record<string, { label: string, icon: string, color: string }> = {
+  'claude-code': { label: 'Claude Code', icon: 'i-simple-icons-anthropic', color: VIBE_PALETTE[1]! }, // copper
+  'codex': { label: 'Codex', icon: 'i-simple-icons-openai', color: VIBE_PALETTE[0]! }, // steel blue
+  'opencode': { label: 'OpenCode', icon: 'i-brand-opencode', color: VIBE_PALETTE[4]! }, // lavender
+  'pi': { label: 'Pi', icon: 'i-brand-pi', color: VIBE_PALETTE[5]! }, // teal
+  // simple-icons ships no Amp mark; `si-amp` is Google's AMP project, a
+  // different product. Sourcegraph builds Amp, so its mark is the closest
+  // correct branding available offline.
+  'amp': { label: 'Amp', icon: 'i-simple-icons-sourcegraph', color: VIBE_PALETTE[3]! }, // rose
+  // Sage matches the `gemini` entry in MODEL_FAMILY_COLOR below, so the
+  // agent and the models it calls share a hue.
+  'gemini': { label: 'Gemini CLI', icon: 'i-simple-icons-googlegemini', color: VIBE_PALETTE[2]! }, // sage
+  'kimi': { label: 'Kimi Code', icon: 'i-simple-icons-moonshotai', color: VIBE_PALETTE[6]! }, // amber
 }
+
+// Fallback icon for a source with no entry above.
+const AGENT_FALLBACK_ICON = 'i-tabler-terminal-2'
+
+export const AGENT_SOURCE_IDS = Object.keys(AGENT_SOURCES)
 
 function hashSource(name: string): number {
   let hash = 0
@@ -458,7 +478,7 @@ export function agentColor(name: string): string {
     return VIBE_PALETTE[0]!
   }
   const key = name.toLowerCase()
-  return AGENT_COLOR_MAP[key] ?? VIBE_PALETTE[hashSource(key)]!
+  return AGENT_SOURCES[key]?.color ?? VIBE_PALETTE[hashSource(key)]!
 }
 
 // Stable hue for a model id — used by the segmented PROJECTS bar so the
@@ -498,24 +518,16 @@ export function modelColor(model: string): string {
 // new agents only need to be added in one place.
 export function agentSourceMeta(id: string): { label: string, icon: string } {
   const key = id.toLowerCase()
-  switch (key) {
-    case 'claude':
-    case 'claude-code': {
-      return { label: 'Claude Code', icon: 'i-simple-icons-anthropic' }
-    }
-    case 'codex': {
-      return { label: 'Codex', icon: 'i-simple-icons-openai' }
-    }
-    case 'opencode': {
-      return { label: 'OpenCode', icon: 'i-brand-opencode' }
-    }
-    case 'pi': {
-      return { label: 'Pi', icon: 'i-brand-pi' }
-    }
-    default: {
-      const label = id.length > 0 ? id.charAt(0).toUpperCase() + id.slice(1) : id
-      return { label, icon: 'i-tabler-terminal-2' }
-    }
+  // The server has emitted bare `claude` as well as `claude-code`.
+  const hit = AGENT_SOURCES[key === 'claude' ? 'claude-code' : key]
+  if (hit) {
+    return { label: hit.label, icon: hit.icon }
+  }
+  // Title-case any unknown source so a newly-added agent still renders
+  // with a readable label before it gets an entry above.
+  return {
+    label: id.length > 0 ? id.charAt(0).toUpperCase() + id.slice(1) : id,
+    icon: AGENT_FALLBACK_ICON,
   }
 }
 

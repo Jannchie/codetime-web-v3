@@ -10,7 +10,7 @@ import type {
   VibeTokenBucket,
   VibeToolRow,
 } from '~/components/Vibe/types'
-import { compact } from '~/components/Vibe/types'
+import { agentSourceMeta, compact } from '~/components/Vibe/types'
 import { useExchangeRate } from '~/composables/useExchangeRate'
 
 const { format: fmtCurrency } = useExchangeRate()
@@ -480,33 +480,10 @@ const machineItems = computed<PillItem<string>[]>(() => [
   ...demoMachines.map(m => ({ id: m.id, label: m.label, icon: m.icon })),
 ])
 
-function sourceMeta(id: string): { label: string, icon: string } {
-  const key = id.toLowerCase()
-  switch (key) {
-    case 'claude':
-    case 'claude-code': {
-      return { label: 'Claude Code', icon: 'i-simple-icons-anthropic' }
-    }
-    case 'codex': {
-      return { label: 'Codex', icon: 'i-simple-icons-openai' }
-    }
-    case 'opencode': {
-      return { label: 'OpenCode', icon: 'i-brand-opencode' }
-    }
-    case 'pi': {
-      return { label: 'Pi', icon: 'i-brand-pi' }
-    }
-    default: {
-      const label = id.length > 0 ? id.charAt(0).toUpperCase() + id.slice(1) : id
-      return { label, icon: 'i-tabler-terminal-2' }
-    }
-  }
-}
-
 const sourceItems = computed<PillItem<string>[]>(() => [
   { id: null, label: 'All agents', icon: 'i-tabler-robot' },
   ...baseDashboard.availableSources.map((id) => {
-    const meta = sourceMeta(id)
+    const meta = agentSourceMeta(id)
     return { id, label: meta.label, icon: meta.icon }
   }),
 ])

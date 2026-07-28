@@ -5,7 +5,7 @@
 // interactive dashboard lives at /demo/agent (synthetic data) and
 // /dashboard/agent (real data, login required).
 
-import { agentColor } from '~/components/Vibe/types'
+import { agentColor, agentSourceMeta } from '~/components/Vibe/types'
 
 const t = useI18N()
 const locale = useLocale()
@@ -15,10 +15,12 @@ const fallback = {
   title: 'Track every AI agent session, not just keystrokes.',
   description:
     'Install one CLI and Code Time captures sessions from Claude Code, Codex, '
-    + 'OpenCode, and Pi — model calls, tokens, cache hit rate, estimated cost, '
-    + 'and the projects they touched. Your prompt text and source code never '
-    + 'leave your machine.',
-  supports: 'Hooks into',
+    + 'OpenCode, Pi, Amp, Gemini CLI, and Kimi Code — model calls, tokens, '
+    + 'cache hit rate, estimated cost, and the projects they touched. Your '
+    + 'prompt text and source code never leave your machine.',
+  // Not "Hooks into": Amp, Gemini CLI and Kimi Code are read from their
+  // own session files on each sync rather than hooked at install time.
+  supports: 'Tracks',
   kpiSessions: 'sessions',
   kpiCost: 'est. cost',
   kpiCalls: 'model calls',
@@ -29,35 +31,28 @@ const fallback = {
 const copy = computed(() => ({ ...fallback, ...t.value.landing.features.agent }))
 const sectionLabel = computed(() => t.value.landing.sections.agentTelemetry ?? 'agent · telemetry')
 
-// Re-uses the canonical VIBE_PALETTE / agent colour map so the same
-// agent renders in the same hue on the landing showcase and inside the
-// real /dashboard/agent timeline.
+// Deterministic 14-day stacked cost series, one row per agent. Picked by
+// hand to read like a real developer's fortnight: a launch push mid-window,
+// a weekend dip at day 5, and a closing crunch on the last two days. Values
+// are daily cost in USD; the SVG stacks them per-day in this order.
+//
+// Label, icon and colour all come from the canonical table in Vibe/types.ts
+// so the same agent renders identically here and in the real dashboard —
+// only the demo numbers live in this file.
 const AGENTS = [
-  { id: 'claude-code', name: 'Claude Code', icon: 'i-simple-icons-anthropic' },
-  { id: 'codex', name: 'Codex', icon: 'i-simple-icons-openai' },
-  { id: 'opencode', name: 'OpenCode', icon: 'i-brand-opencode' },
-  { id: 'pi', name: 'Pi', icon: 'i-brand-pi' },
-].map(a => ({ ...a, color: agentColor(a.id) }))
+  { id: 'claude-code', data: [3.2, 4.1, 5.6, 4.8, 2.4, 1.1, 6.2, 7.4, 8.1, 5.9, 4.6, 4.2, 6.8, 9.2] },
+  { id: 'codex', data: [1.4, 1.8, 2.6, 2.2, 1.1, 0.6, 3.1, 4, 4.6, 3, 2.4, 2.1, 3.6, 4.9] },
+  { id: 'opencode', data: [0.6, 0.9, 1.4, 1, 0.4, 0.2, 1.6, 2, 1.8, 1.3, 1, 0.8, 1.5, 2.4] },
+  { id: 'pi', data: [0.1, 0.2, 0.3, 0.2, 0, 0, 0.4, 0.5, 0.6, 0.3, 0.2, 0.2, 0.4, 0.6] },
+  { id: 'amp', data: [0.4, 0.5, 0.8, 0.6, 0.3, 0.1, 0.9, 1.1, 1.2, 0.8, 0.6, 0.5, 0.9, 1.3] },
+  { id: 'gemini', data: [0.2, 0.3, 0.5, 0.4, 0.2, 0.1, 0.6, 0.7, 0.8, 0.5, 0.4, 0.3, 0.6, 0.9] },
+  { id: 'kimi', data: [0, 0, 0.1, 0.1, 0, 0, 0.2, 0.3, 0.4, 0.3, 0.2, 0.2, 0.4, 0.6] },
+].map(a => ({ ...a, ...agentSourceMeta(a.id), color: agentColor(a.id) }))
 
-// Deterministic 14-day stacked cost series. Picked by hand to read like a
-// real developer's fortnight: a launch push mid-window, a weekend dip at
-// day 5, and a closing crunch on the last two days. Each row is one
-// agent's daily cost in USD; the SVG stacks them per-day.
-const series: number[][] = [
-  // claude-code
-  [3.2, 4.1, 5.6, 4.8, 2.4, 1.1, 6.2, 7.4, 8.1, 5.9, 4.6, 4.2, 6.8, 9.2],
-  // codex
-  [1.4, 1.8, 2.6, 2.2, 1.1, 0.6, 3.1, 4, 4.6, 3, 2.4, 2.1, 3.6, 4.9],
-  // opencode
-  [0.6, 0.9, 1.4, 1, 0.4, 0.2, 1.6, 2, 1.8, 1.3, 1, 0.8, 1.5, 2.4],
-  // pi
-  [0.1, 0.2, 0.3, 0.2, 0, 0, 0.4, 0.5, 0.6, 0.3, 0.2, 0.2, 0.4, 0.6],
-]
-
-const totals = series[0]!.map((_, i) => series.reduce((s, row) => s + row[i]!, 0))
+const totals = AGENTS[0]!.data.map((_, i) => AGENTS.reduce((s, a) => s + a.data[i]!, 0))
 const totalCost = totals.reduce((a, b) => a + b, 0)
-const totalCalls = 1248
-const totalSessions = 47
+const totalCalls = 1563
+const totalSessions = 58
 
 // SVG dimensions. Aspect ratio chosen so it docks cleanly above the agent
 // leaderboard on wide layouts and stays readable when stacked on mobile.
@@ -72,23 +67,26 @@ const innerH = H - PAD_T - PAD_B
 const colCount = totals.length
 const barW = (innerW / colCount) * 0.66
 const colStep = innerW / colCount
-const maxTotal = Math.max(...totals)
+// Axis top, rounded up to a whole $5 step past the tallest day. Bars and
+// gridlines both divide by yMax so a column's height matches the labels
+// it is read against — scaling bars by maxTotal instead would pin the
+// tallest day to the frame top no matter what the axis said.
+const yMax = Math.max(5, Math.ceil(Math.max(...totals) / 5) * 5)
 
 type Slice = { x: number, y: number, w: number, h: number, color: string }
 const slices: Slice[] = []
 for (let i = 0; i < colCount; i += 1) {
   const cx = PAD_L + colStep * i + colStep / 2
   let yCursor = PAD_T + innerH
-  for (const [a, AGENT] of AGENTS.entries()) {
-    const v = series[a]![i]!
-    const segH = (v / maxTotal) * innerH
+  for (const agent of AGENTS) {
+    const segH = (agent.data[i]! / yMax) * innerH
     yCursor -= segH
     slices.push({
       x: cx - barW / 2,
       y: yCursor,
       w: barW,
       h: segH,
-      color: AGENT!.color,
+      color: agent.color,
     })
   }
 }
@@ -97,14 +95,13 @@ for (let i = 0; i < colCount; i += 1) {
 // the labels don't crowd at this width.
 const xTickIdx = [0, 3, 6, 9, 12]
 
-// Y-axis ticks in USD. maxTotal sits at ~17 with the chosen series, so
-// 0/5/10/15 reads cleanly without a third decimal place.
-const yTicks = [0, 5, 10, 15]
+// Y-axis ticks in USD, one per $5 step up to yMax.
+const yTicks = Array.from({ length: yMax / 5 + 1 }, (_, i) => i * 5)
 
 // Per-agent totals over the window — drives the leaderboard bars.
-const agentTotals = AGENTS.map((a, i) => ({
+const agentTotals = AGENTS.map(a => ({
   ...a,
-  total: series[i]!.reduce((s, v) => s + v, 0),
+  total: a.data.reduce((s, v) => s + v, 0),
 }))
 const leaderMax = Math.max(...agentTotals.map(a => a.total))
 
@@ -175,8 +172,8 @@ function fmtCompact(n: number): string {
                   :key="`gy-${ty}`"
                   :x1="PAD_L"
                   :x2="W - PAD_R"
-                  :y1="PAD_T + innerH - (ty / 15) * innerH"
-                  :y2="PAD_T + innerH - (ty / 15) * innerH"
+                  :y1="PAD_T + innerH - (ty / yMax) * innerH"
+                  :y2="PAD_T + innerH - (ty / yMax) * innerH"
                 />
               </g>
               <!-- y-labels -->
@@ -185,7 +182,7 @@ function fmtCompact(n: number): string {
                   v-for="ty in yTicks"
                   :key="`yt-${ty}`"
                   :x="PAD_L - 8"
-                  :y="PAD_T + innerH - (ty / 15) * innerH + 3"
+                  :y="PAD_T + innerH - (ty / yMax) * innerH + 3"
                   text-anchor="end"
                 >${{ ty }}</text>
               </g>
@@ -221,12 +218,12 @@ function fmtCompact(n: number): string {
             <ul class="agent-leader-list">
               <li
                 v-for="a in agentTotals"
-                :key="a.name"
+                :key="a.id"
                 class="agent-leader-row"
               >
                 <span class="agent-leader-name">
                   <i :class="`${a.icon} agent-leader-icon`" />
-                  <span>{{ a.name }}</span>
+                  <span>{{ a.label }}</span>
                 </span>
                 <span class="agent-leader-bar-wrap">
                   <span
@@ -249,14 +246,6 @@ function fmtCompact(n: number): string {
         </NuxtLink>
       </div>
     </div>
-
-    <!-- UnoCSS class discovery anchor — leaderboard icons are sourced
-         from a runtime array, so the scanner can't see them. Listing
-         them here keeps the agent glyphs in the generated stylesheet. -->
-    <span
-      aria-hidden="true"
-      class="icon-discovery i-simple-icons-anthropic i-simple-icons-openai i-tabler-sparkles i-brand-opencode i-brand-pi"
-    />
   </section>
 </template>
 
@@ -452,13 +441,5 @@ function fmtCompact(n: number): string {
 .agent-cta:hover .agent-cta-arrow {
   color: var(--ct-primary);
   transform: translateX(3px);
-}
-
-.icon-discovery {
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
 }
 </style>
