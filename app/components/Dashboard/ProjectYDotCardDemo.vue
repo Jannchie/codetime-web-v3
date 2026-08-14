@@ -125,7 +125,6 @@ const data = Array.from({ length: 30 }, (_, i) => {
 
 <template>
   <PanelSection
-    num="03"
     :title="t.dashboard.overview.codetimeProjectTrendTitle"
     flush
   >

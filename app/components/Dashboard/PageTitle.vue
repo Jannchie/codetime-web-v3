@@ -3,7 +3,6 @@ defineProps<{
   title?: string
   description?: string
   loading?: boolean
-  num?: string
 }>()
 </script>
 

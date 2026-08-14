@@ -74,7 +74,7 @@ const limitLabel = computed(() => mode.value === 'projects'
 
   <WidgetPreviewCard :link="previewLink" :title="previewTitle" :height="180" />
 
-  <PanelSection num="02" :title="t.dashboard.badge.configure" meta="mode · window · count · theme" flush>
+  <PanelSection :title="t.dashboard.badge.configure" meta="mode · window · count · theme" flush>
     <template #icon>
       <i class="i-tabler-adjustments-horizontal text-[15px] text-ct-fg-muted" />
     </template>

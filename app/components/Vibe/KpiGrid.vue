@@ -18,7 +18,6 @@ const props = defineProps<{
 const { formatCompactNumber, currencyMeta } = useExchangeRate()
 
 type Kpi = {
-  index: string
   label: string
   value: string
   unit?: string
@@ -102,7 +101,6 @@ const kpis = computed<Kpi[]>(() => {
   const l = L.value
   return [
     {
-      index: '01',
       label: l?.events ?? 'events',
       value: eventsCompact.value,
       unit: eventsCompact.unit,
@@ -110,7 +108,6 @@ const kpis = computed<Kpi[]>(() => {
       ...activity,
     },
     {
-      index: '02',
       label: l?.sessions ?? 'sessions',
       value: sessionsCompact.value,
       unit: sessionsCompact.unit,
@@ -118,7 +115,6 @@ const kpis = computed<Kpi[]>(() => {
       ...sessions,
     },
     {
-      index: '03',
       label: l?.tokens ?? 'tokens',
       value: tokensCompact.value,
       unit: tokensCompact.unit,
@@ -126,7 +122,6 @@ const kpis = computed<Kpi[]>(() => {
       ...tokens,
     },
     {
-      index: '04',
       label: l?.cost ?? 'cost',
       value: cost > 0 ? formatCompactNumber(cost) : '—',
       unit: undefined,
@@ -135,7 +130,6 @@ const kpis = computed<Kpi[]>(() => {
       accentValue: true,
     },
     {
-      index: '05',
       label: l?.time ?? 'time',
       value: timeCompact.value,
       unit: timeCompact.unit,
@@ -143,7 +137,6 @@ const kpis = computed<Kpi[]>(() => {
       ...sessions,
     },
     {
-      index: '06',
       label: l?.linesNet ?? 'lines net',
       value: `${linesNet >= 0 ? '+' : ''}${linesNetCompact.value}`,
       unit: linesNetCompact.unit,
@@ -158,7 +151,7 @@ const kpis = computed<Kpi[]>(() => {
   <div class="kpis">
     <div
       v-for="kpi in kpis"
-      :key="kpi.index"
+      :key="kpi.label"
       class="kpi"
     >
       <div class="head">

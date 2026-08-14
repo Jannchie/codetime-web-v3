@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-  num: string
   title: string
   meta?: string
   flush?: boolean
@@ -20,6 +19,13 @@ function toggle() {
     open.value = !open.value
   }
 }
+
+// A collapsible header renders as a <button>, so actions can't be nested
+// inside it. Fail loudly in dev rather than silently dropping the buttons.
+const slots = useSlots()
+if (import.meta.dev && props.collapsible && slots.actions) {
+  console.warn('[PanelSection] `actions` slot is ignored when `collapsible` is set.')
+}
 </script>
 
 <template>
@@ -34,10 +40,14 @@ function toggle() {
       :aria-expanded="collapsible ? open : undefined"
       @click="toggle"
     >
-      <span class="up-section-num tabular-nums">{{ num }}</span>
       <slot name="icon" />
       <span class="up-section-title">{{ title }}</span>
       <span v-if="meta" class="up-section-meta tabular-nums">{{ meta }}</span>
+      <!-- Header-level actions (e.g. "Create tag"). Skipped when collapsible,
+           since the header is a <button> there and nesting one is invalid. -->
+      <span v-if="!collapsible && $slots.actions" class="up-section-actions">
+        <slot name="actions" />
+      </span>
       <i
         v-if="collapsible"
         class="up-section-chevron"
@@ -138,26 +148,6 @@ button.up-section-header:hover .up-section-chevron {
   .up-section-header { flex-wrap: nowrap; }
 }
 
-.up-section-num {
-  position: relative;
-  font-family: var(--ct-font-mono);
-  font-size: var(--ct-text-sm);
-  font-weight: var(--ct-weight-semibold);
-  color: var(--ct-primary);
-  padding-left: 12px;
-}
-.up-section-num::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 6px;
-  height: 2px;
-  background: var(--ct-primary);
-  transform: translateY(-50%);
-  border-radius: 2px;
-}
-
 .up-section-title {
   font-size: var(--ct-text-base);
   font-weight: var(--ct-weight-semibold);
@@ -176,6 +166,20 @@ button.up-section-header:hover .up-section-chevron {
 }
 @media (min-width: 640px) {
   .up-section-meta { margin-left: auto; flex-basis: auto; text-align: right; }
+}
+
+.up-section-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+/* Meta already claimed the auto margin on wide screens — actions just trail
+   it under the header's own gap. Below 640px meta wraps to its own line, so
+   actions keep the auto. */
+@media (min-width: 640px) {
+  .up-section-meta + .up-section-actions { margin-left: 0; }
 }
 
 .up-section-body { padding: 10px 18px; }

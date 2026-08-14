@@ -94,13 +94,11 @@ const height = 26
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.workspace"
     :description="t.dashboard.pageHeader.description.workspace"
   />
   <DashboardPageContent>
     <PanelSection
-      num="01"
       :title="t.dashboard.workspace.project"
       :meta="projectName ? `selected · ${projectName}` : 'none selected'"
     >
@@ -122,7 +120,7 @@ const height = 26
       </div>
     </PanelSection>
 
-    <PanelSection num="02" :title="t.dashboard.workspace.range" :meta="t.dashboard.workspace.range">
+    <PanelSection :title="t.dashboard.workspace.range" :meta="t.dashboard.workspace.range">
       <template #icon>
         <i class="i-tabler-calendar ws-icon" />
       </template>
@@ -130,7 +128,6 @@ const height = 26
     </PanelSection>
 
     <PanelSection
-      num="03"
       :title="t.dashboard.workspace.flameGraph.title"
     >
       <template #icon>
@@ -151,7 +148,6 @@ const height = 26
 
     <PanelSection
       v-if="data && data.length > 0"
-      num="04"
       :title="t.dashboard.workspace.topBranch"
       :meta="`${gitBranchCountMap.length}`"
     >

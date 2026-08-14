@@ -168,8 +168,8 @@ const options = computed<Plot.PlotOptions>(() => {
    default 300px chart height eats too much vertical space, so squash
    it to a more compact band while keeping the desktop proportion. */
 @media (max-width: 639px) {
-  .dd-wrap :deep(.polt-chart-wrapper) {
-    min-height: 180px;
+  .dd-wrap {
+    --polt-chart-min-h: 180px;
   }
 }
 </style>

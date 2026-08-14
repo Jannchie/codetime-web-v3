@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<{
   title: string
   filters?: FilterItem[]
   type: 'language' | 'workspace' | 'platform'
-  num?: string
   flat?: boolean
 }>(), {
   filters: () => [],
@@ -33,7 +32,7 @@ const maxMinutes = computed(() => {
 <template>
   <component
     :is="flat ? 'div' : 'PanelSection'"
-    v-bind="flat ? {} : { num: num ?? '00', title, meta: `TOP · ${type.toUpperCase()}` }"
+    v-bind="flat ? {} : { title, meta: `TOP · ${type.toUpperCase()}` }"
   >
     <template v-if="!flat" #icon>
       <i :class="icon" style="color: var(--ct-fg-subtle); font-size: 15px" />
@@ -59,7 +58,6 @@ const maxMinutes = computed(() => {
           >
             <div class="top-row-head">
               <span class="inline-flex gap-2 min-w-0 items-center">
-                <span class="top-row-rank tabular-nums">{{ String(i).padStart(2, '0') }}</span>
                 <div class="top-skel top-skel-icon" />
                 <div class="top-skel top-skel-name" />
               </span>
@@ -81,7 +79,6 @@ const maxMinutes = computed(() => {
           >
             <div class="top-row-head">
               <span class="inline-flex gap-2 min-w-0 truncate items-center">
-                <span class="top-row-rank tabular-nums">{{ String(i + 1).padStart(2, '0') }}</span>
                 <template v-if="d.icon">
                   <i
                     v-if="!d.icon.startsWith('i-vscode-icons')"
@@ -225,12 +222,6 @@ const maxMinutes = computed(() => {
   font-size: var(--ct-text-sm);
   margin-bottom: 4px;
   padding: 0 4px;
-}
-.top-row-rank {
-  font-size: var(--ct-text-xs);
-  color: var(--ct-fg-subtle);
-  width: 14px;
-  text-align: right;
 }
 .top-row-name { color: var(--ct-fg-muted); }
 .top-row-name-lead { color: var(--ct-fg); font-weight: var(--ct-weight-medium); }

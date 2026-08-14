@@ -4,7 +4,6 @@ import { getV3PublicLeaderboard } from '~/api/v3'
 
 const props = defineProps<{
   days: number
-  num?: string
 }>()
 const days = computed(() => props.days)
 const t = useI18N()
@@ -47,7 +46,6 @@ function pct(minutes: number) {
 
 <template>
   <PanelSection
-    :num="num ?? '00'"
     :title="t.dashboard.leaderboard.title(days)"
     flush
   >
@@ -94,7 +92,7 @@ function pct(minutes: number) {
             <i v-if="i === 0" class="i-fluent-emoji-flat-1st-place-medal h-5 w-5" />
             <i v-else-if="i === 1" class="i-fluent-emoji-flat-2nd-place-medal h-5 w-5" />
             <i v-else-if="i === 2" class="i-fluent-emoji-flat-3rd-place-medal h-5 w-5" />
-            <span v-else class="lb-rank-num">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span v-else class="lb-rank-num">{{ i + 1 }}</span>
           </div>
 
           <img

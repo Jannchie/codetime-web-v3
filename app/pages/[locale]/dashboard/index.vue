@@ -8,7 +8,6 @@ const t = useI18N()
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.overview"
     :description="t.dashboard.pageHeader.description.overview"
   />

@@ -151,7 +151,6 @@ const segmentedData = [
 
 <template>
   <PanelSection
-    num="04"
     title="Daily Coding Distribution"
     flush
   >

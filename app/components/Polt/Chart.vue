@@ -31,7 +31,10 @@ const op = computed(() => {
 </template>
 
 <style scoped>
+/* Charts that size themselves from the container need a floor to measure
+   against. Ones that declare their own `options.height` can lower or drop it
+   by setting --polt-chart-min-h on any ancestor — no :deep() into this class. */
 .polt-chart-wrapper {
-  min-height: 300px;
+  min-height: var(--polt-chart-min-h, 300px);
 }
 </style>

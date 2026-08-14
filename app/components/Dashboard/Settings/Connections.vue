@@ -389,7 +389,7 @@ async function disconnect(key: ProviderKey, url: string) {
 </script>
 
 <template>
-  <PanelSection num="08" :title="labels.title" meta="oauth · identity" flush>
+  <PanelSection :title="labels.title" meta="oauth · identity" flush>
     <template #icon>
       <i class="i-tabler-link text-[15px] text-ct-fg-muted" />
     </template>

@@ -25,7 +25,7 @@ const totalCost = computed(() => props.rows.reduce((s, r) => s + r.estimatedCost
 const maxCost = computed(() => Math.max(1, ...props.rows.map(r => r.estimatedCostUsd)))
 
 const view = computed(() => {
-  return props.rows.slice(0, TOP).map((row, index) => {
+  return props.rows.slice(0, TOP).map((row) => {
     // fresh = inputTokens - cached; outputTotal = output; totalTokens =
     // fresh + cached + outputTotal. Under the v2 token convention
     // outputTokens already includes reasoning, so reasoningOutputTokens is
@@ -41,7 +41,6 @@ const view = computed(() => {
     const { icon, name, provider, fast } = providerInfoFor(row.model, row.pricing?.displayName)
     const pricingSource = row.pricing?.source ?? 'missing'
     return {
-      index: String(index + 1).padStart(2, '0'),
       model: row.model,
       name,
       icon,
@@ -79,7 +78,6 @@ function fmtPct(value: number): string {
 <template>
   <ul class="rows">
     <li class="row head">
-      <span />
       <span class="hcell">{{ L?.model ?? 'Model' }}</span>
       <span class="hcell" />
       <span class="hcell num">{{ L?.cache ?? 'Cache' }}</span>
@@ -95,7 +93,6 @@ function fmtPct(value: number): string {
       :key="row.model"
       class="row"
     >
-      <span class="idx">{{ row.index }}</span>
       <span class="name" :title="row.provider ? `${row.provider} · ${row.model}` : row.model">
         <span v-if="row.icon" class="provider-icon" :class="[row.icon]" :aria-label="row.provider" />
         <span v-else class="provider-icon i-mdi-cube-outline" :aria-label="row.provider ?? 'unknown'" />
@@ -121,14 +118,6 @@ function fmtPct(value: number): string {
     <li v-if="view.length === 0" class="empty">
       {{ L?.noModel ?? '— no model usage in window —' }}
     </li>
-    <!-- UnoCSS class discovery anchor — provider icons are picked
-         from PROVIDER_ICON at runtime, so the scanner can't see them.
-         Listing the classes once in markup is more reliable than the
-         safelist (which needs a uno.config reload). -->
-    <span
-      aria-hidden="true"
-      class="icon-discovery i-simple-icons-anthropic i-simple-icons-openai i-simple-icons-google i-simple-icons-deepseek i-simple-icons-meta i-simple-icons-mistralai i-simple-icons-x i-simple-icons-alibabacloud i-mdi-cube-outline"
-    />
   </ul>
 </template>
 
@@ -137,7 +126,7 @@ function fmtPct(value: number): string {
 
 .row {
   display: grid;
-  grid-template-columns: 28px 1.4fr 1.4fr 64px 60px 60px 70px 78px 90px 60px;
+  grid-template-columns: 1.4fr 1.4fr 64px 60px 60px 70px 78px 90px 60px;
   gap: 10px;
   align-items: center;
   padding: 8px 6px;
@@ -176,11 +165,6 @@ function fmtPct(value: number): string {
 }
 .hcell.num { text-align: right; }
 
-.idx {
-  color: var(--ct-fg-subtle);
-  font-family: var(--ct-font-mono);
-  font-variant-numeric: tabular-nums;
-}
 .name {
   color: var(--ct-fg);
   overflow: hidden;
@@ -237,26 +221,18 @@ function fmtPct(value: number): string {
   padding: 24px 0;
 }
 
-.icon-discovery {
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
 @media (max-width: 980px) {
-  .row { grid-template-columns: 28px minmax(120px, 1fr) minmax(60px, 1fr) 56px 56px 56px 68px 78px; }
-  .row > :nth-child(9),
-  .row > :nth-child(10) { display: none; }
+  .row { grid-template-columns: minmax(120px, 1fr) minmax(60px, 1fr) 56px 56px 56px 68px 78px; }
+  .row > :nth-child(8),
+  .row > :nth-child(9) { display: none; }
 }
 
 @media (max-width: 700px) {
-  .row { grid-template-columns: 28px minmax(96px, 1fr) minmax(40px, 0.6fr) 56px 56px 78px; }
+  .row { grid-template-columns: minmax(96px, 1fr) minmax(40px, 0.6fr) 56px 56px 78px; }
+  .row > :nth-child(4),
   .row > :nth-child(5),
   .row > :nth-child(6),
   .row > :nth-child(7),
-  .row > :nth-child(8),
-  .row > :nth-child(10) { display: none; }
+  .row > :nth-child(9) { display: none; }
 }
 </style>

@@ -41,7 +41,7 @@ const embedLink = computed(() => qs.value ? `https://codetime.dev/api/widgets/ca
 
   <WidgetPreviewCard :link="previewLink" :title="w?.calendar?.title ?? 'Activity calendar'" :height="138" />
 
-  <PanelSection num="02" :title="t.dashboard.badge.configure" meta="theme" flush>
+  <PanelSection :title="t.dashboard.badge.configure" meta="theme" flush>
     <template #icon>
       <i class="i-tabler-adjustments-horizontal text-[15px] text-ct-fg-muted" />
     </template>

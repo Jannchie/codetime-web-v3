@@ -95,7 +95,7 @@ async function toggle(item: Item) {
 </script>
 
 <template>
-  <PanelSection num="08" title="Privacy" meta="visibility · on = visible to others" flush>
+  <PanelSection title="Privacy" meta="visibility · on = visible to others" flush>
     <template #icon>
       <i class="i-tabler-lock text-[15px] text-ct-fg-muted" />
     </template>

@@ -93,7 +93,7 @@ async function saveUsername() {
 </script>
 
 <template>
-  <PanelSection num="01" :title="t.dashboard.settings.account.title" :meta="t.dashboard.settings.account.title">
+  <PanelSection :title="t.dashboard.settings.account.title" :meta="t.dashboard.settings.account.title">
     <template #icon>
       <i class="i-tabler-user-circle ws-icon" />
     </template>

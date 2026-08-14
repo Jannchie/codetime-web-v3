@@ -5,7 +5,6 @@ const props = withDefaults(defineProps<{
   type: 'language' | 'workspace' | 'platform'
   filters?: FilterItem[]
   days: number
-  num?: string
   flat?: boolean
 }>(), {
   filters: () => [],
@@ -54,7 +53,6 @@ function onClickItem(field: string, type: 'language' | 'workspace' | 'platform')
     :title="title"
     :filters="filters"
     :type="type"
-    :num="num"
     :flat="flat"
     @click-item="onClickItem"
   />

@@ -45,10 +45,9 @@ function buildSegments(row: VibeAgentRow): Segment[] {
 const view = computed(() => {
   const rows = props.rows.slice(0, TOP)
   const max = Math.max(1, ...rows.map(r => r.estimatedCostUsd))
-  return rows.map((row, index) => {
+  return rows.map((row) => {
     const meta = agentSourceMeta(row.source)
     return {
-      index: String(index + 1).padStart(2, '0'),
       source: row.source,
       label: meta.label,
       icon: meta.icon,
@@ -69,7 +68,6 @@ const view = computed(() => {
 <template>
   <ul class="rows">
     <li class="row head">
-      <span />
       <span class="hcell">{{ L?.agent ?? 'Agent' }}</span>
       <span class="hcell" />
       <span class="hcell num">{{ L?.cost ?? 'Cost' }}</span>
@@ -84,7 +82,6 @@ const view = computed(() => {
       :key="row.source"
       class="row"
     >
-      <span class="idx">{{ row.index }}</span>
       <span class="name" :title="row.source">
         <span class="agent-icon" :class="[row.icon]" aria-hidden="true" />
         <span class="agent-name">{{ row.label }}</span>
@@ -129,7 +126,7 @@ const view = computed(() => {
 
 .row {
   display: grid;
-  grid-template-columns: 28px 1.25fr 1.6fr 80px 56px 64px 50px 60px 66px;
+  grid-template-columns: 1.25fr 1.6fr 80px 56px 64px 50px 60px 66px;
   gap: 10px;
   align-items: center;
   padding: 8px 6px;
@@ -153,11 +150,6 @@ const view = computed(() => {
 }
 .hcell.num { text-align: right; }
 
-.idx {
-  color: var(--ct-fg-subtle);
-  font-family: var(--ct-font-mono);
-  font-variant-numeric: tabular-nums;
-}
 .name {
   color: var(--ct-fg);
   overflow: hidden;
@@ -220,18 +212,18 @@ const view = computed(() => {
 
 @media (max-width: 980px) {
   .row {
-    grid-template-columns: 28px minmax(112px, 1fr) minmax(52px, 0.8fr) 70px 52px 60px 50px;
+    grid-template-columns: minmax(112px, 1fr) minmax(52px, 0.8fr) 70px 52px 60px 50px;
   }
-  .row > :nth-child(8),
-  .row > :nth-child(9) { display: none; }
+  .row > :nth-child(7),
+  .row > :nth-child(8) { display: none; }
 }
 
 @media (max-width: 700px) {
   .row {
-    grid-template-columns: 28px minmax(96px, 1fr) minmax(44px, 0.7fr) 70px 62px;
+    grid-template-columns: minmax(96px, 1fr) minmax(44px, 0.7fr) 70px 62px;
   }
-  .row > :nth-child(5),
-  .row > :nth-child(7),
-  .row > :nth-child(9) { display: none; }
+  .row > :nth-child(4),
+  .row > :nth-child(6),
+  .row > :nth-child(8) { display: none; }
 }
 </style>

@@ -2,7 +2,6 @@
 const props = defineProps<{
   link: string
   alt?: string
-  num?: string
 }>()
 const t = useI18N()
 const link = computed(() => props.link)
@@ -12,7 +11,7 @@ const html = computed(() => `<a href="https://codetime.dev"><img alt="${alt.valu
 </script>
 
 <template>
-  <PanelSection :num="num ?? '03'" :title="t.dashboard.badge.embed" meta="markdown · html · url" flush>
+  <PanelSection :title="t.dashboard.badge.embed" meta="markdown · html · url" flush>
     <template #icon>
       <i class="i-tabler-clipboard-text text-[15px] text-ct-fg-muted" />
     </template>

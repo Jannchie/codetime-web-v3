@@ -43,8 +43,7 @@ function buildSegments(row: VibeProjectRow): Segment[] {
 const view = computed(() => {
   const rows = props.rows.slice(0, TOP)
   const max = Math.max(1, ...rows.map(r => r.estimatedCostUsd))
-  return rows.map((row, index) => ({
-    index: String(index + 1).padStart(2, '0'),
+  return rows.map(row => ({
     project: row.project,
     total: row.totalTokens,
     cacheHit: row.inputTokens > 0 ? row.cachedInputTokens / row.inputTokens : 0,
@@ -76,7 +75,6 @@ const legend = computed(() => {
 <template>
   <ul class="rows">
     <li class="row head">
-      <span />
       <span class="hcell">{{ L?.project ?? 'Project' }}</span>
       <span class="hcell" />
       <span class="hcell num">{{ L?.cost ?? 'Cost' }}</span>
@@ -91,7 +89,6 @@ const legend = computed(() => {
       :key="row.project"
       class="row"
     >
-      <span class="idx">{{ row.index }}</span>
       <span class="name" :title="row.project">{{ row.project }}</span>
       <span class="bar-wrap">
         <span class="bar-track" :style="{ width: `${row.widthPct}%` }">
@@ -139,7 +136,7 @@ const legend = computed(() => {
 
 .row {
   display: grid;
-  grid-template-columns: 28px 1.25fr 1.6fr 80px 56px 64px 50px 60px 66px;
+  grid-template-columns: 1.25fr 1.6fr 80px 56px 64px 50px 60px 66px;
   gap: 10px;
   align-items: center;
   padding: 8px 6px;
@@ -163,11 +160,6 @@ const legend = computed(() => {
 }
 .hcell.num { text-align: right; }
 
-.idx {
-  color: var(--ct-fg-subtle);
-  font-family: var(--ct-font-mono);
-  font-variant-numeric: tabular-nums;
-}
 .name {
   color: var(--ct-fg);
   overflow: hidden;
@@ -240,18 +232,18 @@ const legend = computed(() => {
 
 @media (max-width: 980px) {
   .row {
-    grid-template-columns: 28px minmax(112px, 1fr) minmax(52px, 0.8fr) 70px 52px 60px 50px;
+    grid-template-columns: minmax(112px, 1fr) minmax(52px, 0.8fr) 70px 52px 60px 50px;
   }
-  .row > :nth-child(8),
-  .row > :nth-child(9) { display: none; }
+  .row > :nth-child(7),
+  .row > :nth-child(8) { display: none; }
 }
 
 @media (max-width: 700px) {
   .row {
-    grid-template-columns: 28px minmax(96px, 1fr) minmax(44px, 0.7fr) 70px 62px;
+    grid-template-columns: minmax(96px, 1fr) minmax(44px, 0.7fr) 70px 62px;
   }
-  .row > :nth-child(5),
-  .row > :nth-child(7),
-  .row > :nth-child(9) { display: none; }
+  .row > :nth-child(4),
+  .row > :nth-child(6),
+  .row > :nth-child(8) { display: none; }
 }
 </style>

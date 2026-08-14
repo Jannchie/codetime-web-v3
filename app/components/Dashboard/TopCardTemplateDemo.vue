@@ -30,7 +30,7 @@ const t = useI18N()
 </script>
 
 <template>
-  <PanelSection num="01" :title="t.dashboard.overview.topTitle" flush>
+  <PanelSection :title="t.dashboard.overview.topTitle" flush>
     <template #icon>
       <i class="i-tabler-medal text-[15px] text-ct-fg-muted" />
     </template>

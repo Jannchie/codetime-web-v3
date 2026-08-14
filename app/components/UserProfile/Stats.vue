@@ -1,6 +1,5 @@
 <script setup lang="ts">
 type StatsKpi = {
-  index: string
   label: string
   value: string
   unit?: string
@@ -18,11 +17,10 @@ defineProps<{
   <div class="kpi-grid">
     <div
       v-for="kpi in kpis"
-      :key="kpi.index"
+      :key="kpi.label"
       class="kpi-cell"
     >
       <div class="flex gap-2 items-center">
-        <span class="text-[12px] text-ct-fg-muted tracking-[0.14em] font-mono tabular-nums">{{ kpi.index }}</span>
         <i v-if="kpi.icon" :class="kpi.icon" class="text-sm text-ct-fg-muted shrink-0" />
         <span class="text-[13px] text-ct-fg-muted tracking-[0.14em] font-mono uppercase">{{ kpi.label }}</span>
       </div>

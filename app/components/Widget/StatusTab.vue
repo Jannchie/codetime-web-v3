@@ -181,7 +181,7 @@ const embedLink = computed(() => qs.value ? `https://codetime.dev/api/widgets/st
 
   <WidgetPreviewCard :link="previewLink" :title="w?.status.title ?? 'Currently coding'" :height="previewHeight" />
 
-  <PanelSection num="02" :title="t.dashboard.badge.configure" :meta="styleMode === 'minimal' ? 'style · theme · color' : 'style · theme · color · layout'" flush>
+  <PanelSection :title="t.dashboard.badge.configure" :meta="styleMode === 'minimal' ? 'style · theme · color' : 'style · theme · color · layout'" flush>
     <template #icon>
       <i class="i-tabler-adjustments-horizontal text-[15px] text-ct-fg-muted" />
     </template>

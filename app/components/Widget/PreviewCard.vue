@@ -9,7 +9,7 @@ const loaded = ref(false)
 </script>
 
 <template>
-  <PanelSection num="01" :title="title ?? t.dashboard.badge.preview.title" flush>
+  <PanelSection :title="title ?? t.dashboard.badge.preview.title" flush>
     <template #icon>
       <i class="i-tabler-eye text-[15px] text-ct-fg-muted" />
     </template>

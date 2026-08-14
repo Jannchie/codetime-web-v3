@@ -111,7 +111,7 @@ function closeAccountModal() {
 </script>
 
 <template>
-  <PanelSection num="99" :title="t.dashboard.settings.dangerZone.title" :meta="t.dashboard.settings.dangerZone.title" flush>
+  <PanelSection :title="t.dashboard.settings.dangerZone.title" :meta="t.dashboard.settings.dangerZone.title" flush>
     <template #icon>
       <i class="i-tabler-alert-octagon" style="color: var(--ct-danger)" />
     </template>

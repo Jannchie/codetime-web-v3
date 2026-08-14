@@ -135,7 +135,6 @@ const kpis = computed(() => {
   const topLang = topLanguageEntry.value
   return [
     {
-      index: '01',
       label: 'TOTAL',
       icon: 'i-tabler-clock-hour-4',
       value: totalH ? totalH.value : '—',
@@ -144,7 +143,6 @@ const kpis = computed(() => {
       accent: true,
     },
     {
-      index: '02',
       label: 'LAST 7D',
       icon: 'i-tabler-history',
       value: recent7.value,
@@ -152,7 +150,6 @@ const kpis = computed(() => {
       caption: `${activeDays.value}/${HISTORY_DAYS}d active`,
     },
     {
-      index: '03',
       label: 'PERCENTILE',
       icon: 'i-tabler-trending-up',
       value: pct === null ? '—' : `${pct}`,
@@ -161,7 +158,6 @@ const kpis = computed(() => {
       accent: true,
     },
     {
-      index: '04',
       label: 'TOP·LANG',
       icon: 'i-tabler-code',
       value: topLang ? getLanguageName(topLang.language || 'Unknown') : '—',
@@ -172,7 +168,6 @@ const kpis = computed(() => {
         : '—',
     },
     {
-      index: '05',
       label: 'STREAK·CUR',
       icon: 'i-tabler-flame',
       value: String(currentStreak.value),
@@ -180,7 +175,6 @@ const kpis = computed(() => {
       caption: 'consecutive days',
     },
     {
-      index: '06',
       label: 'STREAK·MAX',
       icon: 'i-tabler-mountain',
       value: String(maxStreak.value),
@@ -188,14 +182,12 @@ const kpis = computed(() => {
       caption: 'longest streak',
     },
     {
-      index: '07',
       label: 'LANGS',
       icon: 'i-tabler-braces',
       value: String(totalLanguages.value),
       caption: 'tracked languages',
     },
     {
-      index: '08',
       label: 'WINDOW',
       icon: 'i-tabler-calendar',
       value: String(HISTORY_DAYS),
@@ -357,7 +349,6 @@ const lastUpdatedLabel = computed(() => {
       </div>
 
       <PanelSection
-        num="01"
         :title="t.dashboard.profile.bio.title"
         :meta="canEditBio ? 'editable · owner' : 'read only'"
       >
@@ -382,7 +373,6 @@ const lastUpdatedLabel = computed(() => {
       </PanelSection>
 
       <PanelSection
-        num="02"
         :title="t.dashboard.profile.stats.title"
         :meta="lastUpdatedLabel ? `updated ${lastUpdatedLabel}` : `${HISTORY_DAYS}d window`"
         :flush="true"
@@ -395,7 +385,6 @@ const lastUpdatedLabel = computed(() => {
 
       <PanelSection
         v-if="languagesPending || topLanguages.length > 0"
-        num="03"
         :title="t.dashboard.profile.languages.title"
         :meta="`${topLanguages.length} tracked`"
       >
@@ -407,7 +396,6 @@ const lastUpdatedLabel = computed(() => {
 
       <PanelSection
         v-if="projectsPending || topProjects.length > 0"
-        num="04"
         title="Top projects"
         :meta="`${totalProjects} tracked`"
       >
@@ -418,7 +406,6 @@ const lastUpdatedLabel = computed(() => {
       </PanelSection>
 
       <PanelSection
-        num="05"
         :title="t.dashboard.profile.activity.title"
         meta="365d · calendar"
       >
@@ -429,7 +416,6 @@ const lastUpdatedLabel = computed(() => {
       </PanelSection>
 
       <PanelSection
-        num="06"
         :title="t.dashboard.profile.activity.title"
         :meta="`${HISTORY_DAYS}d · ${activeDays} active · trend`"
       >

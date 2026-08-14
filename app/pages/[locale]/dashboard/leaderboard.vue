@@ -5,9 +5,9 @@ definePageMeta({
 const t = useI18N()
 
 const boards = computed(() => [
-  { num: '01', days: 28, label: t.value.dashboard.leaderboard.title(28) },
-  { num: '02', days: 7, label: t.value.dashboard.leaderboard.title(7) },
-  { num: '03', days: 1, label: t.value.dashboard.leaderboard.title(1) },
+  { days: 28, label: t.value.dashboard.leaderboard.title(28) },
+  { days: 7, label: t.value.dashboard.leaderboard.title(7) },
+  { days: 1, label: t.value.dashboard.leaderboard.title(1) },
 ])
 
 const active = ref(0)
@@ -15,7 +15,6 @@ const active = ref(0)
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.leaderboard"
     :description="t.dashboard.pageHeader.description.leaderboard"
   />
@@ -30,7 +29,6 @@ const active = ref(0)
         :class="active === i ? 'lb-switch-btn-active' : ''"
         @click="active = i"
       >
-        <span class="lb-switch-num">{{ board.num }}</span>
         <span>{{ board.label }}</span>
       </button>
     </div>
@@ -42,7 +40,7 @@ const active = ref(0)
         class="lb-col"
         :class="i !== active ? 'lb-col-hidden lg:lb-col-show' : ''"
       >
-        <LeaderboardCard :num="board.num" :days="board.days" />
+        <LeaderboardCard :days="board.days" />
       </div>
     </div>
   </DashboardPageContent>
@@ -89,11 +87,6 @@ const active = ref(0)
 .lb-switch-btn-active {
   color: var(--color-primary-1);
   background-color: color-mix(in srgb, var(--color-primary-1) 14%, transparent);
-}
-
-.lb-switch-num {
-  font-size: 9.5px;
-    opacity: 0.7;
 }
 
 /* Grid */

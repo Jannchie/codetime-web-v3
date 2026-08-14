@@ -9,10 +9,9 @@ const L = computed(() => t.value.dashboard.agent?.labels?.table)
 
 const view = computed(() => {
   const max = Math.max(1, ...props.rows.map(r => r.calls))
-  return props.rows.map((row, index) => {
+  return props.rows.map((row) => {
     const failureRate = row.calls > 0 ? row.failures / row.calls : 0
     return {
-      index: String(index + 1).padStart(2, '0'),
       tool: row.tool,
       calls: row.calls,
       failures: row.failures,
@@ -28,7 +27,6 @@ const view = computed(() => {
 <template>
   <ul class="rows">
     <li class="row head">
-      <span />
       <span class="hcell">{{ L?.tool ?? 'Tool' }}</span>
       <span class="hcell" />
       <span class="hcell num">{{ L?.calls ?? 'Calls' }}</span>
@@ -40,7 +38,6 @@ const view = computed(() => {
       :key="row.tool"
       class="row"
     >
-      <span class="idx">{{ row.index }}</span>
       <span class="name" :title="row.tool">{{ row.tool }}</span>
       <span class="bar-wrap">
         <span class="bar" :style="{ width: `${row.widthPct}%` }" />
@@ -64,7 +61,7 @@ const view = computed(() => {
 
 .row {
   display: grid;
-  grid-template-columns: 28px 1.5fr 2fr 70px 60px 70px;
+  grid-template-columns: 1.5fr 2fr 70px 60px 70px;
   gap: 10px;
   align-items: center;
   padding: 8px 6px;
@@ -86,11 +83,6 @@ const view = computed(() => {
 }
 .hcell.num { text-align: right; }
 
-.idx {
-  color: var(--ct-fg-subtle);
-  font-family: var(--ct-font-mono);
-  font-variant-numeric: tabular-nums;
-}
 /* Tool name (Bash/Read/Edit/...) is an identifier — keep mono. */
 .name {
   color: var(--ct-fg);
@@ -132,8 +124,8 @@ const view = computed(() => {
 }
 
 @media (max-width: 700px) {
-  .row { grid-template-columns: 28px minmax(96px, 1fr) minmax(44px, 0.7fr) 60px 50px; }
-  .row > :nth-child(6),
-  .row > :nth-child(7) { display: none; }
+  .row { grid-template-columns: minmax(96px, 1fr) minmax(44px, 0.7fr) 60px 50px; }
+  .row > :nth-child(5),
+  .row > :nth-child(6) { display: none; }
 }
 </style>

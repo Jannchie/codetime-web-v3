@@ -98,7 +98,7 @@ const data = Array.from({ length: 365 }, (_, i) => {
 </script>
 
 <template>
-  <PanelSection num="02" :title="t.dashboard.overview.activityTitle">
+  <PanelSection :title="t.dashboard.overview.activityTitle">
     <template #icon>
       <i class="i-tabler-activity text-[15px] text-ct-fg-muted" />
     </template>

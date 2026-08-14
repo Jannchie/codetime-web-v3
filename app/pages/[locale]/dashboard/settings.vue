@@ -79,7 +79,6 @@ function openConnect(tab: ConnectTab) {
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.settings"
     :description="t.dashboard.pageHeader.description.settings"
   />
@@ -87,7 +86,7 @@ function openConnect(tab: ConnectTab) {
     <DashboardSettingsUser />
 
     <!-- UPLOAD TOKEN -->
-    <PanelSection num="02" :title="t.dashboard.settings.token.title" meta="api · credential" flush>
+    <PanelSection :title="t.dashboard.settings.token.title" meta="api · credential" flush>
       <template #icon>
         <i class="i-tabler-key text-[15px] text-ct-fg-muted" />
       </template>
@@ -138,7 +137,6 @@ function openConnect(tab: ConnectTab) {
          old collapsibles; clicking one launches the modal pre-selected
          on that tab. -->
     <PanelSection
-      num="03"
       title="Connect"
       meta="cli · editors · agents"
       flush
@@ -180,7 +178,7 @@ function openConnect(tab: ConnectTab) {
     <DashboardConnectModal v-model:open="connectOpen" :initial-tab="connectTab" />
 
     <!-- THEME -->
-    <PanelSection num="04" :title="t.dashboard.settings.theme.title" meta="appearance" flush>
+    <PanelSection :title="t.dashboard.settings.theme.title" meta="appearance" flush>
       <template #icon>
         <i class="i-tabler-palette text-[15px] text-ct-fg-muted" />
       </template>
@@ -202,7 +200,7 @@ function openConnect(tab: ConnectTab) {
     </PanelSection>
 
     <!-- LANGUAGE -->
-    <PanelSection num="05" :title="t.dashboard.settings.language.title" meta="locale" flush>
+    <PanelSection :title="t.dashboard.settings.language.title" meta="locale" flush>
       <template #icon>
         <i class="i-tabler-language text-[15px] text-ct-fg-muted" />
       </template>
@@ -218,7 +216,7 @@ function openConnect(tab: ConnectTab) {
     </PanelSection>
 
     <!-- EXPORT -->
-    <PanelSection num="06" :title="t.dashboard.settings.export.title" meta="csv · download" flush>
+    <PanelSection :title="t.dashboard.settings.export.title" meta="csv · download" flush>
       <template #icon>
         <i class="i-tabler-file-export text-[15px] text-ct-fg-muted" />
       </template>
@@ -262,7 +260,7 @@ function openConnect(tab: ConnectTab) {
     </PanelSection>
 
     <!-- OTHER -->
-    <PanelSection num="07" :title="t.dashboard.settings.other.title" meta="session" flush>
+    <PanelSection :title="t.dashboard.settings.other.title" meta="session" flush>
       <template #icon>
         <i class="i-tabler-dots-circle-horizontal text-[15px] text-ct-fg-muted" />
       </template>
@@ -472,14 +470,18 @@ function openConnect(tab: ConnectTab) {
   background-color: rgb(239 68 68 / 0.16) !important;
 }
 
-/* Connect cards (trigger row for the near-fullscreen ConnectModal) */
+/* Connect cards (trigger row for the near-fullscreen ConnectModal).
+   Tracks are minmax(0, …), never a bare 1fr: a bare 1fr floors each column
+   at its content width, so the longest meta ("cli · claude · codex · …")
+   widens its track and pushes the cards past the section's right edge —
+   instead of letting .connect-card-meta ellipsis do its job. */
 .connect-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   border-top: 1px solid var(--ct-border-subtle);
 }
 @media (min-width: 720px) {
-  .connect-grid { grid-template-columns: repeat(3, 1fr); }
+  .connect-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .connect-card {
   display: flex;

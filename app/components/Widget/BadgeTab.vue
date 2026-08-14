@@ -86,7 +86,7 @@ const link = computed(() => {
 <template>
   <WidgetPreviewCard :link="link" :height="32" />
 
-  <PanelSection num="02" :title="t.dashboard.badge.configure" meta="style · color · filters" flush>
+  <PanelSection :title="t.dashboard.badge.configure" meta="style · color · filters" flush>
     <template #icon>
       <i class="i-tabler-adjustments-horizontal text-[15px] text-ct-fg-muted" />
     </template>

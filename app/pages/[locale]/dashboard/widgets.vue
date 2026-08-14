@@ -39,7 +39,6 @@ const active = computed<TabId>({
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.widget ?? 'Widgets'"
     :description="t.dashboard.pageHeader.description.widget ?? ''"
   />

@@ -519,7 +519,6 @@ watchEffect(() => {
       <template v-else>
         <PanelSection
           v-if="showControls"
-          num="01"
           :title="t.dashboard.overview.rangeTitle"
           meta="time · window"
         >
@@ -535,7 +534,6 @@ watchEffect(() => {
         </PanelSection>
 
         <PanelSection
-          num="02"
           :title="t.dashboard.overview.activityTitle"
           meta="annual · calendar"
         >
@@ -552,7 +550,6 @@ watchEffect(() => {
 
         <PanelSection
           v-if="allDataResp.status.value !== 'success' || hasData"
-          num="03"
           :title="t.dashboard.overview.topTitle"
           meta="language · workspace · platform"
           flush
@@ -586,7 +583,6 @@ watchEffect(() => {
         </PanelSection>
 
         <PanelSection
-          num="04"
           :title="t.dashboard.overview.codetimeTrendTitle"
           meta="daily · trend"
           flush
@@ -606,7 +602,6 @@ watchEffect(() => {
 
         <PanelSection
           v-if="allLanguageDataResp.status.value !== 'success' || pAllLangData.length > 0"
-          num="05"
           :title="t.dashboard.overview.codetimeLanguaeTrendTitle"
           meta="language · dots"
           flush
@@ -629,7 +624,6 @@ watchEffect(() => {
 
         <PanelSection
           v-if="allProjectDataResp.status.value !== 'success' || pAllProjectData.length > 0"
-          num="06"
           :title="t.dashboard.overview.codetimeProjectTrendTitle"
           meta="project · dots"
           flush
@@ -652,7 +646,6 @@ watchEffect(() => {
 
         <PanelSection
           v-if="allDataResp.status.value !== 'success' || hasData"
-          num="07"
           :title="t.dashboard.overview.dailyCodingDistributionTitle"
           meta="hour · density"
           flush

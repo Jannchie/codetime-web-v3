@@ -239,7 +239,6 @@ const languageEntries = computed(() => topLanguages.value.map(l => ({
 
 const kpis = computed(() => [
   {
-    index: '01',
     label: 'TOTAL',
     value: getDurationString(sumMinutes.value * 60 * 1000, ['hours']),
     caption: t.value.annualReport.totalCodingTimeOfTheYear,
@@ -247,14 +246,12 @@ const kpis = computed(() => [
     icon: 'i-tabler-clock-hour-4',
   },
   {
-    index: '02',
     label: 'ACTIVE · DAYS',
     value: `${activeDays.value}/${totalDaysInYear.value}`,
     caption: `${(activeDaysRatio.value * 100).toFixed(0)}% · ${t.value.annualReport.activeDaysOfTheYear}`,
     icon: 'i-tabler-calendar-check',
   },
   {
-    index: '03',
     label: 'LONGEST · STREAK',
     value: String(longestStreak.value),
     unit: 'd',
@@ -262,21 +259,18 @@ const kpis = computed(() => [
     icon: 'i-tabler-flame',
   },
   {
-    index: '04',
     label: 'DAILY · AVG',
     value: getDurationString(averageMinutes.value * 60 * 1000, ['hours', 'minutes']),
     caption: t.value.annualReport.averageDailyCodingTime,
     icon: 'i-tabler-chart-bar',
   },
   {
-    index: '05',
     label: 'WEEKEND · SHARE',
     value: `${(weekendMinutesRatio.value * 100).toFixed(0)}%`,
     caption: t.value.annualReport.weekendCodingTimeRatio,
     icon: 'i-tabler-coffee',
   },
   {
-    index: '06',
     label: 'PEAK · DAY',
     value: busiestDay.value ? getDurationString(busiestDay.value.minutes * 60 * 1000, ['hours', 'minutes']) : '—',
     caption: busiestDay.value ? formatDateString(busiestDay.value.field, locale.value) : t.value.annualReport.busiestDayOfTheYear,
@@ -284,7 +278,6 @@ const kpis = computed(() => [
     icon: 'i-tabler-trophy',
   },
   {
-    index: '07',
     label: 'PEAK · MONTH',
     value: busiestMonth.value?.field ?? '—',
     caption: busiestMonth.value ? getDurationString((busiestMonth.value.minutes ?? 0) * 60 * 1000) : t.value.annualReport.busiestMonthOfTheYear,
@@ -292,7 +285,6 @@ const kpis = computed(() => [
     icon: 'i-tabler-calendar-stats',
   },
   {
-    index: '08',
     label: 'PEAK · HOUR',
     value: `${String(mostProductiveHour.value.field).padStart(2, '0')}:00`,
     caption: t.value.annualReport.theMostProductiveHourOfTheYear,
@@ -404,7 +396,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
       <template v-else>
         <!-- Activity calendar -->
         <UserProfileSection
-          num="01"
           :title="t.annualReport.totalCodingTimeOfTheYear"
           :meta="`total · ${getDurationString(sumMinutes * 60 * 1000, ['hours'])}`"
         >
@@ -421,7 +412,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
 
         <!-- KPI grid -->
         <UserProfileSection
-          num="02"
           title="Key Indicators"
           meta="year · summary"
           flush
@@ -434,7 +424,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
 
         <!-- Monthly trend -->
         <UserProfileSection
-          num="03"
           :title="t.annualReport.busiestMonthOfTheYear"
           :meta="busiestMonth ? `${busiestMonth.field} · ${getDurationString((busiestMonth.minutes ?? 0) * 60 * 1000)}` : 'month · trend'"
           flush
@@ -465,7 +454,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
 
         <!-- Hourly distribution -->
         <UserProfileSection
-          num="04"
           :title="t.annualReport.theMostProductiveHourOfTheYear"
           :meta="`${String(mostProductiveHour.field).padStart(2, '0')}:00 - ${String(mostProductiveHour.field).padStart(2, '0')}:59`"
           flush
@@ -500,7 +488,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
 
         <!-- Period of day -->
         <UserProfileSection
-          num="05"
           title="Period of day"
           meta="morning · afternoon · evening · midnight"
           flush
@@ -526,7 +513,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
         <!-- Top languages -->
         <UserProfileSection
           v-if="topLanguage"
-          num="06"
           :title="t.annualReport.theMostUsedLanguageOfTheYear"
           :meta="`${languageEntries.length} tracked`"
         >
@@ -538,7 +524,6 @@ const hasData = computed(() => (yearlyData.value?.dailyDistribution.length ?? 0)
 
         <!-- Share -->
         <UserProfileSection
-          num="07"
           title="Share"
           meta="export · link"
         >
