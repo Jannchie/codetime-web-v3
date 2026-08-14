@@ -442,7 +442,11 @@ export const VIBE_PALETTE = [
 // an agent means one entry here plus its icon in uno.config.ts safelist.
 //
 // Insertion order is the order the landing showcase stacks and ranks them.
-const AGENT_SOURCES: Record<string, { label: string, icon: string, color: string }> = {
+// `history: true` marks the agents `codetime install` does NOT hook: their
+// CLI adapters return [] from installEntries(), so sessions arrive only when
+// a sync reads that agent's own session files. The onboarding guide flags
+// them so listing them never promises a hook install that never writes.
+const AGENT_SOURCES: Record<string, { label: string, icon: string, color: string, history?: boolean }> = {
   'claude-code': { label: 'Claude Code', icon: 'i-simple-icons-anthropic', color: VIBE_PALETTE[1]! }, // copper
   'codex': { label: 'Codex', icon: 'i-simple-icons-openai', color: VIBE_PALETTE[0]! }, // steel blue
   'opencode': { label: 'OpenCode', icon: 'i-brand-opencode', color: VIBE_PALETTE[4]! }, // lavender
@@ -450,17 +454,26 @@ const AGENT_SOURCES: Record<string, { label: string, icon: string, color: string
   // simple-icons ships no Amp mark; `si-amp` is Google's AMP project, a
   // different product. Sourcegraph builds Amp, so its mark is the closest
   // correct branding available offline.
-  'amp': { label: 'Amp', icon: 'i-simple-icons-sourcegraph', color: VIBE_PALETTE[3]! }, // rose
+  'amp': { label: 'Amp', icon: 'i-simple-icons-sourcegraph', color: VIBE_PALETTE[3]!, history: true }, // rose
   // Sage matches the `gemini` entry in MODEL_FAMILY_COLOR below, so the
   // agent and the models it calls share a hue.
-  'gemini': { label: 'Gemini CLI', icon: 'i-simple-icons-googlegemini', color: VIBE_PALETTE[2]! }, // sage
-  'kimi': { label: 'Kimi Code', icon: 'i-simple-icons-moonshotai', color: VIBE_PALETTE[6]! }, // amber
+  'gemini': { label: 'Gemini CLI', icon: 'i-simple-icons-googlegemini', color: VIBE_PALETTE[2]!, history: true }, // sage
+  'kimi': { label: 'Kimi Code', icon: 'i-simple-icons-moonshotai', color: VIBE_PALETTE[6]!, history: true }, // amber
 }
 
 // Fallback icon for a source with no entry above.
 const AGENT_FALLBACK_ICON = 'i-tabler-terminal-2'
 
 export const AGENT_SOURCE_IDS = Object.keys(AGENT_SOURCES)
+
+// The server has emitted bare `claude` as well as `claude-code`. Normalising
+// here (rather than inside one accessor) keeps every reader of the table on
+// the same key, so an aliased id can't resolve a table label but a hashed
+// colour.
+function normalizeAgentId(id: string): string {
+  const key = id.toLowerCase()
+  return key === 'claude' ? 'claude-code' : key
+}
 
 function hashSource(name: string): number {
   let hash = 0
@@ -477,8 +490,7 @@ export function agentColor(name: string): string {
   if (!name) {
     return VIBE_PALETTE[0]!
   }
-  const key = name.toLowerCase()
-  return AGENT_SOURCES[key]?.color ?? VIBE_PALETTE[hashSource(key)]!
+  return agentSourceMeta(name).color
 }
 
 // Stable hue for a model id — used by the segmented PROJECTS bar so the
@@ -514,20 +526,22 @@ export function modelColor(model: string): string {
 }
 
 // Display metadata for an agent source id (claude-code / codex / …).
-// Shared between the source dropdown and the AgentCosts leaderboard so
-// new agents only need to be added in one place.
-export function agentSourceMeta(id: string): { label: string, icon: string } {
-  const key = id.toLowerCase()
-  // The server has emitted bare `claude` as well as `claude-code`.
-  const hit = AGENT_SOURCES[key === 'claude' ? 'claude-code' : key]
+// Shared between the source dropdown, the AgentCosts leaderboard, the
+// landing showcase and the onboarding guide, so new agents only need to be
+// added to AGENT_SOURCES above.
+export function agentSourceMeta(id: string): { label: string, icon: string, color: string, history: boolean } {
+  const key = normalizeAgentId(id)
+  const hit = AGENT_SOURCES[key]
   if (hit) {
-    return { label: hit.label, icon: hit.icon }
+    return { label: hit.label, icon: hit.icon, color: hit.color, history: hit.history ?? false }
   }
   // Title-case any unknown source so a newly-added agent still renders
   // with a readable label before it gets an entry above.
   return {
     label: id.length > 0 ? id.charAt(0).toUpperCase() + id.slice(1) : id,
     icon: AGENT_FALLBACK_ICON,
+    color: VIBE_PALETTE[hashSource(key)]!,
+    history: false,
   }
 }
 

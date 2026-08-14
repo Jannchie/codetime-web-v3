@@ -47,7 +47,7 @@ const tokenDisplay = computed(() => {
     </div>
 
     <!-- Token -->
-    <PanelSection num="01" :title="t.dashboard.pluginGuide.token.title" flush>
+    <PanelSection :title="t.dashboard.pluginGuide.token.title" flush>
       <template #icon>
         <i class="i-tabler-key text-[15px] text-ct-fg-muted" />
       </template>
@@ -82,7 +82,7 @@ const tokenDisplay = computed(() => {
     </PanelSection>
 
     <!-- Plugins -->
-    <PanelSection num="02" :title="t.dashboard.pluginGuide.plugins.title" flush>
+    <PanelSection :title="t.dashboard.pluginGuide.plugins.title" flush>
       <template #icon>
         <i class="i-tabler-puzzle text-[15px] text-ct-fg-muted" />
       </template>
@@ -133,13 +133,13 @@ const tokenDisplay = computed(() => {
     </PanelSection>
 
     <!-- Setup -->
-    <PanelSection num="03" :title="t.dashboard.pluginGuide.setup.title" flush>
+    <PanelSection :title="t.dashboard.pluginGuide.setup.title" flush>
       <template #icon>
         <i class="i-tabler-route text-[15px] text-ct-fg-muted" />
       </template>
       <ol class="onb-steps">
         <li v-for="i in 4" :key="i" class="onb-step">
-          <span class="onb-step-num tabular-nums">{{ String(i).padStart(2, '0') }}</span>
+          <span class="onb-step-dot" aria-hidden="true" />
           <span class="onb-step-text">{{ (t.dashboard.pluginGuide.setup as any)[`step${i}`] }}</span>
         </li>
       </ol>
@@ -333,13 +333,15 @@ const tokenDisplay = computed(() => {
   border-bottom: 1px solid var(--ct-border-subtle);
 }
 .onb-step:last-child { border-bottom: 0; }
-.onb-step-num {
+/* Replaces the old ordinal badge: the <ol> still carries the ordering
+   semantically, the dot only marks where a step begins. */
+.onb-step-dot {
   flex-shrink: 0;
-  font-family: var(--ct-font-mono);
-  font-size: var(--ct-text-sm);
-  font-weight: var(--ct-weight-semibold);
-  color: var(--ct-primary);
-  min-width: 24px;
+  width: 5px;
+  height: 5px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--ct-primary);
 }
 .onb-step-text {
   font-size: var(--ct-text-sm);

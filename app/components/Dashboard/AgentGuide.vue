@@ -39,20 +39,10 @@ const configureCmdDisplay = computed(() =>
 )
 const hookCmd = 'codetime install'
 
-// Supported agents shown as chips under the hook section. Labels and
-// icons come from the canonical table in Vibe/types.ts so a new agent
-// needs no edit here.
-//
-// The ids listed in HISTORY_ONLY are the ones `codetime install` does NOT
-// hook: their CLI adapters return [] from installEntries(), so sessions
-// arrive only when a sync reads that agent's own session files. Listing
-// them without the distinction would promise a hook install never writes.
-const HISTORY_ONLY = new Set(['amp', 'gemini', 'kimi'])
-const supportedAgents = AGENT_SOURCE_IDS.map(id => ({
-  id,
-  ...agentSourceMeta(id),
-  history: HISTORY_ONLY.has(id),
-}))
+// Supported agents shown as chips under the hook section. Label, icon and
+// the `history` flag (agents a hook install does not cover) all come from
+// the canonical table in Vibe/types.ts, so a new agent needs no edit here.
+const supportedAgents = AGENT_SOURCE_IDS.map(id => ({ id, ...agentSourceMeta(id) }))
 
 const historyNote = computed(() => t.value.dashboard.agentGuide.hook.historyOnly
   ?? 'Agents marked ° need no hook — the CLI reads their session history on every sync.')
@@ -74,7 +64,7 @@ const historyNote = computed(() => t.value.dashboard.agentGuide.hook.historyOnly
     </div>
 
     <!-- Token -->
-    <PanelSection num="01" :title="t.dashboard.agentGuide.token.title" flush>
+    <PanelSection :title="t.dashboard.agentGuide.token.title" flush>
       <template #icon>
         <i class="i-tabler-key text-[15px] text-ct-fg-muted" />
       </template>
@@ -109,7 +99,7 @@ const historyNote = computed(() => t.value.dashboard.agentGuide.hook.historyOnly
     </PanelSection>
 
     <!-- Install CLI -->
-    <PanelSection num="02" :title="t.dashboard.agentGuide.install.title" flush>
+    <PanelSection :title="t.dashboard.agentGuide.install.title" flush>
       <template #icon>
         <i class="i-tabler-download text-[15px] text-ct-fg-muted" />
       </template>
@@ -136,7 +126,7 @@ const historyNote = computed(() => t.value.dashboard.agentGuide.hook.historyOnly
     </PanelSection>
 
     <!-- Configure Token -->
-    <PanelSection num="03" :title="t.dashboard.agentGuide.configure.title" flush>
+    <PanelSection :title="t.dashboard.agentGuide.configure.title" flush>
       <template #icon>
         <i class="i-tabler-terminal-2 text-[15px] text-ct-fg-muted" />
       </template>
@@ -168,7 +158,7 @@ const historyNote = computed(() => t.value.dashboard.agentGuide.hook.historyOnly
     </PanelSection>
 
     <!-- Hook Into Agents -->
-    <PanelSection num="04" :title="t.dashboard.agentGuide.hook.title" flush>
+    <PanelSection :title="t.dashboard.agentGuide.hook.title" flush>
       <template #icon>
         <i class="i-tabler-plug-connected text-[15px] text-ct-fg-muted" />
       </template>

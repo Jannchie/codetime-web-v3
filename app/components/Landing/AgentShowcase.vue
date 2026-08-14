@@ -5,7 +5,7 @@
 // interactive dashboard lives at /demo/agent (synthetic data) and
 // /dashboard/agent (real data, login required).
 
-import { agentColor, agentSourceMeta } from '~/components/Vibe/types'
+import { agentSourceMeta } from '~/components/Vibe/types'
 
 const t = useI18N()
 const locale = useLocale()
@@ -47,7 +47,7 @@ const AGENTS = [
   { id: 'amp', data: [0.4, 0.5, 0.8, 0.6, 0.3, 0.1, 0.9, 1.1, 1.2, 0.8, 0.6, 0.5, 0.9, 1.3] },
   { id: 'gemini', data: [0.2, 0.3, 0.5, 0.4, 0.2, 0.1, 0.6, 0.7, 0.8, 0.5, 0.4, 0.3, 0.6, 0.9] },
   { id: 'kimi', data: [0, 0, 0.1, 0.1, 0, 0, 0.2, 0.3, 0.4, 0.3, 0.2, 0.2, 0.4, 0.6] },
-].map(a => ({ ...a, ...agentSourceMeta(a.id), color: agentColor(a.id) }))
+].map(a => ({ ...a, ...agentSourceMeta(a.id) }))
 
 const totals = AGENTS[0]!.data.map((_, i) => AGENTS.reduce((s, a) => s + a.data[i]!, 0))
 const totalCost = totals.reduce((a, b) => a + b, 0)

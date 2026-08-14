@@ -297,7 +297,6 @@ const bucketMeta = computed(() => {
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.agent ?? 'Vibe'"
     :description="t.dashboard.pageHeader.description.agent"
   />
@@ -335,8 +334,7 @@ const bucketMeta = computed(() => {
     </div>
 
     <template v-if="dashboard && hasData">
-      <VibeSection
-        num="01"
+      <PanelSection
         :title="sectionTitles.overview"
         :meta="rangeMeta"
         flush
@@ -346,10 +344,9 @@ const bucketMeta = computed(() => {
           :overview="dashboard.overviewBuckets"
           :total-cost-usd="totalCostUsd"
         />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="02"
+      <PanelSection
         :title="sectionTitles.costTimeline"
         :meta="Lmeta?.estimatedBuckets ? Lmeta.estimatedBuckets(bucketMeta, rangeMeta) : `estimated · ${bucketMeta} · ${rangeMeta}`"
       >
@@ -359,50 +356,44 @@ const bucketMeta = computed(() => {
           :since="dashboard.range.since"
           :until="dashboard.range.until"
         />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="03"
+      <PanelSection
         :title="sectionTitles.rhythm"
         :meta="Lmeta?.rhythmMeta ? Lmeta.rhythmMeta(rangeMeta) : `hour × weekday · local time · ${rangeMeta}`"
       >
         <VibeRhythmHeatmap :cells="dashboard.heatmap" />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="04"
+      <PanelSection
         :title="sectionTitles.projects"
         :meta="Lmeta?.projects ? Lmeta.projects(dashboard.projectTokens.length) : `${dashboard.projectTokens.length} projects`"
       >
         <VibeProjectTokens :rows="dashboard.projectTokens" />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="05"
+      <PanelSection
         :title="sectionTitles.models"
         :meta="fmtCurrency(totalCostUsd)"
       >
         <VibeModelCosts :rows="dashboard.modelCosts" />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="06"
+      <PanelSection
         :title="sectionTitles.agents"
         :meta="Lmeta?.agents ? Lmeta.agents(dashboard.agentCosts.length) : `${dashboard.agentCosts.length} agents`"
       >
         <VibeAgentCosts :rows="dashboard.agentCosts" />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="07"
+      <PanelSection
         :title="sectionTitles.tools"
         :meta="Lmeta?.calls ? Lmeta.calls(compact(totalToolCalls)) : `${compact(totalToolCalls)} calls`"
       >
         <VibeToolPerformance :rows="dashboard.tools" />
-      </VibeSection>
+      </PanelSection>
 
-      <VibeSection
-        num="08"
+      <PanelSection
         :title="sectionTitles.sessions"
         :meta="Lsess?.loaded ? Lsess.loaded(sessions.length) : `${sessions.length} loaded`"
         flush
@@ -482,7 +473,7 @@ const bucketMeta = computed(() => {
             {{ Lsess?.loading ?? 'Loading…' }}
           </div>
         </div>
-      </VibeSection>
+      </PanelSection>
     </template>
 
     <DashboardAgentGuide v-else-if="!dashboardPending && !hasData" />
