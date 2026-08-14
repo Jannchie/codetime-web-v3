@@ -5,30 +5,87 @@
 // Ported verbatim from agent-time/apps/api/src/pricing.ts so the Vibe
 // dashboard renders the same cost figures as the agent-time UI. Keep
 // the FALLBACK table in sync when agent-time updates its prices.
+//
+// A price is a *schedule*, not a number. Two time dimensions exist:
+//
+//   1. Effective dates — a provider changing its rate must not re-price
+//      history. DeepSeek's 2026-08-16 change raises every rate, so
+//      applying it retroactively would overstate old months by up to 4.7x.
+//   2. Time of day — DeepSeek bills peak and off-peak rates depending on
+//      the UTC hour a request lands in.
+//
+// Everything else in the catalogue has a single flat period and pays no
+// cost for those dimensions existing: `ratesFor` short-circuits to the
+// one rate card and the SQL side never splits those rows by hour.
+//
+// Note ccusage has nothing to port here — as of its 2026-08-14 HEAD it
+// has no time-of-day or effective-date pricing at all (its only tiering
+// is long-context `*_above_200k` plus a fast multiplier), and neither
+// LiteLLM nor models.dev carry time-window fields.
 
 const SOURCE_URL = 'https://openrouter.ai/api/v1/models'
 
 const REFRESH_MS = 24 * 60 * 60 * 1000
 
-export type ModelPrice = {
+const HOUR_MS = 60 * 60 * 1000
+const DAY_MS = 24 * HOUR_MS
+
+// Per-token USD rates. One card = the price of everything at one instant.
+// RATE_KEYS is the field list every rate-card transform iterates, so adding
+// a sixth cost dimension means touching the constructors only, never the
+// scale/blend arithmetic.
+const RATE_KEYS = [
+  'inputCostPerToken',
+  'cacheCreationInputCostPerToken',
+  'cacheReadInputCostPerToken',
+  'cachedInputCostPerToken',
+  'outputCostPerToken',
+] as const
+
+type Rates = Record<(typeof RATE_KEYS)[number], number>
+
+// The rate card actually applied to a row, plus provenance. This is the
+// shape the dashboard serialises into its per-model `pricing` block, so
+// it stays flat — the schedule is resolved before it gets here.
+export type ModelPrice = Rates & {
   displayName?: string
-  inputCostPerToken: number
-  cacheCreationInputCostPerToken: number
-  cacheReadInputCostPerToken: number
-  cachedInputCostPerToken: number
-  outputCostPerToken: number
-  source: 'openrouter' | 'fallback' | 'missing'
+  source: 'openrouter' | 'fallback' | 'override' | 'missing'
+}
+
+// One contiguous slice of a model's price history. `rates` is the flat
+// (or off-peak) card; `peak` overrides it inside daily [startHour, endHour)
+// **UTC** windows. Whole hours only — the SQL side anchors rows to a UTC
+// hour, so a window boundary at :30 could not be honoured exactly.
+type PricePeriod = {
+  from: number
+  rates: Rates
+  peak?: { windowsUtc: Array<[number, number]>, rates: Rates }
+}
+
+type PriceSchedule = {
+  displayName?: string
+  source: ModelPrice['source']
+  // Ascending by `from`. The first entry opens at -Infinity so any
+  // timestamp resolves.
+  periods: PricePeriod[]
+  // SQL LIKE patterns (lowercase) matching every stored spelling of this
+  // model. REQUIRED on any schedule that is time-sensitive (more than one
+  // period, or any peak window): it is what tells the query layer to split
+  // these rows by UTC hour so each hour can take its own rate. Match the
+  // whole vendor rather than one model id — over-matching only costs a few
+  // extra (correctly priced) rows, under-matching silently mis-prices.
+  sqlMatch?: string[]
 }
 
 type CatalogState = {
   loadedAt: number
   status: 'ready' | 'stale' | 'missing'
-  table: Record<string, ModelPrice>
-  raw: Map<string, ModelPrice>
+  table: Record<string, PriceSchedule>
+  raw: Map<string, PriceSchedule>
   source: 'openrouter' | 'fallback'
 }
 
-const FALLBACK: Record<string, ModelPrice> = {
+const FALLBACK: Record<string, PriceSchedule> = {
   'gpt-5': fbPrice('GPT-5', 1.25e-6, 1.25e-7, 1e-5),
   'gpt-5-codex': fbPrice('GPT-5 Codex', 1.25e-6, 1.25e-7, 1e-5),
   'gpt-5.1': fbPrice('GPT-5.1', 1.25e-6, 1.25e-7, 1e-5),
@@ -50,11 +107,11 @@ const FALLBACK: Record<string, ModelPrice> = {
   'gpt-5-nano': fbPrice('GPT-5 Nano', 5e-8, 5e-9, 4e-7),
   'claude-sonnet-4-6': fbPrice('Claude Sonnet 4.6', 3e-6, 3e-7, 1.5e-5, 3.75e-6),
   // Sonnet 5 is on introductory pricing ($2/$10 per MTok) through
-  // 2026-08-31; list price afterwards is $3/$15. This table has no
-  // effective-from dimension, so whatever rate it carries is applied to all
-  // history — like every other row here, it is a best-effort degraded-mode
-  // approximation, not a historical price archive. OpenRouter is the source
-  // of truth whenever it is reachable.
+  // 2026-08-31; list price afterwards is $3/$15. Rows here are best-effort
+  // degraded-mode approximations, not a historical price archive —
+  // OpenRouter is the source of truth whenever it is reachable. (The
+  // schedule below *can* express the step-up; it is deliberately not used
+  // for Anthropic because OpenRouter tracks those rates for us.)
   'claude-sonnet-5': fbPrice('Claude Sonnet 5', 2e-6, 2e-7, 1e-5, 2.5e-6),
   'claude-opus-4-6': fbPrice('Claude Opus 4.6', 5e-6, 5e-7, 25e-6, 6.25e-6),
   'claude-opus-4-7': fbPrice('Claude Opus 4.7', 5e-6, 5e-7, 25e-6, 6.25e-6),
@@ -62,11 +119,107 @@ const FALLBACK: Record<string, ModelPrice> = {
   'claude-opus-5': fbPrice('Claude Opus 5', 5e-6, 5e-7, 25e-6, 6.25e-6),
   'claude-fable-5': fbPrice('Claude Fable 5', 1e-5, 1e-6, 5e-5, 1.25e-5),
   'claude-haiku-4-5': fbPrice('Claude Haiku 4.5', 1e-6, 1e-7, 5e-6, 1.25e-6),
+  // Retired 2026-07-24 in favour of the v4 family; kept because stored
+  // model strings are immortal and old rows still price against them.
   'deepseek-chat': fbPrice('DeepSeek Chat', 2.8e-7, 2.8e-8, 4.2e-7),
   'deepseek-reasoner': fbPrice('DeepSeek Reasoner', 2.8e-7, 2.8e-8, 4.2e-7),
-  'deepseek-v4-flash': fbPrice('DeepSeek V4 Flash', 1.4e-7, 2.8e-9, 2.8e-7),
-  'deepseek-v4-pro': fbPrice('DeepSeek V4 Pro', 4.35e-7, 3.625e-9, 8.7e-7),
+  // The v4 family lives in OVERRIDES, not here — see below.
 }
+
+// ---------------------------------------------------------------------
+// DeepSeek — first-party schedules that OUTRANK the OpenRouter catalogue.
+// ---------------------------------------------------------------------
+//
+// Two independent reasons these are overrides rather than fallbacks:
+//
+//   1. OpenRouter's model-level `pricing` block reports whichever endpoint
+//      it routes to by default. For `deepseek/deepseek-v4-pro` that is a
+//      reseller at $1.168/$2.336 per MTok — 2.7× DeepSeek's own
+//      $0.435/$0.87, which is only visible via
+//      /api/v1/models/<id>/endpoints. Users calling the first-party API
+//      (the overwhelmingly common case for a `deepseek-v4-pro` row) were
+//      being priced at the reseller rate whenever OpenRouter was up.
+//   2. OpenRouter publishes one number per model and has no way to
+//      express a peak/off-peak schedule at all.
+//   3. Its cache-read numbers are unreliable for this vendor: it quotes
+//      $0.028/MTok for v4-flash, 10x DeepSeek's published $0.0028, while
+//      quoting v4-pro's $0.003625 exactly right. These workloads are
+//      overwhelmingly cache reads, so that one field moved 30 days of
+//      measured DeepSeek spend across all users from $217 to $58.
+//
+// Source of truth: https://api-docs.deepseek.com/quick_start/pricing/
+const DEEPSEEK_PEAK_FROM_MS = Date.UTC(2026, 7, 16, 16, 0, 0)
+
+// 01:00-04:00 and 06:00-10:00 UTC — i.e. 09:00-12:00 / 14:00-18:00 in
+// Beijing, DeepSeek's home working hours. Off-peak is everything else,
+// billed at exactly half the peak rate.
+const DEEPSEEK_PEAK_WINDOWS_UTC: Array<[number, number]> = [[1, 4], [6, 10]]
+
+// DeepSeek publishes three prices per model — cache hit, cache miss and
+// output, in $/MTok. There is deliberately no cache-*write* price: writing
+// the context cache is free, and the tokens that missed are billed at the
+// plain input (miss) rate. So cacheCreation === input here, NOT the hit
+// rate that `fbPrice` would otherwise default it to — that default was
+// under-charging DeepSeek cache creation by ~30-50×.
+function deepseekRates(hitPerMTok: number, missPerMTok: number, outputPerMTok: number): Rates {
+  return {
+    inputCostPerToken: missPerMTok / 1e6,
+    cacheCreationInputCostPerToken: missPerMTok / 1e6,
+    cacheReadInputCostPerToken: hitPerMTok / 1e6,
+    cachedInputCostPerToken: hitPerMTok / 1e6,
+    outputCostPerToken: outputPerMTok / 1e6,
+  }
+}
+
+const DEEPSEEK_SQL_MATCH = ['%deepseek%']
+
+const OVERRIDES: Record<string, PriceSchedule> = {
+  'deepseek-v4-flash': {
+    displayName: 'DeepSeek V4 Flash',
+    source: 'override',
+    sqlMatch: DEEPSEEK_SQL_MATCH,
+    periods: [
+      { from: Number.NEGATIVE_INFINITY, rates: deepseekRates(0.0028, 0.14, 0.28) },
+      {
+        from: DEEPSEEK_PEAK_FROM_MS,
+        rates: deepseekRates(0.007, 0.22, 0.66),
+        peak: { windowsUtc: DEEPSEEK_PEAK_WINDOWS_UTC, rates: deepseekRates(0.014, 0.44, 1.32) },
+      },
+    ],
+  },
+  'deepseek-v4-pro': {
+    displayName: 'DeepSeek V4 Pro',
+    source: 'override',
+    sqlMatch: DEEPSEEK_SQL_MATCH,
+    periods: [
+      { from: Number.NEGATIVE_INFINITY, rates: deepseekRates(0.003_625, 0.435, 0.87) },
+      {
+        from: DEEPSEEK_PEAK_FROM_MS,
+        rates: deepseekRates(0.022, 0.66, 1.98),
+        peak: { windowsUtc: DEEPSEEK_PEAK_WINDOWS_UTC, rates: deepseekRates(0.044, 1.32, 3.96) },
+      },
+    ],
+  },
+}
+
+// Column name carrying a row's pricing time anchor: the start of the UTC
+// hour its tokens were spent in, as epoch seconds, or NULL when the model's
+// price does not vary with time. `estimateCostFromRow` reads it and
+// `priceAnchorSql` (agent-pricing-sql.ts) emits it — this constant is the
+// only place the name is written.
+export const PRICE_ANCHOR_COLUMN = 'price_hour_epoch'
+
+// Every LIKE pattern the query layer must split by UTC hour, derived from
+// the schedules themselves so the two can never drift: a vendor that
+// gains a peak schedule declares `sqlMatch` next to its periods and the
+// query layer follows automatically.
+export const TIME_SENSITIVE_MODEL_SQL_PATTERNS: readonly string[] = [
+  ...new Set(
+    [...Object.values(OVERRIDES), ...Object.values(FALLBACK)]
+      .filter(schedule => isTimeSensitive(schedule))
+      .flatMap(schedule => schedule.sqlMatch ?? []),
+  ),
+]
 
 // Fast / priority inference variants. Mirrors agent-time/apps/api/src/
 // pricing.ts so the fallback table can still price fast tiers when
@@ -105,20 +258,32 @@ addFastVariants(FALLBACK, [
   'gpt-5.6-terra',
 ], 2)
 
-function addFastVariants(table: Record<string, ModelPrice>, baseIds: string[], multiplier: number): void {
+function scaleRates(rates: Rates, multiplier: number): Rates {
+  const out = {} as Rates
+  for (const key of RATE_KEYS) {
+    out[key] = rates[key] * multiplier
+  }
+  return out
+}
+
+function addFastVariants(table: Record<string, PriceSchedule>, baseIds: string[], multiplier: number): void {
   for (const id of baseIds) {
     const base = table[id]
     if (!base) {
       continue
     }
+    // Scale every period, peak included, so a fast variant of a
+    // time-scheduled model keeps its schedule instead of flattening.
     table[`${id}-fast`] = {
       displayName: base.displayName ? `${base.displayName} Fast` : undefined,
-      inputCostPerToken: base.inputCostPerToken * multiplier,
-      cacheCreationInputCostPerToken: base.cacheCreationInputCostPerToken * multiplier,
-      cacheReadInputCostPerToken: base.cacheReadInputCostPerToken * multiplier,
-      cachedInputCostPerToken: base.cachedInputCostPerToken * multiplier,
-      outputCostPerToken: base.outputCostPerToken * multiplier,
-      source: 'fallback',
+      source: base.source,
+      periods: base.periods.map(period => ({
+        from: period.from,
+        rates: scaleRates(period.rates, multiplier),
+        peak: period.peak
+          ? { windowsUtc: period.peak.windowsUtc, rates: scaleRates(period.peak.rates, multiplier) }
+          : undefined,
+      })),
     }
   }
 }
@@ -129,15 +294,20 @@ function fbPrice(
   cachedRead: number,
   output: number,
   cacheCreation = cachedRead,
-): ModelPrice {
+): PriceSchedule {
   return {
     displayName,
-    inputCostPerToken: input,
-    cacheCreationInputCostPerToken: cacheCreation,
-    cacheReadInputCostPerToken: cachedRead,
-    cachedInputCostPerToken: cachedRead,
-    outputCostPerToken: output,
     source: 'fallback',
+    periods: [{
+      from: Number.NEGATIVE_INFINITY,
+      rates: {
+        inputCostPerToken: input,
+        cacheCreationInputCostPerToken: cacheCreation,
+        cacheReadInputCostPerToken: cachedRead,
+        cachedInputCostPerToken: cachedRead,
+        outputCostPerToken: output,
+      },
+    }],
   }
 }
 
@@ -156,7 +326,7 @@ let inflight: Promise<void> | null = null
 // (the per-(project, model) breakdown alone is folded three ways), and every
 // miss re-runs the whole candidate expansion. Invalidated wherever `state`
 // is reassigned in loadCatalog — those are the only writes.
-const resolved = new Map<string, ModelPrice | null>()
+const resolved = new Map<string, PriceSchedule | null>()
 
 async function loadCatalog(): Promise<void> {
   try {
@@ -166,7 +336,7 @@ async function loadCatalog(): Promise<void> {
     }
     const json = (await response.json()) as { data: Array<Record<string, unknown>> }
     const models = json.data ?? []
-    const map = new Map<string, ModelPrice>()
+    const map = new Map<string, PriceSchedule>()
     for (const model of models) {
       const id = model.id
       if (!id || typeof id !== 'string') {
@@ -188,17 +358,24 @@ async function loadCatalog(): Promise<void> {
       // (most OpenAI/DeepSeek entries have no input_cache_write).
       const cacheRead = Number.parseFloat(String(pricing.input_cache_read ?? '')) || input * 0.1
       const cacheWrite = Number.parseFloat(String(pricing.input_cache_write ?? '')) || cacheRead
-      const price: ModelPrice = {
+      // OpenRouter is a point-in-time quote: one rate, valid now. It is
+      // therefore always a single open-ended period.
+      const schedule: PriceSchedule = {
         displayName: typeof model.name === 'string' ? model.name : undefined,
-        inputCostPerToken: input,
-        cacheCreationInputCostPerToken: cacheWrite,
-        cacheReadInputCostPerToken: cacheRead,
-        cachedInputCostPerToken: cacheRead,
-        outputCostPerToken: output,
         source: 'openrouter',
+        periods: [{
+          from: Number.NEGATIVE_INFINITY,
+          rates: {
+            inputCostPerToken: input,
+            cacheCreationInputCostPerToken: cacheWrite,
+            cacheReadInputCostPerToken: cacheRead,
+            cachedInputCostPerToken: cacheRead,
+            outputCostPerToken: output,
+          },
+        }],
       }
       const key = id.toLowerCase()
-      map.set(key, price)
+      map.set(key, schedule)
       // Also index the bare name. The codetime CLI stores model ids without
       // OpenRouter's mandatory `vendor/` prefix, and this reverse index is
       // what lets any vendor resolve without a hand-written prefix rule (the
@@ -208,7 +385,7 @@ async function loadCatalog(): Promise<void> {
       // from silently flipping an already-resolved price.
       const bare = key.slice(key.indexOf('/') + 1)
       if (bare !== key && !map.has(bare)) {
-        map.set(bare, price)
+        map.set(bare, schedule)
       }
     }
     state = {
@@ -292,11 +469,15 @@ function pricingCandidates(model: string): string[] {
     }
   }
   // Every spelling variant of one base form: the form itself, its dotted
-  // version, and — when it ends in a `-YYYYMMDD` release tag — the undated
-  // form of both. `add` is Set-backed, so re-adding an unchanged form is a
-  // no-op.
+  // version, and — when it ends in a release tag — the untagged form of
+  // both. Tags come in every width vendors have used: `-YYYYMMDD`
+  // (`claude-haiku-4-5-20251001`), `-YYMMDD` (`deepseek-v4-flash-260425`),
+  // `-MMDD` (`deepseek-v4-pro-0813`) and the moving `-latest`. Stripping
+  // one that was not a tag is safe by construction: candidates are probed
+  // as exact keys, so an over-eager strip misses rather than mis-prices.
+  // `add` is Set-backed, so re-adding an unchanged form is a no-op.
   const addAllForms = (form: string): void => {
-    for (const variant of [form, form.replace(/-\d{8}$/, '')]) {
+    for (const variant of [form, form.replace(/-(?:\d{4}|\d{6}|\d{8}|latest)$/, '')]) {
       add(variant)
       add(dotted(variant))
     }
@@ -327,7 +508,7 @@ function pricingCandidates(model: string): string[] {
   return [...set]
 }
 
-export function getPriceFor(model: string): ModelPrice | null {
+function getScheduleFor(model: string): PriceSchedule | null {
   if (!model) {
     return null
   }
@@ -335,13 +516,22 @@ export function getPriceFor(model: string): ModelPrice | null {
   if (cached !== undefined) {
     return cached
   }
-  const price = resolvePriceFor(model)
-  resolved.set(model, price)
-  return price
+  const schedule = resolveScheduleFor(model)
+  resolved.set(model, schedule)
+  return schedule
 }
 
-function resolvePriceFor(model: string): ModelPrice | null {
+function resolveScheduleFor(model: string): PriceSchedule | null {
   const candidates = pricingCandidates(model)
+  // Overrides first: they exist precisely because the catalogue's answer
+  // for these models is wrong (reseller rate) or unrepresentable
+  // (peak/off-peak). See the OVERRIDES block.
+  for (const candidate of candidates) {
+    const override = OVERRIDES[candidate]
+    if (override) {
+      return override
+    }
+  }
   for (const candidate of candidates) {
     const fromRaw = state.raw.get(candidate)
     if (fromRaw) {
@@ -355,6 +545,190 @@ function resolvePriceFor(model: string): ModelPrice | null {
     }
   }
   return null
+}
+
+// A schedule is time-sensitive when *when* the tokens were spent changes
+// what they cost: more than one effective period, or any peak window.
+// Called once per priced row, so it stays allocation-free (no closure).
+function isTimeSensitive(schedule: PriceSchedule): boolean {
+  if (schedule.periods.length > 1) {
+    return true
+  }
+  for (const period of schedule.periods) {
+    if (period.peak) {
+      return true
+    }
+  }
+  return false
+}
+
+function periodAt(schedule: PriceSchedule, atMs: number): PricePeriod {
+  let current = schedule.periods[0]!
+  for (const period of schedule.periods) {
+    if (period.from <= atMs) {
+      current = period
+    }
+    else {
+      break
+    }
+  }
+  return current
+}
+
+function isPeakHour(windows: Array<[number, number]>, atMs: number): boolean {
+  // Epoch ms floors to UTC midnight without any timezone lookup, which is
+  // exactly what the windows are defined against.
+  const hour = Math.floor((atMs - Math.floor(atMs / DAY_MS) * DAY_MS) / HOUR_MS)
+  return windows.some(([start, end]) => hour >= start && hour < end)
+}
+
+// Exact rate card at one instant.
+function ratesAt(schedule: PriceSchedule, atMs: number): Rates {
+  const period = periodAt(schedule, atMs)
+  if (period.peak && isPeakHour(period.peak.windowsUtc, atMs)) {
+    return period.peak.rates
+  }
+  return period.rates
+}
+
+// Milliseconds of one daily UTC window that fall in [epoch, x). Closed
+// form: whole elapsed days each contribute the window's full length, and
+// the partial last day contributes however much of it has elapsed.
+function dailyWindowMsUpTo(x: number, startMs: number, lengthMs: number): number {
+  const days = Math.floor(x / DAY_MS)
+  const intoDay = x - days * DAY_MS
+  return days * lengthMs + Math.min(Math.max(intoDay - startMs, 0), lengthMs)
+}
+
+// Milliseconds of [from, to) that land inside a daily UTC peak window.
+// O(windows) — differencing the two prefix sums beats walking the range a
+// day at a time, which cost ~730 iterations for a year-long window.
+function peakMsBetween(windows: Array<[number, number]>, fromMs: number, toMs: number): number {
+  let total = 0
+  for (const [start, end] of windows) {
+    const startMs = start * HOUR_MS
+    const lengthMs = (end - start) * HOUR_MS
+    total += dailyWindowMsUpTo(toMs, startMs, lengthMs) - dailyWindowMsUpTo(fromMs, startMs, lengthMs)
+  }
+  return total
+}
+
+function weightedRates(parts: Array<{ rates: Rates, weight: number }>): Rates {
+  let total = 0
+  for (const part of parts) {
+    total += part.weight
+  }
+  if (total <= 0) {
+    return parts[0]!.rates
+  }
+  const out = {} as Rates
+  for (const key of RATE_KEYS) {
+    let acc = 0
+    for (const { rates, weight } of parts) {
+      acc += rates[key] * (weight / total)
+    }
+    out[key] = acc
+  }
+  return out
+}
+
+// Degraded path: the row is a sum over a whole window, so we no longer know
+// which hours its tokens were spent in. Blend the schedule across the
+// window by wall-clock time — i.e. assume usage is spread evenly. That is
+// wrong for a user who only ever codes during peak hours, but it is
+// bounded (never outside [off-peak, peak]) and it is the honest answer when
+// the time axis has already been aggregated away. Callers that *do* have a
+// timestamp pass `at` instead and get the exact rate.
+function blendRates(schedule: PriceSchedule, fromMs: number, toMs: number): Rates {
+  // An unbounded (all-time) window would give ancient rates unbounded
+  // weight; a year of lookback is enough for any live schedule.
+  const start = Number.isFinite(fromMs) ? fromMs : toMs - 365 * DAY_MS
+  if (!(toMs > start)) {
+    return ratesAt(schedule, start)
+  }
+  const parts: Array<{ rates: Rates, weight: number }> = []
+  const periods = schedule.periods
+  for (let i = 0; i < periods.length; i++) {
+    const period = periods[i]!
+    const next = periods[i + 1]
+    const segStart = Math.max(start, period.from)
+    const segEnd = Math.min(toMs, next ? next.from : Number.POSITIVE_INFINITY)
+    if (!(segEnd > segStart)) {
+      continue
+    }
+    const span = segEnd - segStart
+    if (period.peak) {
+      const peakMs = peakMsBetween(period.peak.windowsUtc, segStart, segEnd)
+      parts.push({ rates: period.peak.rates, weight: peakMs }, { rates: period.rates, weight: span - peakMs })
+    }
+    else {
+      parts.push({ rates: period.rates, weight: span })
+    }
+  }
+  // `parts` is never empty: the first period opens at -Infinity and
+  // `toMs > start` was checked above, so at least one segment has span.
+  return weightedRates(parts)
+}
+
+export type TimeInput = number | string | Date | null | undefined
+
+function toMs(value: TimeInput): number | null {
+  if (value === null || value === undefined) {
+    return null
+  }
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : null
+  }
+  const ms = value instanceof Date ? value.getTime() : Date.parse(value)
+  return Number.isFinite(ms) ? ms : null
+}
+
+// How the rate card was arrived at:
+//   'flat'    — the model has a single timeless rate; `at` is irrelevant.
+//   'exact'   — time-sensitive model priced at a known instant.
+//   'blended' — time-sensitive model priced across a window (see blendRates).
+export type PriceBasis = 'flat' | 'exact' | 'blended'
+
+function ratesFor(
+  schedule: PriceSchedule,
+  at: TimeInput,
+  window: readonly [TimeInput, TimeInput] | undefined,
+): { rates: Rates, basis: PriceBasis } {
+  if (!isTimeSensitive(schedule)) {
+    return { rates: schedule.periods[0]!.rates, basis: 'flat' }
+  }
+  const atMs = toMs(at)
+  if (atMs !== null) {
+    return { rates: ratesAt(schedule, atMs), basis: 'exact' }
+  }
+  const begin = (window ? toMs(window[0]) : null) ?? Number.NEGATIVE_INFINITY
+  const end = (window ? toMs(window[1]) : null) ?? Date.now()
+  return { rates: blendRates(schedule, begin, end), basis: 'blended' }
+}
+
+// The `pricing` block handed back per row. Memoised on the rate card so a
+// request pricing thousands of rows against the same card allocates one
+// object rather than thousands. A rate card belongs to exactly one
+// schedule, so its name and provenance can never disagree.
+const priceCards = new WeakMap<Rates, ModelPrice>()
+
+function priceCardFor(schedule: PriceSchedule, rates: Rates): ModelPrice {
+  const cached = priceCards.get(rates)
+  if (cached) {
+    return cached
+  }
+  const card: ModelPrice = { ...rates, displayName: schedule.displayName, source: schedule.source }
+  priceCards.set(rates, card)
+  return card
+}
+
+// Resolve a model to the flat rate card that applies at `at` (default: now).
+export function getPriceFor(model: string, at?: TimeInput): ModelPrice | null {
+  const schedule = getScheduleFor(model)
+  if (!schedule) {
+    return null
+  }
+  return priceCardFor(schedule, ratesFor(schedule, at ?? Date.now(), undefined).rates)
 }
 
 // Anthropic prices a 1-hour ephemeral cache write at 2× input, vs the
@@ -385,11 +759,19 @@ export function estimateCostUsd(args: {
   // which multiplies output_tokens only. Kept as a parameter so callers can
   // keep passing it as an informational field.
   reasoningOutputTokens: number
-}): { cost: number, pricing: ModelPrice | null } {
-  const pricing = getPriceFor(args.model)
-  if (!pricing) {
-    return { cost: 0, pricing: null }
+  // When these tokens were spent. Pass `at` whenever the row is anchored to
+  // a real instant (the hour bucket it was grouped into); pass `window` —
+  // the request's [since, until] — when it is a sum over a range. Both are
+  // ignored for models with a flat schedule, which is nearly all of them.
+  at?: TimeInput
+  window?: readonly [TimeInput, TimeInput]
+}): { cost: number, pricing: ModelPrice | null, basis: PriceBasis } {
+  const schedule = getScheduleFor(args.model)
+  if (!schedule) {
+    return { cost: 0, pricing: null, basis: 'flat' }
   }
+  const { rates, basis } = ratesFor(schedule, args.at, args.window)
+  const pricing = priceCardFor(schedule, rates)
   const cacheCreation = Math.max(0, args.cacheCreationInputTokens ?? 0)
   // Split the cache-creation total by ephemeral TTL. `known1h` is clamped
   // to the total so a malformed/over-counted 1h split can never bill more
@@ -413,14 +795,14 @@ export function estimateCostUsd(args: {
     : Math.max(0, args.cachedInputTokens - cacheCreation)
   const fresh = Math.max(0, args.inputTokens - cacheCreation - cacheRead)
   const cost
-    = fresh * pricing.inputCostPerToken
-    + creationDefaultRate * pricing.cacheCreationInputCostPerToken
-    + known1h * pricing.inputCostPerToken * CACHE_CREATE_1H_INPUT_MULTIPLIER
-    + cacheRead * pricing.cacheReadInputCostPerToken
+    = fresh * rates.inputCostPerToken
+    + creationDefaultRate * rates.cacheCreationInputCostPerToken
+    + known1h * rates.inputCostPerToken * CACHE_CREATE_1H_INPUT_MULTIPLIER
+    + cacheRead * rates.cacheReadInputCostPerToken
     // outputTokens already includes reasoning under the v2 convention; do
     // not add reasoningOutputTokens here (ccusage parity).
-    + args.outputTokens * pricing.outputCostPerToken
-  return { cost, pricing }
+    + args.outputTokens * rates.outputCostPerToken
+  return { cost, pricing, basis }
 }
 
 function rowNum(v: unknown): number {
@@ -435,7 +817,18 @@ function rowNum(v: unknown): number {
 // the standard `*_tokens` snake_case column names — every cost-folding
 // loop in the agent dashboard / public-usage handlers writes the same
 // six toN(...) reads, so the column-name contract lives here instead.
-export function estimateCostFromRow(r: Record<string, unknown>): { cost: number, pricing: ModelPrice | null } {
+//
+// PRICE_ANCHOR_COLUMN is the other half of the contract: queries that can
+// anchor their rows in time select it (see `priceAnchorSql`) and those rows
+// price exactly. Rows without it fall back to blending across `window`.
+export function estimateCostFromRow(
+  r: Record<string, unknown>,
+  window?: readonly [TimeInput, TimeInput],
+): { cost: number, pricing: ModelPrice | null, basis: PriceBasis } {
+  const anchor = r[PRICE_ANCHOR_COLUMN]
+  const at = anchor === null || anchor === undefined
+    ? undefined
+    : rowNum(anchor) * 1000
   return estimateCostUsd({
     model: String(r.model ?? 'unknown'),
     inputTokens: rowNum(r.input_tokens),
@@ -446,6 +839,8 @@ export function estimateCostFromRow(r: Record<string, unknown>): { cost: number,
     cacheReadInputTokens: rowNum(r.cache_read_input_tokens),
     outputTokens: rowNum(r.output_tokens),
     reasoningOutputTokens: rowNum(r.reasoning_output_tokens),
+    at,
+    window,
   })
 }
 

@@ -1,7 +1,8 @@
 import type { estimateCostUsd } from '../../../utils/agent-pricing'
 import { sql } from 'drizzle-orm'
 import { defineEventHandler, getQuery } from 'h3'
-import { ensurePricingLoaded, estimateCostFromRow, pricingState } from '../../../utils/agent-pricing'
+import { ensurePricingLoaded, estimateCostFromRow, PRICE_ANCHOR_COLUMN, pricingState } from '../../../utils/agent-pricing'
+import { priceAnchorSql } from '../../../utils/agent-pricing-sql'
 import { tryUser } from '../../../utils/auth'
 import { useDb } from '../../../utils/db'
 import { agentVisibilityCutoff } from '../../../utils/plan-limits'
@@ -336,6 +337,15 @@ export default defineEventHandler(async (event) => {
   const untilIso = range.until.toISOString()
   const bucketTrunc = range.bucket // postgres date_trunc accepts 'hour'/'day'/'week'
 
+  // Fallback pricing window for rows that carry no time anchor of their
+  // own — the leaderboards and the rhythm heatmap sum a whole range into
+  // one row, so by the time cost is computed there is no instant left to
+  // price against. Models on a time-varying schedule get their rate
+  // blended across this window (see blendRates); every flat-priced model
+  // ignores it. Rows that DO have an anchor (the cost timeline's
+  // price_hour_epoch) price exactly and ignore the window.
+  const priceWindow = [range.since, range.until] as const
+
   // Build a reusable WHERE-fragment for buckets/models/tools. We use
   // last_event_at as the join column on agent_sessions; for buckets we
   // use bucket.ts; for tool/model tables we filter via the parent
@@ -476,6 +486,7 @@ export default defineEventHandler(async (event) => {
       timezone(${tz}, date_trunc(${bucketTrunc}, timezone(${tz}, mb.ts))) as ts,
       coalesce(nullif(mb.source, ''), 'unknown') as source,
       coalesce(mb.model, 'unknown') as model,
+      ${priceAnchorSql(sql`mb.model`, sql`mb.ts`)},
       coalesce(sum(mb.input_tokens), 0)::bigint as input_tokens,
       coalesce(sum(mb.cached_input_tokens), 0)::bigint as cached_input_tokens,
       coalesce(sum(mb.cache_creation_input_tokens), 0)::bigint as cache_creation_input_tokens,
@@ -492,13 +503,14 @@ export default defineEventHandler(async (event) => {
     ${mbSinceClause}
     ${mbMachineClause}
     ${mbSourceClause}
-    group by 1, 2, 3
+    group by 1, 2, 3, 4
   `) as unknown as Record<string, unknown>[]
   const tokenRowsOld = await db.execute(sql`
     select
       timezone(${tz}, date_trunc(${bucketTrunc}, timezone(${tz}, s.last_event_at))) as ts,
       coalesce(nullif(s.source, ''), 'unknown') as source,
       coalesce(m.model, 'unknown') as model,
+      ${priceAnchorSql(sql`m.model`, sql`s.last_event_at`)},
       coalesce(sum(m.input_tokens), 0)::bigint as input_tokens,
       coalesce(sum(m.cached_input_tokens), 0)::bigint as cached_input_tokens,
       coalesce(sum(m.cache_creation_input_tokens), 0)::bigint as cache_creation_input_tokens,
@@ -515,12 +527,18 @@ export default defineEventHandler(async (event) => {
     ${sessSinceClause}
     ${mMachineClause}
     ${mSourceClause}
-    group by 1, 2, 3
+    group by 1, 2, 3, 4
   `) as unknown as Record<string, unknown>[]
 
   // Merge the v3 (real-time-bucketed) and pre-v3 (last_event_at-bucketed)
-  // model token rows on (ts, source, model), summing every token column.
-  // The merged rows then feed the same fold/pricing logic as before.
+  // model token rows on (ts, source, model, price hour), summing every
+  // token column. The merged rows then feed the same fold/pricing logic as
+  // before. `price_hour_epoch` joins the key so peak- and off-peak-priced
+  // hours inside one display bucket stay separate until after they are
+  // costed — it is NULL (a single group) for every flat-priced model, so
+  // for those this is the same merge it always was. Pre-v3 rows anchor
+  // their price hour to last_event_at, the same proxy their bucket
+  // placement already uses.
   const tokenAccCols = [
     'input_tokens',
     'cached_input_tokens',
@@ -537,7 +555,8 @@ export default defineEventHandler(async (event) => {
     const ts = tsToIso(r.ts)
     const rowSource = String(r.source ?? 'unknown')
     const model = String(r.model ?? 'unknown')
-    const key = `${ts}\u0000${rowSource}\u0000${model}`
+    const priceHour = r[PRICE_ANCHOR_COLUMN] ?? null
+    const key = `${ts}\u0000${rowSource}\u0000${model}\u0000${priceHour ?? ''}`
     const existing = tokenMergeMap.get(key)
     if (existing) {
       for (const col of tokenAccCols) {
@@ -545,7 +564,7 @@ export default defineEventHandler(async (event) => {
       }
     }
     else {
-      const merged: Record<string, unknown> = { ts, source: rowSource, model }
+      const merged: Record<string, unknown> = { ts, source: rowSource, model, [PRICE_ANCHOR_COLUMN]: priceHour }
       for (const col of tokenAccCols) {
         merged[col] = toN(r[col])
       }
@@ -601,7 +620,7 @@ export default defineEventHandler(async (event) => {
   const heatmapCostByCell = new Map<number, number>()
   for (const r of heatmapCostRows) {
     const key = toN(r.weekday) * 24 + toN(r.hour)
-    const { cost } = estimateCostFromRow(r)
+    const { cost } = estimateCostFromRow(r, priceWindow)
     heatmapCostByCell.set(key, (heatmapCostByCell.get(key) ?? 0) + cost)
   }
 
@@ -706,6 +725,10 @@ export default defineEventHandler(async (event) => {
     modelCalls: number
     cost: number
     pricing: ReturnType<typeof estimateCostUsd>['pricing']
+    // How that rate was arrived at — 'blended' means the model prices by
+    // time of day and this row was summed over the window, so the figure
+    // is an even-usage approximation rather than an exact charge.
+    priceBasis: ReturnType<typeof estimateCostUsd>['basis']
   }
   const modelAggs = new Map<string, ModelAgg>()
   for (const r of breakdownRows) {
@@ -718,7 +741,7 @@ export default defineEventHandler(async (event) => {
     const reasoningOutputTokens = toN(r.reasoning_output_tokens)
     const totalTokens = toN(r.total_tokens)
     const modelCalls = toN(r.model_calls)
-    const { cost, pricing } = estimateCostFromRow(r)
+    const { cost, pricing, basis } = estimateCostFromRow(r, priceWindow)
     const existing = modelAggs.get(model) ?? {
       model,
       inputTokens: 0,
@@ -731,6 +754,7 @@ export default defineEventHandler(async (event) => {
       modelCalls: 0,
       cost: 0,
       pricing,
+      priceBasis: basis,
     }
     existing.inputTokens += inputTokens
     existing.cachedInputTokens += cachedInputTokens
@@ -744,6 +768,7 @@ export default defineEventHandler(async (event) => {
     // Latest non-null pricing wins; identical across same-model rows.
     if (pricing) {
       existing.pricing = pricing
+      existing.priceBasis = basis
     }
     modelAggs.set(model, existing)
   }
@@ -783,7 +808,7 @@ export default defineEventHandler(async (event) => {
     const totalTokens = toN(r.total_tokens)
     const modelCalls = toN(r.model_calls)
     const sessions = toN(r.sessions)
-    const { cost } = estimateCostFromRow(r)
+    const { cost } = estimateCostFromRow(r, priceWindow)
     const existing = projectAggs.get(project) ?? {
       project,
       inputTokens: 0,
@@ -845,7 +870,7 @@ export default defineEventHandler(async (event) => {
     const reasoningOutputTokens = toN(r.reasoning_output_tokens)
     const totalTokens = toN(r.total_tokens)
     const modelCalls = toN(r.model_calls)
-    const { cost } = estimateCostFromRow(r)
+    const { cost } = estimateCostFromRow(r, priceWindow)
     const existing = agentAggs.get(sourceKey) ?? {
       source: sourceKey,
       inputTokens: 0,
@@ -1011,7 +1036,7 @@ export default defineEventHandler(async (event) => {
     const outputTokens = toN(r.output_tokens)
     const reasoningOutputTokens = toN(r.reasoning_output_tokens)
     const modelCalls = toN(r.model_calls)
-    const { cost } = estimateCostFromRow(r)
+    const { cost } = estimateCostFromRow(r, priceWindow)
     const existing = bucketMap.get(ts) ?? {
       ts,
       inputTokens: 0,
@@ -1182,6 +1207,7 @@ export default defineEventHandler(async (event) => {
         ? {
             displayName: m.pricing.displayName,
             source: m.pricing.source,
+            basis: m.priceBasis,
             inputPerMillion: m.pricing.inputCostPerToken * 1_000_000,
             cacheCreationInputPerMillion: m.pricing.cacheCreationInputCostPerToken * 1_000_000,
             cacheReadInputPerMillion: m.pricing.cacheReadInputCostPerToken * 1_000_000,
@@ -1191,6 +1217,7 @@ export default defineEventHandler(async (event) => {
         : {
             displayName: undefined,
             source: 'missing' as const,
+            basis: 'flat' as const,
             inputPerMillion: 0,
             cacheCreationInputPerMillion: 0,
             cacheReadInputPerMillion: 0,

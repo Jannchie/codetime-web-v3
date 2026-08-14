@@ -1,6 +1,7 @@
+import type { TimeInput } from '../../../../../utils/agent-pricing'
 import { sql } from 'drizzle-orm'
 import { defineEventHandler, getQuery, getRouterParam } from 'h3'
-import { ensurePricingLoaded, estimateCostUsd } from '../../../../../utils/agent-pricing'
+import { ensurePricingLoaded, estimateCostFromRow } from '../../../../../utils/agent-pricing'
 import { useDb } from '../../../../../utils/db'
 import { agentVisibilityCutoff } from '../../../../../utils/plan-limits'
 import { canExposePublicData, isWidgetCaller, resolveUserPrivacy } from '../../../../../utils/privacy'
@@ -82,7 +83,12 @@ function toN(value: unknown): number {
   return Number.isFinite(n) ? n : 0
 }
 
-function summarize(rows: ModelRow[]) {
+// `window` is the [since, until] the rows were summed over. Models whose
+// price varies with time (DeepSeek's peak / off-peak schedule, and any
+// rate change before it) get their rate blended across that window — this
+// query aggregates the time axis away, so no exact instant survives to
+// price against. Flat-priced models ignore it.
+function summarize(rows: ModelRow[], window: readonly [TimeInput, TimeInput]) {
   let tokens = 0
   let inputTokens = 0
   let cachedInputTokens = 0
@@ -92,24 +98,10 @@ function summarize(rows: ModelRow[]) {
   for (const r of rows) {
     const inT = toN(r.input_tokens)
     const cachedT = toN(r.cached_input_tokens)
-    const cacheCreationT = toN(r.cache_creation_input_tokens)
-    const cacheCreation5mT = toN(r.cache_creation_5m_input_tokens)
-    const cacheCreation1hT = toN(r.cache_creation_1h_input_tokens)
-    const cacheReadT = toN(r.cache_read_input_tokens)
     const outT = toN(r.output_tokens)
     const reasoningT = toN(r.reasoning_output_tokens)
     const totalT = toN(r.total_tokens)
-    const { cost } = estimateCostUsd({
-      model: String(r.model || 'unknown'),
-      inputTokens: inT,
-      cachedInputTokens: cachedT,
-      cacheCreationInputTokens: cacheCreationT,
-      cacheCreation5mInputTokens: cacheCreation5mT,
-      cacheCreation1hInputTokens: cacheCreation1hT,
-      cacheReadInputTokens: cacheReadT,
-      outputTokens: outT,
-      reasoningOutputTokens: reasoningT,
-    })
+    const { cost } = estimateCostFromRow(r, window)
     tokens += totalT
     inputTokens += inT
     cachedInputTokens += cachedT
@@ -196,6 +188,6 @@ export default defineEventHandler(async (event) => {
     range,
     since: since ? since.toISOString() : null,
     until: now.toISOString(),
-    ...summarize(rows),
+    ...summarize(rows, [since, now]),
   }
 })
