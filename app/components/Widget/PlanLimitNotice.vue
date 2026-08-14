@@ -9,6 +9,18 @@ withDefaults(defineProps<{
 })
 
 const open = ref(false)
+
+// ProUpgradeModal subscribes to pricing, starts a 1 Hz discount countdown and
+// registers a global keydown listener on mount — all of it wasted while the
+// dialog is closed, and this notice renders up to twice per widget tab. Keep
+// it out of the tree until the CTA is actually clicked; nextTick so the
+// modal's enter transition still plays on that first open.
+const modalMounted = ref(false)
+async function openModal() {
+  modalMounted.value = true
+  await nextTick()
+  open.value = true
+}
 </script>
 
 <template>
@@ -27,13 +39,13 @@ const open = ref(false)
     <button
       type="button"
       class="plan-notice-cta"
-      @click="open = true"
+      @click="openModal"
     >
       {{ ctaText ?? 'Upgrade' }}
       <i class="i-tabler-arrow-up-right text-[12px]" />
     </button>
 
-    <ProUpgradeModal v-model:open="open" :reason="text" />
+    <ProUpgradeModal v-if="modalMounted" v-model:open="open" :reason="text" />
   </div>
 </template>
 
