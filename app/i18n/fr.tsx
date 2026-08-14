@@ -502,10 +502,11 @@ export const fr: Partial<Translation> = {
         title: 'Liste des étiquettes',
         noTags: 'Aucune étiquette trouvée. Créez votre première étiquette pour commencer.',
         createTag: 'Créer une étiquette',
-        freeUserLimit: 'Les utilisateurs gratuits peuvent créer jusqu\'à',
+        freeUserLimit: (max: number) => `Le plan gratuit permet jusqu'à ${max} étiquettes`,
         upgradeForMore: 'Mettre à jour pour créer plus d\'étiquettes',
         editTag: 'Modifier l\'étiquette',
         deleteTag: 'Supprimer l\'étiquette',
+        selectHint: 'Sélectionnez une étiquette pour voir ses règles et statistiques',
       },
       tagForm: {
         name: 'Nom',

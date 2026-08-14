@@ -129,7 +129,6 @@ async function handleRuleRefresh() {
 
 <template>
   <DashboardPageTitle
-    num="00"
     :title="t.dashboard.pageHeader.title.tags"
     :description="t.dashboard.pageHeader.description.tags"
   />
@@ -152,6 +151,13 @@ async function handleRuleRefresh() {
         <TagRuleManager :tag="selectedTag" @refresh="handleRuleRefresh" />
         <TagStats ref="tagStatsRef" :tag="selectedTag" />
       </div>
+
+      <!-- Nothing picked yet: say so, instead of ending the page on a
+           dangling tag grid. Skipped while the list is still empty. -->
+      <div v-else-if="tags?.length" class="tags-hint">
+        <i class="i-tabler-hand-click text-xl text-ct-fg-subtle" />
+        <span>{{ t.dashboard.tags.tagList.selectHint }}</span>
+      </div>
     </div>
   </DashboardPageContent>
 
@@ -163,3 +169,17 @@ async function handleRuleRefresh() {
     @close="closeTagForm"
   />
 </template>
+
+<style scoped>
+.tags-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 44px 16px;
+  font-size: var(--ct-text-sm);
+  color: var(--ct-fg-subtle);
+  border: 1px dashed var(--ct-border);
+  border-radius: var(--ct-radius-lg);
+}
+</style>

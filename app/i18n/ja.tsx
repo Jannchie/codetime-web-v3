@@ -529,10 +529,11 @@ export const ja: Partial<Translation> = {
         title: 'タグリスト',
         noTags: 'タグが見つかりません。最初のタグを作成して開始してください。',
         createTag: 'タグを作成',
-        freeUserLimit: '無料ユーザーは最大',
+        freeUserLimit: (max: number) => `無料プランではタグを最大 ${max} 個まで作成できます`,
         upgradeForMore: 'より多くのタグを作成するにはアップグレード',
         editTag: 'タグを編集',
         deleteTag: 'タグを削除',
+        selectHint: 'タグを選択すると、ルールと統計が表示されます',
       },
       tagForm: {
         name: '名前',

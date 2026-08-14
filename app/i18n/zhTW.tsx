@@ -547,10 +547,11 @@ export const zhTW: Partial<Translation> = {
         title: '標籤列表',
         noTags: '未找到標籤。創建您的第一個標籤開始使用。',
         createTag: '創建標籤',
-        freeUserLimit: '免費用戶可以創建至多',
+        freeUserLimit: (max: number) => `免費版最多可建立 ${max} 個標籤`,
         upgradeForMore: '升級以創建更多標籤',
         editTag: '編輯標籤',
         deleteTag: '刪除標籤',
+        selectHint: '選擇一個標籤，檢視它的規則與統計',
       },
       tagForm: {
         name: '名稱',

@@ -535,10 +535,11 @@ export const ms: Partial<Translation> = {
         title: 'Senarai Tag',
         noTags: 'Tiada tag dijumpai. Cipta tag pertama anda untuk bermula.',
         createTag: 'Cipta Tag',
-        freeUserLimit: 'Pengguna percuma boleh mencipta sehingga',
+        freeUserLimit: (max: number) => `Pelan percuma membenarkan sehingga ${max} tag`,
         upgradeForMore: 'Naik taraf untuk mencipta lebih banyak tag',
         editTag: 'Edit tag',
         deleteTag: 'Padam tag',
+        selectHint: 'Pilih tag untuk melihat peraturan dan statistiknya',
       },
       tagForm: {
         name: 'Nama',

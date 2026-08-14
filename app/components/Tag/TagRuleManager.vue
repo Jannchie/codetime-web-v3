@@ -1,21 +1,8 @@
 <script setup lang="ts">
 import type { TagResponse } from '~/api/v3/types.gen'
+import type { RuleCondition, RuleConditionType, RuleGroup, RuleTree } from '~/utils/tag'
 import { putV3TagsByTagId } from '~/api/v3'
 import { useUser } from '~/utils'
-import { getTagDisplay } from '~/utils/tag'
-
-type RuleConditionType = 'CONTAINS' | 'EQUALS' | 'STARTS_WITH' | 'ENDS_WITH' | 'REGEX' | 'NOT_CONTAINS' | 'NOT_EQUALS' | 'NOT_STARTS_WITH' | 'NOT_ENDS_WITH' | 'NOT_REGEX'
-
-type RuleCondition = {
-  field: string
-  conditionType: RuleConditionType
-  value: string
-}
-
-type RuleGroup = {
-  operator: 'AND' | 'OR'
-  conditions: (RuleCondition | RuleGroup)[]
-}
 
 type Props = {
   tag: TagResponse
@@ -41,9 +28,7 @@ type EditingRuleGroup = {
 const isEditing = ref(false)
 const editingRuleGroups = ref<EditingRuleGroup[]>([])
 
-const rules = computed(() => {
-  return props.tag.rules as (RuleCondition | RuleGroup | null | undefined)
-})
+const rules = computed(() => props.tag.rules as RuleTree)
 
 const hasGroupChanges = computed(() => {
   const originalGroups = convertRulesToEditingGroups(rules.value)
@@ -54,7 +39,7 @@ const hasChanges = computed(() => {
   return isEditing.value && hasGroupChanges.value
 })
 
-function convertRulesToEditingGroups(apiRules: RuleCondition | RuleGroup | null | undefined): EditingRuleGroup[] {
+function convertRulesToEditingGroups(apiRules: RuleTree): EditingRuleGroup[] {
   if (!apiRules) {
     return []
   }
@@ -291,7 +276,7 @@ function removeRuleGroup(groupId: string) {
 </script>
 
 <template>
-  <PanelSection num="02" :title="t.dashboard.tags.tagRules.title" :meta="isEditing ? 'editing' : 'or · and · condition'" flush>
+  <PanelSection :title="t.dashboard.tags.tagRules.title" :meta="isEditing ? 'editing' : 'or · and · condition'" flush>
     <template #icon>
       <i class="i-tabler-rules text-[15px] text-ct-fg-muted" />
     </template>
@@ -299,12 +284,7 @@ function removeRuleGroup(groupId: string) {
     <!-- Toolbar -->
     <div class="rules-toolbar">
       <div class="rules-tag">
-        <div
-          class="rules-tag-glyph"
-          :style="{ backgroundColor: tag.color }"
-        >
-          {{ getTagDisplay(tag) }}
-        </div>
+        <TagGlyph :tag="tag" :size="32" />
         <div class="rules-tag-meta">
           <div class="rules-tag-name">
             {{ tag.name }}
@@ -368,7 +348,9 @@ function removeRuleGroup(groupId: string) {
     </div>
 
     <!-- Rule groups -->
-    <div v-else class="rules-list">
+    <!-- The accent is a property of the tag, so it is set once here and
+         inherited by every group's edge. -->
+    <div v-else class="rules-list" :style="{ '--rule-accent': tag.color }">
       <template v-for="(group, groupIndex) in displayRuleGroups" :key="group.id">
         <div v-if="groupIndex > 0" class="rules-connector rules-connector-or">
           <span class="rules-connector-line" />
@@ -481,20 +463,6 @@ function removeRuleGroup(groupId: string) {
   min-width: 0;
 }
 
-.rules-tag-glyph {
-  width: 32px;
-  height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ct-font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: white;
-  border-radius: var(--ct-radius-md);
-  flex-shrink: 0;
-}
-
 .rules-tag-meta {
   display: flex;
   flex-direction: column;
@@ -572,7 +540,7 @@ function removeRuleGroup(groupId: string) {
 }
 
 .rules-connector-or {
-  padding: 10px 0;
+  padding: 7px 0;
 }
 
 .rules-connector-line {
@@ -606,20 +574,28 @@ function removeRuleGroup(groupId: string) {
   border: 1px solid var(--ct-border-subtle);
 }
 
-/* Group card */
+/* Group card. Read mode is just three pills per condition, so it is the
+   tighter of the two boxes and carries the tag-colored edge; editing needs
+   the extra room for selects and inputs. */
 .rules-group {
   position: relative;
   display: flex;
-  padding: 14px;
+  padding: 10px 14px;
   background: var(--ct-surface);
   border: 1px solid var(--ct-border-subtle);
+  border-left: 3px solid var(--rule-accent);
   border-radius: var(--ct-radius-lg);
   transition: border-color var(--ct-duration-fast) var(--ct-ease),
               background-color var(--ct-duration-fast) var(--ct-ease);
 }
+.rules-group:hover {
+  border-top-color: var(--ct-border);
+  border-right-color: var(--ct-border);
+  border-bottom-color: var(--ct-border);
+}
 
 .rules-group.is-editing {
-  background: var(--ct-surface);
+  padding: 14px;
   border-color: var(--ct-border);
 }
 
@@ -720,7 +696,10 @@ function removeRuleGroup(groupId: string) {
 
 .rules-value-input {
   min-width: 12rem;
-  flex: 1;
+  /* Grow with the row, but stop before the value box dwarfs the two
+     selects it belongs with. */
+  flex: 1 1 20rem;
+  max-width: 30rem;
 }
 
 .line-select {
@@ -762,6 +741,8 @@ function removeRuleGroup(groupId: string) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Pinned to the row's right edge once the value input stops growing. */
+  margin-left: auto;
   width: 32px;
   height: 32px;
   background: transparent;

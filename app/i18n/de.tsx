@@ -535,10 +535,11 @@ export const de: Partial<Translation> = {
         title: 'Tag-Liste',
         noTags: 'Keine Tags gefunden. Erstellen Sie Ihren ersten Tag, um zu beginnen.',
         createTag: 'Tag erstellen',
-        freeUserLimit: 'Kostenlose Benutzer können bis zu',
+        freeUserLimit: (max: number) => `Der kostenlose Plan erlaubt bis zu ${max} Tags`,
         upgradeForMore: 'Upgrade für mehr Tags',
         editTag: 'Tag bearbeiten',
         deleteTag: 'Tag löschen',
+        selectHint: 'Wähle ein Tag, um seine Regeln und Statistiken zu sehen',
       },
       tagForm: {
         name: 'Name',

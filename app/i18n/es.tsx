@@ -502,10 +502,11 @@ export const es: Partial<Translation> = {
         title: 'Lista de etiquetas',
         noTags: 'No se encontraron etiquetas. Crea tu primera etiqueta para comenzar.',
         createTag: 'Crear etiqueta',
-        freeUserLimit: 'Los usuarios gratuitos pueden crear hasta',
+        freeUserLimit: (max: number) => `El plan gratuito permite hasta ${max} etiquetas`,
         upgradeForMore: 'Actualizar para crear más etiquetas',
         editTag: 'Editar etiqueta',
         deleteTag: 'Eliminar etiqueta',
+        selectHint: 'Selecciona una etiqueta para ver sus reglas y estadísticas',
       },
       tagForm: {
         name: 'Nombre',

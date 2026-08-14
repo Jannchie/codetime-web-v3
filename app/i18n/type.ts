@@ -555,10 +555,11 @@ export type Translation = {
         title: string
         noTags: string
         createTag: string
-        freeUserLimit: string
+        freeUserLimit: (max: number) => string
         upgradeForMore: string
         editTag: string
         deleteTag: string
+        selectHint: string
       }
       tagForm: {
         name: string

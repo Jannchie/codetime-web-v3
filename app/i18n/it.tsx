@@ -502,10 +502,11 @@ export const it: Partial<Translation> = {
         title: 'Elenco dei tag',
         noTags: 'Nessun tag trovato. Crea il tuo primo tag per iniziare.',
         createTag: 'Crea tag',
-        freeUserLimit: 'Gli utenti gratuiti possono creare fino a',
+        freeUserLimit: (max: number) => `Il piano gratuito consente fino a ${max} tag`,
         upgradeForMore: 'Aggiorna per creare più tag',
         editTag: 'Modifica tag',
         deleteTag: 'Elimina tag',
+        selectHint: 'Seleziona un tag per vederne le regole e le statistiche',
       },
       tagForm: {
         name: 'Nome',

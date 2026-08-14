@@ -790,10 +790,11 @@ export const en: Translation = {
         title: 'Tag List',
         noTags: 'No tags found. Create your first tag to get started.',
         createTag: 'Create Tag',
-        freeUserLimit: 'Free users can create up to',
+        freeUserLimit: (max: number) => `Free plan includes up to ${max} tags`,
         upgradeForMore: 'Upgrade to create more tags',
         editTag: 'Edit tag',
         deleteTag: 'Delete tag',
+        selectHint: 'Select a tag to view its rules and statistics',
       },
       tagForm: {
         name: 'Name',

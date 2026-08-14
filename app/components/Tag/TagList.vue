@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { TagResponse } from '~/api/v3/types.gen'
+import type { RuleTree } from '~/utils/tag'
 import { useUser } from '~/utils'
-import { getTagDisplay } from '~/utils/tag'
+import { countTagConditions } from '~/utils/tag'
 
 type Props = {
   tags: TagResponse[]
@@ -41,6 +42,22 @@ const meta = computed(() => {
   return `${props.tags?.length || 0} TAGS`
 })
 
+// Row view models — derived once per tags change instead of walking the rule
+// tree and formatting a date on every re-render of the list.
+const rows = computed(() => (props.tags ?? []).map(tag => ({
+  tag,
+  ruleCount: countTagConditions(tag.rules as RuleTree),
+  created: new Date(tag.createdAt).toLocaleDateString(),
+})))
+
+// Trailing blanks keep the hairline grid rectangular when the tag count isn't
+// a multiple of the column count. The grid is 3-up ≥1024px, 2-up ≥640px and
+// 1-up below that (where a partial row can't happen), so at most two blanks
+// are needed and each breakpoint shows only the ones it uses.
+const need3 = computed(() => (3 - ((props.tags?.length || 0) % 3)) % 3)
+const need2 = computed(() => (props.tags?.length || 0) % 2)
+const fillerCount = computed(() => Math.max(need3.value, need2.value))
+
 function showDeleteConfirm(tag: TagResponse) {
   tagToDelete.value = tag
   deleteModal.value = true
@@ -61,29 +78,32 @@ function cancelDelete() {
 </script>
 
 <template>
-  <PanelSection num="01" :title="t.dashboard.tags.tagList.title" :meta="meta" flush>
+  <PanelSection :title="t.dashboard.tags.tagList.title" :meta="meta" flush>
     <template #icon>
       <i class="i-tabler-tag text-[15px] text-ct-fg-muted" />
     </template>
 
-    <div class="tag-toolbar">
-      <div class="tag-toolbar-info">
-        <span v-if="isFreeUser" class="tag-toolbar-hint">
-          {{ t.dashboard.tags.tagList.freeUserLimit }}
-        </span>
-      </div>
+    <template #actions>
       <UButton
         variant="subtle"
+        size="sm"
         icon-left="i-tabler-plus"
         :disabled="!canCreateMoreTags"
         @click="emit('createNew')"
       >
         {{ t.dashboard.tags.tagList.createTag }}
       </UButton>
-    </div>
+    </template>
 
-    <div v-if="!canCreateMoreTags && isFreeUser" class="tag-upgrade-hint">
-      {{ t.dashboard.tags.tagList.upgradeForMore }}
+    <!-- Same plan notice (and Upgrade CTA) the widget tabs use. -->
+    <div v-if="isFreeUser" class="tag-quota">
+      <WidgetPlanLimitNotice
+        :variant="canCreateMoreTags ? 'info' : 'warning'"
+        :text="canCreateMoreTags
+          ? t.dashboard.tags.tagList.freeUserLimit(maxTagsForFree)
+          : t.dashboard.tags.tagList.upgradeForMore"
+        :cta-text="t.dashboard.widget?.limit.upgrade"
+      />
     </div>
 
     <!-- LOADING -->
@@ -112,25 +132,29 @@ function cancelDelete() {
     <!-- GRID -->
     <div v-else class="tag-grid">
       <button
-        v-for="tag in tags"
-        :key="tag.id"
+        v-for="row in rows"
+        :key="row.tag.id"
         type="button"
         class="tag-cell group"
-        :class="selectedTag?.id === tag.id ? 'tag-cell-active' : ''"
-        @click="emit('select', tag)"
+        :class="selectedTag?.id === row.tag.id ? 'tag-cell-active' : ''"
+        @click="emit('select', row.tag)"
       >
-        <div
-          class="tag-cell-glyph"
-          :style="{ backgroundColor: tag.color }"
-        >
-          {{ getTagDisplay(tag) }}
-        </div>
+        <TagGlyph :tag="row.tag" />
         <div class="tag-cell-body">
           <div class="tag-cell-name">
-            {{ tag.name }}
+            {{ row.tag.name }}
           </div>
           <div class="tag-cell-meta">
-            {{ new Date(tag.createdAt).toLocaleDateString() }}
+            <span
+              class="tag-cell-rules"
+              :class="{ 'is-empty': row.ruleCount === 0 }"
+              :title="t.dashboard.tags.tagRules.title"
+            >
+              <i class="i-tabler-filter text-[11px]" />
+              <span class="tabular-nums">{{ row.ruleCount }}</span>
+            </span>
+            <span class="tag-cell-dot">·</span>
+            <span class="tabular-nums">{{ row.created }}</span>
           </div>
         </div>
         <div class="tag-cell-actions" @click.stop>
@@ -138,7 +162,7 @@ function cancelDelete() {
             type="button"
             class="tag-cell-action"
             :title="t.dashboard.tags.tagList.editTag"
-            @click="emit('edit', tag)"
+            @click="emit('edit', row.tag)"
           >
             <i class="i-tabler-edit text-sm" />
           </button>
@@ -146,12 +170,20 @@ function cancelDelete() {
             type="button"
             class="tag-cell-action tag-cell-action-danger"
             :title="t.dashboard.tags.tagList.deleteTag"
-            @click="showDeleteConfirm(tag)"
+            @click="showDeleteConfirm(row.tag)"
           >
             <i class="i-tabler-trash text-sm" />
           </button>
         </div>
       </button>
+
+      <div
+        v-for="i in fillerCount"
+        :key="`filler-${i}`"
+        class="tag-filler"
+        :class="{ 'is-lg': i <= need3, 'is-md': i <= need2 }"
+        aria-hidden="true"
+      />
     </div>
   </PanelSection>
 
@@ -161,12 +193,7 @@ function cancelDelete() {
       {{ t.dashboard.tags.deleteConfirm.deleteTagMessage }}
     </p>
     <div v-if="tagToDelete" class="confirm-target">
-      <div
-        class="tag-cell-glyph"
-        :style="{ backgroundColor: tagToDelete.color }"
-      >
-        {{ getTagDisplay(tagToDelete) }}
-      </div>
+      <TagGlyph :tag="tagToDelete" />
       <span class="confirm-target-name">{{ tagToDelete.name }}</span>
     </div>
     <template #footer>
@@ -181,24 +208,10 @@ function cancelDelete() {
 </template>
 
 <style scoped>
-.tag-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+/* Quota strip — only free plans see it, so paid users get the grid flush
+   against the header instead of an empty toolbar row. */
+.tag-quota {
   padding: 12px 18px;
-  border-bottom: 1px solid var(--ct-border-subtle);
-}
-.tag-toolbar-info { display: flex; flex-direction: column; gap: 4px; }
-.tag-toolbar-hint {
-  font-size: var(--ct-text-xs);
-  color: var(--ct-fg-subtle);
-}
-.tag-upgrade-hint {
-  padding: 8px 18px;
-  font-size: var(--ct-text-xs);
-  color: var(--ct-primary);
-  background: var(--ct-primary-soft);
   border-bottom: 1px solid var(--ct-border-subtle);
 }
 
@@ -232,30 +245,19 @@ function cancelDelete() {
   width: 2px;
   background: var(--ct-primary);
 }
+/* The first row's border-top would double up against the header rule. */
+.tag-cell:first-child { border-top: 0; }
 @media (min-width: 640px) {
   .tag-cell:nth-child(2n+1) { border-left: 0; }
+  .tag-cell:nth-child(-n+2) { border-top: 0; }
 }
 @media (min-width: 1024px) {
   .tag-cell:nth-child(2n+1) { border-left: 1px solid var(--ct-border-subtle); }
   .tag-cell:nth-child(3n+1) { border-left: 0; }
+  .tag-cell:nth-child(-n+3) { border-top: 0; }
 }
 @media (max-width: 639px) {
   .tag-cell { border-left: 0; }
-}
-
-.tag-cell-glyph {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  font-family: var(--ct-font-mono);
-  font-size: 12px;
-  font-weight: var(--ct-weight-semibold);
-  color: #fff;
-  border-radius: var(--ct-radius-md);
-  text-transform: uppercase;
 }
 
 .tag-cell-body { flex: 1; min-width: 0; }
@@ -268,9 +270,33 @@ function cancelDelete() {
   text-overflow: ellipsis;
 }
 .tag-cell-meta {
-  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
   font-size: var(--ct-text-xs);
   color: var(--ct-fg-subtle);
+}
+.tag-cell-rules {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--ct-fg-muted);
+}
+.tag-cell-rules.is-empty { opacity: 0.55; }
+.tag-cell-dot { opacity: 0.5; }
+
+/* Blank cells that finish the last grid row (see fillerCount). */
+.tag-filler {
+  display: none;
+  border-top: 1px solid var(--ct-border-subtle);
+  border-left: 1px solid var(--ct-border-subtle);
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tag-filler.is-md { display: block; }
+}
+@media (min-width: 1024px) {
+  .tag-filler.is-lg { display: block; }
 }
 
 .tag-cell-actions {

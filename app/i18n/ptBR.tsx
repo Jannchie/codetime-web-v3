@@ -502,10 +502,11 @@ export const ptBR: Partial<Translation> = {
         title: 'Lista de Tags',
         noTags: 'Nenhuma tag encontrada. Crie sua primeira tag para começar.',
         createTag: 'Criar Tag',
-        freeUserLimit: 'Usuários gratuitos podem criar até',
+        freeUserLimit: (max: number) => `O plano gratuito permite até ${max} tags`,
         upgradeForMore: 'Atualize para criar mais tags',
         editTag: 'Editar tag',
         deleteTag: 'Excluir tag',
+        selectHint: 'Selecione uma tag para ver suas regras e estatísticas',
       },
       tagForm: {
         name: 'Nome',

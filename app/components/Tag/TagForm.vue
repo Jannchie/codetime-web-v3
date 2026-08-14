@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TagResponse } from '~/api/v3/types.gen'
 import { defineAsyncComponent } from 'vue'
+import { stripHash } from '~/components/Widget/Form/presets'
 
 type Props = {
   tag?: TagResponse | null
@@ -114,9 +115,9 @@ onMounted(() => {
 })
 
 const colorHex = computed({
-  get: () => formData.color.replace(/^#/, ''),
+  get: () => stripHash(formData.color),
   set: (v: string) => {
-    formData.color = `#${v.replace(/^#/, '')}`
+    formData.color = `#${stripHash(v)}`
   },
 })
 </script>
@@ -128,6 +129,21 @@ const colorHex = computed({
     width="640px"
   >
     <form class="form-body" @submit.prevent="handleSave">
+      <!-- PREVIEW — same glyph + name pairing the tag list renders, so the
+           colour and emoji choices are judged in their final context. -->
+      <div class="form-preview">
+        <TagGlyph
+          :tag="{ emoji: formData.emoji, name: formData.name || '?', color: formData.color }"
+          :size="32"
+        />
+        <div v-if="formData.name" class="form-preview-name">
+          {{ formData.name }}
+        </div>
+        <!-- No echo of the name field's placeholder — an empty bar keeps the
+             preview readable without repeating the copy below it. -->
+        <div v-else class="rounded bg-ct-surface-2 h-2.5 w-28" aria-hidden="true" />
+      </div>
+
       <!-- NAME -->
       <div class="form-row">
         <label class="form-label">
@@ -189,11 +205,10 @@ const colorHex = computed({
               size="md"
               class="emoji-picker-trigger form-emoji-trigger"
               type="button"
+              :icon-left="formData.emoji ? undefined : 'i-tabler-mood-smile'"
               @click="showEmojiPicker = !showEmojiPicker"
             >
-              <span v-if="formData.emoji" class="form-emoji-glyph">{{ formData.emoji }}</span>
-              <i v-else class="i-tabler-mood-smile" />
-              <span>{{ formData.emoji || t.dashboard.tags.tagForm.emojiPlaceholder }}</span>
+              {{ formData.emoji || t.dashboard.tags.tagForm.emojiPlaceholder }}
             </UButton>
             <UButton
               v-if="formData.emoji"
@@ -242,6 +257,25 @@ const colorHex = computed({
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+/* Preview */
+.form-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--ct-surface-1);
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-radius-lg);
+}
+.form-preview-name {
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-weight-medium);
+  color: var(--ct-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .form-row {
@@ -312,17 +346,16 @@ const colorHex = computed({
 }
 .form-color-hex { width: 9rem; }
 
+/* Square chips read as a palette; the stretched pills they used to be
+   read as buttons. */
 .form-color-presets {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 6px;
-}
-@media (max-width: 599px) {
-  .form-color-presets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .form-color-preset {
-  height: 28px;
-  width: 100%;
+  height: 26px;
+  width: 26px;
   border: 1px solid var(--ct-border);
   border-radius: var(--ct-radius-md);
   cursor: pointer;
@@ -336,7 +369,6 @@ const colorHex = computed({
 /* Emoji */
 .form-emoji-row { display: inline-flex; gap: 8px; align-items: center; }
 .form-emoji-trigger { min-width: 12rem; justify-content: flex-start !important; }
-.form-emoji-glyph { font-size: 16px; }
 .form-emoji-picker {
   margin-top: 8px;
   position: relative;

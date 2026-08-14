@@ -5,7 +5,6 @@ import * as Plot from '@observablehq/plot'
 import * as d3 from 'd3'
 import { getV3TagsByTagIdHistory } from '~/api/v3'
 import { getDurationString } from '~/utils/format'
-import { getTagDisplay } from '~/utils/tag'
 
 type Props = {
   tag: TagResponse
@@ -114,13 +113,16 @@ const chartOptions = computed<PlotOptions>(() => {
 
   return {
     padding: 0,
-    marginLeft: 36,
-    marginRight: 16,
-    marginBottom: 32,
-    marginTop: 12,
-    height: 240,
+    marginLeft: 34,
+    marginRight: 12,
+    marginBottom: 26,
+    marginTop: 8,
+    height: 220,
+    // Axis labels are dropped on purpose — the eyebrow above the chart
+    // already says "time trend · hours", and Plot's own labels collided
+    // with the topmost tick at this margin size.
     x: {
-      label: t.value.plot.label.date,
+      label: null,
       paddingInner: 0.15,
       tickFormat: d3.timeFormat('%m/%d'),
       interval: d3.timeDay,
@@ -128,7 +130,7 @@ const chartOptions = computed<PlotOptions>(() => {
     y: {
       grid: true,
       nice: true,
-      label: t.value.plot.label.timeHour,
+      label: null,
       tickFormat: (d: number) => d3.format('.1f')(d),
       domain: [0, maxHours * 1.1],
     },
@@ -173,7 +175,7 @@ const dailyAvgMs = computed(() => {
 </script>
 
 <template>
-  <PanelSection num="03" :title="t.dashboard.tags.stats.title" :meta="`TIME · DISTRIBUTION · ${timeRange}`" flush>
+  <PanelSection :title="t.dashboard.tags.stats.title" :meta="`TIME · DISTRIBUTION · ${timeRange}`" flush>
     <template #icon>
       <i class="i-tabler-chart-bar text-[15px] text-ct-fg-muted" />
     </template>
@@ -181,12 +183,7 @@ const dailyAvgMs = computed(() => {
     <!-- Toolbar -->
     <div class="stats-toolbar">
       <div class="stats-tag">
-        <div
-          class="stats-tag-glyph"
-          :style="{ backgroundColor: tag.color }"
-        >
-          {{ getTagDisplay(tag) }}
-        </div>
+        <TagGlyph :tag="tag" :size="32" />
         <h3 class="stats-tag-title">
           {{ t.dashboard.tags.stats.statisticsTitle(tag.name) }}
         </h3>
@@ -271,12 +268,16 @@ const dailyAvgMs = computed(() => {
 
       <!-- Chart -->
       <div class="stats-chart-wrap">
-        <div class="eyebrow stats-chart-eyebrow">
-          <span class="eyebrow-bracket">[</span>
-          <span class="eyebrow-num">→</span>
-          <span class="eyebrow-sep">/</span>
-          <span>{{ t.dashboard.tags.stats.timeTrend }}</span>
-          <span class="eyebrow-bracket">]</span>
+        <div class="mb-3 flex gap-3 items-baseline justify-between">
+          <div class="eyebrow">
+            <span class="eyebrow-bracket">[</span>
+            <span class="eyebrow-num">→</span>
+            <span class="eyebrow-sep">/</span>
+            <span>{{ t.dashboard.tags.stats.timeTrend }}</span>
+            <span class="eyebrow-bracket">]</span>
+          </div>
+          <!-- Carries the y-axis unit now that the chart has no axis labels. -->
+          <span class="text-xs text-ct-fg-subtle whitespace-nowrap">{{ t.plot.label.timeHour }}</span>
         </div>
         <div v-if="hasActualData" :key="`chart-${props.tag.id}-${timeRange}`" class="stats-chart">
           <PoltChart
@@ -311,19 +312,6 @@ const dailyAvgMs = computed(() => {
   align-items: center;
   gap: 0.75rem;
   min-width: 0;
-}
-
-.stats-tag-glyph {
-  width: 1.85rem;
-  height: 1.85rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ct-font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: white;
-  flex-shrink: 0;
 }
 
 .stats-tag-title {
@@ -465,13 +453,11 @@ const dailyAvgMs = computed(() => {
   padding: 1rem 1.25rem 1.25rem;
 }
 
-/* Tighten the global .eyebrow's vertical rhythm for this chart header. */
-.stats-chart-eyebrow {
-  margin-bottom: 12px;
-}
-
+/* This chart declares its own height, so drop PoltChart's 300px floor and
+   let the SVG define the block instead of leaving dead space below it. */
 .stats-chart {
   width: 100%;
+  --polt-chart-min-h: 0;
 }
 
 .stats-chart-empty {

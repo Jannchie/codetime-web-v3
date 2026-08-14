@@ -753,10 +753,11 @@ export const zhCN: Partial<Translation> = {
         title: '标签列表',
         noTags: '暂无标签。创建您的第一个标签开始使用。',
         createTag: '创建标签',
-        freeUserLimit: '免费用户限制：',
+        freeUserLimit: (max: number) => `免费版最多可创建 ${max} 个标签`,
         upgradeForMore: '升级以创建更多标签',
         editTag: '编辑标签',
         deleteTag: '删除标签',
+        selectHint: '选择一个标签，查看它的规则与统计',
       },
       tagForm: {
         name: '名称',
