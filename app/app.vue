@@ -11,11 +11,21 @@ import { client } from '@/api/v3/client.gen'
 // VSCode plugin and the LemonSqueezy webhook until edge routing flips
 // to a proxy, but the browser bundle no longer dispatches anything to
 // it directly.
+// SSR has no document to resolve a relative URL against: undici rejects
+// `/v3/users/42` with "Failed to parse URL", which surfaced as a hard 500
+// on every server-rendered page that awaits the SDK (the annual report)
+// and as a blank first paint on the ones that swallow the error (public
+// profiles). Give the server run an absolute origin — the request's own
+// by default, `NUXT_SSR_API_ORIGIN` when the public host is not routable
+// from the box. The origin is constant per deployment, so re-running
+// setConfig on this module-level singleton per request is a no-op.
+const ssrOrigin = import.meta.server
+  ? (process.env.NUXT_SSR_API_ORIGIN || useRequestURL().origin)
+  : ''
+
 client.setConfig({
-  // Empty string = same origin as the current page. On the server side
-  // this falls through to relative fetch, which Nitro resolves against
-  // the request's own origin.
-  baseUrl: '',
+  // Empty string = same origin as the current page (browser only).
+  baseUrl: ssrOrigin,
   credentials: 'include',
   throwOnError: true,
 })
