@@ -18,7 +18,15 @@ if (!user) {
   })
 }
 
-const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+// `Intl…timeZone` resolves to the *host's* zone, which on the server is
+// wherever the box happens to live (Asia/Tokyo here) — not the viewer's.
+// For the ~15k accounts whose legacy `users.timezone` is empty that
+// silently rendered the whole report in JST (issue #35). Keep the SSR
+// pass on UTC; hydration re-runs this setup in the browser and re-fetches
+// with the viewer's real zone.
+const browserTimezone = import.meta.client
+  ? Intl.DateTimeFormat().resolvedOptions().timeZone
+  : 'UTC'
 const reportTimezone = resolveTimezone(user.timezone ?? browserTimezone, browserTimezone)
 const reportYear = computed(() => {
   return parseYearParam((route.query.year as string | undefined) ?? undefined) ?? getDefaultReportYear(reportTimezone)
