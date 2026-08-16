@@ -11,12 +11,38 @@ Codetime Web V3 is a Nuxt.js web application for code time analytics, running at
 - **Install dependencies:** `pnpm install` (preferred package manager)
 - **Development server:** `pnpm run dev` (binds port 3002 with .env.dev;
   production PM2 holds 3001)
-- **Build for production:** `pnpm run build`
+- **Build for production:** `pnpm run build` — **never run this on its own
+  in this checkout.** See "Building is destructive" below.
 - **Lint and fix:** `pnpm run lint` (uses @jannchie/eslint-config with UnoCSS support)
-- **Generate static site:** `pnpm run generate`
+- **Generate static site:** `pnpm run generate` (same hazard as `build`)
 - **Preview production build:** `pnpm run preview`
-- **Update API SDK:** `pnpm openapi` (regenerates from OpenAPI spec at test.codetime.dev)
-- **Deploy:** `pnpm deploy` (updates API, builds, and starts with PM2)
+- **Update API SDK:** `pnpm openapi` (regenerates from the **local dev
+  server** at `localhost:3002/v3/docs/openapi.json` — the dev server must
+  be running, and running current code)
+- **Deploy:** `pnpm deploy` (the only supported way to build; see below)
+
+### Building is destructive
+
+This checkout *is* the production deployment: PM2 serves out of
+`.output/`, and `nuxt build` rewrites it in place, atomically deleting
+every `_nuxt/<hash>` chunk absent from the new build. The running server
+keeps rendering HTML that references the old hashes, so a bare
+`pnpm run build` takes <https://codetime.dev> down within seconds — 500s
+on its own JS, pinned at the Cloudflare edge by `immutable`. This is the
+2026-05-18 incident, and it recurred on 2026-08-16 from a build run
+purely to check that the code compiled.
+
+`scripts/deploy.sh` is the guard: it snapshots `_nuxt/` first, builds,
+rsyncs the old hashes back with `--ignore-existing`, then `pm2 reload`s.
+Nothing else restores them — once a bare build has run, the old chunks
+are gone.
+
+- To verify code compiles, use `npx tsc --noEmit` or `pnpm vitest run`.
+- To ship, use `pnpm deploy`.
+- If a bare build has already happened, run
+  `pm2 reload ecosystem.config.cjs --update-env` immediately to realign
+  the server with the chunks now on disk, then expect stale clients to
+  need one hard refresh.
 
 ## Architecture
 
