@@ -1,6 +1,6 @@
 import type { SQL } from 'drizzle-orm'
 import { sql } from 'drizzle-orm'
-import { PRICE_ANCHOR_COLUMN, TIME_SENSITIVE_MODEL_SQL_PATTERNS } from './agent-pricing'
+import { PRICE_ANCHOR_COLUMN, timeSensitiveSqlPatterns } from './agent-pricing'
 
 // The SQL half of the pricing time-anchor contract whose other half is
 // `estimateCostFromRow` (agent-pricing.ts). Kept in its own module so the
@@ -21,8 +21,11 @@ import { PRICE_ANCHOR_COLUMN, TIME_SENSITIVE_MODEL_SQL_PATTERNS } from './agent-
 // deliberately sidesteps `date_trunc`, whose result depends on the session
 // TimeZone — display buckets elsewhere are truncated in the *user's* zone,
 // which is the wrong frame for a billing window.
+// Read at call time, not at import: the catalogue is fetched rather than
+// static, so the pattern list is only known once it has loaded. Every
+// caller already awaits `ensurePricingLoaded` before building a query.
 export function priceAnchorSql(modelCol: SQL, tsCol: SQL): SQL {
-  const matches = TIME_SENSITIVE_MODEL_SQL_PATTERNS.map(
+  const matches = timeSensitiveSqlPatterns().map(
     pattern => sql`lower(coalesce(${modelCol}, '')) like ${pattern}`,
   )
   // No time-varying schedule in the catalogue: every row anchors to NULL,

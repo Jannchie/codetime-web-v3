@@ -1,7 +1,7 @@
-import type { estimateCostUsd } from '../../../utils/agent-pricing'
+import type { CostEstimate } from '../../../utils/agent-pricing'
 import { sql } from 'drizzle-orm'
 import { defineEventHandler, getQuery } from 'h3'
-import { ensurePricingLoaded, estimateCostFromRow, PRICE_ANCHOR_COLUMN, pricingState } from '../../../utils/agent-pricing'
+import { ensurePricingLoaded, estimateCostFromRow, PRICE_ANCHOR_COLUMN, pricingState, sumEstimates } from '../../../utils/agent-pricing'
 import { priceAnchorSql } from '../../../utils/agent-pricing-sql'
 import { tryUser } from '../../../utils/auth'
 import { useDb } from '../../../utils/db'
@@ -723,25 +723,17 @@ export default defineEventHandler(async (event) => {
     reasoningOutputTokens: number
     totalTokens: number
     modelCalls: number
-    cost: number
-    pricing: ReturnType<typeof estimateCostUsd>['pricing']
-    // How that rate was arrived at — 'blended' means the model prices by
-    // time of day and this row was summed over the window, so the figure
-    // is an even-usage approximation rather than an exact charge.
-    priceBasis: ReturnType<typeof estimateCostUsd>['basis']
+    // Every estimate this model's rows produced, folded once at the end by
+    // `sumEstimates`. Accumulating the cost here instead would mean picking
+    // one `pricing` card per model as the rows go by, and there is no
+    // correct way to do that: a model whose price varies by UTC hour has a
+    // different card per hour, so "keep the last one" reports whichever row
+    // the query happened to return last as though it were the model's rate.
+    estimates: CostEstimate[]
   }
   const modelAggs = new Map<string, ModelAgg>()
   for (const r of breakdownRows) {
     const model = String(r.model ?? 'unknown')
-    const inputTokens = toN(r.input_tokens)
-    const cachedInputTokens = toN(r.cached_input_tokens)
-    const cacheCreationInputTokens = toN(r.cache_creation_input_tokens)
-    const cacheReadInputTokens = toN(r.cache_read_input_tokens)
-    const outputTokens = toN(r.output_tokens)
-    const reasoningOutputTokens = toN(r.reasoning_output_tokens)
-    const totalTokens = toN(r.total_tokens)
-    const modelCalls = toN(r.model_calls)
-    const { cost, pricing, basis } = estimateCostFromRow(r, priceWindow)
     const existing = modelAggs.get(model) ?? {
       model,
       inputTokens: 0,
@@ -752,28 +744,22 @@ export default defineEventHandler(async (event) => {
       reasoningOutputTokens: 0,
       totalTokens: 0,
       modelCalls: 0,
-      cost: 0,
-      pricing,
-      priceBasis: basis,
+      estimates: [],
     }
-    existing.inputTokens += inputTokens
-    existing.cachedInputTokens += cachedInputTokens
-    existing.cacheCreationInputTokens += cacheCreationInputTokens
-    existing.cacheReadInputTokens += cacheReadInputTokens
-    existing.outputTokens += outputTokens
-    existing.reasoningOutputTokens += reasoningOutputTokens
-    existing.totalTokens += totalTokens
-    existing.modelCalls += modelCalls
-    existing.cost += cost
-    // Latest non-null pricing wins; identical across same-model rows.
-    if (pricing) {
-      existing.pricing = pricing
-      existing.priceBasis = basis
-    }
+    existing.inputTokens += toN(r.input_tokens)
+    existing.cachedInputTokens += toN(r.cached_input_tokens)
+    existing.cacheCreationInputTokens += toN(r.cache_creation_input_tokens)
+    existing.cacheReadInputTokens += toN(r.cache_read_input_tokens)
+    existing.outputTokens += toN(r.output_tokens)
+    existing.reasoningOutputTokens += toN(r.reasoning_output_tokens)
+    existing.totalTokens += toN(r.total_tokens)
+    existing.modelCalls += toN(r.model_calls)
+    existing.estimates.push(estimateCostFromRow(r, priceWindow))
     modelAggs.set(model, existing)
   }
   const modelRows = [...modelAggs.values()]
-    .sort((a, b) => b.cost - a.cost || b.modelCalls - a.modelCalls)
+    .map(agg => ({ ...agg, total: sumEstimates(agg.estimates) }))
+    .sort((a, b) => b.total.cost - a.total.cost || b.modelCalls - a.modelCalls)
     .slice(0, 30)
 
   // --- fold breakdown → project leaderboard ---------------------------
@@ -1190,41 +1176,53 @@ export default defineEventHandler(async (event) => {
         .sort((a, b) => b[1] - a[1])
         .map(([source, cost]) => ({ source, estimatedCostUsd: cost })),
     })),
-    modelCosts: modelRows.map(m => ({
-      model: m.model,
-      inputTokens: m.inputTokens,
-      cachedInputTokens: m.cachedInputTokens,
-      outputTokens: m.outputTokens,
-      reasoningOutputTokens: m.reasoningOutputTokens,
-      modelCalls: m.modelCalls,
-      // duration_ms is not meaningful per model (one session can use
-      // multiple models); we leave it at zero so the table doesn't
-      // imply otherwise. Agent-time approximates this via token-weighted
-      // share — punt until we need it.
-      durationMs: 0,
-      estimatedCostUsd: m.cost,
-      pricing: m.pricing
-        ? {
-            displayName: m.pricing.displayName,
-            source: m.pricing.source,
-            basis: m.priceBasis,
-            inputPerMillion: m.pricing.inputCostPerToken * 1_000_000,
-            cacheCreationInputPerMillion: m.pricing.cacheCreationInputCostPerToken * 1_000_000,
-            cacheReadInputPerMillion: m.pricing.cacheReadInputCostPerToken * 1_000_000,
-            cachedInputPerMillion: m.pricing.cachedInputCostPerToken * 1_000_000,
-            outputPerMillion: m.pricing.outputCostPerToken * 1_000_000,
-          }
-        : {
-            displayName: undefined,
-            source: 'missing' as const,
-            basis: 'flat' as const,
-            inputPerMillion: 0,
-            cacheCreationInputPerMillion: 0,
-            cacheReadInputPerMillion: 0,
-            cachedInputPerMillion: 0,
-            outputPerMillion: 0,
-          },
-    })),
+    modelCosts: modelRows.map((m) => {
+      // The rate that most of this model's cost was charged at, not the one
+      // from whichever row came last. `total.cards` holds the rest — a model
+      // priced across a UTC peak boundary really does have several, and one
+      // `pricing` field cannot represent that.
+      const dominant = m.total.cards[0]?.pricing
+      // What a reader needs is whether ANY of this cost was approximated,
+      // not how the dominant card alone was arrived at — so report the
+      // weakest basis present rather than that card's own.
+      const basis = m.total.byBasis.blended > 0
+        ? ('blended' as const)
+        : m.total.byBasis.exact > 0 ? ('exact' as const) : ('flat' as const)
+      return {
+        model: m.model,
+        inputTokens: m.inputTokens,
+        cachedInputTokens: m.cachedInputTokens,
+        outputTokens: m.outputTokens,
+        reasoningOutputTokens: m.reasoningOutputTokens,
+        modelCalls: m.modelCalls,
+        // duration_ms is not meaningful per model (one session can use
+        // multiple models); we leave it at zero so the table doesn't
+        // imply otherwise. Agent-time approximates this via token-weighted
+        // share — punt until we need it.
+        durationMs: 0,
+        estimatedCostUsd: m.total.cost,
+        // What this model could have cost at the cheapest and dearest rate
+        // its rows were priced against. Equal to `estimatedCostUsd` for the
+        // flat-priced models, which is nearly all of them; wider only where
+        // the figure genuinely is an approximation.
+        estimatedCostLowUsd: m.total.low,
+        estimatedCostHighUsd: m.total.high,
+        // Tokens billed at $0 because no catalogue lists the model. The cost
+        // above is an undercount by exactly this much usage, and saying so is
+        // the only way a reader can tell a cheap model from an unknown one.
+        unpricedTokens: m.total.unpriced.tokens,
+        pricing: {
+          displayName: dominant?.displayName,
+          source: dominant?.source ?? ('missing' as const),
+          basis,
+          inputPerMillion: (dominant?.inputCostPerToken ?? 0) * 1_000_000,
+          cacheCreationInputPerMillion: (dominant?.cacheCreationInputCostPerToken ?? 0) * 1_000_000,
+          cacheReadInputPerMillion: (dominant?.cacheReadInputCostPerToken ?? 0) * 1_000_000,
+          cachedInputPerMillion: (dominant?.cachedInputCostPerToken ?? 0) * 1_000_000,
+          outputPerMillion: (dominant?.outputCostPerToken ?? 0) * 1_000_000,
+        },
+      }
+    }),
     agentCosts: agentAggList.map(a => ({
       source: a.source,
       sessions: sessionsBySource.get(a.source) ?? 0,

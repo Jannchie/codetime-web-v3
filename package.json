@@ -12,7 +12,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "deploy": "bash scripts/deploy.sh",
-    "openapi": "openapi-ts"
+    "openapi": "openapi-ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
@@ -28,6 +30,7 @@
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.45.2",
     "jsdom": "^29.1.1",
+    "llm-pricing": "^0.12.1",
     "postgres": "^3.4.7",
     "satori": "^0.26.0",
     "seedrandom": "^3.0.5",
@@ -59,6 +62,7 @@
     "nuxt-og-image": "6.5.0",
     "pm2": "^7.0.1",
     "typescript": "^6.0.3",
+    "vitest": "^4.1.10",
     "vue": "^3.5.34",
     "vue-router": "^5.0.6"
   }
