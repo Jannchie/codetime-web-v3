@@ -714,16 +714,23 @@ export default defineEventHandler(async (event) => {
     sessionsBySource.set(String(r.source ?? 'unknown'), toN(r.sessions))
   }
 
+  // Pricing a row is a property of the row, not of the fold, and
+  // `breakdownRows` is folded three ways below (model, project, agent).
+  // Doing it once here rather than inside each loop is the difference
+  // between one estimate per row and three — 7k calls against 21k on a
+  // real account, and the DeepSeek fan-out only widens that gap.
+  const pricedBreakdown = breakdownRows.map(row => ({
+    row,
+    estimate: estimateCostFromRow(row, priceWindow),
+  }))
+
   // --- fold breakdown → model leaderboard -----------------------------
   type ModelAgg = {
     model: string
     inputTokens: number
     cachedInputTokens: number
-    cacheCreationInputTokens: number
-    cacheReadInputTokens: number
     outputTokens: number
     reasoningOutputTokens: number
-    totalTokens: number
     modelCalls: number
     // Every estimate this model's rows produced, folded once at the end by
     // `sumEstimates`. Accumulating the cost here instead would mean picking
@@ -734,33 +741,31 @@ export default defineEventHandler(async (event) => {
     estimates: CostEstimate[]
   }
   const modelAggs = new Map<string, ModelAgg>()
-  for (const r of breakdownRows) {
+  for (const { row: r, estimate } of pricedBreakdown) {
     const model = String(r.model ?? 'unknown')
     const existing = modelAggs.get(model) ?? {
       model,
       inputTokens: 0,
       cachedInputTokens: 0,
-      cacheCreationInputTokens: 0,
-      cacheReadInputTokens: 0,
       outputTokens: 0,
       reasoningOutputTokens: 0,
-      totalTokens: 0,
       modelCalls: 0,
       estimates: [],
     }
     existing.inputTokens += toN(r.input_tokens)
     existing.cachedInputTokens += toN(r.cached_input_tokens)
-    existing.cacheCreationInputTokens += toN(r.cache_creation_input_tokens)
-    existing.cacheReadInputTokens += toN(r.cache_read_input_tokens)
     existing.outputTokens += toN(r.output_tokens)
     existing.reasoningOutputTokens += toN(r.reasoning_output_tokens)
-    existing.totalTokens += toN(r.total_tokens)
     existing.modelCalls += toN(r.model_calls)
-    existing.estimates.push(estimateCostFromRow(r, priceWindow))
+    existing.estimates.push(estimate)
     modelAggs.set(model, existing)
   }
+  // `estimates` is dropped rather than spread through: it is the fold's
+  // input, and carrying it past `sumEstimates` would keep one object per
+  // row alive until the response is serialised — and offer the response
+  // block a second, unfolded route to the same cost.
   const modelRows = [...modelAggs.values()]
-    .map(agg => ({ ...agg, total: sumEstimates(agg.estimates) }))
+    .map(({ estimates, ...agg }) => ({ ...agg, total: sumEstimates(estimates) }))
     .sort((a, b) => b.total.cost - a.total.cost || b.modelCalls - a.modelCalls)
     .slice(0, 30)
 
@@ -784,7 +789,7 @@ export default defineEventHandler(async (event) => {
     bySource: Map<string, number>
   }
   const projectAggs = new Map<string, ProjectAgg>()
-  for (const r of breakdownRows) {
+  for (const { row: r, estimate } of pricedBreakdown) {
     const project = String(r.project ?? 'unknown')
     const source = String(r.source ?? 'unknown')
     const inputTokens = toN(r.input_tokens)
@@ -796,7 +801,7 @@ export default defineEventHandler(async (event) => {
     const totalTokens = toN(r.total_tokens)
     const modelCalls = toN(r.model_calls)
     const sessions = toN(r.sessions)
-    const { cost } = estimateCostFromRow(r, priceWindow)
+    const { cost } = estimate
     const existing = projectAggs.get(project) ?? {
       project,
       inputTokens: 0,
@@ -847,7 +852,7 @@ export default defineEventHandler(async (event) => {
     byModel: Map<string, number>
   }
   const agentAggs = new Map<string, AgentAgg>()
-  for (const r of breakdownRows) {
+  for (const { row: r, estimate } of pricedBreakdown) {
     const sourceKey = String(r.source ?? 'unknown')
     const model = String(r.model ?? 'unknown')
     const inputTokens = toN(r.input_tokens)
@@ -858,7 +863,7 @@ export default defineEventHandler(async (event) => {
     const reasoningOutputTokens = toN(r.reasoning_output_tokens)
     const totalTokens = toN(r.total_tokens)
     const modelCalls = toN(r.model_calls)
-    const { cost } = estimateCostFromRow(r, priceWindow)
+    const { cost } = estimate
     const existing = agentAggs.get(sourceKey) ?? {
       source: sourceKey,
       inputTokens: 0,

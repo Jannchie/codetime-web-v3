@@ -1,5 +1,6 @@
 import type {
   CostEstimate,
+  EstimateArgs,
   ModelPrice,
   PricingCatalogState,
   TimeInput,
@@ -7,16 +8,16 @@ import type {
 import { modelsDevSource, PricingCatalog } from 'llm-pricing'
 import { fileCache } from 'llm-pricing/node'
 
+// Re-exported so callers name the cost contract through this seam rather
+// than reaching past it into the library.
+export type { CostEstimate, CostTotal, ModelPrice, PriceBasis, PricingCatalogState, TimeInput } from 'llm-pricing'
+
 // The pricing catalogue, and the cost contract the dashboard folds rows
 // through. The arithmetic, the schedule handling, and the catalogue
 // parsers all live in `llm-pricing` — this module is the seam: it owns
 // the one catalogue instance this process shares, and the two decisions
 // that are ours rather than the library's (which upstream to price
 // against, and how to read this table's rows).
-//
-// The exported surface is deliberately unchanged from the hand-rolled
-// version it replaces, so every call site and the characterization tests
-// in `agent-pricing.test.ts` carry over untouched.
 
 // models.dev, which quotes every provider separately rather than the one
 // endpoint a router would pick. Measured over all 93,504 rows of
@@ -67,7 +68,7 @@ export function getPriceFor(model: string, at?: TimeInput): ModelPrice | null {
 }
 
 /** Apply the catalogue to an explicit set of token counts. */
-export function estimateCostUsd(args: Parameters<PricingCatalog['estimate']>[0]): CostEstimate {
+export function estimateCostUsd(args: EstimateArgs): CostEstimate {
   return catalog.estimate(args)
 }
 
@@ -76,13 +77,11 @@ export function estimateCostUsd(args: Parameters<PricingCatalog['estimate']>[0])
  *
  * Derived from the schedules themselves so the two can never drift: a
  * vendor that gains a peak schedule declares its match patterns next to
- * its periods and the query layer follows automatically. Read at
- * query-build time rather than at import — the catalogue has to be loaded
- * first, and every caller already awaits `ensurePricingLoaded`.
+ * its periods and the query layer follows automatically.
  *
- * (This replaces a module-scope `TIME_SENSITIVE_MODEL_SQL_PATTERNS`
- * constant; the catalogue is no longer a static table, so the patterns
- * cannot be known before it loads.)
+ * Read at query-build time rather than held in a module constant: the
+ * catalogue is fetched, not static, so the patterns are unknown until it
+ * loads. Every caller already awaits `ensurePricingLoaded` first.
  */
 export function timeSensitiveSqlPatterns(): readonly string[] {
   return catalog.timeSensitiveSqlPatterns()
@@ -122,13 +121,10 @@ export function estimateCostFromRow(
   return catalog.estimateFromRow(row, { window, inferShape: true })
 }
 
-// Re-exported so callers import the cost contract from one place rather
-// than reaching past this seam into the library. `inferTokenShape` is here
-// for anything that needs a row's shape without pricing it.
-//
 // `sumEstimates` is how a caller folds many rows into one figure. Adding
 // `cost` up by hand loses everything the estimates carry besides the
 // number — which card priced them, whether any were approximated, and how
 // much usage went unpriced at $0 — and every aggregate on this dashboard
-// needs at least one of those.
-export { type CostEstimate, type CostTotal, inferTokenShape, type ModelPrice, PRICE_ANCHOR_COLUMN, type PriceBasis, sumEstimates, type TimeInput } from 'llm-pricing'
+// needs at least one of those. `PRICE_ANCHOR_COLUMN` names the column the
+// query layer emits to make those estimates exact; see `agent-pricing-sql`.
+export { inferTokenShape, PRICE_ANCHOR_COLUMN, sumEstimates } from 'llm-pricing'

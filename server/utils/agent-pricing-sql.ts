@@ -21,9 +21,9 @@ import { PRICE_ANCHOR_COLUMN, timeSensitiveSqlPatterns } from './agent-pricing'
 // deliberately sidesteps `date_trunc`, whose result depends on the session
 // TimeZone — display buckets elsewhere are truncated in the *user's* zone,
 // which is the wrong frame for a billing window.
-// Read at call time, not at import: the catalogue is fetched rather than
-// static, so the pattern list is only known once it has loaded. Every
-// caller already awaits `ensurePricingLoaded` before building a query.
+//
+// Call this while building the query, not at import: it reads the pattern
+// list off the loaded catalogue (see `timeSensitiveSqlPatterns`).
 export function priceAnchorSql(modelCol: SQL, tsCol: SQL): SQL {
   const matches = timeSensitiveSqlPatterns().map(
     pattern => sql`lower(coalesce(${modelCol}, '')) like ${pattern}`,
