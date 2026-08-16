@@ -601,6 +601,7 @@ export default defineEventHandler(async (event) => {
       ((extract(dow from (s.last_event_at at time zone ${tz}))::int + 6) % 7) as weekday,
       extract(hour from (s.last_event_at at time zone ${tz}))::int as hour,
       coalesce(m.model, 'unknown') as model,
+      ${priceAnchorSql(sql`m.model`, sql`s.last_event_at`)},
       coalesce(sum(m.input_tokens), 0)::bigint as input_tokens,
       coalesce(sum(m.cached_input_tokens), 0)::bigint as cached_input_tokens,
       coalesce(sum(m.cache_creation_input_tokens), 0)::bigint as cache_creation_input_tokens,
@@ -615,7 +616,7 @@ export default defineEventHandler(async (event) => {
     ${sessSinceClause}
     ${mMachineClause}
     ${mSourceClause}
-    group by 1, 2, 3
+    group by 1, 2, 3, 4
   `) as unknown as Record<string, unknown>[]
   const heatmapCostByCell = new Map<number, number>()
   for (const r of heatmapCostRows) {
@@ -635,6 +636,7 @@ export default defineEventHandler(async (event) => {
       coalesce(nullif(m.project, ''), 'unknown') as project,
       coalesce(nullif(m.source, ''), 'unknown') as source,
       coalesce(m.model, 'unknown') as model,
+      ${priceAnchorSql(sql`m.model`, sql`s.last_event_at`)},
       coalesce(sum(m.input_tokens), 0)::bigint as input_tokens,
       coalesce(sum(m.cached_input_tokens), 0)::bigint as cached_input_tokens,
       coalesce(sum(m.cache_creation_input_tokens), 0)::bigint as cache_creation_input_tokens,
@@ -652,7 +654,7 @@ export default defineEventHandler(async (event) => {
     ${sessSinceClause}
     ${mMachineClause}
     ${mSourceClause}
-    group by 1, 2, 3
+    group by 1, 2, 3, 4
   `) as unknown as Record<string, unknown>[]
 
   // Per-(project, source) agent active time. Sum of `agent_turns.duration_ms`,
