@@ -33,6 +33,24 @@ export const GITHUB_LINK_COOKIE = 'gh_link_intent'
 export const GITHUB_RETURN_COOKIE = 'gh_return_to'
 export const GITHUB_STATE_TTL_SECONDS = 10 * 60
 
+// Same three-cookie bridge as GitHub, for /v3/auth/google/start →
+// Google /authorize → /v3/auth/google/callback. Distinct names so a
+// user who bounces through both providers can't have one handshake
+// clobber the other's state. NONCE additionally pins the OIDC `nonce`
+// we asked Google to echo back inside the ID token.
+export const GOOGLE_STATE_COOKIE = 'g_oauth_state'
+export const GOOGLE_NONCE_COOKIE = 'g_oauth_nonce'
+export const GOOGLE_LINK_COOKIE = 'g_link_intent'
+export const GOOGLE_RETURN_COOKIE = 'g_return_to'
+export const GOOGLE_STATE_TTL_SECONDS = 10 * 60
+
+// The "Web application" OAuth client — the same one GIS used, so the
+// `sub` claims (and therefore existing users.google_id rows) are
+// unchanged by the move to the redirect flow.
+export function googleWebClientId(): string | undefined {
+  return process.env.GOOGLE_CLIENT_ID || process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID
+}
+
 // Validate a post-login redirect target. We only ever redirect within
 // our own site, so the value must be a root-relative path. Rejecting
 // anything that isn't `/<path>` — and specifically `//` or `/\`, which
@@ -190,6 +208,9 @@ type GoogleClaims = {
   exp: number
   iat: number
   email_verified?: string | boolean
+  // Present only for the redirect flow, which sends a `nonce` to
+  // /authorize and verifies the echo in the callback.
+  nonce?: string
 }
 
 type Jwk = { kid: string, kty: string, alg: string, n: string, e: string, use?: string }
@@ -218,28 +239,14 @@ function b64urlToBuffer(s: string): Buffer {
   return Buffer.from(s.replaceAll('-', '+').replaceAll('_', '/'), 'base64')
 }
 
-// Exchange a Google OAuth authorization code for an ID token using PKCE.
-// Used by the iOS App's native sign-in flow: the App generated the
-// code_verifier locally, kicked off /authorize with the matching challenge,
-// got the code via custom-scheme redirect, and now hands {code,verifier}
-// to us. We're a public-client exchange (no client_secret) because the
-// Google OAuth client is of type "iOS" — PKCE is the security boundary.
-export async function exchangeGoogleCode(
-  code: string,
-  codeVerifier: string,
-  redirectUri: string,
-  clientId: string,
-): Promise<{ idToken: string }> {
+// Shared POST to Google's token endpoint. Both the iOS PKCE exchange and
+// the web authorization-code exchange land here; only the credential
+// half of the body differs (code_verifier vs client_secret).
+async function postGoogleToken(params: Record<string, string>): Promise<{ idToken: string }> {
   const res = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
-    body: new URLSearchParams({
-      client_id: clientId,
-      code,
-      code_verifier: codeVerifier,
-      grant_type: 'authorization_code',
-      redirect_uri: redirectUri,
-    }),
+    body: new URLSearchParams(params),
   })
   if (!res.ok) {
     const detail = await res.text().catch(() => '')
@@ -255,13 +262,55 @@ export async function exchangeGoogleCode(
   return { idToken: String(body.id_token) }
 }
 
+// Exchange a Google OAuth authorization code for an ID token using PKCE.
+// Used by the iOS App's native sign-in flow: the App generated the
+// code_verifier locally, kicked off /authorize with the matching challenge,
+// got the code via custom-scheme redirect, and now hands {code,verifier}
+// to us. We're a public-client exchange (no client_secret) because the
+// Google OAuth client is of type "iOS" — PKCE is the security boundary.
+export async function exchangeGoogleCode(
+  code: string,
+  codeVerifier: string,
+  redirectUri: string,
+  clientId: string,
+): Promise<{ idToken: string }> {
+  return postGoogleToken({
+    client_id: clientId,
+    code,
+    code_verifier: codeVerifier,
+    grant_type: 'authorization_code',
+    redirect_uri: redirectUri,
+  })
+}
+
+// Exchange a Google OAuth authorization code for an ID token as a
+// *confidential* client. This is the browser redirect flow that backs
+// /v3/auth/google/start — the "Web application" OAuth client requires
+// client_secret rather than PKCE, so this never runs anywhere but here
+// on the server.
+export async function exchangeGoogleWebCode(
+  code: string,
+  redirectUri: string,
+): Promise<{ idToken: string }> {
+  const clientId = googleWebClientId()
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+  if (!clientId || !clientSecret) {
+    throw new Error('Google OAuth is not configured')
+  }
+  return postGoogleToken({
+    client_id: clientId,
+    client_secret: clientSecret,
+    code,
+    grant_type: 'authorization_code',
+    redirect_uri: redirectUri,
+  })
+}
+
 export async function verifyGoogleIdToken(
   idToken: string,
   expectedAudience?: string,
 ): Promise<GoogleClaims> {
-  const clientId = expectedAudience
-    || process.env.GOOGLE_CLIENT_ID
-    || process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID
+  const clientId = expectedAudience || googleWebClientId()
   if (!clientId) {
     throw new Error('Google OAuth client ID not configured')
   }

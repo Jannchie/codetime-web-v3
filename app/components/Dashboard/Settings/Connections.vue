@@ -8,12 +8,12 @@ import type { UserSelfPublic } from '~/api/v3'
 // Connect flows reuse the existing sign-in entry points but with a
 // link-mode marker so the server attaches to the current user instead
 // of provisioning a new row:
-//   * Google: GIS JS callback → POST /v3/auth/google/link with the JWT
 //   * Apple:  AppleID popup    → POST /v3/auth/apple/link
-//   * GitHub: full-page nav to /v3/auth/github/start?link=1 (browser
-//             redirect chain handles the callback; we read the
-//             ?link=…&result=… query the callback appends to surface
-//             feedback after the round-trip).
+//   * GitHub: full-page nav to /v3/auth/github/start?link=1
+//   * Google: full-page nav to /v3/auth/google/start?link=1
+// The two redirect providers let the browser redirect chain handle the
+// callback; we read the ?link=…&result=… query the callback appends to
+// surface feedback after the round-trip.
 //
 // Disconnect flows are plain DELETE /v3/auth/{provider}/link calls; the
 // server refuses to leave the account with zero providers (400).
@@ -26,25 +26,18 @@ import type { UserSelfPublic } from '~/api/v3'
 const t = useI18N()
 const user = inject<Ref<UserSelfPublic | null>>('user', ref(null))
 
-// Provider SDKs (AppleID JS SDK, Google Identity Services) attach to the
-// window object at runtime. LoginButton.vue declares its own slightly
-// different Window augmentations, so rather than fight the TS merge we
-// access the globals through narrowly-typed casts at the use sites.
+// The AppleID JS SDK attaches to the window object at runtime.
+// LoginButton.vue declares its own slightly different Window
+// augmentation, so rather than fight the TS merge we access the global
+// through a narrowly-typed cast at the use site.
 type AppleAuth = {
   init: (config: Record<string, unknown>) => void
   signIn: (overrides?: Record<string, unknown>) => Promise<{
     authorization: { id_token: string, code?: string, state?: string }
   }>
 }
-type GisIdentity = {
-  initialize: (config: Record<string, unknown>) => void
-  prompt: () => void
-}
 function appleAuth(): AppleAuth | undefined {
   return (globalThis as any).AppleID?.auth as AppleAuth | undefined
-}
-function gisId(): GisIdentity | undefined {
-  return (globalThis as any).google?.accounts?.id as GisIdentity | undefined
 }
 
 type ProviderKey = 'github' | 'google' | 'apple'
@@ -156,109 +149,18 @@ async function disconnectGithub() {
 }
 
 // ---- Google ----
-let gisScriptPromise: Promise<void> | null = null
-function loadGisScript(): Promise<void> {
-  if (gisScriptPromise) {
-    return gisScriptPromise
-  }
-  gisScriptPromise = new Promise<void>((resolve, reject) => {
-    if (gisId()) {
-      resolve()
-      return
-    }
-    const existing = document.querySelector('script[data-gis-client]') as HTMLScriptElement | null
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true })
-      existing.addEventListener('error', () => reject(new Error('Failed to load Google Identity Services')), { once: true })
-      return
-    }
-    const script = document.createElement('script')
-    script.src = 'https://accounts.google.com/gsi/client'
-    script.async = true
-    script.dataset.gisClient = '1'
-    script.addEventListener('load', () => resolve(), { once: true })
-    script.addEventListener('error', () => reject(new Error('Failed to load Google Identity Services')), { once: true })
-    document.head.append(script)
-  })
-  return gisScriptPromise
-}
-
-async function connectGoogle() {
+// Connect: same server-side redirect as GitHub. This used to drive GIS
+// One Tap (`gis.prompt()`) and POST the JWT to /v3/auth/google/link, but
+// One Tap is pure FedCM — for users whose browser blocks or lacks it the
+// prompt silently never appeared and Connect hung until the 2-minute
+// timeout (issue #41). The redirect flow has no such dependency; the
+// callback links the identity and bounces back with ?link=google&result=…
+function connectGoogle() {
   if (state.google.busy) {
     return
   }
-  const config = useRuntimeConfig()
-  const clientId = config.public.googleClientId
-  if (!clientId) {
-    setError('google', 'Google client ID is not configured.')
-    return
-  }
-  setError('google', null)
   state.google.busy = true
-  try {
-    await loadGisScript()
-    const gis = gisId()
-    if (!gis) {
-      throw new Error('Google Identity Services unavailable')
-    }
-    const credential = await new Promise<string>((resolve, reject) => {
-      let settled = false
-      gis.initialize({
-        client_id: clientId,
-        callback: (resp: { credential?: string }) => {
-          if (settled) {
-            return
-          }
-          settled = true
-          if (resp?.credential) {
-            resolve(resp.credential)
-          }
-          else {
-            reject(new Error('Google did not return a credential'))
-          }
-        },
-        auto_select: false,
-        cancel_on_tap_outside: true,
-      })
-      gis.prompt()
-      // Safety net: if the One Tap UI is silently dismissed (cookies
-      // disabled, ITP, etc.), unblock after a long timeout so the
-      // "Connect" button doesn't stay in busy state forever.
-      setTimeout(() => {
-        if (!settled) {
-          settled = true
-          reject(new Error('Google sign-in was dismissed'))
-        }
-      }, 120_000)
-    })
-
-    const res = await fetch('/v3/auth/google/link', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ credential }),
-    })
-    if (!res.ok) {
-      const detail = await readErrorDetail(res)
-      if (res.status === 409) {
-        setError('google', labels.value.feedback?.conflict ?? detail)
-      }
-      else if (res.status === 400) {
-        setError('google', labels.value.feedback?.replace ?? detail)
-      }
-      else {
-        setError('google', detail)
-      }
-      return
-    }
-    await refreshUser()
-  }
-  catch (error: any) {
-    setError('google', error?.message ?? 'Google sign-in failed')
-  }
-  finally {
-    state.google.busy = false
-  }
+  globalThis.location.href = '/v3/auth/google/start?link=1'
 }
 
 async function disconnectGoogle() {

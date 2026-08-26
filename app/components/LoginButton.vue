@@ -24,61 +24,8 @@ const userPending = inject<Ref<boolean>>('user-pending', ref(false))
 const t = useI18N()
 
 const isGitHubLoading = ref(false)
+const isGoogleLoading = ref(false)
 const isAppleLoading = ref(false)
-
-// Google Identity Services posts the JWT credential to `data-login_uri`
-// as an absolute URL. Use the current page origin so the request lands
-// on the Nuxt backend that owns `/v3/auth/google` (and now mints the
-// cross-subdomain auth cookie at codetime.dev).
-const googleLoginUri = computed(() => {
-  if (import.meta.client) {
-    return `${globalThis.location.origin}/v3/auth/google`
-  }
-  return 'https://codetime.dev/v3/auth/google'
-})
-
-// Inject the GIS client script the moment the logged-out template branch
-// has actually mounted `#g_id_onload`. Using a template ref instead of
-// querying the document avoids the setup-time race we hit earlier where
-// `await nextTick()` inside an immediate watch ran before the v-else-if
-// branch was even chosen, so `document.querySelector('#g_id_onload')`
-// returned null and the watcher silently bailed out.
-//
-// GIS auto-renders the button when its bootstrap script finds an
-// `#g_id_onload` element already in the DOM, so we only need to make
-// sure the element exists *before* the script tag is appended.
-const onloadEl = useTemplateRef<HTMLElement>('onloadEl')
-const gisInjected = ref(false)
-
-function injectGis() {
-  if (gisInjected.value) {
- return
-}
-  if (document.querySelector('script[data-gis-client]')) {
-    gisInjected.value = true
-    return
-  }
-  gisInjected.value = true
-  const script = document.createElement('script')
-  script.src = 'https://accounts.google.com/gsi/client'
-  script.async = true
-  script.dataset.gisClient = '1'
-  document.head.append(script)
-}
-
-watch(
-  onloadEl,
-  (el) => {
-    if (import.meta.server) {
- return
-}
-    if (!el) {
- return
-}
-    injectGis()
-  },
-  { immediate: true, flush: 'post' },
-)
 
 // Sign in with Apple — popup mode.
 // We let Apple's JS SDK pop up its system UI, receive the signed
@@ -190,6 +137,19 @@ async function handleAppleLogin() {
 // /v3/auth/github verifies that cookie, which closes the OAuth Login-CSRF
 // hole where an attacker pre-fetches a code and tricks a victim into
 // hitting the callback to silently bind to the attacker's account.
+// Google — server-side authorization-code redirect, same shape as
+// GitHub. We used to render the Google Identity Services button here,
+// but GIS routes sign-in through FedCM (`navigator.credentials.get`),
+// which is unavailable whenever a privacy extension, Brave shields, or
+// Chrome's third-party-sign-in toggle blocks it — those users just got
+// `FedCM get() rejects with NotSupportedError` in the console and a
+// dead button (issue #41), and GIS exposes no JS hook to detect it.
+function handleGoogleLogin() {
+  isGoogleLoading.value = true
+  const returnTo = globalThis.location.pathname + globalThis.location.search
+  globalThis.location.href = `/v3/auth/google/start?return_to=${encodeURIComponent(returnTo)}`
+}
+
 function handleGitHubLogin() {
   isGitHubLoading.value = true
   // Unlike Google/Apple (which reload in place), GitHub leaves the page
@@ -214,31 +174,28 @@ function handleGitHubLogin() {
         <div
           v-else-if="!user"
           class="flex flex-col gap-8"
-          style="color-scheme: light;"
         >
           <div class="flex flex-col gap-3 items-center">
             <div class="text-sm text-ct-fg-muted">
               {{ t.landing.login }}
             </div>
             <div class="flex gap-2">
-              <div
-                id="g_id_onload"
-                ref="onloadEl"
-                class="hidden"
-                data-itp_support="true"
-                :data-client_id="$config.public.googleClientId"
-                :data-login_uri="googleLoginUri"
-                data-nonce=""
-              />
-              <div
-                class="g_id_signin"
-                data-type="icon"
-                data-shape="circle"
-                data-theme="outline"
-                data-text="signin_with"
-                data-size="medium"
-                data-locale="en-US"
-              />
+              <button
+                key="google"
+                aria-label="google"
+                :disabled="isGoogleLoading"
+                class="border border-[#dadce0] rounded-full bg-white flex h-32px w-32px transition-colors items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                @click="handleGoogleLogin"
+              >
+                <i
+                  v-if="!isGoogleLoading"
+                  class="i-logos-google-icon h-4 w-4"
+                />
+                <i
+                  v-else
+                  class="i-eva-loader-outline bg-black h-5 w-5 animate-spin"
+                />
+              </button>
               <button
                 key="github"
                 aria-label="github"
@@ -371,11 +328,5 @@ function handleGitHubLogin() {
 }
 .dashboard-cta:hover .dashboard-cta-arrow {
   transform: translateX(3px);
-}
-</style>
-
-<style>
-iframe {
-  color-scheme: light !important;
 }
 </style>
