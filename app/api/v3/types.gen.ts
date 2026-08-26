@@ -1061,6 +1061,16 @@ export type PostV3AuthGoogleData = {
     url: '/v3/auth/google';
 };
 
+export type GetV3AuthGoogleCallbackData = {
+    body?: never;
+    path?: never;
+    query: {
+        code: string;
+        state: string;
+    };
+    url: '/v3/auth/google/callback';
+};
+
 export type DeleteV3AuthGoogleLinkData = {
     body?: never;
     path?: never;
@@ -1168,6 +1178,18 @@ export type PostV3AuthGoogleNativeResponses = {
 };
 
 export type PostV3AuthGoogleNativeResponse = PostV3AuthGoogleNativeResponses[keyof PostV3AuthGoogleNativeResponses];
+
+export type GetV3AuthGoogleStartData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * When `1`, the callback will link the Google identity to the currently signed-in user instead of provisioning a new account.
+         */
+        link?: '1';
+    };
+    url: '/v3/auth/google/start';
+};
 
 export type PostV3AuthLoginData = {
     body: {
